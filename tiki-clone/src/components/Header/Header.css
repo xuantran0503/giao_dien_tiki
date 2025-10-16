@@ -1,0 +1,348 @@
+/* Header tổng */
+.header {
+  font-family: Arial, sans-serif;
+  background: #fff;
+  /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05); */
+}
+
+/* Banner */
+.banner {
+  background: #e8f7ee;
+  color: #1a7f37;
+  text-align: center;
+  padding: 10px;
+  font-size: 12px;
+}
+
+.text-and-img-banner {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.img-text-banner img {
+    height: 16px;
+    display: block;
+}
+
+.header-container{
+  max-width: 1440px;
+  margin: 0 auto;      
+  padding: 0 16px;     
+  box-sizing: border-box;
+  width: 100%;
+}
+
+/* Main header */
+.header-main {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 0;
+  gap: 24px;
+  width: auto;
+}
+
+/* Logo */
+.logo-tiki img {
+  height: 60px;
+  object-fit: contain;
+}
+
+/* Right wrapper chứa 2 khối */
+.right-wrapper {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: 8px;
+  margin-left: 10px;
+}
+
+/* Top row: search + icon bar */
+.top-row {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+  gap: 0;
+}
+
+/* Search */
+.search {
+  display: flex;
+  flex: 1;
+  margin-right: 0;
+  font-family: Inter, Arial, sans-serif;
+}
+
+.search-wrapper {
+  display: flex;
+  align-items: center;
+  border: 1px solid #dcdcdc;
+  border-radius: 6px;
+  /* padding: 0 10px; */
+  flex: 1;
+  background: #fff;
+  height: 38px;
+}
+
+/* Icon tìm kiếm */
+.search-icon {
+  font-size: 18px;
+  color: #999;
+  margin-left: 10px;
+}
+
+.search input {
+  flex: 1;
+  padding: 10px 12px;
+  border: none;
+  outline: none;
+  font-size: 14px;
+}
+.img-search img {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+  display: block;
+  margin-left: 10px;
+}
+
+/* Dấu “|” giữa input và nút */
+.search-divider {
+  width: 1px;
+  height: 25px;
+  background-color: #dcdcdc;
+  /* margin: 0 20px; */
+  opacity: 1;
+}
+
+.search-btn {
+  padding: 10px 16px;
+  border: 1px solid #dcdcdc;
+  border-left: none;
+  border: none;
+  background: #fff;
+  color: rgb(10, 104, 255);
+  cursor: pointer;
+  font-size: 14px;
+  font-family: Inter, Arial, sans-serif;
+}
+.search-btn:hover {
+  background-color: rgba(0, 96, 255, 0.12); 
+  color: #1b6ee8;
+  border-color: #1b6ee8;
+
+}
+
+
+/* Thanh icon chung */
+.icon-bar {
+  display: flex;
+  align-items: center;
+  margin-left: 80px;
+  gap: 10px;
+}
+
+/* Icon + chữ */
+.icon-btn-with-text {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  text-decoration: none;
+  color: #333;
+  font-size: 14px;
+  padding: 6px 10px;
+  border-radius: 6px;
+  transition: 0.2s;
+}
+
+.icon-btn-with-text:hover {
+  background-color: rgba(0, 96, 255, 0.12);
+  color: #1b6ee8;
+}
+
+.icon-img img {
+  width: 22px;
+  height: 22px;
+  object-fit: contain;
+  display: block;
+}
+
+
+.img-home img {
+  width: 24px;
+}
+.img-account img{
+  width: 24px;
+}
+.img-cart img {
+  width: 24px;
+}
+
+.cart-btn {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  padding: 6px;
+  border-radius: 6px;
+  transition: 0.2s;
+}
+.cart-btn:hover {
+  
+  background-color: rgba(0, 96, 255, 0.12);
+}
+
+
+.cart-badge {
+  position: absolute;
+  top: -4px;
+  right: -2px;
+  background: #ff3b30;
+  color: #fff;
+  font-size: 10px;
+  font-weight: 600;
+  padding: 2px 5px;
+  border-radius: 50%;
+}
+
+.dau1{
+  color: #ccc;
+  font-weight: 400;
+  font-size: 20px;
+  position: relative;
+  top: -3px;
+}
+
+
+/* Bottom row: location + menu */
+.bottom-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  height: 24px;
+}
+
+.location {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+}
+.img-location img {
+  width: 18px;
+  height: 18px;
+  object-fit: contain;
+  display: block;
+  opacity: 1;
+}
+
+.text-location1 {
+  color: #808098;
+  font-size: 14px;
+  font-weight: 400;    
+  margin: 0 ;
+
+}
+
+.location-link {
+  color: #27272a;
+  text-decoration: underline;
+  font-weight: bold;
+}
+
+/* Menu */
+.menu {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  overflow-x: auto;
+  
+}
+.menu a {
+  text-decoration: none;
+  color: #808098;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+/* Features row */
+.features-container{
+  max-width: 1440px;
+  margin: 0 auto;      
+  padding: 0 16px;     
+  box-sizing: border-box;
+  display: flex;
+  width: 100%;
+}
+
+.features-row {
+  display: flex;
+  /* gap: 18px; */
+  padding: 10px 0;
+  border-top: 1px solid #dcdcdc;
+  border-bottom: 1px solid #dcdcdc;
+  background: #fff;
+  width: 100%;
+}
+
+.feature-item {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.feat-text {
+  color: #27272a;
+  font-family: Inter, Arial, sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+}
+
+.feat-text-1 {
+  color: #003ea1;
+  font-weight: bold;
+  font-size: 14px;
+  padding: 0 10px ;
+  margin-right: 10px;
+}
+
+.img-hang-that img {
+  width: 24px;
+}
+.img-freeship img {
+  width: 24px;
+}
+.img-hoan-tien img {
+  width: 24px;
+}
+.img-doi-tra img {
+  width: 24px;
+}
+.img-giao-nhanh img {
+  width: 24px;
+}
+.img-gia-re img {
+  width: 24px;
+}
+
+.feat-icon {
+  width: 24px;
+  height: 24px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #f5f9ff;
+  border-radius: 50%;
+}
+
+.dau2 {
+  width: 1px;
+  height: 20px;
+  background-color: #dcdcdc;
+  margin: 0 20px;
+  opacity: 2;
+}

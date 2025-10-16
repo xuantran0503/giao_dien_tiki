@@ -1,0 +1,140 @@
+.hero-slider {
+    width: 100%;
+    --hero-height: 320px;
+    position: relative;
+}
+
+.hero-slide-card {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    height: var(--hero-height);
+    background: transparent;
+    overflow: visible;
+    box-sizing: border-box;
+
+
+}
+
+.hero-slide-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 8px;
+    transition: transform 0.3s ease;
+    padding: 20px 20px 40px 20px;
+    box-sizing: border-box;
+}
+
+.hero-slide-card img:hover {
+    transform: scale(1.03);
+}
+
+
+.hero-slider .slick-list,
+.hero-slider .slick-slider {
+    display: block;
+}
+
+.hero-slider .slick-slide {
+    padding: 0 0px;
+    box-sizing: border-box;
+}
+
+.hero-slider .slick-list {
+    margin: 0 -0px;
+}
+
+/* Dots */
+.hero-slider .slick-dots {
+    bottom: 10px;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    padding: 5px;
+}
+
+.hero-slider .slick-dots li {
+    width: 24px;
+    height: 2px;
+    margin: 0;
+}
+
+.hero-slider .slick-dots li button {
+    width: 24px;
+    height: 2px;
+    padding: 0;
+}
+
+.hero-slider .slick-dots li button:before {
+    content: '';
+    width: 24px;
+    height: 2px;
+    background: rgba(39, 39, 42, 0.25);
+    opacity: 0.8;
+    border-radius: 1px;
+}
+
+.hero-slider .slick-dots li.slick-active button:before {
+    background: rgb(13, 92, 182);
+    opacity: 0.9;
+}
+
+
+.hero-slider .slick-prev,
+.hero-slider .slick-next {
+    width: 32px;
+    height: 32px;
+    z-index: 5;
+    border-radius: 50%;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 180ms ease, transform 180ms ease;
+    opacity: 0;
+    background: rgba(255, 255, 255, 0.95);
+    border: none;
+}
+
+.hero-slider:hover .slick-prev,
+.hero-slider:hover .slick-next {
+    opacity: 1;
+}
+
+/* chevron color and size */
+.hero-slider .slick-prev:before,
+.hero-slider .slick-next:before {
+    font-size: 20px;
+    color: #0a68ff;
+    opacity: 1;
+    font-weight: 700;
+}
+
+.hero-slider .slick-prev {
+    left: 12px;
+}
+
+.hero-slider .slick-next {
+    right: 12px;
+}
+
+
+@media (max-width: 900px) {
+    .hero-slider {
+        --hero-height: 220px;
+    }
+
+    .hero-slider .slick-prev,
+    .hero-slider .slick-next {
+        width: 28px;
+        height: 28px;
+    }
+
+    .hero-slider .slick-prev:before,
+    .hero-slider .slick-next:before {
+        font-size: 18px;
+    }
+}

@@ -1,0 +1,29 @@
+          Lỗi
+-----------------------------
+div của slider với icon mini chưa thẳng hàng
+
+nút chuyển ảnh trong slider thì sai màu và kích thước
+
+
++++++++++++++++++++++++++++++
+         ĐANG LÀM 
+slider
+
+
+size banner 230 1319
+  
+  
+size của slider và icon mini
+1138px
+  
+icon mini 1138 128
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
