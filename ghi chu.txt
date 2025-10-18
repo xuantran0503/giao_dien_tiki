@@ -1,0 +1,26 @@
+
+-----------Lỗi chưa sửa------------------
+
+NÚT CHUYỂN ẢNH TRONG SLIDER THÌ SAI MÀU VÀ KÍCH THƯỚC , VÀ ĐANG BỊ LỖI KHI DI CHUỘT VÀO ẢNH THÌ KHÔNG THẤY NÚT HIỆN LÊN 
+
+dots vẫn đang bị sai vị trí ( ở trong ảnh ) nên khoảng trắng từ dots đến viền bo  quá lớn
+
+
++++++++++++++ĐANG LÀM ++++++++++++++++
+         
+giao diện YouMayLike ,featuredBrands, hot-international, category-grid
+
+
+
+
+++++++++++CHƯA LÀM++++++++++++++++
+
+thêm tính năng hover vào các sản phẩm thì sẽ có bóng mờ ở 2 bên  trong top deal, hot-international ,YouMayLike
+
+nút để chuyển trang sản phẩm trong top deal, featured-brands,  hot-international,you-may-like
+
+tính năng khi cuộn chuột mà phần menu sản phẩm bên trái vẫn giữ nguyên khi nào di chuột vào dó thì mới lăn xuống riêng không kéo theo main các sản phẩm 
+
+6: sản phẩm gợi ý hôm nay
+
+7: footer
