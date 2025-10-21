@@ -13,6 +13,23 @@ const slides = [
   "https://salt.tikicdn.com/cache/w750/ts/tikimsp/c1/96/50/b1ed8d284346db1e8bee14586d8f9208.png.webp",
 ];
 
+// Custom Arrow Components
+const PrevArrow = ({ onClick }) => (
+  <button className="custom-arrow custom-arrow-prev" onClick={onClick}>
+    <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <polyline points="15 18 9 12 15 6"></polyline>
+    </svg>
+  </button>
+);
+
+const NextArrow = ({ onClick }) => (
+  <button className="custom-arrow custom-arrow-next" onClick={onClick}>
+    <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </button>
+);
+
 const HeroSlider = ({ height = 300 }) => {
   const settings = {
     dots: true,
@@ -22,7 +39,9 @@ const HeroSlider = ({ height = 300 }) => {
     slidesToScroll: 2,
     autoplay: true,
     autoplaySpeed: 4000,
-    arrows: false,
+    arrows: true,
+    prevArrow: <PrevArrow />,
+    nextArrow: <NextArrow />,
     adaptiveHeight: false,
     pauseOnHover: true,
     centerMode: false,
@@ -34,7 +53,10 @@ const HeroSlider = ({ height = 300 }) => {
         settings: {
           slidesToShow: 1,
           slidesToScroll: 1,
-          dots: true
+          dots: true,
+          arrows: true,
+          prevArrow: <PrevArrow />,
+          nextArrow: <NextArrow />
         }
       }
     ]

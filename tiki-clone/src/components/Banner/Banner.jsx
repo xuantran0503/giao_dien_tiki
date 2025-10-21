@@ -9,6 +9,9 @@ import FeaturedBrands from "../FeaturedBrands/FeaturedBrands";
 import HotInternational from "../HotInternational/HotInternational";
 import CategoryGrid from "../CategoryGrid/CategoryGrid";
 import YouMayLike from "../YouMayLike/YouMayLike";
+import SuggestedProducts from "../SuggestedProducts/SuggestedProducts";
+import Footer from "../Footer/Footer";
+
 
 const Banner = () => {
   return (
@@ -357,6 +360,16 @@ const Banner = () => {
             {/* YouMayLike Section */}
             <div className="you-may-like-container">
               <YouMayLike />
+            </div>
+            
+            {/* SuggestedProducts Section */}
+            <div className="suggested-products-container">
+              <SuggestedProducts />
+            </div>
+
+            {/* Footer Section */}
+            <div className="footer-container">
+              <Footer />
             </div>
           </div>
         </div>

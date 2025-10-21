@@ -79,9 +79,44 @@
     box-sizing: border-box;
 }
 
+/* SuggestedProducts container */
+.suggested-products-container {
+    flex: 1;
+    max-width: 1130px;
+    margin-top: 0;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.footer-container {
+    /* background: #fff; */
+    margin-top: 0;
+    max-width: 1130px;
+    /* margin: 0 auto;
+    padding: 0 20px; */
+    width: 100%;
+    box-sizing: border-box;
+    flex: 1;
+
+}
+
 .banner-left-categories {
     width: 240px;
     margin-left: 20px;
+
+
+
+    position: sticky;
+    top: 8px;
+    align-self: flex-start;
+    /* Tăng chiều cao tối đa để hiển thị đầy đủ tất cả menu items */
+    max-height: calc(100vh - 120px);
+    overflow-y: auto;
+    overflow-x: hidden;
+    /* Ẩn scrollbar hoàn toàn */
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    padding-bottom: 20px;
 }
 
 .left-card {
@@ -246,7 +281,7 @@
 .hero-slider-card {
     background: #fff;
     border-radius: 8px;
-    padding: 16px 16px 24px 16px;
+    padding: 16px 16px 0px 16px;
     box-shadow: 0 1px 6px rgba(16, 24, 40, 0.06);
     width: 100%;
     min-width: 380px;
@@ -254,6 +289,7 @@
     box-sizing: border-box;
     position: relative;
     overflow: hidden;
+    max-height: 360px;
 }
 
 .mini-card {

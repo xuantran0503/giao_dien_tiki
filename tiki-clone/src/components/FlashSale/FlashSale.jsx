@@ -1,7 +1,15 @@
 import React, { useState, useEffect } from "react";
+import { PrevArrow, NextArrow } from "../shared/NavigationArrows";
+import { flashSaleData } from "../../data/flashSaleData";
 import "./FlashSale.css";
+import "../shared/NavigationArrows.css";
 
 const FlashSale = () => {
+  const [currentPage, setCurrentPage] = useState(0);
+  const [direction, setDirection] = useState('next');
+  const itemsPerPage = 6;
+  const totalPages = Math.ceil(flashSaleData.length / itemsPerPage);
+  
   const [timeLeft, setTimeLeft] = useState({
     hours: 0,
     minutes: 0,
@@ -55,50 +63,19 @@ const FlashSale = () => {
     return () => clearInterval(timer);
   }, []);
 
-  const flashSaleProducts = [
-    {
-      id: 1,
-      image: "https://salt.tikicdn.com/cache/280x280/media/catalog/producttmp/80/b9/75/829e0d96e6675f28dc46757a27120354.jpg.webp",
-      discount: 50,
-      price: 84500,
-      soldPercent: 10
-    },
-    {
-      id: 2,
-      image: "https://salt.tikicdn.com/cache/280x280/media/catalog/producttmp/b7/ff/12/56dee306682b71fac4efc03552449c7e.jpg.webp",
-      discount: 5,
-      price: 43500,
-      soldPercent: 10    
-    },
-    {
-      id: 3,
-      image: "https://salt.tikicdn.com/cache/280x280/ts/product/19/b6/c5/62822fe4e5aed62702967b002d8c47a9.jpg.webp",
-      discount: 23,
-      price: 14339000,
-      soldPercent: 10
-    },
-    {
-      id: 4,
-      image: "https://salt.tikicdn.com/cache/280x280/media/catalog/product/c/a/cac_mon_an_chay_a_1.jpg.webp",
-      discount: 46,
-      price: 130000,
-      soldPercent: 10
-    },
-    {
-      id: 5,
-      image: "https://salt.tikicdn.com/cache/280x280/ts/product/10/cb/5a/b4323bfc94fef6d5b26dfbd3d566262c.png.webp",
-      discount: 6,
-      price: 3090400,
-      soldPercent: 10
-    },
-    {
-      id: 6,
-      image: "https://salt.tikicdn.com/cache/280x280/ts/product/f2/f5/4d/0a2169695cc3b333878ca132c854476b.jpg.webp",
-      discount: 40,
-      price: 1664000,
-      soldPercent: 10
-    }
-  ];
+  const startIndex = currentPage * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const flashSaleProducts = flashSaleData.slice(startIndex, endIndex);
+  
+  const handlePrev = () => {
+    setDirection('prev');
+    setCurrentPage((prev) => (prev > 0 ? prev - 1 : totalPages - 1));
+  };
+  
+  const handleNext = () => {
+    setDirection('next');
+    setCurrentPage((prev) => (prev < totalPages - 1 ? prev + 1 : 0));
+  };
 
   const formatPrice = (price) => {
     return new Intl.NumberFormat("vi-VN").format(price);
@@ -132,7 +109,9 @@ const FlashSale = () => {
         </a>
       </div>
 
-      <div className="flash-sale-grid">
+      <div className="flash-sale-grid-wrapper">
+        <PrevArrow onClick={handlePrev} />
+        <div className={`flash-sale-grid slide-${direction}`} key={currentPage}>
         {flashSaleProducts.map((product) => (
           <div key={product.id} className="flash-sale-card">
             <div className="flash-sale-image">
@@ -159,6 +138,8 @@ const FlashSale = () => {
             </div>
           </div>
         ))}
+        </div>
+        <NextArrow onClick={handleNext} />
       </div>
     </div>
   );

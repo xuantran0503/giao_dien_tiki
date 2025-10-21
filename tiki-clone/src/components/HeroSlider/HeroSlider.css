@@ -13,9 +13,9 @@
     width: 100%;
     height: 100%;
     margin: 0 auto;
-    padding: 0 0 12px 0;
+    padding: 0 0 0px 0;
     /* reserve space for dots */
-    overflow: hidden;
+    overflow: visible;
 }
 
 /* Slide card */
@@ -23,18 +23,23 @@
     display: flex !important;
     align-items: center;
     justify-content: center;
-    height: 100%;
-    margin: 0 10px;
-    /* 10px gap between the two images */
+    margin: 0 0px;
     border-radius: 10px;
-    /* round all four corners of each slide */
     overflow: hidden;
     transition: transform 0.3s ease;
     background: #fff;
+    height: 100%;
+    width: 100px;
+
+
+
+
+
+
 }
 
 .hero-slide-card img {
-    width: 100%;
+    width: 97%;
     height: 100%;
     object-fit: cover;
     object-position: center;
@@ -56,7 +61,7 @@
 .hero-slider .slick-list {
     overflow: hidden;
     /* negate per-slide horizontal margins so outer edges stay flush */
-    margin: 0 -10px;
+    margin: 0 -6px;
 }
 
 /* ensure each slick slide fills the available height */
@@ -71,8 +76,8 @@
 /* Dots */
 .hero-slider .slick-dots {
     position: absolute;
-    bottom: 6px;
-    /* centered in the 12px reserved area */
+    bottom: -25px;
+    /* đặt dưới ảnh, tách biệt */
     left: 50%;
     transform: translateX(-50%);
     display: flex !important;
@@ -87,16 +92,16 @@
 
 .hero-slider .slick-dots li {
     width: 16px;
-    height: 3px;
+    height: 1.5px;
     margin: 0;
-    background: rgba(0, 0, 0, 0.3);
+    background: rgba(0, 0, 0, 0.05);
     border-radius: 2px;
     transition: all 0.3s ease;
 }
 
 .hero-slider .slick-dots li.slick-active {
-    background: #0b74e5;
-    width: 28px;
+    background: #1a94ff;
+    width: 24px;
 }
 
 .hero-slider .slick-dots li button {
@@ -110,42 +115,46 @@
     background: transparent;
 }
 
-/* Arrow buttons */
-.hero-slider .slick-prev,
-.hero-slider .slick-next {
-    width: 32px;
-    height: 32px;
-    z-index: 5;
+/* Custom Arrow buttons */
+.custom-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 40px;
+    height: 40px;
+    z-index: 10;
     border-radius: 50%;
     background: rgba(255, 255, 255, 0.95);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-    display: flex !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+    border: none;
+    cursor: pointer;
+    display: flex;
     align-items: center;
     justify-content: center;
-    transition: opacity 180ms ease, transform 180ms ease;
+    transition: all 0.2s ease;
     opacity: 0;
-    border: none;
+    padding: 0;
 }
 
-.hero-slider:hover .slick-prev,
-.hero-slider:hover .slick-next {
+.custom-arrow svg {
+    color: rgb(11, 116, 229);
+}
+
+.hero-slider:hover .custom-arrow {
     opacity: 1;
 }
 
-.hero-slider .slick-prev:before,
-.hero-slider .slick-next:before {
-    font-size: 20px;
-    color: #0a68ff;
-    opacity: 1;
-    font-weight: 700;
+.custom-arrow:hover {
+    background: rgba(255, 255, 255, 1);
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.18);
 }
 
-.hero-slider .slick-prev {
-    left: 12px;
+.custom-arrow-prev {
+    left: 16px;
 }
 
-.hero-slider .slick-next {
-    right: 12px;
+.custom-arrow-next {
+    right: 16px;
 }
 
 @media (max-width: 900px) {
@@ -153,18 +162,26 @@
         height: 220px;
     }
 
-    .hero-slider .slick-prev,
-    .hero-slider .slick-next {
-        width: 28px;
-        height: 28px;
+    .custom-arrow {
+        width: 32px;
+        height: 32px;
     }
 
-    .hero-slider .slick-prev:before,
-    .hero-slider .slick-next:before {
-        font-size: 18px;
+    .custom-arrow svg {
+        width: 16px;
+        height: 16px;
     }
 
     .hero-slider .slick-dots {
-        bottom: -14px;
+        bottom: -18px;
+    }
+
+    .hero-slider .slick-dots li {
+        width: 14px;
+        height: 3px;
+    }
+
+    .hero-slider .slick-dots li.slick-active {
+        width: 20px;
     }
 }

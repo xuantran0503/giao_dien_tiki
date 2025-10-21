@@ -81,11 +81,51 @@
     text-decoration: none;
 }
 
+.flash-sale-grid-wrapper {
+    position: relative;
+    width: 100%;
+}
+
 .flash-sale-grid {
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
     gap: 10px;
     width: 100%;
     overflow: visible;
+}
+
+/* Slide animation for Next */
+.flash-sale-grid.slide-next {
+    animation: slideInFromRight 0.4s ease-out;
+}
+
+/* Slide animation for Prev */
+.flash-sale-grid.slide-prev {
+    animation: slideInFromLeft 0.4s ease-out;
+}
+
+@keyframes slideInFromRight {
+    from {
+        opacity: 0;
+        transform: translateX(40px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes slideInFromLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-40px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
 }
 
 .flash-sale-card {
@@ -185,13 +225,14 @@
 
 .progress-fill {
     height: 100%;
-    background: linear-gradient(90deg, #FF5252 0%, #FF424E 100%);
+    /* background: linear-gradient(90deg, #c00303 0%, #FF424E 100%); */
     border-radius: 8px;
     transition: width 0.3s ease;
     position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
+    background-color: #e40615;
 }
 
 .progress-fill::after {

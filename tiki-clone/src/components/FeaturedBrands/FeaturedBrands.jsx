@@ -1,43 +1,28 @@
-import React from "react";
+import React, { useState } from "react";
+import { PrevArrow, NextArrow } from "../shared/NavigationArrows";
+import { featuredBrandsData } from "../../data/featuredBrandsData";
 import "./FeaturedBrands.css";
+import "../shared/NavigationArrows.css";
 
 const FeaturedBrands = () => {
-  const brands = [
-    {
-      id: 1,
-      image: "im_jbl.jpg",
-      title: "Công nghệ vượt thời Giá giảm đến 50%",
-    },
-    {
-      id: 2,
-      image: "tikivip.png",
-      title: "X2 quyền lợi đốc quyền Đón chờ ngày 20.10",
-      
-    },
-    {
-      id: 3,
-      image: "img_domakup.jpg",
-      title: "Gửi trọn yêu thương Ưu đãi đến 50%",
-      
-    },
-    {
-      id: 4,
-      image: "img_sachchamcon.png",
-      title: "Xả kho cuối tuần Ưu đãi đến 50%",
-    },
-    {
-      id: 5,
-      image: "img_kemdanhrang.png",
-      title: "Thơm mát dài lâu Giao nhanh 2H",
-      
-    },
-    {
-      id: 6,
-      image: "img_tanguoigia.png",
-      title: "Tã người lớn SunMate Coupon đến 100K",
-      
-    }
-  ];
+  const [currentPage, setCurrentPage] = useState(0);
+  const [direction, setDirection] = useState('next');
+  const itemsPerPage = 6;
+  const totalPages = Math.ceil(featuredBrandsData.length / itemsPerPage);
+  
+  const startIndex = currentPage * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const brands = featuredBrandsData.slice(startIndex, endIndex);
+  
+  const handlePrev = () => {
+    setDirection('prev');
+    setCurrentPage((prev) => (prev > 0 ? prev - 1 : totalPages - 1));
+  };
+  
+  const handleNext = () => {
+    setDirection('next');
+    setCurrentPage((prev) => (prev < totalPages - 1 ? prev + 1 : 0));
+  };
 
   return (
     <div className="featured-brands">
@@ -45,7 +30,9 @@ const FeaturedBrands = () => {
         <h2 className="brands-title">Thương hiệu nổi bật</h2>
       </div>
 
-      <div className="brands-grid">
+      <div className="brands-grid-wrapper">
+        <PrevArrow onClick={handlePrev} />
+        <div className={`brands-grid slide-${direction}`} key={currentPage}>
         {brands.map((brand) => (
           <div key={brand.id} className="brand-card">
             <div className="brand-image-wrapper">
@@ -53,6 +40,8 @@ const FeaturedBrands = () => {
             </div>
           </div>
         ))}
+        </div>
+        <NextArrow onClick={handleNext} />
       </div>
     </div>
   );
