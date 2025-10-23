@@ -27,7 +27,7 @@
     width: 100%;
 }
 
-.products-grid.slide-next {
+/* .products-grid.slide-next {
     animation: slideInFromRight 0.4s ease-out;
 }
 
@@ -57,7 +57,7 @@
         opacity: 1;
         transform: translateX(0);
     }
-}
+} */
 
 .product-card {
     background: #fff;
@@ -288,7 +288,7 @@
     text-overflow: ellipsis;
 }
 
-@media (max-width: 576px) {
+/* @media (max-width: 576px) {
 
     .you-may-like {
         padding: 12px 0;
@@ -301,4 +301,4 @@
     .section-title {
         font-size: 18px;
     }
-}
+} */

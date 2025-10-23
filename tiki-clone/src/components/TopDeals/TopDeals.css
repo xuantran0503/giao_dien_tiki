@@ -368,7 +368,7 @@
 }
 
 .star.half {
-    background: linear-gradient(90deg, #ffc400 50%, #ddd 50%); 
+    background: linear-gradient(90deg, #ffc400 50%, #ddd 50%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -380,7 +380,7 @@
 }
 
 /* Responsive */
-@media (max-width: 1200px) {
+/* @media (max-width: 1200px) {
     .deals-grid {
         grid-template-columns: repeat(5, 1fr);
     }
@@ -415,4 +415,4 @@
     .deal-info {
         padding: 8px;
     }
-}
+} */

@@ -18,7 +18,7 @@
     padding: 0 16px;
 }
 
-/* TopDeals container */
+
 .top-deals-container {
     flex: 1;
     max-width: 1130px;
@@ -27,7 +27,7 @@
     box-sizing: border-box;
 }
 
-/* FlashSale container */
+
 .flash-sale-container {
     flex: 1;
     max-width: 1130px;
@@ -36,7 +36,7 @@
     box-sizing: border-box;
 }
 
-/* FeaturedBrands container */
+
 .featured-brands-container {
     flex: 1;
     max-width: 1130px;
@@ -45,7 +45,7 @@
     box-sizing: border-box;
 }
 
-/* HotInternational container */
+
 .hot-international-container {
     flex: 1;
     max-width: 1130px;
@@ -54,7 +54,7 @@
     box-sizing: border-box;
 }
 
-/* CategoryGrid container */
+
 .category-grid-container {
     flex: 1;
     max-width: 1130px;
@@ -63,7 +63,7 @@
     box-sizing: border-box;
 }
 
-/* YouMayLike container */
+
 .you-may-like-container {
     flex: 1;
     max-width: 1130px;
@@ -72,7 +72,7 @@
     box-sizing: border-box;
 }
 
-/* SuggestedProducts container */
+
 .suggested-products-container {
     flex: 1;
     max-width: 1130px;
@@ -82,41 +82,32 @@
 }
 
 .footer-container {
-    /* background: #fff; */
     margin-top: 0;
     max-width: 1130px;
-    /* margin: 0 auto;
-    padding: 0 20px; */
     width: 100%;
     box-sizing: border-box;
-    flex: 1;
-
+    /* flex: 1; */
 }
 
-/* Layout for main content area */
 .banner-content {
     display: flex;
-    flex: 1;
+    /* flex: 1; */
     gap: 16px;
 }
-
 
 .banner-left-categories {
     width: 240px;
     margin-left: 20px;
-
-    position: sticky;
+    /* position: sticky; */
     top: 8px;
     align-self: flex-start;
-    /* Tăng chiều cao tối đa để hiển thị đầy đủ tất cả menu items */
+
     max-height: calc(100vh - 120px);
     overflow-y: auto;
     overflow-x: hidden;
-    /* Ẩn scrollbar hoàn toàn */
+
     scrollbar-width: none;
     -ms-overflow-style: none;
-    /* padding-bottom: 20px; */
-    /* z-index: 10; */
 
 }
 
@@ -124,7 +115,6 @@
     background: #fff;
     border-radius: 8px;
     padding: 8px 8px;
-    /* box-shadow: 0 1px 6px rgba(16, 24, 40, 0.06); */
 }
 
 .card-title {
@@ -149,7 +139,6 @@
     width: 100%;
     padding: 8px 12px;
     border-radius: 6px;
-    /* transition: background 0.2s ease; */
 }
 
 .category-list-small li a:hover {
@@ -180,18 +169,16 @@
 .category-list-small li span {
     display: block;
     margin: 0;
-    /* line-height: 1.2; */
+    line-height: 1.2;
     flex: 1 1 auto;
     text-align: left;
-    word-wrap: break-word;
+
     max-width: 150px;
     pointer-events: none;
-    overflow: hidden;
-    /* text-overflow: ellipsis; */
 
-    /* display: -webkit-box; */
-    /* -webkit-line-clamp: 2; */
-    /* -webkit-box-orient: vertical; */
+    overflow: hidden;
+    word-wrap: break-word;
+
 }
 
 
@@ -245,7 +232,6 @@
     padding: 8px;
     background: white;
     border-radius: 10px;
-    /* box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03); */
 }
 
 .seller-link {
@@ -285,7 +271,7 @@
     background: #fff;
     border-radius: 8px;
     padding: 16px 16px 0px 16px;
-    /* box-shadow: 0 1px 6px rgba(16, 24, 40, 0.06); */
+
     width: 100%;
     min-width: 380px;
     max-width: 1130px;
@@ -299,7 +285,7 @@
     background: #fff;
     border-radius: 8px;
     padding: 14px 16px;
-    /* box-shadow: 0 1px 6px rgba(16, 24, 40, 0.06); */
+
     width: 100%;
     min-width: 380px;
     max-width: 1130px;
@@ -339,7 +325,7 @@
     display: block;
 } */
 
-@media (max-width: 1000px) {
+/* @media (max-width: 1000px) {
     .banner-container {
         padding-left: 16px;
     }
@@ -352,4 +338,4 @@
         width: 100%;
         min-width: auto;
     }
-}
+} */

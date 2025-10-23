@@ -39,11 +39,11 @@ export const suggestedProductsData = [
   {
     id: 4,
     image:
-      "https://salt.tikicdn.com/cache/750x750/ts/product/f3/01/96/ec586ec789d954b6a498a7ebfdb68b25.jpg.webp",
-    name: "Điện thoại Samsung Galaxy S25, Điện thoại AI, Tìm kiếm...",
-    price: 16490000,
-    originalPrice: 22990000,
-    discount: 28,
+      "https://salt.tikicdn.com/cache/750x750/ts/product/8b/fe/74/ce1ef9d6825ebedd4426d3870d29bd8a.png.webp",
+    name: "Combo 5 Mặt Nạ 3D Mayan Hồng Sâm Linh Chi",
+    price: 63000,
+    originalPrice: 85000,
+    discount: 26,
     isFreeShip: "img_giao_chieu_mai.png",
     badgeIcon:
       "https://salt.tikicdn.com/ts/upload/12/e2/4a/c5226426ee9429b0050449ae5403c9cf.png",
@@ -53,15 +53,15 @@ export const suggestedProductsData = [
   {
     id: 5,
     image:
-      "https://salt.tikicdn.com/cache/750x750/ts/product/19/b6/c5/62822fe4e5aed62702967b002d8c47a9.jpg.webp",
-    name: "Samsung Galaxy S24 Ultra 12GB 256GB",
-    price: 28990000,
+      "https://salt.tikicdn.com/cache/750x750/ts/product/be/d1/b3/94c54387dc352f3ee2869bf54ba212d7.png.webp",
+    name: "Gift - Gel chống nắng dưỡng ẩm bảo vệ hoàn hảo Anessa Perfect UV Sunscreen Skincare Gel SPF50+ PA++++ 15g",
+    price: 0,
 
     badgeIcon:
       "https://salt.tikicdn.com/ts/upload/c2/bc/6d/ff18cc8968e2bbb43f7ac58efbfafdff.png",
     isFreeShip: "img_giao_chieu_mai.png",
     deliveryTime: "Giao chiều thứ 5, 23/10",
-    madeIn: "Made in Korea",
+    madeIn: "Made in Japan",
   },
   {
     id: 6,
@@ -95,17 +95,17 @@ export const suggestedProductsData = [
   {
     id: 8,
     image:
-      "https://salt.tikicdn.com/cache/750x750/ts/product/8e/bf/ab/51c2dc3b4e46455a958e39bd8ae8e415.png.webp",
-    name: "Áo thun nam cotton 100%",
-    price: 599000,
-    originalPrice: 1290000,
-    discount: 54,
+      "https://salt.tikicdn.com/cache/750x750/ts/product/5f/83/d2/6fccd3b06281032c8dac0bd6f6510f1f.png.webp",
+    name: "Mascara Chuốt Cong Dài Dày Mi Tự Nhiên Mude Inspire Skinny Curling Mascara (3ml)",
+    price: 175500,
+    originalPrice: 300000,
+    discount: 42,
     rating: 4.5,
     badgeIcon:
       "https://salt.tikicdn.com/ts/upload/f7/9e/83/ab28365ea395893fe5abac88b5103444.png",
     isFreeShip: "img_giao_ngay.png",
     deliveryTime: "Giao siêu tốc 2h",
-    madeIn: "Made in Vietnam",
+    madeIn: "Made in Korea",
   },
   {
     id: 9,
@@ -125,9 +125,9 @@ export const suggestedProductsData = [
   {
     id: 10,
     image:
-      "https://salt.tikicdn.com/cache/750x750/ts/product/af/b4/0d/bceb3100fd16db99f883612c47fb48c5.png.webp",
-    name: "Loa Momo không dây Bluetooth",
-    price: 261900,
+      "https://salt.tikicdn.com/cache/750x750/ts/product/cf/0c/7c/ed4a5f8f0faf6f78f27b4a28490dd2c1.png.webp",
+    name: "Thùng 24 hộp Sữa chuối ít đường 200ml nhãn hiệu Binggrae",
+    price: 328000,
 
     rating: 4.6,
     badgeIcon:
@@ -151,60 +151,60 @@ export const suggestedProductsData = [
   {
     id: 12,
     image:
-      "https://salt.tikicdn.com/cache/750x750/ts/product/81/bc/7b/e816f29fc6e20711f8dc9da9bde3cfa0.jpg.webp",
-    name: "Máy sấy tóc iPad Gen 11",
-    price: 10750000,
-    originalPrice: 14990000,
-    discount: 28,
+      "https://salt.tikicdn.com/cache/750x750/ts/product/23/9e/a9/148a6ddf954ee5f79e3a9f513601816d.jpg.webp",
+    name: "Cốc sạc Samsung Travel Adapter PD25W 1Type-C EP-T2510N - Hàng chính hãng",
+    price: 460000,
+    originalPrice: 490000,
+    discount: 6,
     rating: 4.7,
     badgeIcon:
       "https://salt.tikicdn.com/ts/upload/f7/9e/83/ab28365ea395893fe5abac88b5103444.png",
     deliveryTime: "Giao thứ 5, 23/10",
+    madeIn: "Made in Korea",
   },
 
   {
     id: 13,
     image:
-      "https://salt.tikicdn.com/cache/750x750/ts/product/87/75/32/87ff301dd7ffd7517e0f5f254ee7fa2c.jpg.webp",
-    name: "Laptop Dell Inspiron 15 3520 i5-1235U/8GB/512GB/Win11",
-    price: 13990000,
-    originalPrice: 18990000,
-    discount: 26,
+      "https://salt.tikicdn.com/cache/750x750/media/catalog/producttmp/e7/8b/68/798eb254cae9f93bc41405bc343db19b.png.webp",
+    name: "Nồi áp suất Elmich PCE-1805 dung tích 2.5L - Hàng Chính Hãng",
+    price: 831312,
+    originalPrice: 2090000,
+    discount: 60,
     rating: 4.6,
     badgeIcon:
       "https://salt.tikicdn.com/ts/upload/c2/bc/6d/ff18cc8968e2bbb43f7ac58efbfafdff.png",
     isFreeShip: "img_giao_chieu_mai.png",
     deliveryTime: "Giao chiều thứ 5, 23/10",
-    madeIn: "Made in Vietnam",
   },
   {
     id: 14,
     image:
-      "https://salt.tikicdn.com/cache/750x750/ts/product/83/23/b7/14a42ae4f66c9b8b298aaef4b9671442.jpg.webp",
-    name: "Tai nghe Bluetooth Sony WH-1000XM5 chống ồn chủ động",
-    price: 7990000,
-    originalPrice: 9990000,
-    discount: 20,
+      "https://salt.tikicdn.com/cache/750x750/ts/product/98/43/70/c6809e4dab12d992c46e439d4f72b99e.jpg.webp",
+    name: "MƯA ĐỎ - Chu Lai - Vietnambook",
+    price: 143000,
+    originalPrice: 205000,
+    discount: 30,
 
     badgeIcon:
       "https://salt.tikicdn.com/ts/upload/f7/9e/83/ab28365ea395893fe5abac88b5103444.png",
     isFreeShip: "img_giao_ngay.png",
     deliveryTime: "Giao siêu tốc 2h",
-    madeIn: "Made in Malaysia",
+    madeIn: "Made in Vietnam",
   },
   {
     id: 15,
     image:
-      "https://salt.tikicdn.com/cache/750x750/ts/product/54/db/ac/a7507266526060e632738baceed60ef4.JPG.webp",
-    name: "Nồi cơm điện Panasonic 1.8L SR-ZX185KRA",
-    price: 1890000,
+      "https://salt.tikicdn.com/cache/750x750/ts/product/96/40/20/3334fc46c4e502cf274a8688d4f12628.png.webp",
+    name: "Phấn nước che phủ toàn diện bền màu mịn màng kiềm dầu 24h mude Cushion Soft Silky Fit All Day (15g)",
+    price: 360000,
 
     rating: 4.7,
     badgeIcon:
       "https://salt.tikicdn.com/ts/upload/c2/bc/6d/ff18cc8968e2bbb43f7ac58efbfafdff.png",
     isFreeShip: "img_giao_ngay.png",
     deliveryTime: "Giao siêu tốc 2h",
-    madeIn: "Made in Malaysia",
+    madeIn: "Made in Korea",
   },
   {
     id: 16,
@@ -223,25 +223,24 @@ export const suggestedProductsData = [
   {
     id: 17,
     image:
-      "https://salt.tikicdn.com/cache/750x750/ts/product/83/af/89/6509186a7750689dcdbb783088bcba9c.png.webp",
-    name: "Đồng hồ thông minh Apple Watch Series 9 GPS 41mm",
-    price: 9990000,
-    originalPrice: 11990000,
-    discount: 17,
+      "https://salt.tikicdn.com/cache/750x750/ts/product/8a/44/cf/364b5b2e318a9b7ec8f4badad7765810.png.webp",
+    name: "Sách Combo 2 Cuốn Hay Nhất : Câu Chuyện Cuối Cùng nn + Cây Cam Ngọt Của Tôi nn",
+    price: 203700,
+    originalPrice: 210000,
+    discount: 3,
 
     badgeIcon:
       "https://salt.tikicdn.com/ts/upload/c2/bc/6d/ff18cc8968e2bbb43f7ac58efbfafdff.png",
     deliveryTime: "Giao thứ 5, 23/10",
-    madeIn: "Made in China",
   },
   {
     id: 18,
     image:
-      "https://salt.tikicdn.com/cache/750x750/ts/product/1e/e7/46/90c79b8bde4d3de7fc10eeaf052f083c.png.webp",
-    name: "Balo laptop The North Face Recon 30L chống nước",
-    price: 2190000,
-    originalPrice: 2990000,
-    discount: 27,
+      "https://salt.tikicdn.com/cache/750x750/ts/product/99/59/92/c52b979432d2f6ddb97e976f38f1112c.jpg.webp",
+    name: "Tai Nghe Bluetooth Cao Cấp EQ2 5.3 Pin 7h Âm Thanh Sống Động Bass căng - Hàng Chính Hãng",
+    price: 281060,
+    originalPrice: 500000,
+    discount: 44,
     rating: 4.6,
     badgeIcon:
       "https://salt.tikicdn.com/ts/upload/f7/9e/83/ab28365ea395893fe5abac88b5103444.png",
@@ -252,9 +251,9 @@ export const suggestedProductsData = [
   {
     id: 19,
     image:
-      "https://salt.tikicdn.com/cache/750x750/ts/product/28/8e/66/eaae63796828d98ac02ea5ceb161904f.jpg.webp",
-    name: "Máy lọc không khí Xiaomi Mi Air Purifier 4 Lite",
-    price: 1990000,
+      "https://salt.tikicdn.com/cache/750x750/ts/product/4a/de/7c/4eac70a46a4f8f63e876595f48d397b6.jpg.webp",
+    name: "Son Nước LIPGLOSS PK - Phấn Nụ Hoàng Cung",
+    price: 300800,
 
     rating: 4.7,
     badgeIcon:
@@ -265,9 +264,9 @@ export const suggestedProductsData = [
   {
     id: 20,
     image:
-      "https://salt.tikicdn.com/cache/750x750/ts/product/a5/76/eb/f0cd28e1b2e331ccbfc528c8827c3b07.jpg.webp",
-    name: "Giày thể thao Nike Air Max 270 React",
-    price: 3290000,
+      "https://salt.tikicdn.com/cache/750x750/ts/product/4a/9a/85/37326ce17b25548e620775c52c90ac74.png.webp",
+    name: "Combo 4 Cuốn Sách: Đắc Nhân Tâm + Khéo Ăn Nói Được Thiên Hạ + Thao Túng Tâm Lý Đám Đông + Diễn Biến Tâm Lý Đám Đông - SBOOKS",
+    price: 274607,
 
     rating: 4.8,
     badgeIcon:
@@ -279,25 +278,21 @@ export const suggestedProductsData = [
   {
     id: 21,
     image:
-      "https://salt.tikicdn.com/cache/750x750/ts/product/6d/7a/12/91bc4fde63b406a543ae5e29b3a7723f.jpg.webp",
-    name: "Tủ lạnh Samsung Inverter 236L RT22M4032BY/SV",
-    price: 5990000,
-    originalPrice: 7490000,
-    discount: 20,
+      "https://salt.tikicdn.com/cache/750x750/ts/product/ad/81/8c/df0cbf0d572070ce010f05891ccee6a1.jpg.webp",
+    name: "Sách Giao Tiếp Thông Minh Và Tài Ứng Xử - Bìa Cứng (Tái Bản)",
+    price: 99900,
 
     badgeIcon:
       "https://salt.tikicdn.com/ts/upload/c2/bc/6d/ff18cc8968e2bbb43f7ac58efbfafdff.png",
     deliveryTime: "Giao thứ 5, 23/10",
-    madeIn: "Made in Thailand",
   },
   {
     id: 22,
     image:
-      "https://salt.tikicdn.com/cache/750x750/ts/product/60/74/68/00c2f5c08079d18667456aac273b2f4a.png.webp",
-    name: "Bàn phím cơ Logitech G Pro X Wireless Gaming",
-    price: 3790000,
-    originalPrice: 4990000,
-    discount: 24,
+      "https://salt.tikicdn.com/cache/750x750/ts/product/1c/36/95/a8556325f3ad976e60b1fbd7c31d77bd.jpg.webp",
+    name: "Máy xay mini cầm tay",
+    price: 100000,
+
     rating: 4.9,
     badgeIcon:
       "https://salt.tikicdn.com/ts/upload/f7/9e/83/ab28365ea395893fe5abac88b5103444.png",
@@ -350,11 +345,11 @@ export const suggestedProductsData = [
   {
     id: 26,
     image:
-      "https://salt.tikicdn.com/cache/750x750/ts/product/65/3a/ff/230e1f66e52327ab5290928e796c9213.png.webp",
-    name: "Máy xay sinh tố Philips HR2222/00 700W",
-    price: 1290000,
-    originalPrice: 1790000,
-    discount: 28,
+      "https://salt.tikicdn.com/cache/750x750/ts/product/1c/9c/02/a2550cf373abc1c5ae071a333be9447c.jpg.webp",
+    name: "Chảo chống dính Elmich EL-4718OL",
+    price: 169000,
+    originalPrice: 339000,
+    discount: 50,
 
     badgeIcon:
       "https://salt.tikicdn.com/ts/upload/f7/9e/83/ab28365ea395893fe5abac88b5103444.png",
@@ -365,10 +360,11 @@ export const suggestedProductsData = [
   {
     id: 27,
     image:
-      "https://salt.tikicdn.com/cache/750x750/ts/product/22/b0/c3/e92876a7cb2b7f0c16ca0ec59a1140f3.png.webp",
-    name: "Sách - Đắc Nhân Tâm (Tái Bản 2024)",
-    price: 67150,
-
+      "https://salt.tikicdn.com/cache/750x750/ts/product/13/3a/a6/1369328c486b9f2803e2119f8dc2287f.png.webp",
+    name: "Sữa Rửa Mặt Tạo Bọt Chiết Xuất Tơ Tằm Trắng Senka Perfect Whip 120g - 14839",
+    price: 90000,
+    originalPrice: 119000,
+    discount: 24,
     rating: 4.9,
     badgeIcon:
       "https://salt.tikicdn.com/ts/upload/c2/bc/6d/ff18cc8968e2bbb43f7ac58efbfafdff.png",
@@ -379,11 +375,11 @@ export const suggestedProductsData = [
   {
     id: 28,
     image:
-      "https://salt.tikicdn.com/cache/750x750/ts/product/35/01/65/32884ed3d97a5596e1efe266cd29acde.jpg.webp",
-    name: "Chuột gaming Logitech G502 Hero 16K DPI",
-    price: 990000,
-    originalPrice: 1390000,
-    discount: 29,
+      "https://salt.tikicdn.com/cache/750x750/ts/product/cc/d8/5a/1b58b308076d7dbfd103c9c325e83da6.png.webp",
+    name: "Phấn phủ CARSLAN dạng bột từ tính kiềm dầu màu đen chống nước chống mồ hôi che phủ bóng dầu cho mặt 8g",
+    price: 215100,
+    originalPrice: 430000,
+    discount: 50,
     rating: 4.8,
     badgeIcon:
       "https://salt.tikicdn.com/ts/upload/f7/9e/83/ab28365ea395893fe5abac88b5103444.png",
@@ -393,8 +389,8 @@ export const suggestedProductsData = [
   {
     id: 29,
     image:
-      "https://salt.tikicdn.com/cache/750x750/ts/product/22/b0/c3/e92876a7cb2b7f0c16ca0ec59a1140f3.png.webp",
-    name: "Máy hút bụi Xiaomi Mi Robot Vacuum Mop 2 Pro+",
+      "https://salt.tikicdn.com/cache/750x750/ts/product/68/ef/2e/b4ad7ba6561c3e85092775165d68824e.jpg.webp",
+    name: "Chảo Gang Lodge Tròn 30.48cm",
     price: 8990000,
     originalPrice: 11990000,
     discount: 25,

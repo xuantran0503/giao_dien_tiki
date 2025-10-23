@@ -133,10 +133,10 @@ const Footer = () => {
                     <div className="tiki-description-section">
                         <h4>Tiki - Thật nhanh, thật chất lượng, thật rẻ</h4>
                         <p><strong>Tiki có tất cả</strong></p>
-                        <p>Với hàng triệu sản phẩm từ các thương hiệu, cửa hàng uy tín, những nghìn loại mặt hàng từ <a href="#">Điện thoại smartphone</a> tới <a href="#">Rau củ quả tươi</a>, tâm trọc đến vụ giảo hàng siêu tốc TikiNOW, Tiki mang đến cho bạn một trải nghiệm mua sắm online bắt đầu bằng chữ tín. Thêm vào đó, ở Tiki bạn có thể dễ dàng sử dụng vô vàn các tiện ích khác như: <a href="#">mua thẻ cào</a>, <a href="#">thanh toán hóa đơn điện nước</a>, <a href="#">các dịch vụ bảo hiểm</a>.</p>
+                        <p>Với hàng triệu sản phẩm từ các thương hiệu, cửa hàng uy tín, những nghìn loại mặt hàng từ <Link to={"/category/dien-thoai-smartphone"}>Điện thoại smartphone</Link> tới <Link to={"/category/rau-cu-quat-tuoi"}>Rau củ quả tươi</Link>, tâm trọc đến vụ giảo hàng siêu tốc TikiNOW, Tiki mang đến cho bạn một trải nghiệm mua sắm online bắt đầu bằng chữ tín. Thêm vào đó, ở Tiki bạn có thể dễ dàng sử dụng vô vàn các tiện ích khác như: <Link to={"/category/mua-the-cao"}>mua thẻ cào</Link>, <Link to={"/category/thanh-toan-hoa-don-dien-nuoc"}>thanh toán hóa đơn điện nước</Link>, <Link to={"/category/cac-dich-vu-bao-hiem"}>các dịch vụ bảo hiểm</Link>.</p>
 
                         <p><strong>Khuyến mãi, ưu đãi trăn ngập</strong></p>
-                        <p>Bạn muốn săn giá tốt, Tiki có <a href="#">giảm giá mỗi ngày</a> cho bạn! Bạn là tín đồ của các thương hiệu, các <a href="#">cửa hàng Official chính hãng</a> đang chờ bạn. Không cần săn mã freeship, vì Tiki đã có hàng triệu sản phẩm trong <a href="#">chương trình Freeship+</a>, không giới hạn lượt đặt, tiết kiệm thêm giá trị bạc cửa bạn. Mua thêm gói <a href="#">TikiNOW tiết kiệm</a> tới 100% chi phí & trong ngày, hoặc mua gói TikiPRO để được giảm giá độc quyền, giao hàng ưu tiên & miễn phí trả hàng 365 ngày. Bạn muốn mua hàng trả góp 0%, Tiki có hỗ trợ 100% tính năng Việt Nam. Bạn muốn tiết kiệm hơn nữa? Mở thẻ tín dụng TikiCARD, <a href="#">thẻ tín dụng Tiki hoàn tiền 15%</a> trên mọi giao dịch (tối đa hoàn 600k/tháng)</p>
+                        <p>Bạn muốn săn giá tốt, Tiki có <Link to="/category/giam-gia-moi-ngay">giảm giá mỗi ngày</Link> cho bạn! Bạn là tín đồ của các thương hiệu, các <Link to={"/category/cua-hang-official-chinh-hang"}>cửa hàng Official chính hãng</Link>  đang chờ bạn. Không cần săn mã freeship, vì Tiki đã có hàng triệu sản phẩm trong <Link to={"/category/freeship-plus"}>chương trình Freeship+</Link>, không giới hạn lượt đặt, tiết kiệm thêm giá trị bạc cửa bạn. Mua thêm gói <Link to={"/category/tikinow-tiet-khien"}>TikiNOW tiết kiệm</Link> tới 100% chi phí & trong ngày, hoặc mua gói TikiPRO để được giảm giá độc quyền, giao hàng ưu tiên & miễn phí trả hàng 365 ngày. Bạn muốn mua hàng trả góp 0%, Tiki có hỗ trợ 100% tính năng Việt Nam. Bạn muốn tiết kiệm hơn nữa? Mở thẻ tín dụng TikiCARD, <Link to={"/category/tiki-card"}>thẻ tín dụng Tiki hoàn tiền 15%</Link> trên mọi giao dịch (tối đa hoàn 600k/tháng)</p>
                     </div>
                 </div>
             </div>
@@ -193,209 +193,209 @@ const Footer = () => {
                             <div className="footer-category">
                                 <div>
                                     <h5>Đồ Chơi - Mẹ & Bé</h5>
-                                    <a href="#">Thời Trang Cho Mẹ Và Bé</a>
-                                    <a href="#">Đồ chơi</a>
-                                    <a href="#">Đồ dùng cho bé</a>
-                                    <a href="#">Chăm sóc nhà cửa</a>
-                                    <a href="#">Chăm sóc sức khỏe</a>
-                                    <a href="#">Đồ dùng du lịch</a>
-                                    <a href="#">Tã, bỉm</a>
-                                    <a href="#">Dinh dưỡng cho người lớn</a>
-                                    <a href="#">Dinh dưỡng cho Trẻ</a>
-                                    <a href="#">Phụm tín dụng</a>
-                                    <a href="#">Chuẩn bị mang thai</a>
+                                    <Link to="/category/me-va-be">Thời Trang Cho Mẹ Và Bé</Link>
+                                    <Link to="/category/do-choi">Đồ chơi</Link>
+                                    <Link to="/category/do-dung-cho-be">Đồ dùng cho bé</Link>
+                                    <Link to="/category/cham-soc-nha-cua">Chăm sóc nhà cửa</Link>
+                                    <Link to="/category/cham-soc-suc-khoe">Chăm sóc sức khỏe</Link>
+                                    <Link to="/category/do-dung-du-lich">Đồ dùng du lịch</Link>
+                                    <Link to="/category/tam-bim">Tã, bỉm</Link>
+                                    <Link to="/category/dinh-duong-cho-nguoi-lon">Dinh dưỡng cho người lớn</Link>
+                                    <Link to="/category/dinh-duong-cho-tre">Dinh dưỡng cho Trẻ</Link>
+                                    <Link to="/category/phum-tin-dung">Phụm tín dụng</Link>
+                                    <Link to="/category/chuan-bi-mang-thai">Chuẩn bị mang thai</Link>
                                 </div>
 
                                 <div>
                                     <h5>Thực Phẩm Tươi Sống</h5>
-                                    <a href="#">Trái Cây</a>
-                                    <a href="#">Thịt, Trứng</a>
-                                    <a href="#">Cá, thủy hải sản</a>
-                                    <a href="#">Rau củ quả</a>
-                                    <a href="#">Thực phẩm Việt</a>
-                                    <a href="#">Sữa, bơ, phô mai</a>
-                                    <a href="#">Đông lạnh, mát</a>
-                                    <a href="#">Dầu ăn, gia vị</a>
-                                    <a href="#">Gạo, mì</a>
-                                    <a href="#">Đồ uống</a>
-                                    <a href="#">Bia, đồ uống</a>
+                                    <Link to="/category/trai-cay">Trái Cây</Link>
+                                    <Link to="/category/thit-trung">Thịt, Trứng</Link>
+                                    <Link to="/category/ca-thu-hai-san">Cá, thủy hải sản</Link>
+                                    <Link to="/category/rau-cu-quat-tuoi">Rau củ quả</Link>
+                                    <Link to="/category/thuc-pham-viet">Thực phẩm Việt</Link>
+                                    <Link to="/category/sua-bo-pho-mai">Sữa, bơ, phô mai</Link>
+                                    <Link to="/category/dong-lanh-mat">Đông lạnh, mát</Link>
+                                    <Link to="/category dau-an-gia-vi">Dầu ăn, gia vị</Link>
+                                    <Link to="/category/gao-mi">Gạo, mì</Link>
+                                    <Link to="/category/do-uong">Đồ uống</Link>
+                                    <Link to="/category/bia-do-uong">Bia, đồ uống</Link>
                                 </div>
 
                                 <div>
                                     <h5>Điện Thoại - Máy Tính Bảng</h5>
-                                    <a href="#">Điện thoại Smartphone</a>
-                                    <a href="#">Điện thoai bàn</a>
-                                    <a href="#">Máy tính bảng</a>
-                                    <a href="#">Phụ kiện điện thoại</a>
-                                    <a href="#">Máy tính bảng</a>
+                                    <Link to="/category/dien-thoai-smartphone">Điện thoại Smartphone</Link>
+                                    <Link to="/category/dien-thoai-ban">Điện thoai bàn</Link>
+                                    <Link to="/category/may-tinh-bang">Máy tính bảng</Link>
+                                    <Link to="/category/phu-kien-dien-thoai">Phụ kiện điện thoại</Link>
+                                    <Link to="/category/may-tinh-bang">Máy tính bảng</Link>
                                 </div>
 
                                 <div>
                                     <h5>Làm Đẹp - Sức Khỏe</h5>
-                                    <a href="#">Chăm sóc da mặt</a>
-                                    <a href="#">Dụng cụ làm đẹp</a>
-                                    <a href="#">Thực phẩm chức năng</a>
-                                    <a href="#">Trang điểm</a>
-                                    <a href="#">Chăm sóc sức khỏe</a>
-                                    <a href="#">Chăm sóc cơ thể</a>
-                                    <a href="#">Massage & Thiết bị chăm sóc sức khỏe</a>
-                                    <a href="#">Sản phẩm thiên nhiên & Khoa học</a>
-                                    <a href="#">Chăm sóc tóc và da đầu</a>
-                                    <a href="#">Chăm sóc cá nhân</a>
-                                    <a href="#">Nước hoa</a>
-                                    <a href="#">Hỗ trợ tình dục</a>
-                                    <a href="#">Bộ sản phẩm làm đẹp</a>
-                                    <a href="#">Dược mỹ phẩm</a>
+                                    <Link to="/category/cham-soc-da-mat">Chăm sóc da mặt</Link>
+                                    <Link to="/category/dung-cu-lam-dep">Dụng cụ làm đẹp</Link>
+                                    <Link to="/category/thuc-pham-chuc-nang">Thực phẩm chức năng</Link>
+                                    <Link to="/category/trang-diem">Trang điểm</Link>
+                                    <Link to="/category/cham-soc-suc-khoe">Chăm sóc sức khỏe</Link>
+                                    <Link to="/category/cham-soc-co-the">Chăm sóc cơ thể</Link>
+                                    <Link to="/category/massage-thiet-bi-cham-soc-suc-khoe">Massage & Thiết bị chăm sóc sức khỏe</Link>
+                                    <Link to="/category/san-pham-thien-nhien-khoa-hoc">Sản phẩm thiên nhiên & Khoa học</Link>
+                                    <Link to="/category/cham-soc-toc-va-da-dau">Chăm sóc tóc và da đầu</Link>
+                                    <Link to="/category/cham-soc-ca-nhan">Chăm sóc cá nhân</Link>
+                                    <Link to="/category/nước-hoa">Nước hoa</Link>
+                                    <Link to="/category/ho-tro-tinh-duc">Hỗ trợ tình dục</Link>
+                                    <Link to="/category/buon-san-pham-lam-dep">Bộ sản phẩm làm đẹp</Link>
+                                    <Link to="/category/duoc-my-pham">Dược mỹ phẩm</Link>
                                 </div>
 
                                 <div>
                                     <h5>Điện Gia Dụng</h5>
-                                    <a href="#">Đồ dùng nhà bếp</a>
-                                    <a href="#">Thiết bị gia đình</a>
+                                    <Link to="/category/do-dung-nha-bep">Đồ dùng nhà bếp</Link>
+                                    <Link to="/category/thiet-bi-gia-dinh">Thiết bị gia đình</Link>
                                 </div>
                             </div>
 
                             <div className="footer-category">
                                 <div>
                                     <h4>Thời trang nữ</h4>
-                                    <a href="#">Áo nữ</a>
-                                    <a href="#">Đầm / Váy</a>
-                                    <a href="#">Quần nữ</a>
-                                    <a href="#">Áo liền quần</a>
-                                    <a href="#">Bộ trang phục</a>
-                                    <a href="#">Áo khoác</a>
-                                    <a href="#">Chân váy</a>
-                                    <a href="#">Trang phục bời</a>
-                                    <a href="#">Đồ ngủ</a>
-                                    <a href="#">Thời trang trung niên</a>
+                                    <Link to="/category/ao-nu">Áo nữ</Link>
+                                    <Link to="/category/dam-vay">Đầm / Váy</Link>
+                                    <Link to="/category/quan-nu">Quần nữ</Link>
+                                    <Link to="/category/ao-lien-quan">Áo liền quần</Link>
+                                    <Link to="/category/bot-trang-phuc">Bộ trang phục</Link>
+                                    <Link to="/category/ao-khoac">Áo khoác</Link>
+                                    <Link to="/category/chan-vay">Chân váy</Link>
+                                    <Link to="/category/trang-phuc-boi">Trang phục bơi</Link>
+                                    <Link to="/category/do-nu">Đồ ngủ</Link>
+                                    <Link to="/category/thoi-trang-trung-nien">Thời trang trung niên</Link>
                                 </div>
 
                                 <div>
                                     <h4>Thời trang nam</h4>
-                                    <a href="#">Áo thun</a>
-                                    <a href="#">Quần nam</a>
-                                    <a href="#">Áo khoác nam</a>
-                                    <a href="#">Áo sơ mi</a>
-                                    <a href="#">Đồ mặc nhà nam</a>
-                                    <a href="#">Đồ đôi</a>
-                                    <a href="#">Áo len</a>
-                                    <a href="#">Đồ bơi - Đồ già đình</a>
-                                    <a href="#">Quần áo nam</a>
-                                    <a href="#">Áo giô - Áo phông</a>
-                                    <a href="#">Đồ lót nam</a>
-                                    <a href="#">Quần áo nam</a>
-                                    <a href="#">Quần kaki cỡ lớn</a>
+                                    <Link to="/category/ao-thun">Áo thun</Link>
+                                    <Link to="/category/quan-nam">Quần nam</Link>
+                                    <Link to="/category/ao-khoac-nam">Áo khoác nam</Link>
+                                    <Link to="/category/ao-so-mi">Áo sơ mi</Link>
+                                    <Link to="/category/do-mac-nha-nam">Đồ mặc nhà nam</Link>
+                                    <Link to="/category/do-doi">Đồ đôi</Link>
+                                    <Link to="/category/ao-len">Áo len</Link>
+                                    <Link to="/category/do-boi-do-gai-dinh">Đồ bơi - Đồ già đình</Link>
+                                    <Link to="/category/quan-ao-nam">Quần áo nam</Link>
+                                    <Link to="/category/ao-gio-ao-phong">Áo giô - Áo phông</Link>
+                                    <Link to="/category/do-lot-nam">Đồ lót nam</Link>
+                                    <Link to="/category/quan-ao-nam">Quần áo nam</Link>
+                                    <Link to="/category/quan-kaki-co-cao">Quần kaki cỡ lớn</Link>
                                 </div>
 
                                 <div>
                                     <h4>Giày - Dép nữ</h4>
-                                    <a href="#">Giày cao gót</a>
-                                    <a href="#">Dép</a>
-                                    <a href="#">Guốc nữ</a>
-                                    <a href="#">Giày thể thao nữ</a>
-                                    <a href="#">Giày đế bằng</a>
-                                    <a href="#">Giày búp bê</a>
-                                    <a href="#">Giày boots nữ</a>
-                                    <a href="#">Giày lười</a>
-                                    <a href="#">Phụ kiện giày</a>
-                                    <a href="#">Giày Bé xướng nữ</a>
+                                    <Link to="/category/giay-cao-got">Giày cao gót</Link>
+                                    <Link to="/category/dep">Dép</Link>
+                                    <Link to="/category/guco-nu">Guốc nữ</Link>
+                                    <Link to="/category/giay-the-thao-nu">Giày thể thao nữ</Link>
+                                    <Link to="/category/giay-de-bang">Giày đế bằng</Link>
+                                    <Link to="/category/giay-bup-be">Giày búp bê</Link>
+                                    <Link to="/category/giay-boots-nu">Giày boots nữ</Link>
+                                    <Link to="/category/giay-loi">Giày lười</Link>
+                                    <Link to="/category/phu-kien-giay">Phụ kiện giày</Link>
+                                    <Link to="/category/giay-be-xuong-nu">Giày Bé xướng nữ</Link>
                                 </div>
 
                                 <div>
                                     <h4>Giày - Dép nam</h4>
-                                    <a href="#">Giày thể thao nam</a>
-                                    <a href="#">Giày thể thao nam</a>
-                                    <a href="#">Dép nam</a>
-                                    <a href="#">Giày sandals nam</a>
-                                    <a href="#">Phụ kiện giày</a>
-                                    <a href="#">Giày boots nam</a>
+                                    <Link to="/category/giay-the-thao-nam">Giày thể thao nam</Link>
+                                    <Link to="/category/giay-the-thao-nam">Giày thể thao nam</Link>
+                                    <Link to="/category/dep-nam">Dép nam</Link>
+                                    <Link to="/category/giay-sandals-nam">Giày sandals nam</Link>
+                                    <Link to="/category/phu-kien-giay">Phụ kiện giày</Link>
+                                    <Link to="/category/giay-boots-nam">Giày boots nam</Link>
                                 </div>
 
                                 <div>
                                     <h4>Túi thời trang nữ</h4>
-                                    <a href="#">Túi déo chéo, túi déo vai nữ</a>
-                                    <a href="#">Vi nữ</a>
-                                    <a href="#">Túi xách tay nữ</a>
-                                    <a href="#">Túi xách tay nữ</a>
-                                    <a href="#">Phụ kiện túi</a>
+                                    <Link to="/category/tui-deo-choeo-tui-deo-vai-nu">Túi déo chéo, túi déo vai nữ</Link>
+                                    <Link to="/category/vi-nu">Vi nữ</Link>
+                                    <Link to="/category/tui-xach-tay-nu">Túi xách tay nữ</Link>
+                                    <Link to="/category/tui-xach-tay-nu">Túi xách tay nữ</Link>
+                                    <Link to="/category/phu-kien-tui">Phụ kiện túi</Link>
                                 </div>
 
                                 <div>
                                     <h4>Túi thời trang nam</h4>
-                                    <a href="#">Vi nam</a>
-                                    <a href="#">Túi déo chéo nam</a>
-                                    <a href="#">Túi xách công sở nam</a>
-                                    <a href="#">Túi bao tử, túi đéo bụng</a>
+                                    <Link to="/category/vi-nam">Vi nam</Link>
+                                    <Link to="/category/tui-deo-choeo-nam">Túi déo chéo nam</Link>
+                                    <Link to="/category/tui-xach-cong-so-nam">Túi xách công sở nam</Link>
+                                    <Link to="/category/tui-bao-tu-tui-deo-bung">Túi bao tử, túi đéo bụng</Link>
                                 </div>
                             </div>
 
                             <div className="footer-category">
                                 <div>
                                     <h4>Balo và Vali</h4>
-                                    <a href="#">Balo</a>
-                                    <a href="#">Balo du lịch và phụ kiện</a>
-                                    <a href="#">Balo, cặp, túi chống sốc laptop</a>
-                                    <a href="#">Vali, phụ kiện vali</a>
-                                    <a href="#">Túi chống sốc</a>
-                                    <a href="#">Túi đựng laptop</a>
-                                    <a href="#">Túi xách thời trang</a>
-                                    <a href="#">Khăn quang cổ</a>
+                                    <Link to="/category/balo">Balo</Link>
+                                    <Link to="/category/balo-du-lich-va-phu-kien">Balo du lịch và phụ kiện</Link>
+                                    <Link to="/category/balo-cac-balo-tui-chong-so-c-laptop">Balo, cặp, túi chống sốc laptop</Link>
+                                    <Link to="/category/vali-phu-kien-vali">Vali, phụ kiện vali</Link>
+                                    <Link to="/category/tui-chong-so-c">Túi chống sốc</Link>
+                                    <Link to="/category/tui-dung-laptop">Túi đựng laptop</Link>
+                                    <Link to="/category/tui-xach-thoi-trang">Túi xách thời trang</Link>
+                                    <Link to="/category/khan-quang-co">Khăn quang cổ</Link>
                                 </div>
 
                                 <div>
                                     <h4>Phụ kiện thời trang</h4>
-                                    <a href="#">Phụ kiện thời trang nữ</a>
-                                    <a href="#">Mắt kính</a>
-                                    <a href="#">Phụ kiện thời trang nam</a>
-                                    <a href="#">Trang sức</a>
-                                    <a href="#">Thắt lưng</a>
-                                    <a href="#">Khăn quang cổ</a>
-                                    <a href="#">Mũ nón thời trang</a>
-                                    <a href="#">Găng tay</a>
-                                    <a href="#">Phụ kiện tóc</a>
+                                    <Link to="/category/phu-kien-thoi-trang-nu">Phụ kiện thời trang nữ</Link>
+                                    <Link to="/category/mat-kinh">Mắt kính</Link>
+                                    <Link to="/category/phu-kien-thoi-trang-nam">Phụ kiện thời trang nam</Link>
+                                    <Link to="/category/trang-suc">Trang sức</Link>
+                                    <Link to="/category/that-lung">Thắt lưng</Link>
+                                    <Link to="/category/khan-quang-co">Khăn quang cổ</Link>
+                                    <Link to="/category/mu-non-thoi-trang">Mũ nón thời trang</Link>
+                                    <Link to="/category/gang-tay">Găng tay</Link>
+                                    <Link to="/category/phu-kien-toc">Phụ kiện tóc</Link>
                                 </div>
 
                                 <div>
                                     <h4>Đồng hồ và Trang sức</h4>
-                                    <a href="#">Trang hồ nam</a>
-                                    <a href="#">Phụ kiện đồng hồ</a>
-                                    <a href="#">Đồng hồ nữ</a>
-                                    <a href="#">Đồng hồ trẻ em</a>
-                                    <a href="#">Phụ kiện đồng hồ</a>
-                                    <a href="#">Ké em</a>
+                                    <Link to="/category/trang-ho-nam">Trang hồ nam</Link>
+                                    <Link to="/category/phu-kien-dong-ho">Phụ kiện đồng hồ</Link>
+                                    <Link to="/category/dong-ho-nu">Đồng hồ nữ</Link>
+                                    <Link to="/category/dong-ho-tre-em">Đồng hồ trẻ em</Link>
+                                    <Link to="/category/phu-kien-dong-ho">Phụ kiện đồng hồ</Link>
+                                    <Link to="/category/ke-em">Ké em</Link>
                                 </div>
 
                                 <div>
                                     <h4>Laptop - Máy Vi Tính - Linh kiện</h4>
-                                    <a href="#">Linh Kiện Máy Tính - Phụ Kiện Máy Tính</a>
-                                    <a href="#">Laptop</a>
-                                    <a href="#">Thiết Bi Âm Thanh và Phụ Kiện</a>
-                                    <a href="#">Màn hình</a>
-                                    <a href="#">Linh kiện máy tính</a>
-                                    <a href="#">Thiết bị mạng</a>
-                                    <a href="#">Thiết bị mạng</a>
-                                    <a href="#">Phụ kiện máy tính</a>
+                                    <Link to="/category/linh-kien-may-tinh-va-phu-kien-may-tinh">Linh Kiện Máy Tính - Phụ Kiện Máy Tính</Link>
+                                    <Link to="/category/laptop">Laptop</Link>
+                                    <Link to="/category/thiet-bi-am-thanh-va-phu-kien">Thiết Bi Âm Thanh và Phụ Kiện</Link>
+                                    <Link to="/category/man-hinh">Màn hình</Link>
+                                    <Link to="/category/linh-kien-may-tinh">Linh kiện máy tính</Link>
+                                    <Link to="/category/thiet-bi-mang">Thiết bị mạng</Link>
+                                    <Link to="/category/thiet-bi-mang">Thiết bị mạng</Link>
+                                    <Link to="/category/phu-kien-may-tinh">Phụ kiện máy tính</Link>
                                 </div>
 
                                 <div>
                                     <h4>Nhà Cửa - Đời Sống</h4>
-                                    <a href="#">Trang trí nhà cửa</a>
-                                    <a href="#">Dụng cụ nhà bếp</a>
-                                    <a href="#">Đồ dùng phòng ngủ</a>
-                                    <a href="#">Nội thất</a>
+                                    <Link to="/category/trang-tri-nha-cua">Trang trí nhà cửa</Link>
+                                    <Link to="/category/dung-cu-nha-bep">Dụng cụ nhà bếp</Link>
+                                    <Link to="/category/do-dung-phong-ngu">Đồ dùng phòng ngủ</Link>
+                                    <Link to="/category/noi-that">Nội thất</Link>
                                 </div>
 
                                 <div>
                                     <h4>Bách Hóa Online</h4>
-                                    <a href="#">Chăm sóc thú cưng</a>
-                                    <a href="#">Đồ dùng - Pha chế đăng bột</a>
-                                    <a href="#">Thực phẩm Đông hộp và Khô</a>
-                                    <a href="#">Gia Vị và Chè Biến & Hạt Các Loại</a>
-                                    <a href="#">Báu & Hạt Các Loại</a>
-                                    <a href="#">Vật và các Sản phẩm từ Vật</a>
-                                    <a href="#">Sữa và các Sản phẩm từ sữa</a>
-                                    <a href="#">Đồ Uống Không Cồn</a>
-                                    <a href="#">Bộ quà tặng</a>
+                                    <Link to="/category/cham-soc-thu-cung">Chăm sóc thú cưng</Link>
+                                    <Link to="/category/dong-dung-pha-chiет-dang-bot">Đồ dùng - Pha chế đăng bột</Link>
+                                    <Link to="/category/thuc-pham-dong-hop-va-kho">Thực phẩm Đông hộp và Khô</Link>
+                                    <Link to="/category/gia-vi-va-che-bien-hat-cac-loai">Gia Vị và Chè Biến & Hạt Các Loại</Link>
+                                    <Link to="/category/bau-hat-cac-loai">Báu & Hạt Các Loại</Link>
+                                    <Link to="/category/vat-va-cac-san-pham-tu-vat">Vật và các Sản phẩm từ Vật</Link>
+                                    <Link to="/category/sua-va-cac-san-pham-tu-sua">Sữa và các Sản phẩm từ sữa</Link>
+                                    <Link to="/category/do-uong-khong-con">Đồ Uống Không Cồn</Link>
+                                    <Link to="/category/bo-quat-tang">Bộ quà tặng</Link>
                                 </div>
 
                             </div>
@@ -403,132 +403,132 @@ const Footer = () => {
                             <div className="footer-category">
                                 <div>
                                     <h4>Hàng Quốc Tế</h4>
-                                    <a href="#">Nhà Cửa - Đời Sống</a>
-                                    <a href="#">Thiết Bị Số</a>
-                                    <a href="#">Thời Trang</a>
-                                    <a href="#">Ô tô, xe máy, xe đạp</a>
-                                    <a href="#">Thiết Bị Số</a>
-                                    <a href="#">Phụ Kiện Số</a>
-                                    <a href="#">Thiết bị - Phụ kiện tiệc - sự kiện</a>
-                                    <a href="#">Làm Đẹp - Sức Khỏe</a>
-                                    <a href="#">Sách, văn phòng phẩm & quà lưu niệm</a>
-                                    <a href="#">Mẹ & Bé</a>
-                                    <a href="#">Điện gia dụng</a>
-                                    <a href="#">Bách hóa online</a>
-                                    <a href="#">Máy Ảnh - Máy Quay Phim</a>
-                                    <a href="#">Laptop & Máy Vi Tính</a>
-                                    <a href="#">Thiết bị - phụ kiện tiệc - sự kiện công nghiệp</a>
-                                    <a href="#">Tivi & Thiết Bị Nghe Nhìn</a>
-                                    <a href="#">Thiết bị Thông Minh</a>
-                                    <a href="#">Thiết bị - Phụ Kiện Game và Phụ Kiện</a>
+                                    <Link to="/category/nha-cua-doi-song">Nhà Cửa - Đời Sống</Link>
+                                    <Link to="/category/thiet-bi-so">Thiết Bị Số</Link>
+                                    <Link to="/category/thoi-trang">Thời Trang</Link>
+                                    <Link to="/category/to-to-xe-may-xe-dap">Ô tô, xe máy, xe đạp</Link>
+                                    <Link to="/category/thiet-bi-so">Thiết Bị Số</Link>
+                                    <Link to="/category/phu-kien-so">Phụ Kiện Số</Link>
+                                    <Link to="/category/thiet-bi-phu-kien-tiec-suc-kien">Thiết bị - Phụ kiện tiệc - sự kiện</Link>
+                                    <Link to="/category/lam-dep-suc-khoe">Làm Đẹp - Sức Khỏe</Link>
+                                    <Link to="/category/sach-van-phong-pham-qua-luu-ly">Sách, văn phòng phẩm & quà lưu niệm</Link>
+                                    <Link to="/category/me-be">Mẹ & Bé</Link>
+                                    <Link to="/category/dien-gia-dung">Điện gia dụng</Link>
+                                    <Link to="/category/bach-hoa-online">Bách hóa online</Link>
+                                    <Link to="/category/may-anh-may-quay-phim">Máy Ảnh - Máy Quay Phim</Link>
+                                    <Link to="/category/laptop-may-vi-tinh">Laptop & Máy Vi Tính</Link>
+                                    <Link to="/category/thiet-bi-phu-kien-tiec-suc-kien-cong-nghiep">Thiết bị - phụ kiện tiệc - sự kiện công nghiệp</Link>
+                                    <Link to="/category/tivi-thiet-bi-nghe-nhin">Tivi & Thiết Bị Nghe Nhìn</Link>
+                                    <Link to="/category/thiet-bi-thong-minh">Thiết bị Thông Minh</Link>
+                                    <Link to="/category/thiet-bi-phu-kien-game-va-phu-kien">Thiết bị - Phụ Kiện Game và Phụ Kiện</Link>
                                 </div>
 
                                 <div>
                                     <h4>Thiết Bị Số - Phụ Kiện Số</h4>
-                                    <a href="#">Phụ Kiện Điện Thoại và Máy Tính Bảng</a>
-                                    <a href="#">Phụ kiện thời trang nam</a>
-                                    <a href="#">Laptop</a>
-                                    <a href="#">Thiết Bi Âm Thanh và Phụ Kiện</a>
-                                    <a href="#">Máy tính bảng</a>
-                                    <a href="#">Thiết Bị Đeo Thông Minh và Phụ Chốt</a>
-                                    <a href="#">Máy và Thiết Bị Game</a>
+                                    <Link to="/category/phu-kien-dien-thoai-va-may-tinh-bang">Phụ Kiện Điện Thoại và Máy Tính Bảng</Link>
+                                    <Link to="/category/phu-kien-dien-thoai-va-may-tinh-bang">Phụ kiện thời trang nam</Link>
+                                    <Link to="/category/laptop">Laptop</Link>
+                                    <Link to="/category/thiet-bi-am-thanh-va-phu-kien">Thiết Bi Âm Thanh và Phụ Kiện</Link>
+                                    <Link to="/category/may-tinh-bang">Máy tính bảng</Link>
+                                    <Link to="/category/thiet-bi-deo-thong-minh-va-phu-chot">Thiết Bị Đeo Thông Minh và Phụ Chốt</Link>
+                                    <Link to="/category/may-va-thiet-bi-game">Máy và Thiết Bị Game</Link>
                                 </div>
 
 
 
                                 <div>
                                     <h4>Voucher - Dịch vụ</h4>
-                                    <a href="#">Thanh toán hóa đơn</a>
-                                    <a href="#">Khóa học</a>
-                                    <a href="#">Dịch vụ - Khách sạn & Spa & Làm đẹp</a>
-                                    <a href="#">Dịch vụ khác</a>
-                                    <a href="#">Nhà hàng ăn uống</a>
-                                    <a href="#">Sự kiện - Giải trí</a>
-                                    <a href="#">Sức khỏe - Sức khỏe</a>
-                                    <a href="#">Phiếu quà</a>
-                                    <a href="#">Sim số - Thẻ nạp - Thẻ game</a>
+                                    <Link to="/category/thanh-toan-hoa-don">Thanh toán hóa đơn</Link>
+                                    <Link to="/category/khoa-hoc">Khóa học</Link>
+                                    <Link to="/category/dich-vu-khach-san-spa-lam-dep">Dịch vụ - Khách sạn & Spa & Làm đẹp</Link>
+                                    <Link to="/category/dich-vu-khac">Dịch vụ khác</Link>
+                                    <Link to="/category/nha-hang-an-uong">Nhà hàng ăn uống</Link>
+                                    <Link to="/category/su-kien-giai-tri">Sự kiện - Giải trí</Link>
+                                    <Link to="/category/suc-khoe-suc-khoe">Sức khỏe - Sức khỏe</Link>
+                                    <Link to="/category/phi-quà">Phiếu quà</Link>
+                                    <Link to="/category/sim-so-thẻ-nap-thẻ-game">Sim số - Thẻ nạp - Thẻ game</Link>
                                 </div>
 
                                 <div>
                                     <h4>Ô Tô - Xe Máy - Xe Đạp</h4>
-                                    <a href="#">Phụ kiện - Chăm sóc xe</a>
-                                    <a href="#">Xe điện</a>
-                                    <a href="#">Máy đo áp / Xe Scooter</a>
-                                    <a href="#">Dịch vụ, lập đặt</a>
+                                    <Link to="/category/phu-kien-cham-soc-xe">Phụ kiện - Chăm sóc xe</Link>
+                                    <Link to="/category/xe-dien">Xe điện</Link>
+                                    <Link to="/category/may-do-ap-xe-scooter">Máy đo áp / Xe Scooter</Link>
+                                    <Link to="/category/dich-vu-lap-dat">Dịch vụ, lập đặt</Link>
                                 </div>
 
                                 <div>
                                     <h4>Nhà Sách Tiki</h4>
-                                    <a href="#">Sách tiếng Việt</a>
-                                    <a href="#">Văn phòng phẩm</a>
-                                    <a href="#">Quà lưu niệm</a>
-                                    <a href="#">English Books</a>
+                                    <Link to="/category/sach-tieng-viet">Sách tiếng Việt</Link>
+                                    <Link to="/category/van-phong-pham">Văn phòng phẩm</Link>
+                                    <Link to="/category/quan-lu-niem">Quà lưu niệm</Link>
+                                    <Link to="/category/english-books">English Books</Link>
                                 </div>
                             </div>
 
                             <div className="footer-category">
                                 <div>
                                     <h4>Điện Tử - Điện Lạnh</h4>
-                                    <a href="#">An toàn nhà & Phụ kiện điện lạnh</a>
-                                    <a href="#">Tủ lạnh</a>
-                                    <a href="#">Máy lạnh</a>
-                                    <a href="#">Máy giặt</a>
-                                    <a href="#">Máy rửa chén</a>
-                                    <a href="#">Tivi</a>
-                                    <a href="#">Máy nước nóng</a>
-                                    <a href="#">Máy hút bụi</a>
-                                    <a href="#">Tủ đông rượu</a>
+                                    <Link to="/category/an-toan-nha-phan-kien-dien-lanh">An toàn nhà & Phụ kiện điện lạnh</Link>
+                                    <Link to="/category/tu-lanh">Tủ lạnh</Link>
+                                    <Link to="/category/may-lanh">Máy lạnh</Link>
+                                    <Link to="/category/may-giat">Máy giặt</Link>
+                                    <Link to="/category/may-rua-chen">Máy rửa chén</Link>
+                                    <Link to="/category/tivi">Tivi</Link>
+                                    <Link to="/category/may-nuoc-nong">Máy nước nóng</Link>
+                                    <Link to="/category/may-hut-bui">Máy hút bụi</Link>
+                                    <Link to="/category/tu-dong-rong">Tủ đông rượu</Link>
                                 </div>
 
                                 <div>
                                     <h4>Thể Thao - Dã Ngoại</h4>
-                                    <a href="#">Trang phục thể thao nam</a>
-                                    <a href="#">Phụ kiện thể thao</a>
-                                    <a href="#">Dụng cụ thể thao</a>
-                                    <a href="#">Giày thể thao</a>
-                                    <a href="#">Dụng cụ - thiết bị tập thể thao</a>
-                                    <a href="#">Thể thao nước</a>
-                                    <a href="#">Dụng cụ câu cá</a>
-                                    <a href="#">Thể thao động đội</a>
-                                    <a href="#">Các môn thể thao khác</a>
-                                    <a href="#">Thể thao - Dã ngoại</a>
-                                    <a href="#">Giày thể thao nữ</a>
-                                    <a href="#">Thực phẩm bổ sung năng lượng</a>
-                                    <a href="#">Dụng cụ bổ sung</a>
+                                    <Link to="/category/trang-phuc-the-thao-nam">Trang phục thể thao nam</Link>
+                                    <Link to="/category/phan-kien-the-thao">Phụ kiện thể thao</Link>
+                                    <Link to="/category/dung-cu-the-thao">Dụng cụ thể thao</Link>
+                                    <Link to="/category/giay-the-thao">Giày thể thao</Link>
+                                    <Link to="/category/dung-cu-thiet-bi-tap-the-thao">Dụng cụ - thiết bị tập thể thao</Link>
+                                    <Link to="/category/the-thao-nuoc">Thể thao nước</Link>
+                                    <Link to="/category/dung-cu-cau-ca">Dụng cụ câu cá</Link>
+                                    <Link to="/category/the-thao-dong-doi">Thể thao động đội</Link>
+                                    <Link to="/category/cac-mon-the-thao-khac">Các môn thể thao khác</Link>
+                                    <Link to="/category/the-thao-dan-ngoai">Thể thao - Dã ngoại</Link>
+                                    <Link to="/category/giay-the-thao-nu">Giày thể thao nữ</Link>
+                                    <Link to="/category/thuc-pham-bo sung-nang-luong">Thực phẩm bổ sung năng lượng</Link>
+                                    <Link to="/category/dung-cu-bo sung">Dụng cụ bổ sung</Link>
                                 </div>
 
 
 
                                 <div>
                                     <h4>Máy Ảnh - Máy Quay Phim</h4>
-                                    <a href="#">Phụ Kiện Máy Ảnh, Máy Quay</a>
-                                    <a href="#">Camera Giám Sát</a>
-                                    <a href="#">Thiết Bị Camera Hành Trình</a>
-                                    <a href="#">Action Camera và Phụ Kiện</a>
-                                    <a href="#">Balo - Túi đựng Máy Ảnh - Flycam</a>
-                                    <a href="#">Máy ảnh - Máy quay phím - Flycam</a>
-                                    <a href="#">Ông Kinh [Lens]</a>
-                                    <a href="#">Thiết Bị Studio</a>
-                                    <a href="#">Quầy Phim / Máy Quay</a>
-                                    <a href="#">Phụ Kiện</a>
-                                    <a href="#">Máy Ảnh</a>
+                                    <Link to="/category/phu-kien-may-anh-may-quay">Phụ Kiện Máy Ảnh, Máy Quay</Link>
+                                    <Link to="/category/camera-giam-sat">Camera Giám Sát</Link>
+                                    <Link to="/category/thiet-bi-camera-hanh-trinh">Thiết Bị Camera Hành Trình</Link>
+                                    <Link to="/category/action-camera-va-phu-kien">Action Camera và Phụ Kiện</Link>
+                                    <Link to="/category/balo-tui-dung-may-anh-flycam">Balo - Túi đựng Máy Ảnh - Flycam</Link>
+                                    <Link to="/category/may-anh-may-quay-phim-flycam">Máy ảnh - Máy quay phím - Flycam</Link>
+                                    <Link to="/category/ong-kinh-lens">Ông Kinh [Lens]</Link>
+                                    <Link to="/category/thiet-bi-studio">Thiết Bị Studio</Link>
+                                    <Link to="/category/quay-phim-may-quay">Quầy Phim / Máy Quay</Link>
+                                    <Link to="/category/phu-kien">Phụ Kiện</Link>
+                                    <Link to="/category/may-anh">Máy Ảnh</Link>
                                 </div>
 
                                 <div>
                                     <h4>Tủ Khóa Được Quan Tâm</h4>
-                                    <a href="#">máy suối</a>
-                                    <a href="#">den suối trần</a>
-                                    <a href="#">mái nội điện sunhouse</a>
-                                    <a href="#">may sấy tóc philips</a>
-                                    <a href="#">bàn ủi hơi nước công là hơi nước philp</a>
-                                    <a href="#">máy suối xiaomi</a>
-                                    <a href="#">bình nước nóng ariston</a>
-                                    <a href="#">máy suối xiaomi</a>
-                                    <a href="#">máy hút bụi giường nệm</a>
-                                    <a href="#">cây nước nóng lạnh toshiba</a>
-                                    <a href="#">robot hút bụi lau nhà của nhật</a>
-                                    <a href="#">den suối trần</a>
-                                    <a href="#">nồi cơm điện tefal</a>
+                                    <Link to="/category/may-suoi">máy suối</Link>
+                                    <Link to="/category/den-suoi-tran">den suối trần</Link>
+                                    <Link to="/category/mai-noi-dien-sunhouse">mái nội điện sunhouse</Link>
+                                    <Link to="/category/may-say-toc-philips">may sấy tóc philips</Link>
+                                    <Link to="/category/ban-uu-hoi-hoi-nuoc-cong-la-hoi-nuoc-philp">bàn ủi hơi nước công là hơi nước philp</Link>
+                                    <Link to="/category/may-suoi-xiaomi">máy suối xiaomi</Link>
+                                    <Link to="/category/binh-nuoc-nong-ariston">bình nước nóng ariston</Link>
+                                    <Link to="/category/may-suoi-xiaomi">máy suối xiaomi</Link>
+                                    <Link to="/category/may-hut-bui-giu-nem">máy hút bụi giường nệm</Link>
+                                    <Link to="/category/cay-nuoc-nong-lanh-toshiba">cây nước nóng lạnh toshiba</Link>
+                                    <Link to="/category/robot-hut-bui-lau-nha-cua-nhat">robot hút bụi lau nhà của nhật</Link>
+                                    <Link to="/category/den-suoi-tran">den suối trần</Link>
+                                    <Link to="/category/noi-co-kiem-tefal">nồi cơm điện tefal</Link>
                                 </div>
                             </div>
                         </div>

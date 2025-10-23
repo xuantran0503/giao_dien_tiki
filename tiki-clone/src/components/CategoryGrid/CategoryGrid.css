@@ -3,7 +3,6 @@
     padding: 12px;
     border-radius: 8px;
     margin-top: 12px;
-    /* border: 1px solid #ebebf0; */
 }
 
 .category-grid {
@@ -13,7 +12,6 @@
 }
 
 .category-card {
-    /* background: white; */
     border-radius: 8px;
     cursor: pointer;
     text-decoration: none;
@@ -40,23 +38,4 @@
     height: 100%;
     object-fit: contain;
     border-radius: 8px;
-}
-
-/* Responsive */
-@media (max-width: 1200px) {
-    .category-grid {
-        grid-template-columns: repeat(4, 1fr);
-    }
-}
-
-@media (max-width: 768px) {
-    .category-grid {
-        grid-template-columns: repeat(3, 1fr);
-    }
-}
-
-@media (max-width: 480px) {
-    .category-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
 }

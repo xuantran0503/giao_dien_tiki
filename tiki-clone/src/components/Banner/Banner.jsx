@@ -20,6 +20,7 @@ const Banner = () => {
     <div className="banner-row">
       <div className="banner-container">
         <div className="banner-content">
+
           <div className="banner-left-categories">
 
 
