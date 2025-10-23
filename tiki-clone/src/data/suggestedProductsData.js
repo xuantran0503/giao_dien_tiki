@@ -708,61 +708,99 @@ export const suggestedProductsData = [
   {
     id: 51,
     image:
-      "https://salt.tikicdn.com/cache/750x750/ts/product/71/4d/fd/6b78e4a1728c2d9b09d79207dce94768.jpg.webp",
-    name: "Nồi cơm điện tử Toshiba RC-18NMFVN(WT) 1.8L",
-    price: 1890000,
-    originalPrice: 2590000,
-    discount: 27,
+      "https://salt.tikicdn.com/cache/750x750/ts/product/30/5c/fd/d4bd009dd77428f3bd20502aac140793.png.webp",
+    name: "Cáp sạc cho đồng hồ thông minh Huawei Watch Fit 3/ Watch Fit 2/ Huawei Band 7/8/9/ Watch Kids 4 Pro Kai.N_ Hàng chính hãng",
+    price: 89000,
+
     rating: 4.7,
     badgeIcon:
       "https://salt.tikicdn.com/ts/upload/c2/bc/6d/ff18cc8968e2bbb43f7ac58efbfafdff.png",
     isFreeShip: "img_giao_ngay.png",
     deliveryTime: "Giao siêu tốc 2h",
-    madeIn: "Made in Vietnam",
+    madeIn: "Made in Korea",
   },
   {
     id: 52,
     image:
-      "https://salt.tikicdn.com/cache/750x750/ts/product/66/82/5a/6789dce37d6a2d6926df6bf55e0cee79.jpg.webp",
-    name: "Máy lọc nước RO Kangaroo KG100HA 10 lõi",
-    price: 3990000,
-    originalPrice: 5490000,
-    discount: 27,
+      "https://salt.tikicdn.com/cache/750x750/ts/product/b7/8b/9f/ee92e6ffcf143542b0a0b6e1c2a9e8b2.png.webp",
+    name: "Bộ sạc đa năng Dewalt 10.8V-18V DCB112",
+    price: 635000,
+    originalPrice: 660000,
+    discount: 4,
     rating: 4.8,
     badgeIcon:
       "https://salt.tikicdn.com/ts/upload/f7/9e/83/ab28365ea395893fe5abac88b5103444.png",
     isFreeShip: "img_giao_ngay.png",
     deliveryTime: "Giao siêu tốc 2h",
-    madeIn: "Made in Vietnam",
   },
   {
     id: 53,
     image:
-      "https://salt.tikicdn.com/cache/750x750/ts/product/65/3a/ff/230e1f66e52327ab5290928e796c9213.png.webp",
-    name: "Máy xay sinh tố Philips HR2222/00 700W",
-    price: 1290000,
-    originalPrice: 1790000,
-    discount: 28,
+      "https://salt.tikicdn.com/cache/750x750/ts/product/bc/82/ea/94d938382dff83cd2868f131d76117f2.png.webp",
+    name: "Kem Dưỡng Olay Luminous Sáng Da Mờ Thâm Nám Ban Đêm 50g",
+    price: 175500,
+    originalPrice: 269000,
+    discount: 35,
     rating: 4.6,
     badgeIcon:
       "https://salt.tikicdn.com/ts/upload/c2/bc/6d/ff18cc8968e2bbb43f7ac58efbfafdff.png",
     isFreeShip: "img_giao_ngay.png",
     deliveryTime: "Giao siêu tốc 2h",
-    madeIn: "Made in Indonesia",
   },
   {
     id: 54,
     image:
-      "https://salt.tikicdn.com/cache/750x750/ts/product/a7/66/64/4accb364a876520e29a3ce81f7a9efc5.jpg.webp",
-    name: "Bình đun siêu tốc Philips HD9350/90 1.7L",
-    price: 590000,
-    originalPrice: 890000,
-    discount: 34,
+      "https://salt.tikicdn.com/cache/750x750/ts/product/fd/12/31/e82e4637fd601aa56202042b09324f65.jpg.webp",
+    name: "Màn hình Monitor Xiaomi 27 inch A27i ELA5345EU FHD/IPS/100HZ/6MS - Hàng Chính Hãng",
+    price: 2220000,
+    originalPrice: 2990000,
+    discount: 26,
     rating: 4.7,
     badgeIcon:
       "https://salt.tikicdn.com/ts/upload/f7/9e/83/ab28365ea395893fe5abac88b5103444.png",
     isFreeShip: "img_giao_ngay.png",
     deliveryTime: "Giao siêu tốc 2h",
-    madeIn: "Made in China",
+  },
+  {
+    id: 55,
+    image:
+      "https://salt.tikicdn.com/cache/750x750/media/catalog/producttmp/16/54/58/29ebbeaf7f85f309c0afbf937c394971.jpg.webp",
+    name: "Bình giữ nhiệt LocknLock Riga Tumbler Vietnam Edition LHC4160 897ml",
+    price: 398000,
+    originalPrice: 736000,
+    discount: 46,
+    rating: 4.7,
+    badgeIcon:
+      "https://salt.tikicdn.com/ts/upload/f7/9e/83/ab28365ea395893fe5abac88b5103444.png",
+    isFreeShip: "img_giao_ngay.png",
+    deliveryTime: "Giao siêu tốc 2h",
+  },
+  {
+    id: 56,
+    image:
+      "https://salt.tikicdn.com/cache/750x750/ts/product/15/15/6e/7da52edc5b04c5fffdb0fe7c1ed9b923.png.webp",
+    name: "Thùng 24 hộp Sữa dâu ít đường 200ml nhãn hiệu Binggrae",
+    price: 2220000,
+    originalPrice: 2990000,
+    discount: 26,
+    rating: 4.7,
+    badgeIcon:
+      "https://salt.tikicdn.com/ts/upload/f7/9e/83/ab28365ea395893fe5abac88b5103444.png",
+    isFreeShip: "img_giao_ngay.png",
+    deliveryTime: "Giao siêu tốc 2h",
+  },
+  {
+    id: 57,
+    image:
+      "https://salt.tikicdn.com/cache/750x750/ts/product/ca/66/77/66f048ac8ac0c386b53696d1151f85f4.jpg.webp",
+    name: "Sách Không Gia Đình (Tái Bản)",
+    price: 122000,
+    originalPrice: 160000,
+    discount: 24,
+    rating: 4.7,
+    badgeIcon:
+      "https://salt.tikicdn.com/ts/upload/f7/9e/83/ab28365ea395893fe5abac88b5103444.png",
+    isFreeShip: "img_giao_ngay.png",
+    deliveryTime: "Giao siêu tốc 2h",
   },
 ];

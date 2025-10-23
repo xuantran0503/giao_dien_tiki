@@ -18,23 +18,23 @@ export const flashSaleData = [
   {
     id: 3,
     image:
-      "https://salt.tikicdn.com/cache/280x280/ts/product/19/b6/c5/62822fe4e5aed62702967b002d8c47a9.jpg.webp",
-    discount: 23,
-    price: 14339000,
+      "https://salt.tikicdn.com/cache/280x280/ts/product/b3/4c/93/08e02bd6ce074c6d49584786beacfb68.png.webp",
+    discount: 5,
+    price: 1881000,
     soldPercent: 10,
   },
   {
     id: 4,
     image:
       "https://salt.tikicdn.com/cache/280x280/media/catalog/product/c/a/cac_mon_an_chay_a_1.jpg.webp",
-    discount: 46,
-    price: 130000,
+    discount: 19,
+    price: 44500,
     soldPercent: 10,
   },
   {
     id: 5,
     image:
-      "https://salt.tikicdn.com/cache/280x280/ts/product/10/cb/5a/b4323bfc94fef6d5b26dfbd3d566262c.png.webp",
+      "https://salt.tikicdn.com/cache/280x280/ts/product/fc/62/5b/bb188b6b7caac581ec712fd121df59bb.jpg.webp",
     discount: 6,
     price: 3090400,
     soldPercent: 10,
@@ -42,9 +42,9 @@ export const flashSaleData = [
   {
     id: 6,
     image:
-      "https://salt.tikicdn.com/cache/280x280/ts/product/f2/f5/4d/0a2169695cc3b333878ca132c854476b.jpg.webp",
-    discount: 40,
-    price: 1664000,
+      "https://salt.tikicdn.com/cache/280x280/ts/product/24/ae/a2/40c9c52cd2e2ceac59f57246d0c0d62e.jpg.webp",
+    discount: 26,
+    price: 43000,
     soldPercent: 10,
   },
   {

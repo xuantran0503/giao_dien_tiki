@@ -8,7 +8,7 @@ const SuggestedProducts = () => {
 
     // Duplicate products to have more items
     const allProducts = [];
-    for (let i = 0; i < 100; i++) {
+    for (let i = 0; i < suggestedProductsData.length; i++) {
         const product = suggestedProductsData[i % suggestedProductsData.length];
         allProducts.push({
             ...product,
@@ -37,7 +37,7 @@ const SuggestedProducts = () => {
     };
 
     const loadMore = () => {
-        setVisibleProducts(prev => Math.min(prev + 30, allProducts.length));
+        setVisibleProducts(prev => Math.min(prev + 16, allProducts.length));
     };
 
     return (

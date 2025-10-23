@@ -8,7 +8,7 @@ khoảng cách trái phải của 2 ảnh với 2 bên  viền chưa bằng nhau
 
 để các mục ở chế độ random hiển thị sản phẩm
 
-nên dùng hàm để tính giá sau khi có giảm giá
+nên dùng hàm để tính giá sản phẩm sau khi có giảm giá để hiển thị cho đỡ phải nhập giá trong data 
 
 +++++++++++++ĐANG LÀM ++++++++++++++++
          
