@@ -1,682 +1,772 @@
-export const suggestedProductsData = [{
+export const suggestedProductsData = [
+  {
     id: 1,
-    image: "https://salt.tikicdn.com/cache/750x750/ts/product/dd/2b/a6/fefd132c5ba9b5629c0119f57549e5d4.png.webp",
+    image:
+      "https://salt.tikicdn.com/cache/750x750/ts/product/dd/2b/a6/fefd132c5ba9b5629c0119f57549e5d4.png.webp",
     name: "Apple iPhone 17 Pro Max",
     price: 44490000,
-    badgeIcon: "https://salt.tikicdn.com/ts/upload/c2/bc/6d/ff18cc8968e2bbb43f7ac58efbfafdff.png",
+    badgeIcon:
+      "https://salt.tikicdn.com/ts/upload/c2/bc/6d/ff18cc8968e2bbb43f7ac58efbfafdff.png",
     isFreeShip: "img_giao_ngay.png",
     deliveryTime: "Giao siêu tốc 2h",
-
-},
-{
+  },
+  {
     id: 2,
-    image: "https://salt.tikicdn.com/cache/750x750/ts/product/3b/95/ec/5b2c7ec0e09565f399a0a184bd71696b.png.webp",
+    image:
+      "https://salt.tikicdn.com/cache/750x750/ts/product/3b/95/ec/5b2c7ec0e09565f399a0a184bd71696b.png.webp",
     name: "iPhone 15",
     price: 15990000,
     originalPrice: 23490000,
     discount: 29,
     rating: 5.0,
-    badgeIcon: "https://salt.tikicdn.com/ts/upload/f7/9e/83/ab28365ea395893fe5abac88b5103444.png",
-    deliveryTime: "Giao thứ 5, 23/10"
-},
-{
+    badgeIcon:
+      "https://salt.tikicdn.com/ts/upload/f7/9e/83/ab28365ea395893fe5abac88b5103444.png",
+    deliveryTime: "Giao thứ 5, 23/10",
+  },
+  {
     id: 3,
-    image: "https://salt.tikicdn.com/cache/750x750/ts/product/ef/67/33/79cbb046ea3942e6e9046f172a08573e.jpg.webp",
+    image:
+      "https://salt.tikicdn.com/cache/750x750/ts/product/ef/67/33/79cbb046ea3942e6e9046f172a08573e.jpg.webp",
     name: "Apple iPhone 17 Pro",
     price: 47490000,
     rating: 5.0,
-    badgeIcon: "https://salt.tikicdn.com/ts/upload/12/e2/4a/c5226426ee9429b0050449ae5403c9cf.png",
+    badgeIcon:
+      "https://salt.tikicdn.com/ts/upload/12/e2/4a/c5226426ee9429b0050449ae5403c9cf.png",
     isFreeShip: "img_giao_ngay.png",
     deliveryTime: "Giao siêu tốc 2h",
-    madeIn: "Made in China"
-},
-{
+    madeIn: "Made in China",
+  },
+  {
     id: 4,
-    image: "https://salt.tikicdn.com/cache/750x750/ts/product/f3/01/96/ec586ec789d954b6a498a7ebfdb68b25.jpg.webp",
+    image:
+      "https://salt.tikicdn.com/cache/750x750/ts/product/f3/01/96/ec586ec789d954b6a498a7ebfdb68b25.jpg.webp",
     name: "Điện thoại Samsung Galaxy S25, Điện thoại AI, Tìm kiếm...",
     price: 16490000,
     originalPrice: 22990000,
     discount: 28,
     isFreeShip: "img_giao_chieu_mai.png",
-    badgeIcon: "https://salt.tikicdn.com/ts/upload/12/e2/4a/c5226426ee9429b0050449ae5403c9cf.png",
+    badgeIcon:
+      "https://salt.tikicdn.com/ts/upload/12/e2/4a/c5226426ee9429b0050449ae5403c9cf.png",
     deliveryTime: "Giao thứ 5, 23/10",
-    madeIn: "Made in Korea"
-},
-{
+    madeIn: "Made in Korea",
+  },
+  {
     id: 5,
-    image: "https://salt.tikicdn.com/cache/750x750/ts/product/19/b6/c5/62822fe4e5aed62702967b002d8c47a9.jpg.webp",
+    image:
+      "https://salt.tikicdn.com/cache/750x750/ts/product/19/b6/c5/62822fe4e5aed62702967b002d8c47a9.jpg.webp",
     name: "Samsung Galaxy S24 Ultra 12GB 256GB",
     price: 28990000,
-    originalPrice: 33990000,
-    discount: 15,
-    rating: 4.9,
-    badgeIcon: "https://salt.tikicdn.com/ts/upload/c2/bc/6d/ff18cc8968e2bbb43f7ac58efbfafdff.png",
+
+    badgeIcon:
+      "https://salt.tikicdn.com/ts/upload/c2/bc/6d/ff18cc8968e2bbb43f7ac58efbfafdff.png",
     isFreeShip: "img_giao_chieu_mai.png",
     deliveryTime: "Giao chiều thứ 5, 23/10",
-    madeIn: "Made in Korea"
-},
-{
+    madeIn: "Made in Korea",
+  },
+  {
     id: 6,
-    image: "https://salt.tikicdn.com/cache/750x750/ts/product/cf/c1/31/3436e1380470ed8bf1bcbfe1b5affa51.jpg.webp",
+    image:
+      "https://salt.tikicdn.com/cache/750x750/ts/product/cf/c1/31/3436e1380470ed8bf1bcbfe1b5affa51.jpg.webp",
     name: "Dầu gội Selsun chống gàu 100ml",
     price: 49000,
-    originalPrice: 59000,
-    discount: 17,
+
     rating: 4.7,
-    badgeIcon: "https://salt.tikicdn.com/ts/upload/f7/9e/83/ab28365ea395893fe5abac88b5103444.png",
+    badgeIcon:
+      "https://salt.tikicdn.com/ts/upload/f7/9e/83/ab28365ea395893fe5abac88b5103444.png",
     isFreeShip: "img_giao_ngay.png",
     deliveryTime: "Giao siêu tốc 2h",
-    madeIn: "Made in Thailand"
-},
-{
+    madeIn: "Made in Thailand",
+  },
+  {
     id: 7,
-    image: "https://salt.tikicdn.com/cache/750x750/ts/product/0d/d1/72/5f3167f4799d01e7faed0da0d92d3a50.png.webp",
+    image:
+      "https://salt.tikicdn.com/cache/750x750/ts/product/0d/d1/72/5f3167f4799d01e7faed0da0d92d3a50.png.webp",
     name: "Sách - Combo 3 cuốn Nhà Giả Kim",
     price: 164100,
     originalPrice: 369000,
     discount: 56,
     rating: 4.8,
-    badgeIcon: "https://salt.tikicdn.com/ts/upload/c2/bc/6d/ff18cc8968e2bbb43f7ac58efbfafdff.png",
+    badgeIcon:
+      "https://salt.tikicdn.com/ts/upload/c2/bc/6d/ff18cc8968e2bbb43f7ac58efbfafdff.png",
     isFreeShip: "img_giao_ngay.png",
     deliveryTime: "Giao siêu tốc 2h",
-    madeIn: "Made in Vietnam"
-},
-{
+    madeIn: "Made in Vietnam",
+  },
+  {
     id: 8,
-    image: "https://salt.tikicdn.com/cache/750x750/ts/product/8e/bf/ab/51c2dc3b4e46455a958e39bd8ae8e415.png.webp",
+    image:
+      "https://salt.tikicdn.com/cache/750x750/ts/product/8e/bf/ab/51c2dc3b4e46455a958e39bd8ae8e415.png.webp",
     name: "Áo thun nam cotton 100%",
     price: 599000,
     originalPrice: 1290000,
     discount: 54,
     rating: 4.5,
-    badgeIcon: "https://salt.tikicdn.com/ts/upload/f7/9e/83/ab28365ea395893fe5abac88b5103444.png",
+    badgeIcon:
+      "https://salt.tikicdn.com/ts/upload/f7/9e/83/ab28365ea395893fe5abac88b5103444.png",
     isFreeShip: "img_giao_ngay.png",
     deliveryTime: "Giao siêu tốc 2h",
-    madeIn: "Made in Vietnam"
-},
-{
+    madeIn: "Made in Vietnam",
+  },
+  {
     id: 9,
-    image: "https://salt.tikicdn.com/cache/750x750/ts/product/5c/96/79/8ada9e069d709ed484e0f44dbea85acd.jpg.webp",
+    image:
+      "https://salt.tikicdn.com/cache/750x750/ts/product/5c/96/79/8ada9e069d709ed484e0f44dbea85acd.jpg.webp",
     name: "Kem Body Dưỡng Ẩm Trắng Da",
     price: 352850,
     originalPrice: 520000,
     discount: 32,
-    rating: 4.8,
-    badgeIcon: "https://salt.tikicdn.com/ts/upload/c2/bc/6d/ff18cc8968e2bbb43f7ac58efbfafdff.png",
+
+    badgeIcon:
+      "https://salt.tikicdn.com/ts/upload/c2/bc/6d/ff18cc8968e2bbb43f7ac58efbfafdff.png",
     isFreeShip: "img_giao_ngay.png",
     deliveryTime: "Giao siêu tốc 2h",
-    madeIn: "Made in Korea"
-},
-{
+    madeIn: "Made in Korea",
+  },
+  {
     id: 10,
-    image: "https://salt.tikicdn.com/cache/750x750/ts/product/af/b4/0d/bceb3100fd16db99f883612c47fb48c5.png.webp",
+    image:
+      "https://salt.tikicdn.com/cache/750x750/ts/product/af/b4/0d/bceb3100fd16db99f883612c47fb48c5.png.webp",
     name: "Loa Momo không dây Bluetooth",
     price: 261900,
-    originalPrice: 399000,
-    discount: 34,
+
     rating: 4.6,
-    badgeIcon: "https://salt.tikicdn.com/ts/upload/c2/bc/6d/ff18cc8968e2bbb43f7ac58efbfafdff.png",
+    badgeIcon:
+      "https://salt.tikicdn.com/ts/upload/c2/bc/6d/ff18cc8968e2bbb43f7ac58efbfafdff.png",
     deliveryTime: "Giao thứ 5, 23/10",
-    madeIn: "Made in China"
-},
-{
+  },
+  {
     id: 11,
-    image: "https://salt.tikicdn.com/cache/750x750/ts/product/03/0e/01/3555e6eb541dd4174fd15a535b36b0f6.png.webp",
+    image:
+      "https://salt.tikicdn.com/cache/750x750/ts/product/03/0e/01/3555e6eb541dd4174fd15a535b36b0f6.png.webp",
     name: "Phúc phần dành dưỡng ẩm",
     price: 1301000,
-    originalPrice: 1890000,
-    discount: 31,
+
     rating: 4.9,
-    badgeIcon: "https://salt.tikicdn.com/ts/upload/f7/9e/83/ab28365ea395893fe5abac88b5103444.png",
+    badgeIcon:
+      "https://salt.tikicdn.com/ts/upload/f7/9e/83/ab28365ea395893fe5abac88b5103444.png",
     isFreeShip: "img_giao_ngay.png",
     deliveryTime: "Giao siêu tốc 2h",
-    madeIn: "Made in Thailand"
-},
-{
+    madeIn: "Made in Thailand",
+  },
+  {
     id: 12,
-    image: "https://salt.tikicdn.com/cache/750x750/ts/product/81/bc/7b/e816f29fc6e20711f8dc9da9bde3cfa0.jpg.webp",
+    image:
+      "https://salt.tikicdn.com/cache/750x750/ts/product/81/bc/7b/e816f29fc6e20711f8dc9da9bde3cfa0.jpg.webp",
     name: "Máy sấy tóc iPad Gen 11",
     price: 10750000,
     originalPrice: 14990000,
     discount: 28,
     rating: 4.7,
-    badgeIcon: "https://salt.tikicdn.com/ts/upload/f7/9e/83/ab28365ea395893fe5abac88b5103444.png",
+    badgeIcon:
+      "https://salt.tikicdn.com/ts/upload/f7/9e/83/ab28365ea395893fe5abac88b5103444.png",
     deliveryTime: "Giao thứ 5, 23/10",
-    madeIn: "Made in Singapore"
-},
-{
+  },
+
+  {
     id: 13,
-    image: "https://salt.tikicdn.com/cache/750x750/ts/product/87/75/32/87ff301dd7ffd7517e0f5f254ee7fa2c.jpg.webp",
+    image:
+      "https://salt.tikicdn.com/cache/750x750/ts/product/87/75/32/87ff301dd7ffd7517e0f5f254ee7fa2c.jpg.webp",
     name: "Laptop Dell Inspiron 15 3520 i5-1235U/8GB/512GB/Win11",
     price: 13990000,
     originalPrice: 18990000,
     discount: 26,
     rating: 4.6,
-    badgeIcon: "https://salt.tikicdn.com/ts/upload/c2/bc/6d/ff18cc8968e2bbb43f7ac58efbfafdff.png",
+    badgeIcon:
+      "https://salt.tikicdn.com/ts/upload/c2/bc/6d/ff18cc8968e2bbb43f7ac58efbfafdff.png",
     isFreeShip: "img_giao_chieu_mai.png",
     deliveryTime: "Giao chiều thứ 5, 23/10",
-    madeIn: "Made in Vietnam"
-},
-{
+    madeIn: "Made in Vietnam",
+  },
+  {
     id: 14,
-    image: "https://salt.tikicdn.com/cache/750x750/ts/product/83/23/b7/14a42ae4f66c9b8b298aaef4b9671442.jpg.webp",
+    image:
+      "https://salt.tikicdn.com/cache/750x750/ts/product/83/23/b7/14a42ae4f66c9b8b298aaef4b9671442.jpg.webp",
     name: "Tai nghe Bluetooth Sony WH-1000XM5 chống ồn chủ động",
     price: 7990000,
     originalPrice: 9990000,
     discount: 20,
-    rating: 4.9,
-    badgeIcon: "https://salt.tikicdn.com/ts/upload/f7/9e/83/ab28365ea395893fe5abac88b5103444.png",
+
+    badgeIcon:
+      "https://salt.tikicdn.com/ts/upload/f7/9e/83/ab28365ea395893fe5abac88b5103444.png",
     isFreeShip: "img_giao_ngay.png",
     deliveryTime: "Giao siêu tốc 2h",
-    madeIn: "Made in Malaysia"
-},
-{
+    madeIn: "Made in Malaysia",
+  },
+  {
     id: 15,
-    image: "https://salt.tikicdn.com/cache/750x750/ts/product/54/db/ac/a7507266526060e632738baceed60ef4.JPG.webp",
+    image:
+      "https://salt.tikicdn.com/cache/750x750/ts/product/54/db/ac/a7507266526060e632738baceed60ef4.JPG.webp",
     name: "Nồi cơm điện Panasonic 1.8L SR-ZX185KRA",
     price: 1890000,
-    originalPrice: 2490000,
-    discount: 24,
+
     rating: 4.7,
-    badgeIcon: "https://salt.tikicdn.com/ts/upload/c2/bc/6d/ff18cc8968e2bbb43f7ac58efbfafdff.png",
+    badgeIcon:
+      "https://salt.tikicdn.com/ts/upload/c2/bc/6d/ff18cc8968e2bbb43f7ac58efbfafdff.png",
     isFreeShip: "img_giao_ngay.png",
     deliveryTime: "Giao siêu tốc 2h",
-    madeIn: "Made in Malaysia"
-},
-{
+    madeIn: "Made in Malaysia",
+  },
+  {
     id: 16,
-    image: "https://salt.tikicdn.com/cache/750x750/ts/product/8a/b6/ba/1d95b88597f28e42d8ca91e3b3ff600f.jpg.webp",
+    image:
+      "https://salt.tikicdn.com/cache/750x750/ts/product/8a/b6/ba/1d95b88597f28e42d8ca91e3b3ff600f.jpg.webp",
     name: "Sữa rửa mặt Cetaphil Gentle Skin Cleanser 500ml",
     price: 285000,
     originalPrice: 380000,
     discount: 25,
     rating: 4.8,
-    badgeIcon: "https://salt.tikicdn.com/ts/upload/f7/9e/83/ab28365ea395893fe5abac88b5103444.png",
+    badgeIcon:
+      "https://salt.tikicdn.com/ts/upload/f7/9e/83/ab28365ea395893fe5abac88b5103444.png",
     isFreeShip: "img_giao_ngay.png",
     deliveryTime: "Giao siêu tốc 2h",
-    madeIn: "Made in Canada"
-},
-{
+  },
+  {
     id: 17,
-    image: "https://salt.tikicdn.com/cache/750x750/ts/product/83/af/89/6509186a7750689dcdbb783088bcba9c.png.webp",
+    image:
+      "https://salt.tikicdn.com/cache/750x750/ts/product/83/af/89/6509186a7750689dcdbb783088bcba9c.png.webp",
     name: "Đồng hồ thông minh Apple Watch Series 9 GPS 41mm",
     price: 9990000,
     originalPrice: 11990000,
     discount: 17,
-    rating: 4.9,
-    badgeIcon: "https://salt.tikicdn.com/ts/upload/c2/bc/6d/ff18cc8968e2bbb43f7ac58efbfafdff.png",
+
+    badgeIcon:
+      "https://salt.tikicdn.com/ts/upload/c2/bc/6d/ff18cc8968e2bbb43f7ac58efbfafdff.png",
     deliveryTime: "Giao thứ 5, 23/10",
-    madeIn: "Made in China"
-},
-{
+    madeIn: "Made in China",
+  },
+  {
     id: 18,
-    image: "https://salt.tikicdn.com/cache/750x750/ts/product/1e/e7/46/90c79b8bde4d3de7fc10eeaf052f083c.png.webp",
+    image:
+      "https://salt.tikicdn.com/cache/750x750/ts/product/1e/e7/46/90c79b8bde4d3de7fc10eeaf052f083c.png.webp",
     name: "Balo laptop The North Face Recon 30L chống nước",
     price: 2190000,
     originalPrice: 2990000,
     discount: 27,
     rating: 4.6,
-    badgeIcon: "https://salt.tikicdn.com/ts/upload/f7/9e/83/ab28365ea395893fe5abac88b5103444.png",
+    badgeIcon:
+      "https://salt.tikicdn.com/ts/upload/f7/9e/83/ab28365ea395893fe5abac88b5103444.png",
     isFreeShip: "img_giao_ngay.png",
     deliveryTime: "Giao siêu tốc 2h",
-    madeIn: "Made in Vietnam"
-},
-{
+    madeIn: "Made in Vietnam",
+  },
+  {
     id: 19,
-    image: "https://salt.tikicdn.com/cache/750x750/ts/product/28/8e/66/eaae63796828d98ac02ea5ceb161904f.jpg.webp",
+    image:
+      "https://salt.tikicdn.com/cache/750x750/ts/product/28/8e/66/eaae63796828d98ac02ea5ceb161904f.jpg.webp",
     name: "Máy lọc không khí Xiaomi Mi Air Purifier 4 Lite",
     price: 1990000,
-    originalPrice: 2790000,
-    discount: 29,
+
     rating: 4.7,
-    badgeIcon: "https://salt.tikicdn.com/ts/upload/c2/bc/6d/ff18cc8968e2bbb43f7ac58efbfafdff.png",
+    badgeIcon:
+      "https://salt.tikicdn.com/ts/upload/c2/bc/6d/ff18cc8968e2bbb43f7ac58efbfafdff.png",
     isFreeShip: "img_giao_chieu_mai.png",
     deliveryTime: "Giao chiều thứ 5, 23/10",
-    madeIn: "Made in China"
-},
-{
+  },
+  {
     id: 20,
-    image: "https://salt.tikicdn.com/cache/750x750/ts/product/a5/76/eb/f0cd28e1b2e331ccbfc528c8827c3b07.jpg.webp",
+    image:
+      "https://salt.tikicdn.com/cache/750x750/ts/product/a5/76/eb/f0cd28e1b2e331ccbfc528c8827c3b07.jpg.webp",
     name: "Giày thể thao Nike Air Max 270 React",
     price: 3290000,
-    originalPrice: 4590000,
-    discount: 28,
+
     rating: 4.8,
-    badgeIcon: "https://salt.tikicdn.com/ts/upload/f7/9e/83/ab28365ea395893fe5abac88b5103444.png",
+    badgeIcon:
+      "https://salt.tikicdn.com/ts/upload/f7/9e/83/ab28365ea395893fe5abac88b5103444.png",
     isFreeShip: "img_giao_ngay.png",
     deliveryTime: "Giao siêu tốc 2h",
-    madeIn: "Made in Vietnam"
-},
-{
+    madeIn: "Made in Vietnam",
+  },
+  {
     id: 21,
-    image: "https://salt.tikicdn.com/cache/750x750/ts/product/6d/7a/12/91bc4fde63b406a543ae5e29b3a7723f.jpg.webp",
+    image:
+      "https://salt.tikicdn.com/cache/750x750/ts/product/6d/7a/12/91bc4fde63b406a543ae5e29b3a7723f.jpg.webp",
     name: "Tủ lạnh Samsung Inverter 236L RT22M4032BY/SV",
     price: 5990000,
     originalPrice: 7490000,
     discount: 20,
-    rating: 4.6,
-    badgeIcon: "https://salt.tikicdn.com/ts/upload/c2/bc/6d/ff18cc8968e2bbb43f7ac58efbfafdff.png",
+
+    badgeIcon:
+      "https://salt.tikicdn.com/ts/upload/c2/bc/6d/ff18cc8968e2bbb43f7ac58efbfafdff.png",
     deliveryTime: "Giao thứ 5, 23/10",
-    madeIn: "Made in Thailand"
-},
-{
+    madeIn: "Made in Thailand",
+  },
+  {
     id: 22,
-    image: "https://salt.tikicdn.com/cache/750x750/ts/product/60/74/68/00c2f5c08079d18667456aac273b2f4a.png.webp",
+    image:
+      "https://salt.tikicdn.com/cache/750x750/ts/product/60/74/68/00c2f5c08079d18667456aac273b2f4a.png.webp",
     name: "Bàn phím cơ Logitech G Pro X Wireless Gaming",
     price: 3790000,
     originalPrice: 4990000,
     discount: 24,
     rating: 4.9,
-    badgeIcon: "https://salt.tikicdn.com/ts/upload/f7/9e/83/ab28365ea395893fe5abac88b5103444.png",
+    badgeIcon:
+      "https://salt.tikicdn.com/ts/upload/f7/9e/83/ab28365ea395893fe5abac88b5103444.png",
     isFreeShip: "img_giao_ngay.png",
     deliveryTime: "Giao siêu tốc 2h",
-    madeIn: "Made in China"
-},
-{
+  },
+  {
     id: 23,
-    image: "https://salt.tikicdn.com/cache/750x750/ts/product/40/c7/34/725a76d74b770da8c4f35b4b2501d70e.png.webp",
+    image:
+      "https://salt.tikicdn.com/cache/750x750/ts/product/40/c7/34/725a76d74b770da8c4f35b4b2501d70e.png.webp",
     name: "Nước hoa Chanel Bleu De Chanel EDP 100ml",
     price: 3850000,
     originalPrice: 4500000,
     discount: 14,
-    rating: 4.9,
-    badgeIcon: "https://salt.tikicdn.com/ts/upload/c2/bc/6d/ff18cc8968e2bbb43f7ac58efbfafdff.png",
+
+    badgeIcon:
+      "https://salt.tikicdn.com/ts/upload/c2/bc/6d/ff18cc8968e2bbb43f7ac58efbfafdff.png",
     isFreeShip: "img_giao_ngay.png",
     deliveryTime: "Giao siêu tốc 2h",
-    madeIn: "Made in France"
-},
-{
+    madeIn: "Made in France",
+  },
+  {
     id: 24,
-    image: "https://salt.tikicdn.com/cache/750x750/ts/product/7a/d5/29/01fb28f59c68276df3ad4c391c5be314.jpg.webp",
+    image:
+      "https://salt.tikicdn.com/cache/750x750/ts/product/7a/d5/29/01fb28f59c68276df3ad4c391c5be314.jpg.webp",
     name: "Máy ảnh Canon EOS M50 Mark II Kit 15-45mm",
     price: 16990000,
-    originalPrice: 21990000,
-    discount: 23,
+
     rating: 4.8,
-    badgeIcon: "https://salt.tikicdn.com/ts/upload/f7/9e/83/ab28365ea395893fe5abac88b5103444.png",
+    badgeIcon:
+      "https://salt.tikicdn.com/ts/upload/f7/9e/83/ab28365ea395893fe5abac88b5103444.png",
     deliveryTime: "Giao thứ 5, 23/10",
-    madeIn: "Made in Japan"
-},
-{
+    madeIn: "Made in Japan",
+  },
+  {
     id: 25,
-    image: "https://salt.tikicdn.com/cache/750x750/ts/product/90/49/97/ec88ab408c1997378344486c94dbac40.jpg.webp",
+    image:
+      "https://salt.tikicdn.com/cache/750x750/ts/product/90/49/97/ec88ab408c1997378344486c94dbac40.jpg.webp",
     name: "Quần jean nam Levi's 511 Slim Fit",
     price: 1490000,
     originalPrice: 2190000,
     discount: 32,
     rating: 4.7,
-    badgeIcon: "https://salt.tikicdn.com/ts/upload/c2/bc/6d/ff18cc8968e2bbb43f7ac58efbfafdff.png",
+    badgeIcon:
+      "https://salt.tikicdn.com/ts/upload/c2/bc/6d/ff18cc8968e2bbb43f7ac58efbfafdff.png",
     isFreeShip: "img_giao_ngay.png",
     deliveryTime: "Giao siêu tốc 2h",
-    madeIn: "Made in Vietnam"
-},
-{
+    madeIn: "Made in Vietnam",
+  },
+  {
     id: 26,
-    image: "https://salt.tikicdn.com/cache/750x750/ts/product/65/3a/ff/230e1f66e52327ab5290928e796c9213.png.webp",
+    image:
+      "https://salt.tikicdn.com/cache/750x750/ts/product/65/3a/ff/230e1f66e52327ab5290928e796c9213.png.webp",
     name: "Máy xay sinh tố Philips HR2222/00 700W",
     price: 1290000,
     originalPrice: 1790000,
     discount: 28,
-    rating: 4.6,
-    badgeIcon: "https://salt.tikicdn.com/ts/upload/f7/9e/83/ab28365ea395893fe5abac88b5103444.png",
+
+    badgeIcon:
+      "https://salt.tikicdn.com/ts/upload/f7/9e/83/ab28365ea395893fe5abac88b5103444.png",
     isFreeShip: "img_giao_ngay.png",
     deliveryTime: "Giao siêu tốc 2h",
-    madeIn: "Made in Indonesia"
-},
-{
+    madeIn: "Made in Indonesia",
+  },
+  {
     id: 27,
-    image: "https://salt.tikicdn.com/cache/750x750/ts/product/22/b0/c3/e92876a7cb2b7f0c16ca0ec59a1140f3.png.webp",
+    image:
+      "https://salt.tikicdn.com/cache/750x750/ts/product/22/b0/c3/e92876a7cb2b7f0c16ca0ec59a1140f3.png.webp",
     name: "Sách - Đắc Nhân Tâm (Tái Bản 2024)",
     price: 67150,
-    originalPrice: 86000,
-    discount: 22,
+
     rating: 4.9,
-    badgeIcon: "https://salt.tikicdn.com/ts/upload/c2/bc/6d/ff18cc8968e2bbb43f7ac58efbfafdff.png",
+    badgeIcon:
+      "https://salt.tikicdn.com/ts/upload/c2/bc/6d/ff18cc8968e2bbb43f7ac58efbfafdff.png",
     isFreeShip: "img_giao_ngay.png",
     deliveryTime: "Giao siêu tốc 2h",
-    madeIn: "Made in Vietnam"
-},
-{
+    madeIn: "Made in Vietnam",
+  },
+  {
     id: 28,
-    image: "https://salt.tikicdn.com/cache/750x750/ts/product/35/01/65/32884ed3d97a5596e1efe266cd29acde.jpg.webp",
+    image:
+      "https://salt.tikicdn.com/cache/750x750/ts/product/35/01/65/32884ed3d97a5596e1efe266cd29acde.jpg.webp",
     name: "Chuột gaming Logitech G502 Hero 16K DPI",
     price: 990000,
     originalPrice: 1390000,
     discount: 29,
     rating: 4.8,
-    badgeIcon: "https://salt.tikicdn.com/ts/upload/f7/9e/83/ab28365ea395893fe5abac88b5103444.png",
+    badgeIcon:
+      "https://salt.tikicdn.com/ts/upload/f7/9e/83/ab28365ea395893fe5abac88b5103444.png",
     isFreeShip: "img_giao_ngay.png",
     deliveryTime: "Giao siêu tốc 2h",
-    madeIn: "Made in China"
-},
-{
+  },
+  {
     id: 29,
-    image: "https://salt.tikicdn.com/cache/750x750/ts/product/22/b0/c3/e92876a7cb2b7f0c16ca0ec59a1140f3.png.webp",
+    image:
+      "https://salt.tikicdn.com/cache/750x750/ts/product/22/b0/c3/e92876a7cb2b7f0c16ca0ec59a1140f3.png.webp",
     name: "Máy hút bụi Xiaomi Mi Robot Vacuum Mop 2 Pro+",
     price: 8990000,
     originalPrice: 11990000,
     discount: 25,
     rating: 4.7,
-    badgeIcon: "https://salt.tikicdn.com/ts/upload/c2/bc/6d/ff18cc8968e2bbb43f7ac58efbfafdff.png",
+    badgeIcon:
+      "https://salt.tikicdn.com/ts/upload/c2/bc/6d/ff18cc8968e2bbb43f7ac58efbfafdff.png",
     deliveryTime: "Giao thứ 5, 23/10",
-    madeIn: "Made in China"
-},
-{
+    madeIn: "Made in China",
+  },
+  {
     id: 30,
-    image: "https://salt.tikicdn.com/cache/750x750/ts/product/35/01/65/32884ed3d97a5596e1efe266cd29acde.jpg.webp",
+    image:
+      "https://salt.tikicdn.com/cache/750x750/ts/product/35/01/65/32884ed3d97a5596e1efe266cd29acde.jpg.webp",
     name: "Kem chống nắng La Roche-Posay Anthelios SPF50+ 50ml",
     price: 385000,
-    originalPrice: 495000,
-    discount: 22,
-    rating: 4.9,
-    badgeIcon: "https://salt.tikicdn.com/ts/upload/f7/9e/83/ab28365ea395893fe5abac88b5103444.png",
+
+    badgeIcon:
+      "https://salt.tikicdn.com/ts/upload/f7/9e/83/ab28365ea395893fe5abac88b5103444.png",
     isFreeShip: "img_giao_ngay.png",
     deliveryTime: "Giao siêu tốc 2h",
-    madeIn: "Made in France"
-},
-{
+    madeIn: "Made in France",
+  },
+  {
     id: 31,
-    image: "https://salt.tikicdn.com/cache/750x750/ts/product/f3/7c/52/d7369f7fc4576f5d5e174a8d79228199.jpg.webp",
+    image:
+      "https://salt.tikicdn.com/cache/750x750/ts/product/f3/7c/52/d7369f7fc4576f5d5e174a8d79228199.jpg.webp",
     name: "Điện thoại OPPO Reno11 F 5G 8GB/256GB",
     price: 8490000,
     originalPrice: 10990000,
     discount: 23,
     rating: 4.6,
-    badgeIcon: "https://salt.tikicdn.com/ts/upload/c2/bc/6d/ff18cc8968e2bbb43f7ac58efbfafdff.png",
+    badgeIcon:
+      "https://salt.tikicdn.com/ts/upload/c2/bc/6d/ff18cc8968e2bbb43f7ac58efbfafdff.png",
     isFreeShip: "img_giao_chieu_mai.png",
     deliveryTime: "Giao chiều thứ 5, 23/10",
-    madeIn: "Made in Vietnam"
-},
-{
+  },
+  {
     id: 32,
-    image: "https://salt.tikicdn.com/cache/750x750/ts/product/c7/a2/3a/c9e6eaa17656191e9fdd8febea6dd87c.jpg.webp",
+    image:
+      "https://salt.tikicdn.com/cache/750x750/ts/product/c7/a2/3a/c9e6eaa17656191e9fdd8febea6dd87c.jpg.webp",
     name: "Máy sấy tóc Dyson Supersonic HD15 Vinca Blue",
     price: 12990000,
     originalPrice: 15990000,
     discount: 19,
-    rating: 4.9,
-    badgeIcon: "https://salt.tikicdn.com/ts/upload/f7/9e/83/ab28365ea395893fe5abac88b5103444.png",
+
+    badgeIcon:
+      "https://salt.tikicdn.com/ts/upload/f7/9e/83/ab28365ea395893fe5abac88b5103444.png",
     deliveryTime: "Giao thứ 5, 23/10",
-    madeIn: "Made in Malaysia"
-},
-{
+    madeIn: "Made in Malaysia",
+  },
+  {
     id: 33,
-    image: "https://salt.tikicdn.com/cache/750x750/media/catalog/product/b/i/bia_loi-song-toi-gian-cua-nguoi-nhat.u2751.d20170222.t225522.277804.jpg.webp",
+    image:
+      "https://salt.tikicdn.com/cache/750x750/media/catalog/product/b/i/bia_loi-song-toi-gian-cua-nguoi-nhat.u2751.d20170222.t225522.277804.jpg.webp",
     name: "Bình giữ nhiệt Lock&Lock 500ml LHC4145",
     price: 245000,
     originalPrice: 350000,
     discount: 30,
     rating: 4.7,
-    badgeIcon: "https://salt.tikicdn.com/ts/upload/c2/bc/6d/ff18cc8968e2bbb43f7ac58efbfafdff.png",
+    badgeIcon:
+      "https://salt.tikicdn.com/ts/upload/c2/bc/6d/ff18cc8968e2bbb43f7ac58efbfafdff.png",
     isFreeShip: "img_giao_ngay.png",
     deliveryTime: "Giao siêu tốc 2h",
-    madeIn: "Made in Korea"
-},
-{
+    madeIn: "Made in Korea",
+  },
+  {
     id: 34,
-    image: "https://salt.tikicdn.com/cache/750x750/ts/product/1c/c5/f8/cabf11d364a21d9b33b188cc544ad508.jpg.webp",
+    image:
+      "https://salt.tikicdn.com/cache/750x750/ts/product/1c/c5/f8/cabf11d364a21d9b33b188cc544ad508.jpg.webp",
     name: "Máy tính bảng iPad Air 5 M1 64GB WiFi",
     price: 14990000,
     originalPrice: 17990000,
     discount: 17,
     rating: 4.8,
-    badgeIcon: "https://salt.tikicdn.com/ts/upload/f7/9e/83/ab28365ea395893fe5abac88b5103444.png",
+    badgeIcon:
+      "https://salt.tikicdn.com/ts/upload/f7/9e/83/ab28365ea395893fe5abac88b5103444.png",
     deliveryTime: "Giao thứ 5, 23/10",
-    madeIn: "Made in China"
-},
-{
+    madeIn: "Made in China",
+  },
+  {
     id: 35,
-    image: "https://salt.tikicdn.com/cache/750x750/ts/product/3a/9c/66/18ecaa9313dcf898ec367fe9a5607e2c.JPG.webp",
+    image:
+      "https://salt.tikicdn.com/cache/750x750/ts/product/3a/9c/66/18ecaa9313dcf898ec367fe9a5607e2c.JPG.webp",
     name: "Áo khoác gió nam Adidas Windbreaker",
     price: 890000,
     originalPrice: 1290000,
     discount: 31,
     rating: 4.6,
-    badgeIcon: "https://salt.tikicdn.com/ts/upload/c2/bc/6d/ff18cc8968e2bbb43f7ac58efbfafdff.png",
+    badgeIcon:
+      "https://salt.tikicdn.com/ts/upload/c2/bc/6d/ff18cc8968e2bbb43f7ac58efbfafdff.png",
     isFreeShip: "img_giao_ngay.png",
     deliveryTime: "Giao siêu tốc 2h",
-    madeIn: "Made in Vietnam"
-},
-{
+    madeIn: "Made in Vietnam",
+  },
+  {
     id: 36,
-    image: "https://salt.tikicdn.com/cache/750x750/ts/product/63/09/97/56d478a87f5df723ca38e0ed628e7f55.jpg.webp",
+    image:
+      "https://salt.tikicdn.com/cache/750x750/ts/product/63/09/97/56d478a87f5df723ca38e0ed628e7f55.jpg.webp",
     name: "Nồi chiên không dầu Philips HD9252/90 4.1L",
     price: 2490000,
     originalPrice: 3490000,
     discount: 29,
     rating: 4.8,
-    badgeIcon: "https://salt.tikicdn.com/ts/upload/f7/9e/83/ab28365ea395893fe5abac88b5103444.png",
+    badgeIcon:
+      "https://salt.tikicdn.com/ts/upload/f7/9e/83/ab28365ea395893fe5abac88b5103444.png",
     isFreeShip: "img_giao_ngay.png",
     deliveryTime: "Giao siêu tốc 2h",
-    madeIn: "Made in Indonesia"
-},
-{
+    madeIn: "Made in Indonesia",
+  },
+  {
     id: 37,
-    image: "https://salt.tikicdn.com/cache/750x750/ts/product/c1/df/60/7722d392a4a22f7191a03e0d27b214b4.jpg.webp",
+    image:
+      "https://salt.tikicdn.com/cache/750x750/ts/product/c1/df/60/7722d392a4a22f7191a03e0d27b214b4.jpg.webp",
     name: "Serum Vitamin C The Ordinary 30ml",
     price: 185000,
     originalPrice: 250000,
     discount: 26,
     rating: 4.7,
-    badgeIcon: "https://salt.tikicdn.com/ts/upload/c2/bc/6d/ff18cc8968e2bbb43f7ac58efbfafdff.png",
+    badgeIcon:
+      "https://salt.tikicdn.com/ts/upload/c2/bc/6d/ff18cc8968e2bbb43f7ac58efbfafdff.png",
     isFreeShip: "img_giao_ngay.png",
     deliveryTime: "Giao siêu tốc 2h",
-    madeIn: "Made in Canada"
-},
-{
+    madeIn: "Made in Canada",
+  },
+  {
     id: 38,
-    image: "https://salt.tikicdn.com/cache/750x750/ts/product/b6/9a/44/5db569fbc86af9076a20dfa3b3628705.jpg.webp",
+    image:
+      "https://salt.tikicdn.com/cache/750x750/ts/product/b6/9a/44/5db569fbc86af9076a20dfa3b3628705.jpg.webp",
     name: "Loa soundbar Samsung HW-Q600C 3.1.2ch",
     price: 7990000,
     originalPrice: 10990000,
     discount: 27,
     rating: 4.7,
-    badgeIcon: "https://salt.tikicdn.com/ts/upload/f7/9e/83/ab28365ea395893fe5abac88b5103444.png",
+    badgeIcon:
+      "https://salt.tikicdn.com/ts/upload/f7/9e/83/ab28365ea395893fe5abac88b5103444.png",
     deliveryTime: "Giao thứ 5, 23/10",
-    madeIn: "Made in Vietnam"
-},
-{
+    madeIn: "Made in Vietnam",
+  },
+  {
     id: 39,
-    image: "https://salt.tikicdn.com/cache/750x750/ts/product/40/2d/51/b4eba07740f223d62793e0b7c8f89510.jpg.webp",
+    image:
+      "https://salt.tikicdn.com/cache/750x750/ts/product/40/2d/51/b4eba07740f223d62793e0b7c8f89510.jpg.webp",
     name: "Giày cao gót nữ Charles & Keith Pointed Toe",
     price: 1590000,
     originalPrice: 2290000,
     discount: 31,
     rating: 4.6,
-    badgeIcon: "https://salt.tikicdn.com/ts/upload/c2/bc/6d/ff18cc8968e2bbb43f7ac58efbfafdff.png",
+    badgeIcon:
+      "https://salt.tikicdn.com/ts/upload/c2/bc/6d/ff18cc8968e2bbb43f7ac58efbfafdff.png",
     isFreeShip: "img_giao_ngay.png",
     deliveryTime: "Giao siêu tốc 2h",
-    madeIn: "Made in China"
-},
-{
+    madeIn: "Made in China",
+  },
+  {
     id: 40,
-    image: "https://salt.tikicdn.com/cache/750x750/ts/product/b7/2a/79/5a477585d8b95154800b3d577aac42f2.jpg.webp",
+    image:
+      "https://salt.tikicdn.com/cache/750x750/ts/product/b7/2a/79/5a477585d8b95154800b3d577aac42f2.jpg.webp",
     name: "Máy pha cà phê Delonghi Magnifica S ECAM22.110.B",
     price: 11990000,
     originalPrice: 15990000,
     discount: 25,
     rating: 4.8,
-    badgeIcon: "https://salt.tikicdn.com/ts/upload/f7/9e/83/ab28365ea395893fe5abac88b5103444.png",
+    badgeIcon:
+      "https://salt.tikicdn.com/ts/upload/f7/9e/83/ab28365ea395893fe5abac88b5103444.png",
     deliveryTime: "Giao thứ 5, 23/10",
-    madeIn: "Made in Romania"
-},
-{
+    madeIn: "Made in Romania",
+  },
+  {
     id: 41,
-    image: "https://salt.tikicdn.com/cache/750x750/ts/product/87/72/52/757e0fb844f16ea6adc9246020db9dd0.png.webp",
+    image:
+      "https://salt.tikicdn.com/cache/750x750/ts/product/87/72/52/757e0fb844f16ea6adc9246020db9dd0.png.webp",
     name: "Sữa tắm Dove Deeply Nourishing 530ml",
     price: 89000,
     originalPrice: 125000,
     discount: 29,
     rating: 4.7,
-    badgeIcon: "https://salt.tikicdn.com/ts/upload/c2/bc/6d/ff18cc8968e2bbb43f7ac58efbfafdff.png",
+    badgeIcon:
+      "https://salt.tikicdn.com/ts/upload/c2/bc/6d/ff18cc8968e2bbb43f7ac58efbfafdff.png",
     isFreeShip: "img_giao_ngay.png",
     deliveryTime: "Giao siêu tốc 2h",
-    madeIn: "Made in Vietnam"
-},
-{
+    madeIn: "Made in Vietnam",
+  },
+  {
     id: 42,
-    image: "https://salt.tikicdn.com/cache/750x750/ts/product/f6/90/1a/7798d89cd8c6808df55571c8af40a286.jpg.webp",
+    image:
+      "https://salt.tikicdn.com/cache/750x750/ts/product/f6/90/1a/7798d89cd8c6808df55571c8af40a286.jpg.webp",
     name: "Điện thoại Xiaomi 14 5G 12GB/512GB",
     price: 19990000,
     originalPrice: 24990000,
     discount: 20,
     rating: 4.8,
-    badgeIcon: "https://salt.tikicdn.com/ts/upload/f7/9e/83/ab28365ea395893fe5abac88b5103444.png",
+    badgeIcon:
+      "https://salt.tikicdn.com/ts/upload/f7/9e/83/ab28365ea395893fe5abac88b5103444.png",
     isFreeShip: "img_giao_chieu_mai.png",
     deliveryTime: "Giao chiều thứ 5, 23/10",
-    madeIn: "Made in China"
-},
-{
+    madeIn: "Made in China",
+  },
+  {
     id: 43,
-    image: "https://salt.tikicdn.com/cache/750x750/ts/product/01/f4/13/50ca15d170950740c4954919d4c65ced.png.webp",
+    image:
+      "https://salt.tikicdn.com/cache/750x750/ts/product/01/f4/13/50ca15d170950740c4954919d4c65ced.png.webp",
     name: "Màn hình gaming ASUS TUF VG27AQ 27inch 165Hz",
     price: 6490000,
     originalPrice: 8990000,
     discount: 28,
     rating: 4.8,
-    badgeIcon: "https://salt.tikicdn.com/ts/upload/c2/bc/6d/ff18cc8968e2bbb43f7ac58efbfafdff.png",
+    badgeIcon:
+      "https://salt.tikicdn.com/ts/upload/c2/bc/6d/ff18cc8968e2bbb43f7ac58efbfafdff.png",
     deliveryTime: "Giao thứ 5, 23/10",
-    madeIn: "Made in China"
-},
-{
+    madeIn: "Made in China",
+  },
+  {
     id: 44,
-    image: "https://salt.tikicdn.com/cache/750x750/ts/product/79/c8/22/746f1fb509c92295cdecdf518ef1c4ad.jpg.webp",
+    image:
+      "https://salt.tikicdn.com/cache/750x750/ts/product/79/c8/22/746f1fb509c92295cdecdf518ef1c4ad.jpg.webp",
     name: "Túi xách nữ Coach Tabby Shoulder Bag",
     price: 8990000,
     originalPrice: 12990000,
     discount: 31,
     rating: 4.9,
-    badgeIcon: "https://salt.tikicdn.com/ts/upload/f7/9e/83/ab28365ea395893fe5abac88b5103444.png",
+    badgeIcon:
+      "https://salt.tikicdn.com/ts/upload/f7/9e/83/ab28365ea395893fe5abac88b5103444.png",
     isFreeShip: "img_giao_ngay.png",
     deliveryTime: "Giao siêu tốc 2h",
-    madeIn: "Made in Vietnam"
-},
-{
+    madeIn: "Made in Vietnam",
+  },
+  {
     id: 45,
-    image: "https://salt.tikicdn.com/cache/750x750/ts/product/fb/95/e9/c6d32a528f954f8322944d4d0d1411a0.jpg.webp",
+    image:
+      "https://salt.tikicdn.com/cache/750x750/ts/product/fb/95/e9/c6d32a528f954f8322944d4d0d1411a0.jpg.webp",
     name: "Máy giặt Electrolux Inverter 9kg EWF9024BDWB",
     price: 7490000,
     originalPrice: 10990000,
     discount: 32,
     rating: 4.7,
-    badgeIcon: "https://salt.tikicdn.com/ts/upload/c2/bc/6d/ff18cc8968e2bbb43f7ac58efbfafdff.png",
+    badgeIcon:
+      "https://salt.tikicdn.com/ts/upload/c2/bc/6d/ff18cc8968e2bbb43f7ac58efbfafdff.png",
     deliveryTime: "Giao thứ 5, 23/10",
-    madeIn: "Made in Thailand"
-},
-{
+    madeIn: "Made in Thailand",
+  },
+  {
     id: 46,
-    image: "https://salt.tikicdn.com/cache/750x750/ts/product/16/f6/98/113c622445fffc991cb6bb5e2876a90e.jpg.webp",
+    image:
+      "https://salt.tikicdn.com/cache/750x750/ts/product/16/f6/98/113c622445fffc991cb6bb5e2876a90e.jpg.webp",
     name: "Quạt điều hòa Kangaroo KG50F68 Remote",
     price: 3290000,
     originalPrice: 4590000,
     discount: 28,
     rating: 4.6,
-    badgeIcon: "https://salt.tikicdn.com/ts/upload/f7/9e/83/ab28365ea395893fe5abac88b5103444.png",
+    badgeIcon:
+      "https://salt.tikicdn.com/ts/upload/f7/9e/83/ab28365ea395893fe5abac88b5103444.png",
     isFreeShip: "img_giao_ngay.png",
     deliveryTime: "Giao siêu tốc 2h",
-    madeIn: "Made in Vietnam"
-},
-{
+    madeIn: "Made in Vietnam",
+  },
+  {
     id: 47,
-    image: "https://salt.tikicdn.com/cache/750x750/ts/product/c7/15/2a/0166ad095dc2035584375f4cebef1554.jpg.webp",
+    image:
+      "https://salt.tikicdn.com/cache/750x750/ts/product/c7/15/2a/0166ad095dc2035584375f4cebef1554.jpg.webp",
     name: "Sách - Tôi Thấy Hoa Vàng Trên Cỏ Xanh",
     price: 95200,
     originalPrice: 140000,
     discount: 32,
     rating: 4.9,
-    badgeIcon: "https://salt.tikicdn.com/ts/upload/c2/bc/6d/ff18cc8968e2bbb43f7ac58efbfafdff.png",
+    badgeIcon:
+      "https://salt.tikicdn.com/ts/upload/c2/bc/6d/ff18cc8968e2bbb43f7ac58efbfafdff.png",
     isFreeShip: "img_giao_ngay.png",
     deliveryTime: "Giao siêu tốc 2h",
-    madeIn: "Made in Vietnam"
-},
-{
+    madeIn: "Made in Vietnam",
+  },
+  {
     id: 48,
-    image: "https://salt.tikicdn.com/cache/750x750/ts/product/10/c4/aa/a6ed84d63a9d3253a3c873d139e7ff36.png.webp",
+    image:
+      "https://salt.tikicdn.com/cache/750x750/ts/product/10/c4/aa/a6ed84d63a9d3253a3c873d139e7ff36.png.webp",
     name: "Micro không dây Shure SM58 chuyên nghiệp",
     price: 2890000,
     originalPrice: 3990000,
     discount: 28,
     rating: 4.8,
-    badgeIcon: "https://salt.tikicdn.com/ts/upload/f7/9e/83/ab28365ea395893fe5abac88b5103444.png",
+    badgeIcon:
+      "https://salt.tikicdn.com/ts/upload/f7/9e/83/ab28365ea395893fe5abac88b5103444.png",
     deliveryTime: "Giao thứ 5, 23/10",
-    madeIn: "Made in Mexico"
-},
-{
+    madeIn: "Made in Mexico",
+  },
+  {
     id: 49,
-    image: "https://salt.tikicdn.com/cache/750x750/ts/product/94/d3/7e/25651dd49dba6b35ffb35167fb0a249f.png.webp",
+    image:
+      "https://salt.tikicdn.com/cache/750x750/ts/product/94/d3/7e/25651dd49dba6b35ffb35167fb0a249f.png.webp",
     name: "Kem dưỡng ẩm Neutrogena Hydro Boost 50g",
     price: 295000,
     originalPrice: 420000,
     discount: 30,
     rating: 4.7,
-    badgeIcon: "https://salt.tikicdn.com/ts/upload/c2/bc/6d/ff18cc8968e2bbb43f7ac58efbfafdff.png",
+    badgeIcon:
+      "https://salt.tikicdn.com/ts/upload/c2/bc/6d/ff18cc8968e2bbb43f7ac58efbfafdff.png",
     isFreeShip: "img_giao_ngay.png",
     deliveryTime: "Giao siêu tốc 2h",
-    madeIn: "Made in USA"
-},
-{
+    madeIn: "Made in USA",
+  },
+  {
     id: 50,
-    image: "https://salt.tikicdn.com/cache/750x750/ts/product/a7/3d/54/de778837a0a357a2596684034403af59.png.webp",
+    image:
+      "https://salt.tikicdn.com/cache/750x750/ts/product/a7/3d/54/de778837a0a357a2596684034403af59.png.webp",
     name: "Chuột không dây Logitech MX Master 3S Wireless",
     price: 2290000,
     originalPrice: 3190000,
     discount: 28,
     rating: 4.9,
-    badgeIcon: "https://salt.tikicdn.com/ts/upload/f7/9e/83/ab28365ea395893fe5abac88b5103444.png",
+    badgeIcon:
+      "https://salt.tikicdn.com/ts/upload/f7/9e/83/ab28365ea395893fe5abac88b5103444.png",
     isFreeShip: "img_giao_ngay.png",
     deliveryTime: "Giao siêu tốc 2h",
-    madeIn: "Made in China"
-},
-{
+    madeIn: "Made in China",
+  },
+  {
     id: 51,
-    image: "https://salt.tikicdn.com/cache/750x750/ts/product/71/4d/fd/6b78e4a1728c2d9b09d79207dce94768.jpg.webp",
+    image:
+      "https://salt.tikicdn.com/cache/750x750/ts/product/71/4d/fd/6b78e4a1728c2d9b09d79207dce94768.jpg.webp",
     name: "Nồi cơm điện tử Toshiba RC-18NMFVN(WT) 1.8L",
     price: 1890000,
     originalPrice: 2590000,
     discount: 27,
     rating: 4.7,
-    badgeIcon: "https://salt.tikicdn.com/ts/upload/c2/bc/6d/ff18cc8968e2bbb43f7ac58efbfafdff.png",
+    badgeIcon:
+      "https://salt.tikicdn.com/ts/upload/c2/bc/6d/ff18cc8968e2bbb43f7ac58efbfafdff.png",
     isFreeShip: "img_giao_ngay.png",
     deliveryTime: "Giao siêu tốc 2h",
-    madeIn: "Made in Vietnam"
-},
-{
+    madeIn: "Made in Vietnam",
+  },
+  {
     id: 52,
-    image: "https://salt.tikicdn.com/cache/750x750/ts/product/66/82/5a/6789dce37d6a2d6926df6bf55e0cee79.jpg.webp",
+    image:
+      "https://salt.tikicdn.com/cache/750x750/ts/product/66/82/5a/6789dce37d6a2d6926df6bf55e0cee79.jpg.webp",
     name: "Máy lọc nước RO Kangaroo KG100HA 10 lõi",
     price: 3990000,
     originalPrice: 5490000,
     discount: 27,
     rating: 4.8,
-    badgeIcon: "https://salt.tikicdn.com/ts/upload/f7/9e/83/ab28365ea395893fe5abac88b5103444.png",
+    badgeIcon:
+      "https://salt.tikicdn.com/ts/upload/f7/9e/83/ab28365ea395893fe5abac88b5103444.png",
     isFreeShip: "img_giao_ngay.png",
     deliveryTime: "Giao siêu tốc 2h",
-    madeIn: "Made in Vietnam"
-},
-{
+    madeIn: "Made in Vietnam",
+  },
+  {
     id: 53,
-    image: "https://salt.tikicdn.com/cache/750x750/ts/product/65/3a/ff/230e1f66e52327ab5290928e796c9213.png.webp",
+    image:
+      "https://salt.tikicdn.com/cache/750x750/ts/product/65/3a/ff/230e1f66e52327ab5290928e796c9213.png.webp",
     name: "Máy xay sinh tố Philips HR2222/00 700W",
     price: 1290000,
     originalPrice: 1790000,
     discount: 28,
     rating: 4.6,
-    badgeIcon: "https://salt.tikicdn.com/ts/upload/c2/bc/6d/ff18cc8968e2bbb43f7ac58efbfafdff.png",
+    badgeIcon:
+      "https://salt.tikicdn.com/ts/upload/c2/bc/6d/ff18cc8968e2bbb43f7ac58efbfafdff.png",
     isFreeShip: "img_giao_ngay.png",
     deliveryTime: "Giao siêu tốc 2h",
-    madeIn: "Made in Indonesia"
-},
-{
+    madeIn: "Made in Indonesia",
+  },
+  {
     id: 54,
-    image: "https://salt.tikicdn.com/cache/750x750/ts/product/a7/66/64/4accb364a876520e29a3ce81f7a9efc5.jpg.webp",
+    image:
+      "https://salt.tikicdn.com/cache/750x750/ts/product/a7/66/64/4accb364a876520e29a3ce81f7a9efc5.jpg.webp",
     name: "Bình đun siêu tốc Philips HD9350/90 1.7L",
     price: 590000,
     originalPrice: 890000,
     discount: 34,
     rating: 4.7,
-    badgeIcon: "https://salt.tikicdn.com/ts/upload/f7/9e/83/ab28365ea395893fe5abac88b5103444.png",
+    badgeIcon:
+      "https://salt.tikicdn.com/ts/upload/f7/9e/83/ab28365ea395893fe5abac88b5103444.png",
     isFreeShip: "img_giao_ngay.png",
     deliveryTime: "Giao siêu tốc 2h",
-    madeIn: "Made in China"
-}
+    madeIn: "Made in China",
+  },
 ];

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import { FaStar } from "react-icons/fa";
 import { PrevArrow, NextArrow } from "../shared/NavigationArrows";
 import { hotInternationalData } from "../../data/hotInternationalData";
@@ -60,18 +61,19 @@ const HotInternational = () => {
 
   return (
     <div className="hot-international">
+
       <div className="hot-international-header">
         <h2 className="hot-international-title">Hàng ngoại giá hot</h2>
-        <a href="/international-products" className="view-all">
+        <Link to="/international-products" className="view-all">
           Xem tất cả
-        </a>
+        </Link>
       </div>
 
       <div className="hot-international-grid-wrapper">
         <PrevArrow onClick={handlePrev} />
         <div className={`hot-international-grid slide-${direction}`} key={currentPage}>
           {products.map((product) => (
-            <div key={product.id} className="hot-product-card">
+            <Link to={`/product/${product.id}`} key={product.id} className="hot-product-card">
               <div className="hot-product-image">
                 <img src={product.image} alt={product.title} />
               </div>
@@ -102,11 +104,13 @@ const HotInternational = () => {
                   )}
                 </div>
 
-                {product.madeIn && (
-                  <div className="made-in">{product.madeIn}</div>
-                )}
 
                 <div className="hot-product-bottom-badges">
+                  {product.madeIn && (
+                    <div className="made-in">{product.madeIn}</div>
+                  )}
+
+
                   <div className="divider"></div>
                   <div className="badge-row">
                     {product.badge === "NOW" && (
@@ -121,7 +125,7 @@ const HotInternational = () => {
                   </div>
                 </div>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
         <NextArrow onClick={handleNext} />

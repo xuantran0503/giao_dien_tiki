@@ -1,20 +1,29 @@
 import React from "react";
-import Header from "./components/Header/Header";
-import Banner from "./components/Banner/Banner";
-import Footer from "./components/Footer/Footer";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import ScrollToTop from "./components/ScrollToTop";
+import HomePage from "./pages/HomePage";
+import CategoryPage from "./pages/CategoryPage";
+import ProductDetailPage from "./pages/ProductDetailPage";
+import FlashSalePage from "./pages/FlashSalePage";
+import PromotionPage from "./pages/PromotionPage";
+import BrandPage from "./pages/BrandPage";
+import AboutPage from "./pages/AboutPage";
 import "./App.css";
-import FloatingButtons from "./components/FloatingButtons/FloatingButtons";
-import YouMayLike from "./components/YouMayLike/YouMayLike";
 
 function App() {
   return (
-    <div className="App">
-      <Header />
-      <Banner />
-      {/* <YouMayLike /> */}
-      <FloatingButtons />
-      {/* <Footer /> */}
-    </div>
+    <Router>
+      <ScrollToTop />
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/category/:categoryName" element={<CategoryPage />} />
+        <Route path="/product/:productId" element={<ProductDetailPage />} />
+        <Route path="/flash-sale" element={<FlashSalePage />} />
+        <Route path="/promotion/:promoType" element={<PromotionPage />} />
+        <Route path="/brand/:brandId" element={<BrandPage />} />
+        <Route path="/about" element={<AboutPage />} />
+      </Routes>
+    </Router>
   );
 }
 

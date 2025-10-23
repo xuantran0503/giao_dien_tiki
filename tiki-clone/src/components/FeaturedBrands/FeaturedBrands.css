@@ -27,6 +27,7 @@
 }
 
 .brands-grid {
+
     display: grid;
     grid-template-columns: repeat(6, 1fr);
     gap: 10px;
@@ -46,6 +47,7 @@
         opacity: 0;
         transform: translateX(40px);
     }
+
     to {
         opacity: 1;
         transform: translateX(0);
@@ -57,6 +59,7 @@
         opacity: 0;
         transform: translateX(-40px);
     }
+
     to {
         opacity: 1;
         transform: translateX(0);
@@ -70,11 +73,13 @@
     overflow: hidden;
     display: flex;
     flex-direction: column;
-    flex: 1;
-    min-width: 0;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    /* flex: 1; */
+    /* min-width: 0; */
+    /* transition: transform 0.2s ease, box-shadow 0.2s ease; */
     cursor: pointer;
     padding: 12px;
+    text-decoration: none;
+    color: inherit;
 }
 
 /* .brand-card:hover {
@@ -86,7 +91,7 @@
 .brand-image-wrapper {
     position: relative;
     width: 100%;
-    aspect-ratio: 1 / 1;
+    /* aspect-ratio: 1 / 1; */
     display: flex;
     align-items: center;
     justify-content: center;

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import { PrevArrow, NextArrow } from "../shared/NavigationArrows";
 import { youMayLikeData } from "../../data/youMayLikeData";
 import "./YouMayLike.css";
@@ -55,7 +56,7 @@ const YouMayLike = () => {
                 <PrevArrow onClick={handlePrev} />
                 <div className={`products-grid slide-${direction}`} key={currentPage}>
                     {products.map((product) => (
-                        <div key={product.id} className="product-card">
+                        <Link to={`/product/${product.id}`} key={product.id} className="product-card">
 
                             <div className="product-image-wrapper">
                                 <img src={product.image} alt={product.name} className="product-image" />
@@ -86,13 +87,13 @@ const YouMayLike = () => {
                                             <span className="original-price">{formatPrice(product.originalPrice)}<sup>₫</sup></span>
                                         </div>
                                     )}
-                                    {product.madeIn && (
-                                        <div className="made-in">{product.madeIn}</div>
-                                    )}
 
                                 </div>
 
                                 <div className="product-bottom-badges">
+                                    {product.madeIn && (
+                                        <div className="made-in">{product.madeIn}</div>
+                                    )}
                                     <div className="divider"></div>
                                     <div className="badge-row">
 
@@ -109,7 +110,7 @@ const YouMayLike = () => {
                                 </div>
 
                             </div>
-                        </div>
+                        </Link>
                     ))}
                 </div>
                 <NextArrow onClick={handleNext} />

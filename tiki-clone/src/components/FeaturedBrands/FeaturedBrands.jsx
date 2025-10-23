@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import { PrevArrow, NextArrow } from "../shared/NavigationArrows";
 import { featuredBrandsData } from "../../data/featuredBrandsData";
 import "./FeaturedBrands.css";
@@ -34,11 +35,11 @@ const FeaturedBrands = () => {
         <PrevArrow onClick={handlePrev} />
         <div className={`brands-grid slide-${direction}`} key={currentPage}>
         {brands.map((brand) => (
-          <div key={brand.id} className="brand-card">
+          <Link to={`/brand/${brand.id}`} key={brand.id} className="brand-card">
             <div className="brand-image-wrapper">
               <img src={brand.image} alt={brand.title} className="brand-image" />
             </div>
-          </div>
+          </Link>
         ))}
         </div>
         <NextArrow onClick={handleNext} />

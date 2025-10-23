@@ -5,7 +5,7 @@
     margin-top: 8px;
     width: 100%;
     box-sizing: border-box;
-    max-width: 100%;
+    /* max-width: 100%; */
 }
 
 .flash-sale-header {
@@ -31,15 +31,20 @@
 .flash-text {
     font-size: 20px;
     font-weight: 700;
-    color: #FF424E;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
+    color: rgb(39, 39, 42);
+    /* text-transform: uppercase; */
+    /* letter-spacing: 0.5px; */
 }
 
 .time-badges {
     display: flex;
     gap: 1px;
     align-items: center;
+}
+
+.time-badge.active {
+    background: #FF424E;
+    /* box-shadow: 0 2px 4px rgba(255, 66, 78, 0.3); */
 }
 
 .time-separator {
@@ -65,10 +70,6 @@
     box-sizing: border-box;
 }
 
-.time-badge.active {
-    background: #FF424E;
-    box-shadow: 0 2px 4px rgba(255, 66, 78, 0.3);
-}
 
 .view-all {
     color: #0B74E5;
@@ -77,9 +78,9 @@
     font-weight: 500;
 }
 
-.view-all:hover {
+/* .view-all:hover {
     text-decoration: none;
-}
+} */
 
 .flash-sale-grid-wrapper {
     position: relative;
@@ -133,18 +134,20 @@
     /* border-radius: 8px; */
     /* border: 1px solid #e0e0e0; */
     overflow: hidden;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
     display: flex;
     flex-direction: column;
     flex: 1;
     min-width: 0;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
     cursor: pointer;
+    text-decoration: none;
+    color: inherit;
 }
 
-/* .flash-sale-card:hover {
+.flash-sale-card:hover {
     transform: translateY(-2px);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-} */
+}
 
 .flash-sale-image {
     position: relative;
@@ -170,7 +173,7 @@
     left: 8px;
     background: rgb(255, 219, 222);
     color: rgb(255, 66, 78);
-    padding: 4px 8px;
+    padding: 4px 4px;
     border-radius: 4px;
     font-size: 12px;
     font-weight: 700;
@@ -196,7 +199,7 @@
     color: #FF424E;
     font-size: 16px;
     font-weight: 600;
-    line-height: 1;
+    /* line-height: 1; */
 }
 
 .flash-current-price sup {
@@ -207,45 +210,44 @@
 
 
 .flash-progress-section {
-    display: flex;
-    flex-direction: column;
-    gap: 0;
+    /* display: flex; */
+    /* flex-direction: column; */
+    /* gap: 0;*/
     position: relative;
+
 }
 
-.progress-bar {
+.flash-progress-bar {
     width: 100%;
     height: 15px;
-    /* background: linear-gradient(90deg, #FFE8E9 0%, #FFF5F5 100%); */
     border-radius: 8px;
-    overflow: visible;
-    position: relative;
+    /* overflow: visible; */
+    /* position: relative; */
     background-color: rgb(255, 170, 175);
 }
 
-.progress-fill {
+.flash-progress-fill {
     height: 100%;
-    /* background: linear-gradient(90deg, #c00303 0%, #FF424E 100%); */
+    background: linear-gradient(90deg, #FF5252 0%, #FF424E 100%);
     border-radius: 8px;
-    transition: width 0.3s ease;
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: #e40615;
+    /* transition: width 0.3s ease; */
+    /* position: relative; */
+    /* display: flex; */
+    /* align-items: center; */
+    /* justify-content: center; */
 }
 
-.progress-fill::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 20px;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3));
+.flash-progress-fill::after {
+    /* content: ''; */
+    /* position: absolute; */
+    /* top: 0;
+    right: 0; */
+    /* width: 20px; */
+    /* height: 100%; */
+    /* background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3)); */
 }
 
-.sold-text {
+.flash-sold-text {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -253,12 +255,12 @@
     font-size: 10px;
     color: white;
     font-weight: 600;
-    white-space: nowrap;
-    z-index: 1;
+    /* white-space: nowrap; */
+    /* z-index: 1; */
 }
 
 /* Responsive */
-@media (max-width: 768px) {
+/* @media (max-width: 768px) {
     .flash-sale {
         padding: 12px;
     }
@@ -278,4 +280,10 @@
     .flash-text {
         font-size: 16px;
     }
-}
+} */
+
+/* @media (max-width: 768px) {
+    .flash-sold-text {
+        font-size: 10px;
+    }
+} */

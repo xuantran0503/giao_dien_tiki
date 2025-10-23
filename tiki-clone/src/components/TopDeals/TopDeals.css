@@ -37,11 +37,6 @@
     align-items: center;
 }
 
-.view-all:hover {
-    color: #0B74E5;
-    text-decoration: none;
-}
-
 .deals-grid-wrapper {
     position: relative;
     width: 100%;
@@ -52,7 +47,7 @@
     grid-template-columns: repeat(6, 1fr);
     gap: 10px;
     width: 100%;
-    overflow: visible;
+    /* overflow: visible; */
 }
 
 /* Slide animation for Next (left to right) */
@@ -60,7 +55,6 @@
     animation: slideInFromRight 0.4s ease-out;
 }
 
-/* Slide animation for Prev (right to left) */
 .deals-grid.slide-prev {
     animation: slideInFromLeft 0.4s ease-out;
 }
@@ -93,8 +87,10 @@
     background: #fff;
     border-radius: 8px;
     overflow: hidden;
+    text-decoration: none;
+    color: inherit;
     border: 1px solid #e0e0e0;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    /* transition: transform 0.2s ease, box-shadow 0.2s ease; */
     display: flex;
     flex-direction: column;
     width: 100%;
@@ -162,8 +158,8 @@
     left: 0;
     width: 100%;
     height: auto;
-    z-index: 2;
-    object-fit: contain;
+    /* z-index: 2; */
+    /* object-fit: contain; */
 }
 
 .deal-info {
@@ -172,10 +168,10 @@
     padding: 8px;
     display: flex;
     flex-direction: column;
-    flex: 1;
+    /* flex: 1; */
     justify-content: space-between;
     box-sizing: border-box;
-    overflow: hidden;
+    /* overflow: hidden; */
     max-width: 100%;
 }
 
@@ -193,6 +189,7 @@
     min-height: 16px;
 }
 
+/* 
 .top-badge {
     display: inline-flex;
     align-items: center;
@@ -204,15 +201,15 @@
 .top-badge img {
     width: 14px;
     height: 14px;
-}
+} */
 
 .made-in {
     font-size: 11px;
     color: var(--Alias-Primary---On-Theme, #27272a);
     font-weight: 400;
     margin: 0;
-    word-break: break-word;
-    overflow-wrap: break-word;
+    /* word-break: break-word;
+    overflow-wrap: break-word; */
     max-width: 100%;
 }
 
@@ -234,7 +231,7 @@
     margin-top: 6px;
     padding-top: 0px;
     max-width: 100%;
-    overflow: hidden;
+    /* overflow: hidden; */
 }
 
 .badge-row {
@@ -242,8 +239,8 @@
     gap: 4px;
     align-items: center;
     width: 100%;
-    max-width: 100%;
-    overflow: hidden;
+    /* max-width: 100%; */
+    /* overflow: hidden; */
 }
 
 .deal-bottom-badges img {
@@ -256,9 +253,9 @@
     color: #787878;
     font-weight: 400;
     font-size: 11px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    /* white-space: nowrap; */
+    /* overflow: hidden; */
+    /* text-overflow: ellipsis; */
 }
 
 .deal-title {
@@ -360,6 +357,7 @@
     gap: 2px;
 }
 
+
 .star {
     color: #DEE2E7;
     font-size: 12px;
@@ -370,7 +368,7 @@
 }
 
 .star.half {
-    background: linear-gradient(90deg, #ffc400 50%, #ddd 50%);
+    background: linear-gradient(90deg, #ffc400 50%, #ddd 50%); 
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;

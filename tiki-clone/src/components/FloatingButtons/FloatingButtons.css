@@ -37,6 +37,8 @@
   width: 100%;
   height: 100%;
   border: none;
+  text-decoration: none;
+  color: inherit;
   background: transparent;
   cursor: pointer;
   display: flex;

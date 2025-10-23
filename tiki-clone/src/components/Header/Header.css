@@ -18,14 +18,14 @@
 }
 
 .img-text-banner img {
-    height: 16px;
-    display: block;
+  height: 16px;
+  display: block;
 }
 
-.header-container{
+.header-container {
   max-width: 1440px;
-  margin: 0 auto;      
-  padding: 0 16px;     
+  margin: 0 auto;
+  padding: 0 16px;
   box-sizing: border-box;
   width: 100%;
 }
@@ -33,16 +33,22 @@
 .header-main {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  /* justify-content: space-between; */
   padding: 10px 0;
   gap: 24px;
   width: auto;
 }
 
 
+.logo-tiki {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+
 .logo-tiki img {
   height: 60px;
-  object-fit: contain;
+  /* object-fit: contain; */
 }
 
 
@@ -57,9 +63,9 @@
 .top-row {
   display: flex;
   align-items: center;
-  justify-content: flex-start;
+  /* justify-content: flex-start; */
   width: 100%;
-  gap: 0;
+  /* gap: 0; */
 }
 
 .search {
@@ -79,11 +85,11 @@
   height: 38px;
 }
 
-.search-icon {
+/* .search-icon {
   font-size: 18px;
   color: #999;
   margin-left: 10px;
-}
+} */
 
 .search input {
   flex: 1;
@@ -92,10 +98,11 @@
   outline: none;
   font-size: 14px;
 }
+
 .img-search img {
   width: 20px;
   height: 20px;
-  object-fit: contain;
+  /* object-fit: contain; */
   display: block;
   margin-left: 10px;
 }
@@ -119,8 +126,9 @@
   font-size: 14px;
   font-family: Inter, Arial, sans-serif;
 }
+
 .search-btn:hover {
-  background-color: rgba(0, 96, 255, 0.12); 
+  background-color: rgba(0, 96, 255, 0.12);
   color: #1b6ee8;
   border-color: #1b6ee8;
 
@@ -162,25 +170,28 @@
 .img-home img {
   width: 24px;
 }
-.img-account img{
+
+.img-account img {
   width: 24px;
 }
+
 .img-cart img {
   width: 24px;
 }
 
 .cart-btn {
   position: relative;
-  display: flex;
+  /* display: flex; */
   align-items: center;
-  justify-content: center;
-  text-decoration: none;
+  /* justify-content: center; */
+  /* text-decoration: none; */
   padding: 6px;
   border-radius: 6px;
-  transition: 0.2s;
+  /* transition: 0.2s; */
 }
+
 .cart-btn:hover {
-  
+
   background-color: rgba(0, 96, 255, 0.12);
 }
 
@@ -197,7 +208,7 @@
   border-radius: 50%;
 }
 
-.dau1{
+.dau1 {
   color: #ccc;
   font-weight: 400;
   font-size: 20px;
@@ -220,6 +231,7 @@
   gap: 6px;
   font-size: 14px;
 }
+
 .img-location img {
   width: 18px;
   height: 18px;
@@ -231,8 +243,8 @@
 .text-location1 {
   color: #808098;
   font-size: 14px;
-  font-weight: 400;    
-  margin: 0 ;
+  font-weight: 400;
+  margin: 0;
 
 }
 
@@ -246,23 +258,15 @@
   display: flex;
   align-items: center;
   gap: 18px;
-  overflow-x: auto;
-  
+  /* overflow-x: auto; */
+
 }
+
 .menu a {
   text-decoration: none;
   color: #808098;
-  border-radius: 6px;
+  /* border-radius: 6px; */
   font-size: 14px;
-}
-
-.features-container{
-  max-width: 1440px;
-  margin: 0 auto;      
-  padding: 0 16px;     
-  box-sizing: border-box;
-  display: flex;
-  width: 100%;
 }
 
 .features-row {
@@ -274,47 +278,78 @@
   width: 100%;
 }
 
+.features-container {
+  max-width: 1440px;
+  margin: 0 auto;
+  display: flex;
+  width: 100%;
+  padding: 0 16px;
+  box-sizing: border-box;
+}
+
+
 .feature-item {
   display: flex;
   align-items: center;
   gap: 4px;
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
 }
 
-.feat-text {
-  color: #27272a;
-  font-family: Inter, Arial, sans-serif;
-  font-size: 12px;
-  font-weight: 400;
+.feature-item:hover {
+  opacity: 0.8;
+}
+
+.feature-item img,
+.feature-item span,
+.feature-item div {
+  pointer-events: none;
 }
 
 .feat-text-1 {
   color: #003ea1;
   font-weight: bold;
   font-size: 14px;
-  padding: 0 10px ;
+  padding: 0 10px;
   margin-right: 10px;
 }
+
+.feat-text {
+  color: #27272a;
+  font-family: Inter, Arial, sans-serif;
+  font-size: 12px;
+  pointer-events: none;
+  font-weight: 400;
+}
+
 
 .img-hang-that img {
   width: 24px;
 }
+
 .img-freeship img {
   width: 24px;
 }
+
 .img-hoan-tien img {
   width: 24px;
 }
+
 .img-doi-tra img {
   width: 24px;
 }
+
 .img-giao-nhanh img {
   width: 24px;
 }
+
 .img-gia-re img {
   width: 24px;
 }
 
-.feat-icon {
+/* .feat-icon {
   width: 24px;
   height: 24px;
   display: inline-flex;
@@ -322,7 +357,7 @@
   justify-content: center;
   background: #f5f9ff;
   border-radius: 50%;
-}
+} */
 
 .dau2 {
   width: 1px;

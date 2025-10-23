@@ -63,6 +63,8 @@
     background: #fff;
     border-radius: 8px;
     border: 1px solid #e0e0e0;
+    text-decoration: none;
+    color: inherit;
     overflow: hidden;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
     display: flex;

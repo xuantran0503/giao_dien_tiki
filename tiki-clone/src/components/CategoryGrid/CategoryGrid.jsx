@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import "./CategoryGrid.css";
 
 const CategoryGrid = () => {
@@ -21,11 +22,11 @@ const CategoryGrid = () => {
     <div className="category-grid-section">
       <div className="category-grid">
         {categories.map((category) => (
-          <div key={category.id} className="category-card">
+          <Link to={`/category/${category.id}`} key={category.id} className="category-card">
             <div className="category-images">
               <img src={category.image} alt="Category" className="category-img" />
             </div>
-          </div>
+          </Link>
         ))}
       </div>
     </div>

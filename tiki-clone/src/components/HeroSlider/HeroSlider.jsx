@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -16,7 +17,7 @@ const slides = [
 // Custom Arrow Components
 const PrevArrow = ({ onClick }) => (
   <button className="custom-arrow custom-arrow-prev" onClick={onClick}>
-    <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
       <polyline points="15 18 9 12 15 6"></polyline>
     </svg>
   </button>
@@ -24,7 +25,7 @@ const PrevArrow = ({ onClick }) => (
 
 const NextArrow = ({ onClick }) => (
   <button className="custom-arrow custom-arrow-next" onClick={onClick}>
-    <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
       <polyline points="9 18 15 12 9 6"></polyline>
     </svg>
   </button>
@@ -68,7 +69,9 @@ const HeroSlider = ({ height = 300 }) => {
         <Slider {...settings}>
           {slides.map((src, idx) => (
             <div key={idx} className="hero-slide-card">
-              <img src={src} alt={`slide-${idx + 1}`} />
+              <Link to={`/promotion/slide-${idx + 1}`}>
+                <img src={src} alt={`slide-${idx + 1}`} />
+              </Link>
             </div>
           ))}
         </Slider>

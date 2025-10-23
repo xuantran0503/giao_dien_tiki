@@ -3,11 +3,9 @@ export const hotInternationalData = [
     id: 1,
     image:
       "https://salt.tikicdn.com/cache/750x750/ts/product/12/3b/37/0054011296181b439110b5a1eaa613f4.png.webp",
-    title: "Kem dưỡng trắng dạng gel giúp cải thiện thâm nám",
+    title: "Kem dưỡng trắng dạng gel giúp cải thiện thâm nám Hada Labo 50g",
     price: 240350,
-    originalPrice: 350000,
-    discount: 31,
-    rating: 4.5,
+
     badge: "NOW",
     shippingBadge: "Giao siêu tốc 2h",
     madeIn: "Made in Japan",
@@ -22,7 +20,6 @@ export const hotInternationalData = [
     discount: 22,
     rating: 5,
     shippingBadge: "Giao thứ 4, 22/10",
-    madeIn: "Made in France",
   },
   {
     id: 3,
@@ -32,7 +29,7 @@ export const hotInternationalData = [
     price: 194718,
     originalPrice: 215000,
     discount: 9,
-    rating: 4.6,
+
     badge: "DELIVERY",
     shippingBadge: "Giao sáng thứ 4, 22/10",
     madeIn: "Made in Japan",
@@ -41,11 +38,11 @@ export const hotInternationalData = [
     id: 4,
     image:
       "https://salt.tikicdn.com/cache/750x750/ts/product/5c/96/79/8ada9e069d709ed484e0f44dbea85acd.jpg.webp",
-    title: "Kem Chống Nắng Make p:rem Vật Lý Kiềm Dầu Kh...",
+    title: "Kem Chống Nắng Make p:rem Vật Lý Kiềm Dầu Khiết 50ml",
     price: 320800,
     originalPrice: 480000,
     discount: 33,
-    rating: 4.7,
+    rating: 1.7,
     badge: "DELIVERY",
     shippingBadge: "Giao chiều mai",
     madeIn: "Made in Korea",
@@ -54,11 +51,10 @@ export const hotInternationalData = [
     id: 5,
     image:
       "https://salt.tikicdn.com/cache/750x750/ts/product/af/b4/0d/bceb3100fd16db99f883612c47fb48c5.png.webp",
-    title: "Serum Dưỡng Trắng Da, Cấp Ẩm Ba Tầng Angel's...",
+    title: "Serum Dưỡng Trắng Da, Cấp Ẩm Ba Tầng Angel's Liquid 130ml",
     price: 359000,
-    originalPrice: 550000,
-    discount: 35,
-    rating: 4.8,
+
+    rating: 2.8,
     badge: "NOW",
     shippingBadge: "Giao siêu tốc 2h",
     madeIn: "Made in Korea",
@@ -67,13 +63,10 @@ export const hotInternationalData = [
     id: 6,
     image:
       "https://salt.tikicdn.com/cache/750x750/ts/product/03/0e/01/3555e6eb541dd4174fd15a535b36b0f6.png.webp",
-    title: "Gel rửa mặt giảm mụn Eucerin Pro Acne Cleansi...",
+    title: "Gel rửa mặt giảm mụn Eucerin Pro Acne Cleansing Foaming Gel",
     price: 173052,
-    originalPrice: 209000,
-    discount: 17,
-    rating: 4.6,
+
     shippingBadge: "Giao thứ 4, 22/10",
-    madeIn: "Made in Germany",
   },
   {
     id: 7,
@@ -154,7 +147,7 @@ export const hotInternationalData = [
   {
     id: 13,
     image:
-      "https://salt.tikicdn.com/cache/750x750/ts/product/12/3b/37/0054011296181b439110b5a1eaa613f4.png.webp",
+      "https://salt.tikicdn.com/cache/750x750/ts/product/8b/98/e0/a7744204d3d0ca7e64db744c8095de0a.png.webp",
     title: "Kem Dưỡng Trắng Da Dạng Gel Hada Labo 50g",
     price: 240350,
     originalPrice: 350000,
@@ -167,7 +160,7 @@ export const hotInternationalData = [
   {
     id: 14,
     image:
-      "https://salt.tikicdn.com/cache/750x750/ts/product/05/9b/6b/b4f605313e6065e7171f090220487edf.jpg.webp",
+      "https://salt.tikicdn.com/cache/750x750/ts/product/8b/fe/74/ce1ef9d6825ebedd4426d3870d29bd8a.png.webp",
     title: "Bộ Nồi Chảo Tefal Ingenio Daily Chef 3 Món",
     price: 2336000,
     originalPrice: 3000000,
@@ -179,7 +172,7 @@ export const hotInternationalData = [
   {
     id: 15,
     image:
-      "https://salt.tikicdn.com/cache/750x750/ts/product/75/3b/77/49bbaebce88dfa733840ec07e795bd2b.png.webp",
+      "https://salt.tikicdn.com/cache/750x750/ts/product/cf/0c/7c/ed4a5f8f0faf6f78f27b4a28490dd2c1.png.webp",
     title: "Vòng Đeo Tay Tránh Muỗi KINCHO 30 Cái",
     price: 194718,
     originalPrice: 215000,
@@ -192,7 +185,7 @@ export const hotInternationalData = [
   {
     id: 16,
     image:
-      "https://salt.tikicdn.com/cache/750x750/ts/product/5c/96/79/8ada9e069d709ed484e0f44dbea85acd.jpg.webp",
+      "https://salt.tikicdn.com/cache/750x750/ts/product/5f/83/d2/6fccd3b06281032c8dac0bd6f6510f1f.png.webp",
     title: "Kem Chống Nắng Make p:rem Vật Lý Kiềm Dầu 50ml",
     price: 320800,
     originalPrice: 480000,
@@ -205,7 +198,7 @@ export const hotInternationalData = [
   {
     id: 17,
     image:
-      "https://salt.tikicdn.com/cache/750x750/ts/product/af/b4/0d/bceb3100fd16db99f883612c47fb48c5.png.webp",
+      "https://salt.tikicdn.com/cache/750x750/ts/product/cb/dd/7c/8004d258d7ed14b5f7b9301058d99ae1.jpg.webp",
     title: "Serum Dưỡng Trắng Da Angel's Liquid 130ml",
     price: 359000,
     originalPrice: 550000,
@@ -218,7 +211,7 @@ export const hotInternationalData = [
   {
     id: 18,
     image:
-      "https://salt.tikicdn.com/cache/750x750/ts/product/03/0e/01/3555e6eb541dd4174fd15a535b36b0f6.png.webp",
+      "https://salt.tikicdn.com/cache/750x750/ts/product/23/9e/a9/148a6ddf954ee5f79e3a9f513601816d.jpg.webp",
     title: "Gel Rửa Mặt Giảm Mụn Eucerin Pro Acne 200ml",
     price: 173052,
     originalPrice: 209000,

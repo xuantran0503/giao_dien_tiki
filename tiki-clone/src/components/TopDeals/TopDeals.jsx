@@ -1,9 +1,10 @@
 import React, { useState } from "react";
-import { FaStar } from "react-icons/fa";
+import { Link } from "react-router-dom";
+// import { FaStar } from "react-icons/fa";
 import { topDealsData } from "../../data/topDealsData";
 import { PrevArrow, NextArrow } from "../shared/NavigationArrows";
-import "./TopDeals.css";
 import "../shared/NavigationArrows.css";
+import "./TopDeals.css";
 
 const TopDeals = () => {
   const [currentPage, setCurrentPage] = useState(0);
@@ -62,16 +63,16 @@ const TopDeals = () => {
         <div className="header-left">
           <img src="../img_top_deal_sieu_re.png" alt="top deal siêu rẻ" />
         </div>
-        <a href="/top-deals" className="view-all">
+        <Link to="/top-deals" className="view-all">
           Xem tất cả
-        </a>
+        </Link>
       </div>
 
       <div className="deals-grid-wrapper" style={{ position: 'relative' }}>
         <PrevArrow onClick={handlePrev} />
         <div className={`deals-grid slide-${direction}`} key={currentPage}>
           {deals.map((deal) => (
-            <div key={deal.id} className="deal-card">
+            <Link to={`/product/${deal.id}`} key={deal.id} className="deal-card">
 
               <div className="deal-image-wrapper">
                 <img src={deal.image} alt={deal.title} className="deal-image" />
@@ -127,7 +128,7 @@ const TopDeals = () => {
                 </div>
 
               </div>
-            </div>
+            </Link>
           ))}
         </div>
         <NextArrow onClick={handleNext} />

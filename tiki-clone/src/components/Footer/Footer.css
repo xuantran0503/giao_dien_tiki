@@ -43,11 +43,11 @@
     font-size: 13px;
     color: #808089;
     text-decoration: none;
-    transition: color 0.2s;
+    transition: all 0.2s;
 }
 
 .footer-links a:hover {
-    color: #0b74e5;
+    text-decoration: underline;
 }
 
 .footer-links a::after {
@@ -105,12 +105,12 @@
     color: #808089;
     text-decoration: none;
     display: inline;
-    transition: color 0.2s;
+    transition: all 0.2s;
     line-height: 1.8;
 }
 
 .footer-category a:hover {
-    color: #0b74e5;
+    text-decoration: underline;
 }
 
 .footer-category a::after {
@@ -173,22 +173,38 @@
     line-height: 1.6;
 }
 
-.footer-info-column p strong {
-    color: #0b74e5;
+.footer-info-column p a {
+    display: inline;
+    font-size: 12px;
+    color: #808089;
+    text-decoration: none;
+    transition: all 0.2s;
+}
+
+.footer-info-column p a:hover {
+    text-decoration: underline;
+}
+
+.footer-info-column p .hotline-link {
+    color: rgb(56, 56, 61);
     font-weight: 600;
 }
 
-.footer-info-column a {
+.footer-info-column p .hotline-link:hover {
+    text-decoration: underline;
+}
+
+.footer-info-column > a {
     display: block;
     font-size: 12px;
     color: #808089;
     text-decoration: none;
     margin: 8px 0;
-    transition: color 0.2s;
+    transition: all 0.2s;
 }
 
-.footer-info-column a:hover {
-    color: #0b74e5;
+.footer-info-column > a:hover {
+    text-decoration: underline;
 }
 
 .mt-20 {
@@ -212,45 +228,62 @@
 /* Payment Methods */
 .payment-methods {
     display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    margin-top: 12px;
+    flex-direction: column;
+}
+
+.payment-methods h4 {
+    margin-bottom: 12px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #333;
+}
+
+.payment-methods .app-buttons {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 4px;
+    margin-bottom: 16px;
+}
+
+.payment-methods svg {
+    height: 32px;
+    width: auto;
+    object-fit: contain;
 }
 
 .payment-methods img {
-    height: 20px;
+    display: block;
+    height: 30px;
     width: auto;
+    max-width: 100px;
     object-fit: contain;
-}
-
-/* Shipping Services */
-.shipping-services {
-    display: flex;
-    gap: 8px;
-    margin-top: 12px;
-}
-
-.shipping-services img {
-    height: 24px;
-    width: auto;
-    object-fit: contain;
+    margin-top: 8px;
 }
 
 /* Social Links */
 .social-links {
     display: flex;
-    gap: 12px;
+    align-items: center;
+    gap: 8px;
     margin-top: 12px;
 }
 
-.social-icon {
+.social-icon-facebook,
+.social-icon-youtube,
+.social-icon-zalo {
     width: 32px;
     height: 32px;
-    border-radius: 50%;
-    display: flex;
+    display: inline-flex;
     align-items: center;
     justify-content: center;
     transition: transform 0.2s;
+    flex-shrink: 0;
+}
+
+.social-icon-facebook:hover,
+.social-icon-youtube:hover,
+.social-icon-zalo:hover {
+    transform: scale(1.1);
 }
 
 .social-icon:hover {
@@ -258,20 +291,30 @@
 }
 
 .social-icon.facebook {
-    background: #3b5998;
+    /* background: #3b5998; */
 }
 
 .social-icon.youtube {
-    background: #ff0000;
+    /* background: #ff0000; */
 }
 
 .social-icon.zalo {
-    background: #0068ff;
+    /* background: #0068ff; */
 }
 
-.social-icon i {
+/* .social-icon i {
     color: #fff;
     font-size: 16px;
+} */
+
+.social-icon-facebook svg,
+.social-icon-youtube svg,
+.social-icon-zalo svg {
+    width: 32px;
+    height: 32px;
+    display: block;
+    object-fit: contain;
+    vertical-align: middle;
 }
 
 /* App Download */
@@ -350,6 +393,16 @@
     /* color: #27272a; */
     font-weight: 600;
     color: #808089;
+}
+
+.tiki-description-section a {
+    color: #0b74e5;
+    text-decoration: none;
+    transition: all 0.2s;
+}
+
+.tiki-description-section a:hover {
+    text-decoration: underline;
 }
 
 .company-info-section a {

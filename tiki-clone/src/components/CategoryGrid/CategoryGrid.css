@@ -16,6 +16,9 @@
     /* background: white; */
     border-radius: 8px;
     cursor: pointer;
+    text-decoration: none;
+    color: inherit;
+    display: block;
     /* border: 1px solid #ebebf0; */
     overflow: hidden;
     padding: 2px;

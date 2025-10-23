@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import "./Header.css";
 
 const Header = () => {
@@ -18,9 +19,9 @@ const Header = () => {
         {/* Main header */}
         <div className="header-main">
           {/* Logo */}
-          <div className="logo-tiki">
+          <Link to="/" className="logo-tiki">
             <img src="/tiki-logo.png" alt="Tiki Logo" />
-          </div>
+          </Link>
 
           {/* Nhóm phải gồm 2 khối lớn */}
           <div className="right-wrapper">
@@ -28,7 +29,7 @@ const Header = () => {
             <div className="top-row">
               <div className="search">
                 <div className="search-wrapper">
-                  
+
                   <div className="img-search">
                     <img src="/search.png" alt="search" />
                   </div>
@@ -39,54 +40,54 @@ const Header = () => {
               </div>
 
               <div className="icon-bar">
-                <a href="#" className="icon-btn-with-text">
-                  
+                <Link to="/" className="icon-btn-with-text">
+
                   <div className="img-home">
                     <img src="/home.png" alt="home" />
                   </div>
                   <span className="text">Trang chủ</span>
-                </a>
+                </Link>
 
-                <a href="#" className="icon-btn-with-text">
-                  
+                <Link to="/account" className="icon-btn-with-text">
+
                   <div className="img-account">
                     <img src="/account.png" alt="account" />
                   </div>
                   <span className="text">Tài khoản</span>
-                </a>
+                </Link>
 
                 <span className="dau1">|</span>
-                <a href="#" className="cart-btn">
+                <Link to="/cart" className="cart-btn">
                   <div className="img-cart">
                     <img src="/cart.png" alt="cart" />
                   </div>
-                  
+
                   <span className="cart-badge">0</span>
-                </a>
+                </Link>
               </div>
             </div>
 
             {/* Khối 2: location + menu */}
             <div className="bottom-row">
               <nav className="menu">
-                <a href="#">điện gia dụng</a>
-                <a href="#">xe cộ</a>
-                <a href="#">mẹ & bé</a>
-                <a href="#">khỏe đẹp</a>
-                <a href="#">nhà cửa</a>
-                <a href="#">sách</a>
-                <a href="#">thể thao</a>
+                <Link to="/category/dien-gia-dung">điện gia dụng</Link>
+                <Link to="/category/xe-co">xe cộ</Link>
+                <Link to="/category/me-be">mẹ & bé</Link>
+                <Link to="/category/khoe-dep">khỏe đẹp</Link>
+                <Link to="/category/nha-cua">nhà cửa</Link>
+                <Link to="/category/sach">sách</Link>
+                <Link to="/category/the-thao">thể thao</Link>
               </nav>
 
               <div className="location">
-                
+
                 <div className="img-location">
                   <img src="/location.png" alt="location" />
                 </div>
                 <h4 className="text-location1">Giao đến: </h4>
-                <a href="#" className="location-link">
+                <Link to="/location" className="location-link">
                   Q. Hoàn Kiếm, P. Hàng Trống, Hà Nội
-                </a>
+                </Link>
               </div>
             </div>
           </div>
@@ -96,50 +97,58 @@ const Header = () => {
       {/* Features row */}
       <div className="features-row">
         <div className="features-container">
-          <div className="feature-item">
+
+          <Link to="/about" className="feature-item">
             <span className="feat-text-1">Cam kết</span>
-          </div>
-          <div className="feature-item">
+          </Link>
+
+          <Link to="/promotion/hang-that" className="feature-item">
             <div className="img-hang-that">
               <img src="/img_hang_that.png" alt="heart" />
             </div>
             <span className="feat-text">100% hàng thật</span>
-          </div>
-          <div className="feature-item">
+          </Link>
+
+          <Link to="/promotion/freeship" className="feature-item">
             <span className="dau2"></span>
             <div className="img-freeship">
               <img src="/img_freeship.png" alt="freeship" />
             </div>
             <span className="feat-text">Freeship mọi đơn</span>
             <span className="dau2"></span>
-          </div>
-          <div className="feature-item">
+          </Link>
+
+          <Link to="/promotion/hoan-tien" className="feature-item">
             <div className="img-hoan-tien">
               <img src="/img_hoantien.png" alt="hoantien" />
             </div>
             <span className="feat-text">Hoàn 200% nếu hàng giả</span>
             <span className="dau2"></span>
-          </div>
-          <div className="feature-item">
+          </Link>
+
+          <Link to="/promotion/doi-tra" className="feature-item">
             <div className="img-doi-tra">
               <img src="/img_doitra.png" alt="doitra" />
             </div>
             <span className="feat-text">30 ngày đổi trả</span>
             <span className="dau2"></span>
-          </div>
-          <div className="feature-item">
+          </Link>
+
+          <Link to="/promotion/giao-nhanh" className="feature-item">
             <div className="img-giao-nhanh">
               <img src="/img_giaonhanh.png" alt="giaonhanh" />
             </div>
             <span className="feat-text">Giao nhanh 2h</span>
             <span className="dau2"></span>
-          </div>
-          <div className="feature-item">
+          </Link>
+
+          <Link to="/promotion/gia-re" className="feature-item">
             <div className="img-gia-re">
               <img src="/img_giare.png" alt="giare" />
             </div>
             <span className="feat-text">Giá siêu rẻ</span>
-          </div>
+          </Link>
+
         </div>
       </div>
     </header>
