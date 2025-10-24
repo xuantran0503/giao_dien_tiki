@@ -8,12 +8,33 @@ khoảng cách trái phải của 2 ảnh với 2 bên  viền chưa bằng nhau
 
 để các mục ở chế độ random hiển thị sản phẩm
 
-nên dùng hàm để tính giá sản phẩm sau khi có giảm giá để hiển thị cho đỡ phải nhập giá trong data 
 
 +++++++++++++ĐANG LÀM ++++++++++++++++
          
 
 sửa data cho đồng bộ thông tin cho chuẩn
+
+
+ghi nhớ ---------------------------
+setCurrentPage((prev) => (prev > 0 ? prev - 1 : totalPages - 1));
+
+setCurrentPage((prev) => (prev > 0 ? prev - 1 : totalPages - 1));
+Nếu prev > 0: tức là không phải trang đầu tiên, thì lùi lại 1 trang (prev - 1).
+
+Nếu prev === 0: tức là đang ở trang đầu, thì vòng lại trang cuối cùng (totalPages - 1).
+
+setCurrentPage((prev) => (prev < totalPages - 1 ? prev + 1 : 0));
+
+Nếu prev < totalPages - 1: tức là chưa đến trang cuối, thì tiến thêm 1 (prev + 1).
+
+Nếu prev === totalPages - 1: tức là đang ở trang cuối, thì vòng lại trang đầu tiên (0).
+
+rating = 4.5
+fullStars = Math.floor(4.5) = 4
+
+Math.ceil(4.5) = 5
+emptyStars = 5 - 5 = 0
+
 
 
 --------git--------

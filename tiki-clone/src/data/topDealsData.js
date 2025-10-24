@@ -4,7 +4,6 @@ export const topDealsData = [
     image:
       "https://salt.tikicdn.com/cache/750x750/ts/product/ac/65/4e/e21a92395ae8a7a1c2af3da945d76944.jpg.webp",
     title: "Sách Thiết Kế Một Cuộc Đời Đáng Sống",
-    price: 94208,
     originalPrice: 128000,
     discount: 26,
     rating: 5,
@@ -20,7 +19,6 @@ export const topDealsData = [
     image:
       "https://salt.tikicdn.com/cache/750x750/ts/product/c3/3f/2b/0a42ce3a97fc8567a567dda4a39aed6b.jpg.webp",
     title: "Máy tính bảng iPad Gen 10 10.9 inch WiFi 64GB",
-    price: 9490000,
     originalPrice: 12990000,
     discount: 27,
     rating: 4.8,
@@ -35,7 +33,6 @@ export const topDealsData = [
     image:
       "https://salt.tikicdn.com/cache/750x750/ts/product/dd/2b/a6/fefd132c5ba9b5629c0119f57549e5d4.png.webp",
     title: "Điện Thoại iPhone 13 128GB - Hàng Chính Hãng VN/A",
-    price: 13990000,
     originalPrice: 19990000,
     discount: 30,
     rating: 3.9,
@@ -50,7 +47,6 @@ export const topDealsData = [
     image:
       "https://salt.tikicdn.com/cache/750x750/ts/product/16/72/77/dff96564663b63ba96b2c74b60261dcd.jpg.webp",
     title: "Sách Xứ Sở Miên Man",
-    price: 176000,
     originalPrice: 220000,
     discount: 20,
     rating: 5,
@@ -64,7 +60,6 @@ export const topDealsData = [
     image:
       "https://salt.tikicdn.com/cache/750x750/media/catalog/producttmp/f9/ef/80/db2030d1d4f125d28b0b0bf02461b759.png.webp",
     title: "Máy giặt LG AI DD Inverter 10 kg FV1410S4W1  - Hàng Chính Hãng",
-    price: 7560000,
     originalPrice: 11900000,
     discount: 36,
     rating: 5,
@@ -79,7 +74,6 @@ export const topDealsData = [
     image:
       "https://salt.tikicdn.com/cache/750x750/ts/product/40/c7/34/725a76d74b770da8c4f35b4b2501d70e.png.webp",
     title: "Bình nước Inochi - Kita Fami 500ml",
-    price: 78000,
     originalPrice: 153636,
     discount: 49,
     rating: 4.8,
@@ -94,7 +88,6 @@ export const topDealsData = [
     image:
       "https://salt.tikicdn.com/cache/750x750/ts/product/cf/c1/31/3436e1380470ed8bf1bcbfe1b5affa51.jpg.webp",
     title: "Dầu Gội Selsun Chống Gàu 200ml",
-    price: 49000,
     originalPrice: 59000,
     discount: 17,
     rating: 4.6,
@@ -109,7 +102,6 @@ export const topDealsData = [
     image:
       "https://salt.tikicdn.com/cache/750x750/ts/product/f3/01/96/ec586ec789d954b6a498a7ebfdb68b25.jpg.webp",
     title: "Điện Thoại Oppo A58 6GB/128GB - Hàng Chính Hãng",
-    price: 4090000,
     originalPrice: 5490000,
     discount: 25,
     rating: 4.5,
@@ -124,7 +116,6 @@ export const topDealsData = [
     image:
       "https://salt.tikicdn.com/cache/750x750/ts/product/3b/95/ec/5b2c7ec0e09565f399a0a184bd71696b.png.webp",
     title: "Điện Thoại iPhone 14 128GB - Chính Hãng VN/A",
-    price: 18990000,
     originalPrice: 24990000,
     discount: 24,
     rating: 4.9,
@@ -139,7 +130,6 @@ export const topDealsData = [
     image:
       "https://salt.tikicdn.com/cache/750x750/ts/product/12/3b/37/0054011296181b439110b5a1eaa613f4.png.webp",
     title: "Kem Dưỡng Trắng Da Dạng Gel Hada Labo 50g",
-    price: 240350,
     originalPrice: 350000,
     discount: 31,
     rating: 4.7,
@@ -154,7 +144,6 @@ export const topDealsData = [
     image:
       "https://salt.tikicdn.com/cache/750x750/ts/product/05/9b/6b/b4f605313e6065e7171f090220487edf.jpg.webp",
     title: "Bộ Nồi Chảo Tefal Ingenio Daily Chef 3 Món",
-    price: 2336000,
     originalPrice: 3000000,
     discount: 22,
     rating: 4.8,
@@ -169,7 +158,6 @@ export const topDealsData = [
     image:
       "https://salt.tikicdn.com/cache/750x750/ts/product/75/3b/77/49bbaebce88dfa733840ec07e795bd2b.png.webp",
     title: "Vòng Đeo Tay Tránh Muỗi KINCHO 30 Cái",
-    price: 194718,
     originalPrice: 215000,
     discount: 9,
     rating: 4.6,
@@ -184,7 +172,6 @@ export const topDealsData = [
     image:
       "https://salt.tikicdn.com/cache/750x750/ts/product/5c/96/79/8ada9e069d709ed484e0f44dbea85acd.jpg.webp",
     title: "Kem Chống Nắng Make p:rem Vật Lý Kiềm Dầu 50ml",
-    price: 320800,
     originalPrice: 480000,
     discount: 33,
     rating: 4.7,
@@ -198,7 +185,6 @@ export const topDealsData = [
     image:
       "https://salt.tikicdn.com/cache/750x750/ts/product/af/b4/0d/bceb3100fd16db99f883612c47fb48c5.png.webp",
     title: "Serum Dưỡng Trắng Da Angel's Liquid 130ml",
-    price: 359000,
     originalPrice: 550000,
     discount: 35,
     rating: 4.8,
@@ -213,7 +199,6 @@ export const topDealsData = [
     image:
       "https://salt.tikicdn.com/cache/750x750/ts/product/03/0e/01/3555e6eb541dd4174fd15a535b36b0f6.png.webp",
     title: "Gel Rửa Mặt Giảm Mụn Eucerin Pro Acne 200ml",
-    price: 173052,
     originalPrice: 209000,
     discount: 17,
     rating: 4.6,
@@ -228,7 +213,6 @@ export const topDealsData = [
       "https://salt.tikicdn.com/cache/750x750/ts/product/0d/d1/72/5f3167f4799d01e7faed0da0d92d3a50.png.webp",
     title:
       "Combo 3 Cuốn: Nhà Giả Kim + Tuổi Trẻ Đáng Giá Bao Nhiêu + Đắc Nhân Tâm",
-    price: 164100,
     originalPrice: 369900,
     discount: 56,
     rating: 4.9,
@@ -244,7 +228,6 @@ export const topDealsData = [
     image:
       "https://salt.tikicdn.com/cache/750x750/ts/product/ef/67/33/79cbb046ea3942e6e9046f172a08573e.jpg.webp",
     title: "Apple MacBook Air M2 2022 - Xanh Đá Trời - 256GB",
-    price: 29990000,
     originalPrice: 31990000,
     discount: 6,
     rating: 4.9,
@@ -260,7 +243,6 @@ export const topDealsData = [
       "https://salt.tikicdn.com/cache/750x750/ts/product/9d/bf/9d/407574e952023b3d26577ee610ee489a.png.webp",
     title:
       "(Boxset Trọn Bộ 2 Tập) Sách TÂY SƠN THỰC LỤC - Trần Hoàng Vũ Tập biên - NXB Lao Động",
-    price: 684450,
     originalPrice: 1299000,
     discount: 47,
     rating: 4.7,

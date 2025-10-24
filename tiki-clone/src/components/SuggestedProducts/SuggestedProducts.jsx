@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { suggestedProductsData } from "../../data/suggestedProductsData";
+import { calculateDiscountedPrice, formatPrice } from "../../utils/priceUtils";
 import "./SuggestedProducts.css";
 
 const SuggestedProducts = () => {
@@ -16,8 +17,8 @@ const SuggestedProducts = () => {
         });
     }
 
-    const formatPrice = (price) => {
-        return new Intl.NumberFormat("vi-VN").format(price);
+    const loadMore = () => {
+        setVisibleProducts(prev => Math.min(prev + 16, allProducts.length));
     };
 
     const renderStars = (rating) => {
@@ -36,9 +37,6 @@ const SuggestedProducts = () => {
         return stars;
     };
 
-    const loadMore = () => {
-        setVisibleProducts(prev => Math.min(prev + 16, allProducts.length));
-    };
 
     return (
         <div className="suggested-products">
@@ -102,7 +100,7 @@ const SuggestedProducts = () => {
                                 <div className="product-price-section">
                                     <div className="price-row">
                                         <span className={`current-price ${!product.discount || product.discount === 0 || !product.originalPrice ? 'no-discount' : ''}`}>
-                                            {formatPrice(product.price)}<sup>₫</sup>
+                                            {formatPrice(calculateDiscountedPrice(product.originalPrice, product.discount))}<sup>₫</sup>
                                         </span>
                                     </div>
                                     {product.discount && product.discount > 0 && product.originalPrice && (
@@ -162,7 +160,7 @@ const SuggestedProducts = () => {
                             <div className="product-price-section">
                                 <div className="price-row">
                                     <span className={`current-price ${!product.discount || product.discount === 0 || !product.originalPrice ? 'no-discount' : ''}`}>
-                                        {formatPrice(product.price)}<sup>₫</sup>
+                                        {formatPrice(calculateDiscountedPrice(product.originalPrice, product.discount))}<sup>₫</sup>
                                     </span>
                                 </div>
                                 {product.discount && product.discount > 0 && product.originalPrice && (
@@ -221,7 +219,7 @@ const SuggestedProducts = () => {
                             <div className="product-price-section">
                                 <div className="price-row">
                                     <span className={`current-price ${!product.discount || product.discount === 0 || !product.originalPrice ? 'no-discount' : ''}`}>
-                                        {formatPrice(product.price)}<sup>₫</sup>
+                                        {formatPrice(calculateDiscountedPrice(product.originalPrice, product.discount))}<sup>₫</sup>
                                     </span>
                                 </div>
                                 {product.discount && product.discount > 0 && product.originalPrice && (
@@ -281,7 +279,7 @@ const SuggestedProducts = () => {
                             <div className="product-price-section">
                                 <div className="price-row">
                                     <span className={`current-price ${!product.discount || product.discount === 0 || !product.originalPrice ? 'no-discount' : ''}`}>
-                                        {formatPrice(product.price)}<sup>₫</sup>
+                                        {formatPrice(calculateDiscountedPrice(product.originalPrice, product.discount))}<sup>₫</sup>
                                     </span>
                                 </div>
                                 {product.discount && product.discount > 0 && product.originalPrice && (
@@ -390,7 +388,7 @@ const SuggestedProducts = () => {
                             <div className="product-price-section">
                                 <div className="price-row">
                                     <span className={`current-price ${!product.discount || product.discount === 0 || !product.originalPrice ? 'no-discount' : ''}`}>
-                                        {formatPrice(product.price)}<sup>₫</sup>
+                                        {formatPrice(calculateDiscountedPrice(product.originalPrice, product.discount))}<sup>₫</sup>
                                     </span>
                                 </div>
                                 {product.discount && product.discount > 0 && product.originalPrice && (
@@ -449,7 +447,7 @@ const SuggestedProducts = () => {
                             <div className="product-price-section">
                                 <div className="price-row">
                                     <span className={`current-price ${!product.discount || product.discount === 0 || !product.originalPrice ? 'no-discount' : ''}`}>
-                                        {formatPrice(product.price)}<sup>₫</sup>
+                                        {formatPrice(calculateDiscountedPrice(product.originalPrice, product.discount))}<sup>₫</sup>
                                     </span>
                                 </div>
                                 {product.discount && product.discount > 0 && product.originalPrice && (

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { PrevArrow, NextArrow } from "../shared/NavigationArrows";
 import { flashSaleData } from "../../data/flashSaleData";
+import { calculateDiscountedPrice, formatPrice } from "../../utils/priceUtils";
 import "./FlashSale.css";
 import "../shared/NavigationArrows.css";
 
@@ -18,7 +19,7 @@ const FlashSale = () => {
   });
 
   useEffect(() => {
-    // Tính thời gian đến khung giờ Flash Sale tiếp theo (mỗi 2 giờ)
+    
     const calculateTimeLeft = () => {
       const now = new Date();
       const currentHour = now.getHours();
@@ -28,7 +29,7 @@ const FlashSale = () => {
       // Các khung giờ Flash Sale: 0h, 2h, 4h, 6h, 8h, 10h, 12h, 14h, 16h, 18h, 20h, 22h
       const saleHours = [0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22];
 
-      // Tìm khung giờ tiếp theo
+      
       let nextSaleHour = saleHours.find(hour => hour > currentHour);
       if (!nextSaleHour) {
         nextSaleHour = saleHours[0]; // Nếu qua 22h thì lấy 0h ngày mai
@@ -78,10 +79,6 @@ const FlashSale = () => {
     setCurrentPage((prev) => (prev < totalPages - 1 ? prev + 1 : 0));
   };
 
-  const formatPrice = (price) => {
-    return new Intl.NumberFormat("vi-VN").format(price);
-  };
-
   return (
     <div className="flash-sale">
       <div className="flash-sale-header">
@@ -126,7 +123,7 @@ const FlashSale = () => {
 
                 <div className="flash-price-section">
                   <span className="flash-current-price">
-                    {formatPrice(product.price)}<sup>₫</sup>
+                    {formatPrice(calculateDiscountedPrice(product.originalPrice, product.discount))}<sup>₫</sup>
                   </span>
                 </div>
 

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { PrevArrow, NextArrow } from "../shared/NavigationArrows";
 import { youMayLikeData } from "../../data/youMayLikeData";
+import { calculateDiscountedPrice, formatPrice } from "../../utils/priceUtils";
 import "./YouMayLike.css";
 import "../shared/NavigationArrows.css";
 
@@ -23,11 +24,6 @@ const YouMayLike = () => {
     const handleNext = () => {
         setDirection('next');
         setCurrentPage((prev) => (prev < totalPages - 1 ? prev + 1 : 0));
-    };
-
-
-    const formatPrice = (price) => {
-        return new Intl.NumberFormat("vi-VN").format(price);
     };
 
     const renderStars = (rating) => {
@@ -78,7 +74,7 @@ const YouMayLike = () => {
                                 <div className="you-may-like-price-section">
                                     <div className="price-row">
                                         <span className={`current-price ${!product.discount || !product.originalPrice ? 'no-discount' : ''}`}>
-                                            {formatPrice(product.price)}<sup>₫</sup>
+                                            {formatPrice(calculateDiscountedPrice(product.originalPrice, product.discount))}<sup>₫</sup>
                                         </span>
                                     </div>
                                     {product.discount && product.originalPrice && (

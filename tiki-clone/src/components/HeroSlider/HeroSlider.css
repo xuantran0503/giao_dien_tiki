@@ -26,7 +26,7 @@
     /* margin: 0 6px; */
     border-radius: 10px;
     overflow: hidden;
-    /* transition: transform 0.3s ease; */
+    
     background: #fff;
     height: 100%;
     width: 100px;
@@ -53,8 +53,8 @@
     border-radius: 10px;
     /* gap: 8px; */
     /* padding: 0 8px; */
-    /* round all four corners of each image */
-    /* transition: transform 0.3s ease; */
+    
+    
 }
 
 /* Remove left margin from first slide */
@@ -66,10 +66,6 @@
 .hero-slider .slick-slide:last-child .hero-slide-card {
     margin-right: 0;
 }
-
-/* .hero-slide-card img:hover {
-    transform: scale(1.03);
-} */
 
 /* Slick structure */
 /* .hero-slider .slick-list,
@@ -149,7 +145,6 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    /* transition: all 0.2s ease; */
     opacity: 0;
     /* padding: 0; */
 }
@@ -162,11 +157,6 @@
     opacity: 1;
 }
 
-/* .custom-arrow:hover {
-    background: rgba(255, 255, 255, 1);
-    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.18);
-} */
-
 .custom-arrow-prev {
     left: 16px;
 }
@@ -174,32 +164,3 @@
 .custom-arrow-next {
     right: 16px;
 }
-
-/* @media (max-width: 900px) {
-    .hero-slider {
-        height: 220px;
-    }
-
-    .custom-arrow {
-        width: 32px;
-        height: 32px;
-    }
-
-    .custom-arrow svg {
-        width: 16px;
-        height: 16px;
-    }
-
-    .hero-slider .slick-dots {
-        bottom: -18px;
-    }
-
-    .hero-slider .slick-dots li {
-        width: 14px;
-        height: 3px;
-    }
-
-    .hero-slider .slick-dots li.slick-active {
-        width: 20px;
-    }
-} */

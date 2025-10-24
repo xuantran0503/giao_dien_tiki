@@ -51,7 +51,7 @@
 }
 
 /* Slide animation for Next (left to right) */
-.deals-grid.slide-next {
+/* .deals-grid.slide-next {
     animation: slideInFromRight 0.4s ease-out;
 }
 
@@ -81,7 +81,7 @@
         opacity: 1;
         transform: translateX(0);
     }
-}
+} */
 
 .deal-card {
     background: #fff;
@@ -326,7 +326,7 @@
     border-radius: 8px;
     font-style: normal;
     line-height: 150%;
-    white-space: nowrap;
+    /* white-space: nowrap; */
 }
 
 .original-price {
@@ -337,7 +337,7 @@
     line-height: 150%;
     color: #808089;
     text-decoration: line-through;
-    white-space: nowrap;
+    /* white-space: nowrap; */
 }
 
 .original-price sup {

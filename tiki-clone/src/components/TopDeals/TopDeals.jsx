@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 // import { FaStar } from "react-icons/fa";
 import { topDealsData } from "../../data/topDealsData";
 import { PrevArrow, NextArrow } from "../shared/NavigationArrows";
+import { calculateDiscountedPrice, formatPrice } from "../../utils/priceUtils";
 import "../shared/NavigationArrows.css";
 import "./TopDeals.css";
 
@@ -25,19 +26,6 @@ const TopDeals = () => {
     setDirection('next');
     setCurrentPage((prev) => (prev < totalPages - 1 ? prev + 1 : 0));
   };
-
-  const formatPrice = (price) => {
-    return new Intl.NumberFormat("vi-VN").format(price);
-  };
-
-  // const renderStars = (rating) => {
-  //   return Array(5).fill(0).map((_, i) => (
-  //     <FaStar
-  //       key={i}
-  //       className={`star ${i < Math.floor(rating) ? 'filled' : ''}`}
-  //     />
-  //   ));
-  // };
 
   const renderStars = (rating) => {
     const stars = [];
@@ -98,7 +86,7 @@ const TopDeals = () => {
 
                   <div className="price-row">
                     <span className={`current-price ${!deal.discount || !deal.originalPrice ? 'no-discount' : ''}`}>
-                      {formatPrice(deal.price)}<sup>₫</sup>
+                      {formatPrice(calculateDiscountedPrice(deal.originalPrice, deal.discount))}<sup>₫</sup>
                     </span>
                   </div>
 
