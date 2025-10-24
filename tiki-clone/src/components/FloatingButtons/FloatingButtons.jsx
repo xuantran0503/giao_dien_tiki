@@ -16,7 +16,9 @@ const FloatingButtons = () => {
             <span className="button-text">Trợ lý</span>
           </Link>
         </div>
+
         <div className="button-separator"></div>
+
         <div className="floating-button-wrapper">
           <Link to="/notifications" className="floating-button tin-moi">
             <img

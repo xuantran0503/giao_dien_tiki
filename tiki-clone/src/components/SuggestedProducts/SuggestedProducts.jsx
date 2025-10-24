@@ -135,7 +135,7 @@ const SuggestedProducts = () => {
             <div className="products-grid-suggested">
                 {allProducts.slice(4, 10).map((product, index) => (
                     <Link to={`/product/${product.id}`} key={product.id} className="product-card-suggested">
-                        {index === 0 && <span className="ad-label">AD</span>}
+                        {index < 0 && <span className="ad-label">AD</span>}
                         <div className="product-image-container">
                             <img
                                 src={product.image}

@@ -8,14 +8,160 @@ khoảng cách trái phải của 2 ảnh với 2 bên  viền chưa bằng nhau
 
 để các mục ở chế độ random hiển thị sản phẩm
 
-
-+++++++++++++ĐANG LÀM ++++++++++++++++
-         
+trong footer chỗ  hover vào các thẻ a  dấu / đang bị gạch chân
 
 sửa data cho đồng bộ thông tin cho chuẩn
 
 
++++++++++++++ĐANG LÀM ++++++++++++++++
+
+làm giao diện địa chỉ giao hàng để thay đổi địa chỉ hiển thị ở header , 
+
+làm giao diện đang nhập tài khoản (redux)
+
+làm giao diện giỏ hàng (redux)
+
+khi Dropdown thì màu nền từ phần features-row của header xuống hết trang thì phải chuyển màu     background: rgba(0, 0, 0, 0.53);
+
+
+
+bấm nút xem thêm thì hiển thị 10 lịch sử tìm  kiếm gần đây tính cả 5 cái trước đó 
+
+
+
+
+
+https://salt.tikicdn.com/ts/category/61/d4/ea/e6ea3ffc1fcde3b6224d2bb691ea16a2.png
+https://salt.tikicdn.com/ts/category/55/5b/80/48cbaafe144c25d5065786ecace86d38.png
+https://salt.tikicdn.com/ts/category/00/5d/97/384ca1a678c4ee93a0886a204f47645d.png
+https://salt.tikicdn.com/ts/category/cf/ed/e1/5a6b58f21fbcad0d201480c987f8defe.png
+
+
 ghi nhớ ---------------------------
+
+🧩 1. Khai báo state và ref
+const [searchValue, setSearchValue] = useState("");
+const [showDropdown, setShowDropdown] = useState(false);
+const [searchHistory, setSearchHistory] = useState([]);
+const searchRef = useRef(null);
+
+Biến	Kiểu	Ý nghĩa
+searchValue	string	Giá trị người dùng đang nhập vào ô tìm kiếm
+showDropdown	boolean	Dùng để hiển thị hoặc ẩn phần gợi ý / lịch sử tìm kiếm
+searchHistory	array	Lưu danh sách từ khóa đã tìm gần đây, hiển thị dưới dropdown
+searchRef	useRef	Trỏ tới DOM của ô tìm kiếm, để kiểm tra click ra ngoài thì ẩn dropdown
+📦 2. Dữ liệu tĩnh hiển thị trong dropdown
+const popularSearches = [...];
+const featuredCategories = [...];
+
+
+Đây là hai danh sách tĩnh (fake data) để hiển thị trong dropdown:
+
+popularSearches: Các từ khóa phổ biến (có ảnh + text).
+
+featuredCategories: Các danh mục nổi bật (hiện ở cuối dropdown, dạng icon + tên danh mục).
+
+→ Hai phần này thường hiển thị khi người dùng chưa nhập gì vào ô tìm kiếm.
+
+💾 3. Load lịch sử tìm kiếm từ localStorage
+useEffect(() => {
+  const history = JSON.parse(localStorage.getItem("searchHistory") || "[]");
+  setSearchHistory(history);
+}, []);
+
+
+Khi trang được mở (mount lần đầu), code sẽ đọc lịch sử tìm kiếm đã lưu trong localStorage của trình duyệt.
+
+Nếu chưa có, gán mảng rỗng [].
+
+Sau đó gán vào searchHistory.
+
+→ Nhờ vậy, khi reload trang, người dùng vẫn thấy lịch sử tìm kiếm trước đó.
+
+🖱 4. Click ra ngoài thì ẩn dropdown
+useEffect(() => {
+  const handleClickOutside = (event) => {
+    if (searchRef.current && !searchRef.current.contains(event.target)) {
+      setShowDropdown(false);
+    }
+  };
+  document.addEventListener("mousedown", handleClickOutside);
+  return () => document.removeEventListener("mousedown", handleClickOutside);
+}, []);
+
+
+Giải thích:
+
+Khi click chuột xuống bất kỳ đâu (mousedown),
+
+Nếu click không nằm trong vùng searchRef (tức là ngoài ô tìm kiếm),
+
+Thì setShowDropdown(false) → đóng dropdown.
+
+Cuối cùng, hàm return dọn dẹp listener khi component bị unmount.
+
+🔤 5. Các hàm xử lý sự kiện nhập và tìm kiếm
+const handleSearchChange = (e) => setSearchValue(e.target.value);
+const handleSearchFocus = () => setShowDropdown(true);
+
+
+Khi người dùng nhập ký tự, searchValue cập nhật.
+
+Khi click vào ô tìm kiếm, dropdown mở ra (setShowDropdown(true)).
+
+🔍 6. Hàm chính để xử lý tìm kiếm
+const handleSearch = () => {
+  if (searchValue.trim()) {
+    const newHistory = [searchValue, ...searchHistory.filter(item => item !== searchValue)].slice(0, 5);
+    setSearchHistory(newHistory);
+    localStorage.setItem("searchHistory", JSON.stringify(newHistory));
+    setShowDropdown(false);
+    console.log("Searching for:", searchValue);
+  }
+};
+
+
+Chức năng:
+
+Kiểm tra nếu người dùng đã nhập (không để trống).
+
+Thêm từ khóa mới vào đầu danh sách.
+
+Tránh trùng lặp (filter(item => item !== searchValue)).
+
+Giới hạn chỉ giữ 5 từ khóa gần nhất (slice(0,5)).
+
+Lưu lại searchHistory vào localStorage.
+
+Ẩn dropdown.
+
+Có thể gọi API hoặc navigate() để thực hiện tìm kiếm thật.
+
+🧠 7. Click vào lịch sử tìm kiếm
+const handleHistoryClick = (text) => {
+  setSearchValue(text);
+  setShowDropdown(false);
+  console.log("Searching for:", text);
+};
+
+
+Khi người dùng click vào từ khóa trong lịch sử,
+
+Gán giá trị đó vào ô tìm kiếm,
+
+Ẩn dropdown và có thể thực hiện tìm kiếm ngay.
+
+⌨️ 8. Xử lý phím Enter
+const handleKeyPress = (e) => {
+  if (e.key === "Enter") handleSearch();
+};
+
+
+Khi người dùng nhấn Enter trong ô input → chạy handleSearch().
+
+
+
+
 setCurrentPage((prev) => (prev > 0 ? prev - 1 : totalPages - 1));
 
 setCurrentPage((prev) => (prev > 0 ? prev - 1 : totalPages - 1));
@@ -34,6 +180,8 @@ fullStars = Math.floor(4.5) = 4
 
 Math.ceil(4.5) = 5
 emptyStars = 5 - 5 = 0
+
+
 
 
 
