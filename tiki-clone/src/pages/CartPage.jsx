@@ -51,13 +51,6 @@ const CartPage = () => {
     setSelectedItems(selectedItems.filter((itemId) => itemId !== id));
   };
 
-  // Tính tổng tiền hàng (chỉ tính các sản phẩm được chọn)
-  const calculateTotal = () => {
-    return cartItems
-      .filter((item) => selectedItems.includes(item.id))
-      .reduce((total, item) => total + item.price * item.quantity, 0);
-  };
-
   // Tính tổng tiền tạm tính (trước giảm giá)
   const calculateSubtotal = () => {
     return cartItems
@@ -67,6 +60,14 @@ const CartPage = () => {
         return total + originalPrice * item.quantity;
       }, 0);
   };
+  
+  // Tính tổng tiền hàng (chỉ tính các sản phẩm được chọn)
+  const calculateTotal = () => {
+    return cartItems
+      .filter((item) => selectedItems.includes(item.id))
+      .reduce((total, item) => total + item.price * item.quantity, 0);
+  };
+
 
   const subtotal = calculateSubtotal();
   const total = calculateTotal();
@@ -145,12 +146,12 @@ const CartPage = () => {
                       <Link to={`/product/${item.id}`} className="item-name">
                         {item.name}
                       </Link>
-                      {item.originalPrice &&
+                      {/* {item.originalPrice &&
                         item.originalPrice !== item.price && (
                           <div className="item-promotion">
                             Giá chưa áp dụng mã khuyến mãi
                           </div>
-                        )}
+                        )} */}
                     </div>
 
                     <div className="item-price">

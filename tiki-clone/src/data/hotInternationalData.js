@@ -5,7 +5,7 @@ export const hotInternationalData = [
       "https://salt.tikicdn.com/cache/750x750/ts/product/12/3b/37/0054011296181b439110b5a1eaa613f4.png.webp",
     title: "Kem dưỡng trắng dạng gel giúp cải thiện thâm nám Hada Labo 50g",
     originalPrice: 350000,
-
+    sold: 342,
     badge: "NOW",
     shippingBadge: "Giao siêu tốc 2h",
     madeIn: "Made in Japan",
@@ -18,6 +18,7 @@ export const hotInternationalData = [
     originalPrice: 3000000,
     discount: 22,
     rating: 5,
+    sold: 85,
     shippingBadge: "Giao thứ 4, 22/10",
   },
   {
@@ -27,6 +28,7 @@ export const hotInternationalData = [
     title: "Vòng đeo tay tránh muỗi KINCHO 30 cái Hương thảo mộc",
     originalPrice: 215000,
     discount: 9,
+    sold: 430,
     badge: "DELIVERY",
     shippingBadge: "Giao sáng thứ 4, 22/10",
     madeIn: "Made in Japan",

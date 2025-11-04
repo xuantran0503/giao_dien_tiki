@@ -5,6 +5,7 @@ export const suggestedProductsData = [
       "https://salt.tikicdn.com/cache/750x750/ts/product/dd/2b/a6/fefd132c5ba9b5629c0119f57549e5d4.png.webp",
     name: "Apple iPhone 17 Pro Max",
     originalPrice: 44490000,
+    sold: 150,
     badgeIcon:
       "https://salt.tikicdn.com/ts/upload/c2/bc/6d/ff18cc8968e2bbb43f7ac58efbfafdff.png",
     isFreeShip: "img_giao_ngay.png",
@@ -18,6 +19,7 @@ export const suggestedProductsData = [
     originalPrice: 23490000,
     discount: 29,
     rating: 5.0,
+    sold: 1500,
     badgeIcon:
       "https://salt.tikicdn.com/ts/upload/f7/9e/83/ab28365ea395893fe5abac88b5103444.png",
     deliveryTime: "Giao thứ 5, 23/10",
@@ -29,6 +31,7 @@ export const suggestedProductsData = [
     name: "Apple iPhone 17 Pro",
     originalPrice: 47490000,
     rating: 5.0,
+    sold: 234,
     badgeIcon:
       "https://salt.tikicdn.com/ts/upload/12/e2/4a/c5226426ee9429b0050449ae5403c9cf.png",
     isFreeShip: "img_giao_ngay.png",
@@ -67,6 +70,7 @@ export const suggestedProductsData = [
     name: "Dầu gội Selsun chống gàu 100ml",
     originalPrice: 49000,
     rating: 4.7,
+    sold: 1523,
     badgeIcon:
       "https://salt.tikicdn.com/ts/upload/f7/9e/83/ab28365ea395893fe5abac88b5103444.png",
     isFreeShip: "img_giao_ngay.png",
@@ -81,6 +85,7 @@ export const suggestedProductsData = [
     originalPrice: 369000,
     discount: 56,
     rating: 4.8,
+    sold: 500,
     badgeIcon:
       "https://salt.tikicdn.com/ts/upload/c2/bc/6d/ff18cc8968e2bbb43f7ac58efbfafdff.png",
     isFreeShip: "img_giao_ngay.png",
@@ -95,6 +100,7 @@ export const suggestedProductsData = [
     originalPrice: 300000,
     discount: 42,
     rating: 4.5,
+    sold: 150,
     badgeIcon:
       "https://salt.tikicdn.com/ts/upload/f7/9e/83/ab28365ea395893fe5abac88b5103444.png",
     isFreeShip: "img_giao_ngay.png",
@@ -122,6 +128,7 @@ export const suggestedProductsData = [
     name: "Thùng 24 hộp Sữa chuối ít đường 200ml nhãn hiệu Binggrae",
     originalPrice: 328000,
     rating: 4.6,
+    sold: 300,
     badgeIcon:
       "https://salt.tikicdn.com/ts/upload/c2/bc/6d/ff18cc8968e2bbb43f7ac58efbfafdff.png",
     deliveryTime: "Giao thứ 5, 23/10",
@@ -199,8 +206,8 @@ export const suggestedProductsData = [
   {
     id: 16,
     image:
-      "https://salt.tikicdn.com/cache/750x750/ts/product/8a/b6/ba/1d95b88597f28e42d8ca91e3b3ff600f.jpg.webp",
-    name: "Sữa rửa mặt Cetaphil Gentle Skin Cleanser 500ml",
+      "https://salt.tikicdn.com/cache/750x750/ts/product/83/17/2a/21ff8eb0a2290a8baa9c6161c436db1d.png.webp",
+    name: "Giá đỡ màn hình HyperWork Core Arm | SA01- Hàng Chính Hãng ",
 
     originalPrice: 380000,
     discount: 25,
@@ -315,10 +322,10 @@ export const suggestedProductsData = [
   {
     id: 25,
     image:
-      "https://salt.tikicdn.com/cache/750x750/ts/product/90/49/97/ec88ab408c1997378344486c94dbac40.jpg.webp",
-    name: "Quần jean nam Levi's 511 Slim Fit",
+      "https://salt.tikicdn.com/cache/750x750/ts/product/b3/df/2d/e454fe0d4d2bf0d54d219c43bc69ae2b.jpg.webp",
+    name: "Quần Jean nam Leman xanh bạc rách JD18 - Slim Form",
 
-    originalPrice: 2190000,
+    originalPrice: 549000,
     discount: 32,
     rating: 4.7,
     badgeIcon:
@@ -400,10 +407,10 @@ export const suggestedProductsData = [
   {
     id: 31,
     image:
-      "https://salt.tikicdn.com/cache/750x750/ts/product/f3/7c/52/d7369f7fc4576f5d5e174a8d79228199.jpg.webp",
-    name: "Điện thoại OPPO Reno11 F 5G 8GB/256GB",
+      "https://salt.tikicdn.com/cache/750x750/ts/product/d4/99/00/e3290246734075f4f0f3fed41659eac7.jpg.webp",
+    name: "Tai Nghe Bluetooth Chụp Tai Sony WH-1000XM5 Hi-Res Noise Canceling - Hàng Chính Hãng",
 
-    originalPrice: 10990000,
+    originalPrice: 299000,
     discount: 23,
     rating: 4.6,
     badgeIcon:
@@ -414,10 +421,10 @@ export const suggestedProductsData = [
   {
     id: 32,
     image:
-      "https://salt.tikicdn.com/cache/750x750/ts/product/c7/a2/3a/c9e6eaa17656191e9fdd8febea6dd87c.jpg.webp",
-    name: "Máy sấy tóc Dyson Supersonic HD15 Vinca Blue",
+      "https://salt.tikicdn.com/cache/750x750/ts/product/e8/11/cf/aefa845a20041d6f0472a07780d33e55.png.webp",
+    name: "Màn hình LG UltraWide 29U511A (29 Inch - IPS - WFHD - 100Hz) - Hàng chính hãng",
 
-    originalPrice: 15990000,
+    originalPrice: 5490000,
     discount: 19,
 
     badgeIcon:
@@ -428,10 +435,10 @@ export const suggestedProductsData = [
   {
     id: 33,
     image:
-      "https://salt.tikicdn.com/cache/750x750/media/catalog/product/b/i/bia_loi-song-toi-gian-cua-nguoi-nhat.u2751.d20170222.t225522.277804.jpg.webp",
-    name: "Bình giữ nhiệt Lock&Lock 500ml LHC4145",
+      "https://salt.tikicdn.com/cache/750x750/ts/product/73/f2/a9/d25dfa5ce3b80ab3621abcec092e3201.jpg.webp",
+    name: "Tai nghe Game Lip-Top Q20 chân Type C, check QR tra nguồn gốc, có Micro và nút chỉnh âm lượng, Hàng chính hãng BH 1 năm",
 
-    originalPrice: 350000,
+    originalPrice: 155000,
     discount: 30,
     rating: 4.7,
     badgeIcon:
@@ -443,10 +450,10 @@ export const suggestedProductsData = [
   {
     id: 34,
     image:
-      "https://salt.tikicdn.com/cache/750x750/ts/product/1c/c5/f8/cabf11d364a21d9b33b188cc544ad508.jpg.webp",
-    name: "Máy tính bảng iPad Air 5 M1 64GB WiFi",
+      "https://salt.tikicdn.com/cache/750x750/ts/product/a3/80/bd/bc7840299c80a3e32b6e8f8853ec04a0.jpg.webp",
+    name: "Dây Đa Năng Hỗ Trợ Tập Luyện Powerband | Dây Kháng Lực Tập Toàn Thân Cao Cấp Nhiều Cấp Độ",
 
-    originalPrice: 17990000,
+    originalPrice: 138000,
     discount: 17,
     rating: 4.8,
     badgeIcon:
@@ -963,6 +970,7 @@ export const suggestedProductsData = [
     originalPrice: 160000,
     discount: 24,
     rating: 4.7,
+    sold: 1500,
     badgeIcon:
       "https://salt.tikicdn.com/ts/upload/f7/9e/83/ab28365ea395893fe5abac88b5103444.png",
     isFreeShip: "img_giao_ngay.png",

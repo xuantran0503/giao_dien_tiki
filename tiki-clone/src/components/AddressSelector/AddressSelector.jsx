@@ -1,8 +1,34 @@
 import React, { useState } from "react";
 import "./AddressSelector.css";
 
-const AddressSelector = ({ onLoginClick }) => {
+const AddressSelector = ({ onLoginClick, forceOpen = false, onClose }) => {
   const [showLocationModal, setShowLocationModal] = useState(false);
+  // Mở modal từ cha khi forceOpen = true
+  React.useEffect(() => {
+    if (forceOpen) {
+      setShowLocationModal(true);
+    }
+  }, [forceOpen]);
+
+  // Đồng bộ địa chỉ với localStorage + event bus đơn giản
+  React.useEffect(() => {
+    const saved = window.localStorage.getItem("selectedAddress");
+    if (saved && typeof saved === "string") {
+      setSelectedAddress(saved);
+    }
+
+    const handleAddressChange = (e) => {
+      const addr = e && e.detail && e.detail.address;
+      if (addr) {
+        setSelectedAddress(addr);
+      }
+    };
+
+    window.addEventListener("addressChange", handleAddressChange);
+    return () =>
+      window.removeEventListener("addressChange", handleAddressChange);
+  }, []);
+
   const [selectedAddress, setSelectedAddress] = useState(
     "P. Minh Khai, Q. Hoàng Mai, Hà Nội"
   );
@@ -85,6 +111,25 @@ const AddressSelector = ({ onLoginClick }) => {
         "X. Giao Hương",
         "X. Giao Long",
         "X. Giao Xuân",
+      ],
+      "H. Hải Hậu ": [
+        "Thị trấn Cồn",
+        "Thị trấn Thịnh Long",
+        "X. Hải Sơn",
+        "X. Hải Phú",
+        "X. Hải An",
+        "X. Hải Bắc",
+        "X. Hải Châu",
+        "X. Hải Đông",
+        "X. Hải Giang",
+        "X. Hải Hà",
+        "X. Hải Phong",
+        "X. Hải Hòa",
+        "X. Hải Hưng",
+        "X. Hải Quang",
+        "X. Hải Chính",
+        "X. Hải Lộc",
+        "X. Hải Lý",
       ],
     },
     "Thái Bình": {
@@ -205,8 +250,7 @@ const AddressSelector = ({ onLoginClick }) => {
 
   // Lấy danh sách quận/huyện theo tỉnh đã chọn
   const getDistrictsByCity = (city) => {
-    if (!city || !addressData[city]) 
-      return [];
+    if (!city || !addressData[city]) return [];
     return Object.keys(addressData[city]);
   };
 
@@ -236,6 +280,14 @@ const AddressSelector = ({ onLoginClick }) => {
     if (locationType === "default") {
       // Giữ nguyên địa chỉ hiện tại
       setShowLocationModal(false);
+      // Lưu và phát sự kiện đồng bộ
+      window.localStorage.setItem("selectedAddress", selectedAddress);
+      window.dispatchEvent(
+        new CustomEvent("addressChange", {
+          detail: { address: selectedAddress },
+        })
+      );
+      if (onClose) onClose();
     } else if (
       locationType === "custom" &&
       selectedCity &&
@@ -243,15 +295,21 @@ const AddressSelector = ({ onLoginClick }) => {
       selectedWard
     ) {
       // Cập nhật địa chỉ mới
-      setSelectedAddress(
-        `${selectedWard}, ${selectedDistrict}, ${selectedCity}`
-      );
+      const newAddr = `${selectedWard}, ${selectedDistrict}, ${selectedCity}`;
+      setSelectedAddress(newAddr);
       setShowLocationModal(false);
+      // Lưu và phát sự kiện đồng bộ
+      window.localStorage.setItem("selectedAddress", newAddr);
+      window.dispatchEvent(
+        new CustomEvent("addressChange", { detail: { address: newAddr } })
+      );
+      if (onClose) onClose();
     }
   };
 
   const handleLoginClick = () => {
     setShowLocationModal(false);
+    if (onClose) onClose();
     if (onLoginClick) {
       onLoginClick();
     }
@@ -273,7 +331,10 @@ const AddressSelector = ({ onLoginClick }) => {
       {showLocationModal && (
         <div
           className="location-modal-overlay"
-          onClick={() => setShowLocationModal(false)}
+          onClick={() => {
+            setShowLocationModal(false);
+            if (onClose) onClose();
+          }}
         >
           <div className="location-modal" onClick={(e) => e.stopPropagation()}>
             <div className="location-modal-content">
@@ -281,7 +342,10 @@ const AddressSelector = ({ onLoginClick }) => {
                 <h2>Địa chỉ giao hàng</h2>
                 <button
                   className="close-btn"
-                  onClick={() => setShowLocationModal(false)}
+                  onClick={() => {
+                    setShowLocationModal(false);
+                    if (onClose) onClose();
+                  }}
                 >
                   ×
                 </button>

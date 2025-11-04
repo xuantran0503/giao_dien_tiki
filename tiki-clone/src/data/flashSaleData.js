@@ -6,14 +6,17 @@ export const flashSaleData = [
     originalPrice: 200000,
     discount: 50,
     soldPercent: 10,
+    rating: 3.5,
+    sold: 150,
   },
   {
     id: 202,
     image:
       "https://salt.tikicdn.com/cache/280x280/media/catalog/producttmp/b7/ff/12/56dee306682b71fac4efc03552449c7e.jpg.webp",
-    originalPrice: 45789,
+    originalPrice: 4500000,
     discount: 5,
     soldPercent: 10,
+    sold: 150,
   },
   {
     id: 203,
@@ -22,6 +25,7 @@ export const flashSaleData = [
     originalPrice: 1980000,
     discount: 5,
     soldPercent: 10,
+    sold: 150,
   },
   {
     id: 204,
@@ -30,12 +34,13 @@ export const flashSaleData = [
     originalPrice: 54938,
     discount: 19,
     soldPercent: 10,
+    sold: 150,
   },
   {
     id: 205,
     image:
       "https://salt.tikicdn.com/cache/280x280/ts/product/fc/62/5b/bb188b6b7caac581ec712fd121df59bb.jpg.webp",
-    originalPrice: 3287660,
+    originalPrice: 32000,
     discount: 6,
     soldPercent: 10,
   },
@@ -134,6 +139,7 @@ export const flashSaleData = [
     originalPrice: 32898734,
     discount: 21,
     soldPercent: 10,
+    sold: 1500,
   },
   {
     id: 218,

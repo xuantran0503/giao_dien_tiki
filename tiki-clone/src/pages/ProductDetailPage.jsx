@@ -3,6 +3,7 @@ import { useParams, Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { addToCart } from "../store/cartSlice";
 import Header from "../components/Header/Header";
+import AddressSelector from "../components/AddressSelector/AddressSelector";
 import { suggestedProductsData } from "../data/suggestedProductsData";
 import { topDealsData } from "../data/topDealsData";
 import { flashSaleData } from "../data/flashSaleData";
@@ -20,12 +21,12 @@ const ProductDetailPage = () => {
     message: "",
     type: "",
   });
+  const [isAddressModalOpen, setIsAddressModalOpen] = useState(false);
 
   // Tìm sản phẩm từ tất cả data sources
   const findProduct = (id) => {
     const numId = parseInt(id);
     // const numId = title;
-
 
     // Tìm trong suggested products (data chuẩn nhất)
     let product = suggestedProductsData.find((p) => p.id === numId);
@@ -42,6 +43,7 @@ const ProductDetailPage = () => {
           originalPrice: topDeal.originalPrice,
           discount: topDeal.discount,
           rating: topDeal.rating,
+          sold: topDeal.sold,
           badgeIcon: topDeal.imageBadges,
           deliveryTime: topDeal.shippingBadge || "Giao siêu tốc 2h",
           madeIn: topDeal.madeIn,
@@ -60,7 +62,8 @@ const ProductDetailPage = () => {
           image: flashSale.image,
           originalPrice: flashSale.originalPrice,
           discount: flashSale.discount,
-          rating: 4.5,
+          rating: flashSale.rating,
+          sold: flashSale.sold,
           deliveryTime: "Giao siêu tốc 2h",
           isFreeShip: "img_giao_ngay.png",
         };
@@ -78,6 +81,7 @@ const ProductDetailPage = () => {
           originalPrice: hotInt.originalPrice,
           discount: hotInt.discount,
           rating: hotInt.rating,
+          sold: hotInt.sold,
           deliveryTime: "Giao siêu tốc 2h",
           madeIn: hotInt.madeIn,
           isFreeShip: "img_giao_ngay.png",
@@ -96,6 +100,7 @@ const ProductDetailPage = () => {
           originalPrice: youMayLike.originalPrice,
           discount: youMayLike.discount,
           rating: youMayLike.rating,
+          sold: youMayLike.sold,
           deliveryTime: youMayLike.shippingBadge || "Giao siêu tốc 2h",
           madeIn: youMayLike.madeIn,
           badgeIcon: youMayLike.badgeIcon, // Sửa từ imageBadges sang badgeIcon
@@ -168,20 +173,27 @@ const ProductDetailPage = () => {
   };
 
   // Render sao đánh giá
+
   const renderStars = (rating) => {
-    if (!rating) return null;
     const stars = [];
     const fullStars = Math.floor(rating);
+    const hasHalfStar = rating % 1 !== 0;
 
     for (let i = 0; i < fullStars; i++) {
       stars.push(
-        <span key={`full-${i}`} className="star filled">
+        <span key={i} className="star filled">
           ★
         </span>
       );
     }
-
-    const emptyStars = 5 - fullStars;
+    if (hasHalfStar) {
+      stars.push(
+        <span key="half" className="star half">
+          ★
+        </span>
+      );
+    }
+    const emptyStars = 5 - Math.ceil(rating);
     for (let i = 0; i < emptyStars; i++) {
       stars.push(
         <span key={`empty-${i}`} className="star">
@@ -189,7 +201,6 @@ const ProductDetailPage = () => {
         </span>
       );
     }
-
     return stars;
   };
 
@@ -225,10 +236,10 @@ const ProductDetailPage = () => {
           {/* Right: Product Info */}
           <div className="product-info-detail">
             {/* Badge */}
-            {product.badgeIcon && (
+            {product.imageBadges && (
               <div className="product-badge-container">
                 <img
-                  src={product.badgeIcon}
+                  src={product.imageBadges}
                   alt="Badge"
                   className="product-badge-icon-detail"
                 />
@@ -242,12 +253,19 @@ const ProductDetailPage = () => {
             <div className="rating-section">
               {product.rating && (
                 <>
+                  <span className="rating-number">{product.rating}</span>
                   <div className="rating-stars-detail">
                     {renderStars(product.rating)}
                   </div>
-                  <span className="rating-number">{product.rating}</span>
                   <span className="separator-dot">•</span>
-                  <span className="sold-count">Đã bán 15k</span>
+                  {product.sold && (
+                    <span className="sold-count">
+                      Đã bán {product.sold.toLocaleString("vi-VN")}
+                    </span>
+                  )}
+                  {!product.sold && (
+                    <span className="sold-count">Đã bán sản phẩm</span>
+                  )}
                 </>
               )}
             </div>
@@ -275,11 +293,27 @@ const ProductDetailPage = () => {
                 <span className="info-label">Thông tin vận chuyển</span>
               </div>
               <div className="delivery-detail">
-                <img
+                {/* <img
                   src="/img_giao_ngay.png"
                   alt="delivery"
                   className="delivery-icon"
-                />
+                /> */}
+
+                <div className="delivery-address-section">
+                  {/* Giao đến địa chỉ */}
+                  <AddressSelector
+                    forceOpen={isAddressModalOpen}
+                    onClose={() => setIsAddressModalOpen(false)}
+                  />
+
+                  <button
+                    className="btn-change-address"
+                    onClick={() => setIsAddressModalOpen(true)}
+                  >
+                    Đổi
+                  </button>
+                </div>
+
                 <div className="delivery-text">
                   <p className="delivery-main">
                     {product.deliveryTime || "Giao siêu tốc 2h"}
@@ -334,12 +368,14 @@ const ProductDetailPage = () => {
               <button className="btn-add-to-cart" onClick={handleAddToCart}>
                 Thêm vào giỏ
               </button>
+
+              <button className="btn-add-to-cart">Mua trả góp - trả sau</button>
             </div>
           </div>
         </div>
 
         {/* Product Description */}
-        <div className="product-description-section">
+        {/* <div className="product-description-section">
           <h2 className="section-title">Đặc điểm nổi bật</h2>
           <div className="description-content">
             <ul>
@@ -350,7 +386,7 @@ const ProductDetailPage = () => {
               <li>✓ Hỗ trợ khách hàng 24/7</li>
             </ul>
           </div>
-        </div>
+        </div> */}
 
         {/* Similar Products */}
         <div className="similar-products-section">

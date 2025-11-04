@@ -113,6 +113,7 @@
 
 .product-badge-icon-detail {
   height: 20px;
+  width: 20px;
 }
 
 .product-name-detail {
@@ -139,12 +140,20 @@
 }
 
 .rating-stars-detail .star {
-  color: #fdd835;
+  /* color: #fdd835; */
+  color: #ddd;
   font-size: 16px;
 }
 
 .rating-stars-detail .star.filled {
   color: #fdd835;
+}
+
+.star.half {
+    background: linear-gradient(90deg, #ffc400 50%, #ddd 50%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
 }
 
 .rating-number {
@@ -226,14 +235,71 @@
 
 .delivery-detail {
   display: flex;
+  flex-direction: column;
   align-items: flex-start;
-  gap: 12px;
+  gap: 8px;
+  /* text-decoration: none; */
 }
 
 .delivery-icon {
   width: 32px;
   height: 32px;
 }
+
+.delivery-address-section {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  gap: 8px;
+}
+
+/* Tinh chỉnh AddressSelector trong khu vực giao hàng để các phần thẳng hàng */
+.delivery-info-section .location {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0;
+  margin: 0;
+}
+
+.delivery-info-section .img-location img {
+  width: 18px;
+  height: 18px;
+}
+
+.delivery-info-section .text-location1 {
+  font-size: 14px;
+  margin: 0;
+}
+
+.delivery-info-section .location-link {
+  background: none;
+  border: none;
+  /* color: #0b74e5; */
+  cursor: pointer;
+  padding: 0;
+  font-size: 14px;
+  text-decoration: none;
+}
+
+.btn-change-address {
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 150%;
+  background-color: #fff;
+  color: #0b74e5;
+  /* border: 1px solid #0b74e5; */
+  /* border-radius: 4px; */
+  padding: 8px 16px;
+  /* cursor: pointer; */
+  text-decoration: none;
+}
+
+.btn-change-address:hover {
+  /* background-color: #f0f8ff; */
+  text-decoration: none;
+}
+
 
 .delivery-text {
   flex: 1;
@@ -364,9 +430,9 @@
   color: #fff;
 }
 
-.btn-buy-now:hover {
+/* .btn-buy-now:hover {
   background-color: #e63946;
-}
+} */
 
 .btn-add-to-cart {
   background-color: #fff;
