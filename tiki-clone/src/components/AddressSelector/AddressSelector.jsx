@@ -32,6 +32,7 @@ const AddressSelector = ({ onLoginClick, forceOpen = false, onClose }) => {
   const [selectedAddress, setSelectedAddress] = useState(
     "P. Minh Khai, Q. Hoàng Mai, Hà Nội"
   );
+
   const [locationType, setLocationType] = useState("default");
   const [selectedCity, setSelectedCity] = useState("");
   const [selectedDistrict, setSelectedDistrict] = useState("");
@@ -301,7 +302,9 @@ const AddressSelector = ({ onLoginClick, forceOpen = false, onClose }) => {
       // Lưu và phát sự kiện đồng bộ
       window.localStorage.setItem("selectedAddress", newAddr);
       window.dispatchEvent(
-        new CustomEvent("addressChange", { detail: { address: newAddr } })
+        new CustomEvent("addressChange", { 
+          detail: { address: newAddr } 
+        })
       );
       if (onClose) onClose();
     }
