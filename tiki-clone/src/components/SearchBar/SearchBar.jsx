@@ -123,7 +123,7 @@ const SearchBar = () => {
 
   const handleSearch = () => {
     if (searchValue.trim()) {
-      // Lưu vào history (giới hạn 5 item)
+      
       const newHistory = [
         searchValue,
         ...searchHistory.filter((item) => item !== searchValue),
@@ -132,14 +132,14 @@ const SearchBar = () => {
       localStorage.setItem("searchHistory", JSON.stringify(newHistory));
       setShowDropdown(false);
 
-      console.log("Searching for:", searchValue);
+      // console.log("Searching for:", searchValue);
     }
   };
 
   const handleHistoryClick = (text) => {
     setSearchValue(text);
     setShowDropdown(false);
-    console.log("Searching for:", text);
+    // console.log("Searching for:", text);
   };
 
   const handleKeyPress = (e) => {

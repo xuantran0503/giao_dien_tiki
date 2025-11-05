@@ -251,7 +251,11 @@
   align-items: center;
   flex: 1;
   gap: 8px;
+
+;
 }
+
+
 
 /* Tinh chỉnh AddressSelector trong khu vực giao hàng để các phần thẳng hàng */
 .delivery-info-section .location {
@@ -292,7 +296,7 @@
   /* border-radius: 4px; */
   padding: 8px 16px;
   /* cursor: pointer; */
-  text-decoration: none;
+  /* text-decoration: none; */
 }
 
 .btn-change-address:hover {

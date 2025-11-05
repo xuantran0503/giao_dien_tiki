@@ -12,13 +12,13 @@ const Login = ({ onClose }) => {
   const [passwordError, setPasswordError] = useState("");
   const [resetAccountError, setResetAccountError] = useState("");
 
-  // Hàm validate số điện thoại Việt Nam
+  
   const validatePhoneNumber = (phone) => {
     const phoneRegex = /^(0[3|5|7|8|9])+([0-9]{8})$/;
     return phoneRegex.test(phone);
   };
 
-  // Hàm validate email
+  
   const validateEmail = (email) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
@@ -26,26 +26,26 @@ const Login = ({ onClose }) => {
 
   const handlePhoneChange = (e) => {
     const value = e.target.value;
-    // Chỉ cho phép nhập số
+    
     const onlyNumbers = value.replace(/[^0-9]/g, "");
     setEmail(onlyNumbers);
 
     // Xóa lỗi khi người dùng bắt đầu nhập
-    if (phoneError) {
-      setPhoneError("");
-    }
+    // if (phoneError) {
+    //   setPhoneError("");
+    // }
   };
 
   const handleContinue = () => {
     const phone = email.trim();
 
-    // Kiểm tra không được để trống
+
     if (!phone) {
       setPhoneError("Số điện thoại không được để trống");
       return;
     }
 
-    // Kiểm tra định dạng số điện thoại
+    
     if (!validatePhoneNumber(phone)) {
       setPhoneError("Số điện thoại không đúng định dạng");
       return;
@@ -59,18 +59,18 @@ const Login = ({ onClose }) => {
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
-    // Xóa lỗi khi người dùng bắt đầu nhập
-    if (emailError) {
-      setEmailError("");
-    }
+    
+    // if (emailError) {
+    //   setEmailError("");
+    // }
   };
 
   const handlePasswordChange = (e) => {
     setPassword(e.target.value);
-    // Xóa lỗi khi người dùng bắt đầu nhập
-    if (passwordError) {
-      setPasswordError("");
-    }
+    
+    // if (passwordError) {
+    //   setPasswordError("");
+    // }
   };
 
   const handleLogin = (e) => {
@@ -88,9 +88,10 @@ const Login = ({ onClose }) => {
     } else if (!validateEmail(trimmedEmail)) {
       setEmailError("Email không đúng định dạng");
       hasError = true;
-    } else {
-      setEmailError("");
-    }
+    } 
+    // else {
+    //   setEmailError("");
+    // }
 
     // Kiểm tra mật khẩu
     if (!trimmedPassword) {
@@ -99,9 +100,10 @@ const Login = ({ onClose }) => {
     } else if (trimmedPassword.length < 6) {
       setPasswordError("Mật khẩu phải có ít nhất 6 ký tự");
       hasError = true;
-    } else {
-      setPasswordError("");
-    }
+    } 
+    // else {
+    //   setPasswordError("");
+    // }
 
     // Nếu không có lỗi, xử lý đăng nhập
     if (!hasError) {
@@ -135,10 +137,11 @@ const Login = ({ onClose }) => {
 
   const handleResetAccountChange = (e) => {
     setEmail(e.target.value);
+
     // Xóa lỗi khi người dùng bắt đầu nhập
-    if (resetAccountError) {
-      setResetAccountError("");
-    }
+    // if (resetAccountError) {
+    //   setResetAccountError("");
+    // }
   };
 
   const handleForgotPasswordSubmit = (e) => {
@@ -182,6 +185,14 @@ const Login = ({ onClose }) => {
     setEmail("");
     setResetAccountError("");
   };
+
+  const handleRegisterClick = (e) => {
+    e.preventDefault();
+    setStep(1);
+    setPhoneNumber("");
+    // alert("Chuyển đến trang đăng ký tài khoản.");
+
+  }
 
   const handleBack = () => {
     setStep(1);
@@ -357,12 +368,16 @@ const Login = ({ onClose }) => {
                   >
                     Quên mật khẩu?
                   </a>
+
                   <p>
                     Chưa có tài khoản?{" "}
-                    <a href="/register" className="login-link-register">
+                    <a href="#" 
+                    className="login-link-register" 
+                    onClick={handleRegisterClick}>
                       Tạo tài khoản
                     </a>
                   </p>
+
                 </div>
               </form>
             </div>

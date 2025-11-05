@@ -2,7 +2,13 @@ import React, { useState } from "react";
 import "./AddressSelector.css";
 
 const AddressSelector = ({ onLoginClick, forceOpen = false, onClose }) => {
+  const [locationType, setLocationType] = useState("default");
+  const [selectedCity, setSelectedCity] = useState("");
+  const [selectedDistrict, setSelectedDistrict] = useState("");
+  const [selectedWard, setSelectedWard] = useState("");
+  
   const [showLocationModal, setShowLocationModal] = useState(false);
+
   // Mở modal từ cha khi forceOpen = true
   React.useEffect(() => {
     if (forceOpen) {
@@ -10,7 +16,7 @@ const AddressSelector = ({ onLoginClick, forceOpen = false, onClose }) => {
     }
   }, [forceOpen]);
 
-  // Đồng bộ địa chỉ với localStorage + event bus đơn giản
+  // Đồng bộ địa chỉ với localStorage + event listener
   React.useEffect(() => {
     const saved = window.localStorage.getItem("selectedAddress");
     if (saved && typeof saved === "string") {
@@ -25,20 +31,15 @@ const AddressSelector = ({ onLoginClick, forceOpen = false, onClose }) => {
     };
 
     window.addEventListener("addressChange", handleAddressChange);
-    return () =>
-      window.removeEventListener("addressChange", handleAddressChange);
+    return () => window.removeEventListener("addressChange", handleAddressChange);
   }, []);
 
   const [selectedAddress, setSelectedAddress] = useState(
     "P. Minh Khai, Q. Hoàng Mai, Hà Nội"
   );
 
-  const [locationType, setLocationType] = useState("default");
-  const [selectedCity, setSelectedCity] = useState("");
-  const [selectedDistrict, setSelectedDistrict] = useState("");
-  const [selectedWard, setSelectedWard] = useState("");
 
-  // Dữ liệu địa chỉ theo cấu trúc: Tỉnh → Quận/Huyện → Phường/Xã
+  // Dữ liệu địa chỉ
   const addressData = {
     "Hà Nội": {
       "Q. Hoàng Mai": [
@@ -246,16 +247,17 @@ const AddressSelector = ({ onLoginClick, forceOpen = false, onClose }) => {
     },
   };
 
-  // Lấy danh sách tỉnh/thành phố
+  // Lấy danh sách tỉnh
   const cities = Object.keys(addressData);
 
-  // Lấy danh sách quận/huyện theo tỉnh đã chọn
+  // Lấy danh sách huyện 
   const getDistrictsByCity = (city) => {
-    if (!city || !addressData[city]) return [];
+    if (!city || !addressData[city]) 
+      return [];
     return Object.keys(addressData[city]);
   };
 
-  // Lấy danh sách phường/xã theo quận/huyện đã chọn
+  // Lấy danh sách xã 
   const getWardsByDistrict = (city, district) => {
     if (
       !city ||
@@ -268,8 +270,8 @@ const AddressSelector = ({ onLoginClick, forceOpen = false, onClose }) => {
   };
 
   const handleLocationClick = (e) => {
-    e.preventDefault();
-    // Reset về lựa chọn default khi mở modal
+    // e.preventDefault();
+    
     setLocationType("default");
     setSelectedCity("");
     setSelectedDistrict("");
@@ -279,10 +281,11 @@ const AddressSelector = ({ onLoginClick, forceOpen = false, onClose }) => {
 
   const handleSaveLocation = () => {
     if (locationType === "default") {
-      // Giữ nguyên địa chỉ hiện tại
+      
       setShowLocationModal(false);
-      // Lưu và phát sự kiện đồng bộ
+      
       window.localStorage.setItem("selectedAddress", selectedAddress);
+      
       window.dispatchEvent(
         new CustomEvent("addressChange", {
           detail: { address: selectedAddress },
@@ -299,8 +302,9 @@ const AddressSelector = ({ onLoginClick, forceOpen = false, onClose }) => {
       const newAddr = `${selectedWard}, ${selectedDistrict}, ${selectedCity}`;
       setSelectedAddress(newAddr);
       setShowLocationModal(false);
-      // Lưu và phát sự kiện đồng bộ
+      
       window.localStorage.setItem("selectedAddress", newAddr);
+
       window.dispatchEvent(
         new CustomEvent("addressChange", { 
           detail: { address: newAddr } 
@@ -313,9 +317,7 @@ const AddressSelector = ({ onLoginClick, forceOpen = false, onClose }) => {
   const handleLoginClick = () => {
     setShowLocationModal(false);
     if (onClose) onClose();
-    if (onLoginClick) {
-      onLoginClick();
-    }
+    if (onLoginClick) {onLoginClick();}
   };
 
   return (

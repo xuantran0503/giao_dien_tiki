@@ -129,10 +129,7 @@ const ProductDetailPage = () => {
   }
 
   // Tính giá sau giảm giá
-  const finalPrice = calculateDiscountedPrice(
-    product.originalPrice,
-    product.discount
-  );
+  const finalPrice = calculateDiscountedPrice(product.originalPrice, product.discount);
 
   // Xử lý tăng số lượng
   const handleIncrease = () => {
