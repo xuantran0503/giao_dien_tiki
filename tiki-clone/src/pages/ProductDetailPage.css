@@ -601,7 +601,7 @@
 }
 
 /* Product Not Found */
-.product-not-found {
+/* .product-not-found {
   max-width: 600px;
   margin: 80px auto;
   text-align: center;
@@ -614,9 +614,9 @@
   font-size: 24px;
   color: #242424;
   margin-bottom: 24px;
-}
+} */
 
-.back-home-link {
+/* .back-home-link {
   display: inline-block;
   padding: 12px 24px;
   background-color: #0b74e5;
@@ -628,10 +628,10 @@
 
 .back-home-link:hover {
   background-color: #0958ba;
-}
+} */
 
 /* Responsive */
-@media (max-width: 1024px) {
+/* @media (max-width: 1024px) {
   .product-main-info {
     flex-direction: column;
   }
@@ -644,9 +644,9 @@
   .similar-products-grid {
     grid-template-columns: repeat(3, 1fr);
   }
-}
+} */
 
-@media (max-width: 768px) {
+/* @media (max-width: 768px) {
   .product-detail-container {
     padding: 12px;
   }
@@ -670,5 +670,5 @@
   .similar-products-grid {
     grid-template-columns: repeat(2, 1fr);
   }
-}
+} */
 

@@ -11,11 +11,10 @@ const CartPage = () => {
   const cartItems = useSelector((state) => state.cart.items);
   const totalQuantity = useSelector((state) => state.cart.totalQuantity);
 
-  const [selectedItems, setSelectedItems] = useState(
-    cartItems.map((item) => item.id)
+  const [selectedItems, setSelectedItems] = useState(//selectedItems la danh sach san pham da chon  
+    cartItems.map((item) => item.id) //mac dinh chon tat ca san pham trong gio hang
   );
 
-  // Chọn/bỏ chọn tất cả sản phẩm
   const handleSelectAll = (e) => {
     if (e.target.checked) {
       setSelectedItems(cartItems.map((item) => item.id));
@@ -23,51 +22,44 @@ const CartPage = () => {
       setSelectedItems([]);
     }
   };
-
-  // Chọn/bỏ chọn từng sản phẩm
+  
   const handleSelectItem = (id) => {
-    if (selectedItems.includes(id)) {
+    if (selectedItems.includes(id)) { //neu da chon thi bo ra khoi danh sach bang filter
       setSelectedItems(selectedItems.filter((itemId) => itemId !== id));
-    } else {
+    } else {//neu chua chon thi them vao
       setSelectedItems([...selectedItems, id]);
     }
   };
 
-  // Tăng số lượng
   const handleIncrease = (id, currentQuantity) => {
     dispatch(updateQuantity({ id, quantity: currentQuantity + 1 }));
   };
 
-  // Giảm số lượng
   const handleDecrease = (id, currentQuantity) => {
     if (currentQuantity > 1) {
       dispatch(updateQuantity({ id, quantity: currentQuantity - 1 }));
     }
   };
 
-  // Xóa sản phẩm
   const handleRemove = (id) => {
     dispatch(removeFromCart(id));
     setSelectedItems(selectedItems.filter((itemId) => itemId !== id));
   };
-
-  // Tính tổng tiền tạm tính (trước giảm giá)
+  
   const calculateSubtotal = () => {
     return cartItems
       .filter((item) => selectedItems.includes(item.id))
       .reduce((total, item) => {
-        const originalPrice = item.originalPrice || item.price;
+        const originalPrice = item.originalPrice ;
         return total + originalPrice * item.quantity;
       }, 0);
   };
   
-  // Tính tổng tiền hàng (chỉ tính các sản phẩm được chọn)
   const calculateTotal = () => {
     return cartItems
       .filter((item) => selectedItems.includes(item.id))
       .reduce((total, item) => total + item.price * item.quantity, 0);
   };
-
 
   const subtotal = calculateSubtotal();
   const total = calculateTotal();

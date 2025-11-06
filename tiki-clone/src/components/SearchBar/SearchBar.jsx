@@ -97,7 +97,7 @@ const SearchBar = () => {
     },
   ];
 
-  // Load search history từ localStorage
+ 
   useEffect(() => {
     const history = JSON.parse(localStorage.getItem("searchHistory") || "[]");
     setSearchHistory(history);

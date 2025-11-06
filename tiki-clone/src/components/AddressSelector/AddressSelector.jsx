@@ -9,7 +9,6 @@ const AddressSelector = ({ onLoginClick, forceOpen = false, onClose }) => {
   
   const [showLocationModal, setShowLocationModal] = useState(false);
 
-  // Mở modal từ cha khi forceOpen = true
   React.useEffect(() => {
     if (forceOpen) {
       setShowLocationModal(true);
@@ -34,12 +33,12 @@ const AddressSelector = ({ onLoginClick, forceOpen = false, onClose }) => {
     return () => window.removeEventListener("addressChange", handleAddressChange);
   }, []);
 
+
+  
   const [selectedAddress, setSelectedAddress] = useState(
     "P. Minh Khai, Q. Hoàng Mai, Hà Nội"
   );
 
-
-  // Dữ liệu địa chỉ
   const addressData = {
     "Hà Nội": {
       "Q. Hoàng Mai": [
@@ -247,17 +246,17 @@ const AddressSelector = ({ onLoginClick, forceOpen = false, onClose }) => {
     },
   };
 
-  // Lấy danh sách tỉnh
+  
   const cities = Object.keys(addressData);
 
-  // Lấy danh sách huyện 
+  
   const getDistrictsByCity = (city) => {
     if (!city || !addressData[city]) 
       return [];
     return Object.keys(addressData[city]);
   };
 
-  // Lấy danh sách xã 
+  
   const getWardsByDistrict = (city, district) => {
     if (
       !city ||
@@ -298,7 +297,7 @@ const AddressSelector = ({ onLoginClick, forceOpen = false, onClose }) => {
       selectedDistrict &&
       selectedWard
     ) {
-      // Cập nhật địa chỉ mới
+      
       const newAddr = `${selectedWard}, ${selectedDistrict}, ${selectedCity}`;
       setSelectedAddress(newAddr);
       setShowLocationModal(false);

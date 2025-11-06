@@ -1,6 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-// Load giỏ hàng từ localStorage khi khởi tạo
 const loadCartFromStorage = () => {
   try {
     const savedCart = localStorage.getItem("tikiCart");
@@ -16,7 +15,6 @@ const loadCartFromStorage = () => {
   };
 };
 
-// Lưu giỏ hàng vào localStorage
 const saveCartToStorage = (state) => {
   try {
     localStorage.setItem("tikiCart", JSON.stringify(state));
@@ -34,11 +32,9 @@ const cartSlice = createSlice({
       const existingItem = state.items.find((item) => item.id === newItem.id);
 
       if (existingItem) {
-        // Nếu sản phẩm đã có trong giỏ hàng, TĂNG SỐ LƯỢNG
         existingItem.quantity += newItem.quantity;
         state.totalQuantity += newItem.quantity;
       } else {
-        // Nếu sản phẩm chưa có, thêm mới vào giỏ hàng
         state.items.push({
           id: newItem.id,
           name: newItem.name,
@@ -51,7 +47,6 @@ const cartSlice = createSlice({
         state.totalQuantity += newItem.quantity;
       }
 
-      // Lưu vào localStorage
       saveCartToStorage(state);
     },
 
@@ -64,7 +59,6 @@ const cartSlice = createSlice({
         state.items = state.items.filter((item) => item.id !== id);
       }
 
-      // Lưu vào localStorage
       saveCartToStorage(state);
     },
 
@@ -78,7 +72,6 @@ const cartSlice = createSlice({
         state.totalQuantity += diff;
       }
 
-      // Lưu vào localStorage
       saveCartToStorage(state);
     },
 
@@ -86,7 +79,6 @@ const cartSlice = createSlice({
       state.items = [];
       state.totalQuantity = 0;
 
-      // Lưu vào localStorage
       saveCartToStorage(state);
     },
   },

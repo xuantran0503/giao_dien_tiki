@@ -26,14 +26,10 @@ const ProductDetailPage = () => {
   // Tìm sản phẩm từ tất cả data sources
   const findProduct = (id) => {
     const numId = parseInt(id);
-    // const numId = title;
 
-    // Tìm trong suggested products (data chuẩn nhất)
     let product = suggestedProductsData.find((p) => p.id === numId);
 
-    // Nếu không tìm thấy, tìm trong các nguồn khác và map sang format chuẩn
     if (!product) {
-      // Tìm trong TopDeals
       const topDeal = topDealsData.find((p) => p.id === numId);
       if (topDeal) {
         product = {
@@ -121,7 +117,7 @@ const ProductDetailPage = () => {
         <div className="product-not-found">
           <h2>Không tìm thấy sản phẩm</h2>
           <Link to="/" className="back-home-link">
-            ← Quay về trang chủ
+            Quay về trang chủ
           </Link>
         </div>
       </div>
@@ -205,7 +201,7 @@ const ProductDetailPage = () => {
     <div className="product-detail-page">
       <Header />
 
-      {/* Breadcrumb */}
+      
       <div className="breadcrumb-container">
         <div className="breadcrumb">
           <Link to="/">Trang chủ</Link>
@@ -214,10 +210,10 @@ const ProductDetailPage = () => {
         </div>
       </div>
 
-      {/* Product Detail Container */}
+      
       <div className="product-detail-container">
         <div className="product-main-info">
-          {/* Left: Product Images */}
+          
           <div className="product-images">
             <div className="main-image">
               <img src={product.image} alt={product.name} />
@@ -226,13 +222,13 @@ const ProductDetailPage = () => {
               <div className="thumbnail active">
                 <img src={product.image} alt={product.name} />
               </div>
-              {/* Có thể thêm nhiều ảnh thumbnail ở đây */}
+              
             </div>
           </div>
 
           {/* Right: Product Info */}
           <div className="product-info-detail">
-            {/* Badge */}
+            
             {product.imageBadges && (
               <div className="product-badge-container">
                 <img
@@ -243,10 +239,10 @@ const ProductDetailPage = () => {
               </div>
             )}
 
-            {/* Product Name */}
+            
             <h1 className="product-name-detail">{product.name}</h1>
 
-            {/* Rating & Sold */}
+          
             <div className="rating-section">
               {product.rating && (
                 <>
