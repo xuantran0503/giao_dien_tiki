@@ -5,11 +5,11 @@
  * @returns {number}
  */
 export const calculateDiscountedPrice = (originalPrice, discount) => {
-  if (!originalPrice || isNaN(Number(originalPrice))) {
-    return 0;
-  }
+  // if (!originalPrice) {
+  //   return 0;
+  // }
 
-  if (!discount || isNaN(Number(discount))) {
+  if (!discount) {
     return Number(originalPrice);
   }
   //

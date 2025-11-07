@@ -15,15 +15,11 @@ sửa data cho đồng bộ thông tin cho chuẩn
 
 +++++++++++++ĐANG LÀM ++++++++++++++++
 
-làm giao diện địa chỉ giao hàng để thay đổi địa chỉ hiển thị ở header , 
-
-làm giao diện đang nhập tài khoản (redux)
-
 làm giao diện giỏ hàng (redux)
 
-sửa thêm votcher
+dùng redux-persist để lưu dữ liệu vào redux để tránh xung đột dữ liệu khi thay đổi số lượng 
 
-sửa lỗi khi click vào sản phẩm của các mục như top deal ... thì lại hiển thị sản phẩm của suggestedProductsData 
+khi mở 2 tab và tăng số lượng sản phẩm lên thì phải đồng bộ dữ liệu khi thay đổi 
 
 
 
@@ -205,5 +201,12 @@ git push -u xuantran0503 main --force
 ⚠️ Chỉ dùng --force nếu bạn chắc chắn muốn thay thế toàn bộ nội dung trên GitHub.
 
 
+🔸 Trường hợp bạn chỉ muốn chuyển sang nhánh main (nếu nó đã có sẵn):
 
+Nếu bạn chưa có nhánh main cục bộ, hãy tạo từ remote:
+
+git fetch origin
+git checkout main
+
+git branch -M main
 

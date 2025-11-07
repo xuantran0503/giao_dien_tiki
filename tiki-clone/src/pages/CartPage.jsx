@@ -3,17 +3,24 @@ import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { removeFromCart, updateQuantity } from "../store/cartSlice";
 import Header from "../components/Header/Header";
-import { formatPrice } from "../utils/priceUtils";
+import Footer from "../components/Footer/Footer";
+import { addToCart } from "../store/cartSlice";
+import { suggestedProductsData } from "../data/suggestedProductsData";
+import { topDealsData } from "../data/topDealsData";
+import { flashSaleData } from "../data/flashSaleData";
+import { hotInternationalData } from "../data/hotInternationalData";
+import { youMayLikeData } from "../data/youMayLikeData";  
+import { calculateDiscountedPrice, formatPrice } from "../utils/priceUtils";
 import "./CartPage.css";
+import { PrevArrow, NextArrow } from "../components/shared/NavigationArrows";
 
 const CartPage = () => {
   const dispatch = useDispatch();
   const cartItems = useSelector((state) => state.cart.items);
-  const totalQuantity = useSelector((state) => state.cart.totalQuantity);
 
-  const [selectedItems, setSelectedItems] = useState(//selectedItems la danh sach san pham da chon  
-    cartItems.map((item) => item.id) //mac dinh chon tat ca san pham trong gio hang
-  );
+  const [selectedItems, setSelectedItems] = useState([]);
+
+  const [currentPage, setCurrentPage] = useState(1);
 
   const handleSelectAll = (e) => {
     if (e.target.checked) {
@@ -22,11 +29,13 @@ const CartPage = () => {
       setSelectedItems([]);
     }
   };
-  
+
   const handleSelectItem = (id) => {
-    if (selectedItems.includes(id)) { //neu da chon thi bo ra khoi danh sach bang filter
+    if (selectedItems.includes(id)) {
+      //neu da chon thi bo ra khoi danh sach bang filter
       setSelectedItems(selectedItems.filter((itemId) => itemId !== id));
-    } else {//neu chua chon thi them vao
+    } else {
+      //neu chua chon thi them vao
       setSelectedItems([...selectedItems, id]);
     }
   };
@@ -45,16 +54,16 @@ const CartPage = () => {
     dispatch(removeFromCart(id));
     setSelectedItems(selectedItems.filter((itemId) => itemId !== id));
   };
-  
+
   const calculateSubtotal = () => {
     return cartItems
       .filter((item) => selectedItems.includes(item.id))
       .reduce((total, item) => {
-        const originalPrice = item.originalPrice ;
+        const originalPrice = item.originalPrice;
         return total + originalPrice * item.quantity;
       }, 0);
   };
-  
+
   const calculateTotal = () => {
     return cartItems
       .filter((item) => selectedItems.includes(item.id))
@@ -64,6 +73,87 @@ const CartPage = () => {
   const subtotal = calculateSubtotal();
   const total = calculateTotal();
   const discount = subtotal - total;
+
+  // Hàm thêm sản phẩm tương tự vào giỏ
+  const handleAddSimilarProductToCart = (item) => {
+    const itemFinalPrice = calculateDiscountedPrice(
+      item.originalPrice,
+      item.discount
+    );
+
+    dispatch(
+      addToCart({
+        id: item.id,
+        name: item.name,
+        image: item.image,
+        price: itemFinalPrice,
+        originalPrice: item.originalPrice,
+        discount: item.discount,
+        quantity: 1,
+      })
+    );
+  };
+
+  const itemsPerPage = 6;
+  // Tính toán chuyển slice
+  const totalPages = Math.ceil(topDealsData.length / itemsPerPage);
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = topDealsData.slice(
+    indexOfFirstItem,
+    indexOfLastItem
+  );
+
+  const handlePageChange = (pageNumber) => {
+    setCurrentPage(pageNumber);
+    
+  };
+
+  const handlePrevPage = () => {
+    if (currentPage > 1) {
+      handlePageChange(currentPage - 1);
+    }
+  };
+
+  const handleNextPage = () => {
+    if (currentPage < totalPages) {
+      handlePageChange(currentPage + 1);
+    }
+  };
+
+
+
+  const renderStars = (rating) => {
+    const stars = [];
+    const fullStars = Math.floor(rating);
+    const hasHalfStar = rating % 1 !== 0;
+
+    for (let i = 0; i < fullStars; i++) {
+      stars.push(
+        <span key={i} className="star filled">
+          ★
+        </span>
+      );
+    }
+    if (hasHalfStar) {
+      stars.push(
+        <span key="half" className="star half">
+          ★
+        </span>
+      );
+    }
+    const emptyStars = 5 - Math.ceil(rating);
+    for (let i = 0; i < emptyStars; i++) {
+      stars.push(
+        <span key={`empty-${i}`} className="star">
+          ★
+        </span>
+      );
+    }
+    return stars;
+  };
+
+
 
   return (
     <div className="cart-page">
@@ -102,6 +192,7 @@ const CartPage = () => {
                     Tất cả ({cartItems.length} sản phẩm)
                   </span>
                 </label>
+
                 <div className="cart-columns">
                   <span className="col-price">Đơn giá</span>
                   <span className="col-quantity">Số lượng</span>
@@ -168,12 +259,14 @@ const CartPage = () => {
                       >
                         -
                       </button>
+
                       <input
                         type="text"
                         className="qty-input"
                         value={item.quantity}
                         readOnly
                       />
+
                       <button
                         className="qty-btn"
                         onClick={() => handleIncrease(item.id, item.quantity)}
@@ -218,6 +311,7 @@ const CartPage = () => {
                 <span className="delivery-label">Giao tới</span>
                 <button className="btn-change-address">Thay đổi</button>
               </div>
+
               <div className="delivery-address">
                 <strong>Trần Văn Xuân</strong> | 0383477786
                 <p>Xóm 1, Xã Hải Sơn, Huyện Hải Hậu, Nam Định</p>
@@ -295,11 +389,73 @@ const CartPage = () => {
       {cartItems.length > 0 && (
         <div className="suggested-products-cart">
           <h2 className="suggested-title">Sản phẩm mua kèm</h2>
-          <div className="suggested-grid">
-            {/* Có thể thêm sản phẩm gợi ý ở đây */}
+
+          <div className="similar-products-wrapper">
+            {totalPages > 1 && currentPage > 1 && (
+              <PrevArrow onClick={handlePrevPage} />
+            )}
+
+            <div className="similar-products-grid">
+              {currentItems.map((item) => (
+                <div key={item.id} className="similar-product-card-wrapper">
+                  <Link
+                    to={`/product/${item.id}`}
+                    className="similar-product-card"
+                  >
+                    <div className="similar-product-image">
+                      <img src={item.image} alt={item.name} />
+                    </div>
+
+                    <div className="similar-product-info">
+                      <h3 className="similar-product-name">{item.title}</h3>
+                      <div>
+                        <span class ="rating-stars">
+                            {renderStars(item.rating)}
+                          </span>
+                      </div>
+                      <div className="similar-product-price">
+                        <span className="price">
+                          {formatPrice(
+                            calculateDiscountedPrice(
+                              item.originalPrice,
+                              item.discount
+                            )
+                          )}
+                          <sup>₫</sup>
+                        </span>
+                        <div className="discount-price-container">
+                          {item.discount && item.discount > 0 && (
+                            <span className="discount">-{item.discount}%</span>
+                          )}
+
+                          {item.originalPrice !== item.price && (
+                            <span className="original-price">
+                              {formatPrice(item.originalPrice)}
+                              <sup>₫</sup>
+                            </span>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  </Link>
+                  <button
+                    className="btn-add-to-cart-similar"
+                    onClick={() => handleAddSimilarProductToCart(item)}
+                  >
+                    Thêm vào giỏ
+                  </button>
+                </div>
+              ))}
+            </div>
+
+            {totalPages > 1 && currentPage < totalPages && (
+              <NextArrow onClick={handleNextPage} />
+            )}
           </div>
         </div>
       )}
+
+      <Footer />
     </div>
   );
 };

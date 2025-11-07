@@ -555,9 +555,12 @@
 
 /* Suggested Products */
 .suggested-products-cart {
+      background-color: #fff;
+    border-radius: 4px;
+    padding: 24px;
   max-width: 1270px;
   margin: 0 auto;
-  padding: 0 15px 40px;
+  /* padding: 0 15px 40px; */
 }
 
 .suggested-title {

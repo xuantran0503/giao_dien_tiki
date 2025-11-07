@@ -6,7 +6,7 @@ const Login = ({ onClose }) => {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [step, setStep] = useState(1); // 1: phone input, 2: email login, 3: phone password, 4: forgot password
-  const [phoneNumber, setPhoneNumber] = useState(""); // Lưu số điện thoại
+  const [phoneNumber, setPhoneNumber] = useState(""); 
   const [phoneError, setPhoneError] = useState("");
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
@@ -18,7 +18,6 @@ const Login = ({ onClose }) => {
     return phoneRegex.test(phone);
   };
 
-  
   const validateEmail = (email) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
@@ -29,48 +28,35 @@ const Login = ({ onClose }) => {
     
     const onlyNumbers = value.replace(/[^0-9]/g, "");
     setEmail(onlyNumbers);
-
-    // Xóa lỗi khi người dùng bắt đầu nhập
-    // if (phoneError) {
-    //   setPhoneError("");
-    // }
+    
   };
 
   const handleContinue = () => {
     const phone = email.trim();
 
-
     if (!phone) {
       setPhoneError("Số điện thoại không được để trống");
       return;
     }
-
     
     if (!validatePhoneNumber(phone)) {
       setPhoneError("Số điện thoại không đúng định dạng");
       return;
     }
 
-    // Nếu hợp lệ, lưu số điện thoại và chuyển sang step 3 (nhập mật khẩu)
-    setPhoneError("");
     setPhoneNumber(phone);
+
     setStep(3);
   };
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
     
-    // if (emailError) {
-    //   setEmailError("");
-    // }
   };
 
   const handlePasswordChange = (e) => {
     setPassword(e.target.value);
     
-    // if (passwordError) {
-    //   setPasswordError("");
-    // }
   };
 
   const handleLogin = (e) => {
@@ -80,8 +66,7 @@ const Login = ({ onClose }) => {
     const trimmedPassword = password.trim();
 
     let hasError = false;
-
-    // Kiểm tra email
+    
     if (!trimmedEmail) {
       setEmailError("Email không được để trống");
       hasError = true;
@@ -89,11 +74,7 @@ const Login = ({ onClose }) => {
       setEmailError("Email không đúng định dạng");
       hasError = true;
     } 
-    // else {
-    //   setEmailError("");
-    // }
-
-    // Kiểm tra mật khẩu
+    
     if (!trimmedPassword) {
       setPasswordError("Mật khẩu không được để trống");
       hasError = true;
@@ -101,14 +82,10 @@ const Login = ({ onClose }) => {
       setPasswordError("Mật khẩu phải có ít nhất 6 ký tự");
       hasError = true;
     } 
-    // else {
-    //   setPasswordError("");
-    // }
-
-    // Nếu không có lỗi, xử lý đăng nhập
+    
     if (!hasError) {
       console.log("Đăng nhập với:", trimmedEmail, trimmedPassword);
-      // Xử lý đăng nhập ở đây
+      
       alert("Đăng nhập thành công!");
     }
   };
@@ -117,8 +94,7 @@ const Login = ({ onClose }) => {
     e.preventDefault();
 
     const trimmedPassword = password.trim();
-
-    // Kiểm tra mật khẩu
+    
     if (!trimmedPassword) {
       setPasswordError("Mật khẩu không được để trống");
       return;
@@ -128,8 +104,7 @@ const Login = ({ onClose }) => {
       setPasswordError("Mật khẩu phải có ít nhất 6 ký tự");
       return;
     }
-
-    // Nếu hợp lệ, xử lý đăng nhập
+    
     setPasswordError("");
     console.log("Đăng nhập với số điện thoại:", phoneNumber, trimmedPassword);
     alert("Đăng nhập thành công!");
@@ -137,25 +112,19 @@ const Login = ({ onClose }) => {
 
   const handleResetAccountChange = (e) => {
     setEmail(e.target.value);
-
-    // Xóa lỗi khi người dùng bắt đầu nhập
-    // if (resetAccountError) {
-    //   setResetAccountError("");
-    // }
+    
   };
 
   const handleForgotPasswordSubmit = (e) => {
-    e.preventDefault();
+    // e.preventDefault();
 
     const account = email.trim();
-
-    // Kiểm tra không được để trống
+    
     if (!account) {
       setResetAccountError("Vui lòng nhập số điện thoại hoặc email");
       return;
     }
-
-    // Kiểm tra định dạng (số điện thoại hoặc email)
+    
     const isPhone = /^[0-9]+$/.test(account);
     const isEmail = validateEmail(account);
 
@@ -190,8 +159,7 @@ const Login = ({ onClose }) => {
     e.preventDefault();
     setStep(1);
     setPhoneNumber("");
-    // alert("Chuyển đến trang đăng ký tài khoản.");
-
+    
   }
 
   const handleBack = () => {

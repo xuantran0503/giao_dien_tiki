@@ -97,7 +97,6 @@ const SearchBar = () => {
     },
   ];
 
- 
   useEffect(() => {
     const history = JSON.parse(localStorage.getItem("searchHistory") || "[]");
     setSearchHistory(history);
@@ -109,8 +108,6 @@ const SearchBar = () => {
         setShowDropdown(false);
       }
     };
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
   const handleSearchFocus = () => {

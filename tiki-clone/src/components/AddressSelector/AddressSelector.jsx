@@ -28,9 +28,7 @@ const AddressSelector = ({ onLoginClick, forceOpen = false, onClose }) => {
         setSelectedAddress(addr);
       }
     };
-
-    window.addEventListener("addressChange", handleAddressChange);
-    return () => window.removeEventListener("addressChange", handleAddressChange);
+    
   }, []);
 
 
@@ -107,15 +105,14 @@ const AddressSelector = ({ onLoginClick, forceOpen = false, onClose }) => {
         "X. Xuân Hồng",
       ],
       "H. Giao Thủy": [
-        "X. Bình Hòa",
+        
         "X. Giao Hải",
         "X. Giao Hương",
         "X. Giao Long",
         "X. Giao Xuân",
       ],
       "H. Hải Hậu ": [
-        "Thị trấn Cồn",
-        "Thị trấn Thịnh Long",
+        
         "X. Hải Sơn",
         "X. Hải Phú",
         "X. Hải An",
@@ -248,7 +245,6 @@ const AddressSelector = ({ onLoginClick, forceOpen = false, onClose }) => {
 
   
   const cities = Object.keys(addressData);
-
   
   const getDistrictsByCity = (city) => {
     if (!city || !addressData[city]) 
@@ -309,13 +305,13 @@ const AddressSelector = ({ onLoginClick, forceOpen = false, onClose }) => {
           detail: { address: newAddr } 
         })
       );
-      if (onClose) onClose();
+      // if (onClose) onClose();
     }
   };
 
   const handleLoginClick = () => {
     setShowLocationModal(false);
-    if (onClose) onClose();
+    // if (onClose) onClose();
     if (onLoginClick) {onLoginClick();}
   };
 

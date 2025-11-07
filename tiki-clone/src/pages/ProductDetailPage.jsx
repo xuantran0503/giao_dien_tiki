@@ -3,7 +3,9 @@ import { useParams, Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { addToCart } from "../store/cartSlice";
 import Header from "../components/Header/Header";
+import Footer from "../components/Footer/Footer";
 import AddressSelector from "../components/AddressSelector/AddressSelector";
+import { PrevArrow, NextArrow } from "../components/shared/NavigationArrows";
 import { suggestedProductsData } from "../data/suggestedProductsData";
 import { topDealsData } from "../data/topDealsData";
 import { flashSaleData } from "../data/flashSaleData";
@@ -21,7 +23,10 @@ const ProductDetailPage = () => {
     message: "",
     type: "",
   });
+
   const [isAddressModalOpen, setIsAddressModalOpen] = useState(false);
+
+  const [currentPage, setCurrentPage] = useState(1);
 
   // Tìm sản phẩm từ tất cả data sources
   const findProduct = (id) => {
@@ -110,36 +115,36 @@ const ProductDetailPage = () => {
 
   const product = findProduct(productId);
 
-  if (!product) {
-    return (
-      <div className="product-detail-page">
-        <Header />
-        <div className="product-not-found">
-          <h2>Không tìm thấy sản phẩm</h2>
-          <Link to="/" className="back-home-link">
-            Quay về trang chủ
-          </Link>
-        </div>
-      </div>
-    );
-  }
+  // if (!product) {
+  //   return (
+  //     <div className="product-detail-page">
+  //       <Header />
+  //       <div className="product-not-found">
+  //         <h2>Không tìm thấy sản phẩm</h2>
+  //         <Link to="/" className="back-home-link">
+  //           Quay về trang chủ
+  //         </Link>
+  //       </div>
+  //     </div>
+  //   );
+  // }
 
   // Tính giá sau giảm giá
-  const finalPrice = calculateDiscountedPrice(product.originalPrice, product.discount);
+  const finalPrice = calculateDiscountedPrice(
+    product.originalPrice,
+    product.discount
+  );
 
-  // Xử lý tăng số lượng
   const handleIncrease = () => {
     setQuantity((prev) => prev + 1);
   };
 
-  // Xử lý giảm số lượng
   const handleDecrease = () => {
     if (quantity > 1) {
       setQuantity((prev) => prev - 1);
     }
   };
 
-  // Xử lý thêm vào giỏ hàng
   const handleAddToCart = () => {
     // Thêm sản phẩm vào giỏ hàng (nếu trùng sẽ tự động tăng số lượng)
     dispatch(
@@ -154,18 +159,81 @@ const ProductDetailPage = () => {
       })
     );
 
-    // Hiển thị thông báo thành công
     setNotification({
       show: true,
       message: "Đã thêm sản phẩm vào giỏ hàng",
       type: "success",
     });
+
     setTimeout(() => {
       setNotification({ show: false, message: "", type: "" });
     }, 1000);
   };
 
-  // Render sao đánh giá
+  // Hàm thêm sản phẩm tương tự vào giỏ
+  const handleAddSimilarProductToCart = (item, e) => {
+    // Ngăn chặn điều hướng khi click nút
+    // e.preventDefault();
+    // e.stopPropagation();
+
+    const itemFinalPrice = calculateDiscountedPrice(
+      item.originalPrice,
+      item.discount
+    );
+
+    dispatch(
+      addToCart({
+        id: item.id,
+        name: item.name,
+        image: item.image,
+        price: itemFinalPrice,
+        originalPrice: item.originalPrice,
+        discount: item.discount,
+        quantity: 1,
+      })
+    );
+
+    setNotification({
+      show: true,
+      message: "Đã thêm sản phẩm vào giỏ hàng",
+      type: "success",
+    });
+
+    setTimeout(() => {
+      setNotification({ show: false, message: "", type: "" });
+    }, 1000);
+  };
+
+  const itemsPerPage = 6;
+  // Tính toán pagination
+  const totalPages = Math.ceil(suggestedProductsData.length / itemsPerPage);
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = suggestedProductsData.slice(
+    indexOfFirstItem,
+    indexOfLastItem
+  );
+
+  const handlePageChange = (pageNumber) => {
+    setCurrentPage(pageNumber);
+    // Cuộn lên phần sản phẩm tương tự
+    // document.querySelector(".similar-products-section")?.scrollIntoView({
+    //   behavior: "smooth",
+    //   block: "start",
+    // });
+  };
+
+  const handlePrevPage = () => {
+    if (currentPage > 1) {
+      handlePageChange(currentPage - 1);
+    }
+  };
+
+  const handleNextPage = () => {
+    if (currentPage < totalPages) {
+      handlePageChange(currentPage + 1);
+    }
+  };
 
   const renderStars = (rating) => {
     const stars = [];
@@ -201,19 +269,16 @@ const ProductDetailPage = () => {
     <div className="product-detail-page">
       <Header />
 
-      
       <div className="breadcrumb-container">
         <div className="breadcrumb">
           <Link to="/">Trang chủ</Link>
-          <span className="separator">›</span>
+          <span className="separator">{">"}</span>
           <span className="current">{product.name}</span>
         </div>
       </div>
 
-      
       <div className="product-detail-container">
         <div className="product-main-info">
-          
           <div className="product-images">
             <div className="main-image">
               <img src={product.image} alt={product.name} />
@@ -222,13 +287,11 @@ const ProductDetailPage = () => {
               <div className="thumbnail active">
                 <img src={product.image} alt={product.name} />
               </div>
-              
             </div>
           </div>
 
           {/* Right: Product Info */}
           <div className="product-info-detail">
-            
             {product.imageBadges && (
               <div className="product-badge-container">
                 <img
@@ -239,10 +302,8 @@ const ProductDetailPage = () => {
               </div>
             )}
 
-            
             <h1 className="product-name-detail">{product.name}</h1>
 
-          
             <div className="rating-section">
               {product.rating && (
                 <>
@@ -280,7 +341,6 @@ const ProductDetailPage = () => {
               )}
             </div>
 
-            {/* Delivery Info */}
             <div className="delivery-info-section">
               <div className="info-row">
                 <span className="info-label">Thông tin vận chuyển</span>
@@ -293,7 +353,6 @@ const ProductDetailPage = () => {
                 /> */}
 
                 <div className="delivery-address-section">
-                  {/* Giao đến địa chỉ */}
                   <AddressSelector
                     forceOpen={isAddressModalOpen}
                     onClose={() => setIsAddressModalOpen(false)}
@@ -330,15 +389,23 @@ const ProductDetailPage = () => {
             <div className="quantity-section">
               <span className="quantity-label">Số Lượng</span>
               <div className="quantity-selector">
-                <button className="quantity-btn" onClick={handleDecrease}>
+                <button
+                  className="quantity-btn"
+                  onClick={handleDecrease}
+                  // disabled={item.quantity <= 1}
+                  //  disabled={quantity <= 1}
+                  //   aria-disabled={quantity <= 1}
+                >
                   -
                 </button>
+
                 <input
                   type="text"
                   className="quantity-input"
                   value={quantity}
                   readOnly
                 />
+
                 <button className="quantity-btn" onClick={handleIncrease}>
                   +
                 </button>
@@ -384,35 +451,64 @@ const ProductDetailPage = () => {
         {/* Similar Products */}
         <div className="similar-products-section">
           <h2 className="section-title">Sản phẩm tương tự</h2>
-          <div className="similar-products-grid">
-            {suggestedProductsData.slice(0, 6).map((item) => (
-              <Link
-                to={`/product/${item.id}`}
-                key={item.id}
-                className="similar-product-card"
-              >
-                <div className="similar-product-image">
-                  <img src={item.image} alt={item.name} />
+
+          <div className="similar-products-wrapper">
+            {/* Navigation Arrows */}
+            {totalPages > 1 && currentPage > 1 && (
+              <PrevArrow onClick={handlePrevPage} />
+            )}
+
+            <div className="similar-products-grid">
+              {currentItems.map((item) => (
+                <div key={item.id} className="similar-product-card-wrapper">
+                  <Link
+                    to={`/product/${item.id}`}
+                    className="similar-product-card"
+                  >
+                    <div className="similar-product-image">
+                      <img src={item.image} alt={item.name} />
+                    </div>
+
+                    <div className="similar-product-info">
+                      <h3 className="similar-product-name">{item.name}</h3>
+                      <div className="similar-product-price">
+                        <span className="price">
+                          {formatPrice(
+                            calculateDiscountedPrice(
+                              item.originalPrice,
+                              item.discount
+                            )
+                          )}
+                          <sup>₫</sup>
+                        </span>
+                        <div className="discount-price-container">
+                          {item.discount && item.discount > 0 && (
+                            <span className="discount">-{item.discount}%</span>
+                          )}
+
+                          {item.originalPrice !== item.price && (
+                            <span className="original-price">
+                              {formatPrice(item.originalPrice)}
+                              <sup>₫</sup>
+                            </span>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  </Link>
+                  <button
+                    className="btn-add-to-cart-similar"
+                    onClick={(e) => handleAddSimilarProductToCart(item, e)}
+                  >
+                    Thêm vào giỏ
+                  </button>
                 </div>
-                <div className="similar-product-info">
-                  <h3 className="similar-product-name">{item.name}</h3>
-                  <div className="similar-product-price">
-                    <span className="price">
-                      {formatPrice(
-                        calculateDiscountedPrice(
-                          item.originalPrice,
-                          item.discount
-                        )
-                      )}
-                      <sup>₫</sup>
-                    </span>
-                    {item.discount && item.discount > 0 && (
-                      <span className="discount">-{item.discount}%</span>
-                    )}
-                  </div>
-                </div>
-              </Link>
-            ))}
+              ))}
+            </div>
+
+            {totalPages > 1 && currentPage < totalPages && (
+              <NextArrow onClick={handleNextPage} />
+            )}
           </div>
         </div>
       </div>
@@ -422,12 +518,14 @@ const ProductDetailPage = () => {
         <div className={`add-to-cart-notification ${notification.type}`}>
           <div className="notification-content">
             <span className="notification-icon">
-              {notification.type === "success" ? "✓" : "ⓘ"}
+              {notification.type === "success"}
             </span>
             <span>{notification.message}</span>
           </div>
         </div>
       )}
+
+      <Footer />
     </div>
   );
 };

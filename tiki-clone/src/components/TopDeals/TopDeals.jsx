@@ -10,9 +10,10 @@ import "./TopDeals.css";
 const TopDeals = () => {
   const [currentPage, setCurrentPage] = useState(0);
   const [direction, setDirection] = useState('next');
+
+
   const itemsPerPage = 6;
   const totalPages = Math.ceil(topDealsData.length / itemsPerPage);
-
   const startIndex = currentPage * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
   const deals = topDealsData.slice(startIndex, endIndex);

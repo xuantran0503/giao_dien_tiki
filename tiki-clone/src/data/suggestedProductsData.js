@@ -838,12 +838,12 @@ export const suggestedProductsData = [
   {
     id: 61,
     image:
-      "https://salt.tikicdn.com/cache/750x750/ts/product/ca/66/77/66f048ac8ac0c386b53696d1151f85f4.jpg.webp",
-    name: "Sách Không Gia Đình (Tái Bản)",
+      "https://salt.tikicdn.com/cache/750x750/ts/product/93/22/12/5f852e19b9907569d31684c7155bdb38.png.webp",
+    name: "Dầu gội bưởi Cocoon giúp giảm gãy rụng và làm mềm tóc 500ml",
 
-    originalPrice: 160000,
-    discount: 24,
-    rating: 4.7,
+    originalPrice: 395000,
+    discount: 8,
+    rating: 4.6,
     badgeIcon:
       "https://salt.tikicdn.com/ts/upload/f7/9e/83/ab28365ea395893fe5abac88b5103444.png",
     isFreeShip: "img_giao_ngay.png",
@@ -922,11 +922,11 @@ export const suggestedProductsData = [
   {
     id: 67,
     image:
-      "https://salt.tikicdn.com/cache/750x750/ts/product/ca/66/77/66f048ac8ac0c386b53696d1151f85f4.jpg.webp",
-    name: "Sách Không Gia Đình (Tái Bản)",
+      "https://salt.tikicdn.com/cache/750x750/ts/product/c2/be/e2/1f7049adc5223a725191b54ac85937f3.jpg.webp",
+    name: "Pin kiềm AA Philips LR6P4B/97 vỉ 4 viên",
 
-    originalPrice: 160000,
-    discount: 24,
+    originalPrice: 48000,
+    discount: 19,
     rating: 4.7,
     badgeIcon:
       "https://salt.tikicdn.com/ts/upload/f7/9e/83/ab28365ea395893fe5abac88b5103444.png",
@@ -1007,11 +1007,11 @@ export const suggestedProductsData = [
   {
     id: 73,
     image:
-      "https://salt.tikicdn.com/cache/750x750/ts/product/ca/66/77/66f048ac8ac0c386b53696d1151f85f4.jpg.webp",
-    name: "Sách Không Gia Đình (Tái Bản)",
+      "https://salt.tikicdn.com/cache/750x750/ts/product/c4/b3/ca/ffd538cdf6793fb4262a805d07751dde.jpg.webp",
+    name: "Điện Thoại Samsung Galaxy A36 5G - Hàng Chính Hãng",
 
-    originalPrice: 160000,
-    discount: 24,
+    originalPrice: 8140000,
+    discount: 26,
     rating: 4.7,
     badgeIcon:
       "https://salt.tikicdn.com/ts/upload/f7/9e/83/ab28365ea395893fe5abac88b5103444.png",
@@ -1021,12 +1021,13 @@ export const suggestedProductsData = [
   {
     id: 74,
     image:
-      "https://salt.tikicdn.com/cache/750x750/ts/product/ca/66/77/66f048ac8ac0c386b53696d1151f85f4.jpg.webp",
-    name: "Sách Không Gia Đình (Tái Bản)",
-
-    originalPrice: 160000,
-    discount: 24,
-    rating: 4.7,
+      "https://salt.tikicdn.com/cache/750x750/ts/product/26/95/0c/d13ed28b56fa2f7cbc475278008c2569.png.webp",
+    name: "Sữa Bột Friso Gold 4 1400g (Dành Cho Trẻ Từ 2 - 6 Tuổi)",
+    sold: 15000,
+    originalPrice: 816000,
+    // price: 712600,
+    discount: 13,
+    rating: 4.8,
     badgeIcon:
       "https://salt.tikicdn.com/ts/upload/f7/9e/83/ab28365ea395893fe5abac88b5103444.png",
     isFreeShip: "img_giao_ngay.png",
