@@ -12,18 +12,15 @@ trong footer chỗ  hover vào các thẻ a  dấu / đang bị gạch chân
 
 sửa data cho đồng bộ thông tin cho chuẩn
 
+trong file SearchBar.jsx chưa giải thích được tại sao dùng dòng 8:  const searchRef = useRef(null); và dòng 107:  if (searchRef.current && !searchRef.current.contains(event.target)) , và dòng 158 : <div className="search" ref={searchRef}> 
+
 
 +++++++++++++ĐANG LÀM ++++++++++++++++
 
 làm giao diện giỏ hàng (redux)
 
-dùng redux-persist để lưu dữ liệu vào redux để tránh xung đột dữ liệu khi thay đổi số lượng 
-
-khi mở 2 tab và tăng số lượng sản phẩm lên thì phải đồng bộ dữ liệu khi thay đổi 
-
-
-
-
+dùng redux-persist để lưu dữ liệu vào redux để lưu dữ liệu khi thay đổi số lượng để khi reload trang không bị mất dữ liệu ,
+khi mở 2 tab và tăng số lượng sản phẩm lên thì phải đồng bộ dữ liệu khi thay đổi và hiển thị thay đổi đồng thời cùng 2 tab đó, và khi tôi ở trang chi tiết sản phẩm và cập nhật phải cộng  thêm số lượng sản phẩm đó vào  giỏ hàng nhưng mà nếu trùng sản phẩm thì cộng thêm số lượng đó vào giỏ hàng và khi tôi dùng nút tăng hoặc giảm số lưởng của sản phẩm thì cũng phải cập nhật số lượng luôn để khi tôi cộng thêm số lượng sản phẩm từ trang chi tiết sản phẩm thì nó cũng phải được cập nhật cộng thêm luôn 
 
 
 
