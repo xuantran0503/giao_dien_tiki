@@ -2,10 +2,13 @@ import React, { useState, useEffect, useRef } from "react";
 import "./SearchBar.css";
 
 const SearchBar = () => {
+  // ========== STATE ==========
   const [searchValue, setSearchValue] = useState("");
   const [showDropdown, setShowDropdown] = useState(false);
   const [searchHistory, setSearchHistory] = useState([]);
+  const searchRef = useRef(null);
 
+  // ========== DATA ==========
   const popularSearches = [
     {
       id: 1,
@@ -96,72 +99,55 @@ const SearchBar = () => {
     },
   ];
 
+  // ========== EFFECTS ==========
+  // Load search history từ localStorage
   useEffect(() => {
     const history = JSON.parse(localStorage.getItem("searchHistory") || "[]");
     setSearchHistory(history);
   }, []);
 
-  const searchRef = useRef(null);
+  // Click outside để đóng dropdown
   useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (searchRef.current && !searchRef.current.contains(event.target)) {
+    const handleClickOutside = (e) => {
+      if (searchRef.current && !searchRef.current.contains(e.target)) {
         setShowDropdown(false);
       }
     };
-
     document.addEventListener("mousedown", handleClickOutside);
-
-    // Cleanup khi component unmount
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  const handleSearchFocus = () => {
-    setShowDropdown(true);
-  };
-
-  const handleSearchChange = (e) => {
-    setSearchValue(e.target.value);
-  };
-
+  // ========== HANDLERS ==========
   const handleSearch = () => {
-    if (searchValue.trim()) {
-      const newHistory = [
-        searchValue,
-        ...searchHistory.filter((item) => item !== searchValue),
-      ].slice(0, 5);
-      setSearchHistory(newHistory);
-      localStorage.setItem("searchHistory", JSON.stringify(newHistory));
-      setShowDropdown(false);
+    if (!searchValue.trim()) return;
 
-      // console.log("Searching for:", searchValue);
-    }
+    // Lưu vào history (loại bỏ duplicate, giữ 5 item)
+    const newHistory = [
+      searchValue,
+      ...searchHistory.filter((item) => item !== searchValue),
+    ].slice(0, 5);
+    setSearchHistory(newHistory);
+    localStorage.setItem("searchHistory", JSON.stringify(newHistory));
+    setShowDropdown(false);
   };
 
-  const handleHistoryClick = (text) => {
+  const selectSearchText = (text) => {
     setSearchValue(text);
     setShowDropdown(false);
-    // console.log("Searching for:", text);
   };
 
-  const handleKeyPress = (e) => {
-    if (e.key === "Enter") {
-      handleSearch();
-    }
-  };
-
+  // ========== RENDER ==========
   return (
     <>
-      {/* Overlay backdrop */}
       {showDropdown && (
         <div
           className="search-overlay"
           onClick={() => setShowDropdown(false)}
-        ></div>
+        />
       )}
 
       <div className="search" ref={searchRef}>
+        {/* Search Input */}
         <div className="search-wrapper">
           <div className="img-search">
             <img src="/search.png" alt="search" />
@@ -170,9 +156,9 @@ const SearchBar = () => {
             type="text"
             placeholder="Túi rác Inochi 79k/8 cuộn"
             value={searchValue}
-            onChange={handleSearchChange}
-            onFocus={handleSearchFocus}
-            onKeyPress={handleKeyPress}
+            onChange={(e) => setSearchValue(e.target.value)}
+            onFocus={() => setShowDropdown(true)}
+            onKeyPress={(e) => e.key === "Enter" && handleSearch()}
           />
           <span className="search-divider"></span>
           <button className="search-btn" onClick={handleSearch}>
@@ -180,10 +166,10 @@ const SearchBar = () => {
           </button>
         </div>
 
-        {/* Search Dropdown */}
+        {/* Dropdown */}
         {showDropdown && (
           <div className="search-dropdown">
-            {/* Lịch sử tìm kiếm */}
+            {/* Lịch sử */}
             {searchHistory.length > 0 && (
               <div className="search-section search-history-section">
                 <div className="search-history-list">
@@ -191,7 +177,7 @@ const SearchBar = () => {
                     <div
                       key={index}
                       className="search-history-item"
-                      onClick={() => handleHistoryClick(item)}
+                      onClick={() => selectSearchText(item)}
                     >
                       <img
                         src="https://salt.tikicdn.com/ts/upload/e8/aa/26/42a11360f906c4e769a0ff144d04bfe1.png"
@@ -209,7 +195,7 @@ const SearchBar = () => {
               </div>
             )}
 
-            {/* Tìm Kiếm Phổ Biến */}
+            {/* Tìm kiếm phổ biến */}
             <div className="search-section">
               <div className="section-header">
                 <img
@@ -219,13 +205,12 @@ const SearchBar = () => {
                 />
                 <h3>Tìm Kiếm Phổ Biến</h3>
               </div>
-
               <div className="popular-search-list">
                 {popularSearches.map((item) => (
                   <div
                     key={item.id}
                     className="popular-search-item-horizontal"
-                    onClick={() => handleHistoryClick(item.text)}
+                    onClick={() => selectSearchText(item.text)}
                   >
                     <div className="popular-item-thumbnail">
                       <img src={item.image} alt={item.text} />
@@ -236,14 +221,11 @@ const SearchBar = () => {
               </div>
             </div>
 
-            {/* Danh Mục Nổi Bật */}
+            {/* Danh mục nổi bật */}
             <div className="search-section">
               <div className="section-header">
-                <div>
-                  <h3>Danh Mục Nổi Bật</h3>
-                </div>
+                <h3>Danh Mục Nổi Bật</h3>
               </div>
-
               <div className="featured-categories-grid">
                 {featuredCategories.map((category) => (
                   <div key={category.id} className="featured-category-item">

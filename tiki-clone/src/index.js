@@ -9,8 +9,6 @@ import store, { persistor } from "./store/store";
 import { PersistGate } from "redux-persist/integration/react";
 import { setupCrossTabSync } from "./utils/syncTabs";
 
-// Thiết lập đồng bộ giữa các tab
-// Storage event sẽ trigger khi localStorage thay đổi từ tab khác
 setupCrossTabSync(store, syncCart);
 
 const root = ReactDOM.createRoot(document.getElementById("root"));

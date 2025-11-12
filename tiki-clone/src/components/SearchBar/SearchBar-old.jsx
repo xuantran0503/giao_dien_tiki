@@ -109,6 +109,7 @@ const SearchBar = () => {
       }
     };
 
+    // Đăng ký event listener để lắng nghe mọi click trên trang
     document.addEventListener("mousedown", handleClickOutside);
 
     // Cleanup khi component unmount
