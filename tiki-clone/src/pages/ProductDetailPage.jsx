@@ -59,7 +59,7 @@ const ProductDetailPage = () => {
       if (flashSale) {
         product = {
           id: flashSale.id,
-          name: "Flash Sale Product",
+          name: flashSale.name,
           image: flashSale.image,
           originalPrice: flashSale.originalPrice,
           discount: flashSale.discount,

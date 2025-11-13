@@ -8,6 +8,7 @@ export const flashSaleData = [
     soldPercent: 10,
     rating: 3.5,
     sold: 150,
+    name: "Bình nước Inochi - Kita Fami 500ml",
   },
   {
     id: 202,
@@ -17,6 +18,7 @@ export const flashSaleData = [
     discount: 5,
     soldPercent: 10,
     sold: 150,
+    name: "Nồi chiên không dầu LocknLock - Hàng Chính Hãng",
   },
   {
     id: 203,
@@ -26,6 +28,7 @@ export const flashSaleData = [
     discount: 5,
     soldPercent: 10,
     sold: 150,
+    name: "Nồi chiên không dầu Tefal - Hàng Chính Hãng",
   },
   {
     id: 204,
@@ -35,6 +38,7 @@ export const flashSaleData = [
     discount: 19,
     soldPercent: 10,
     sold: 150,
+    name: "Sách Các Món Ăn Chay A - Z",
   },
   {
     id: 205,
@@ -43,6 +47,8 @@ export const flashSaleData = [
     originalPrice: 32000,
     discount: 6,
     soldPercent: 10,
+    sold: 150,
+    name: "Sách Nhật Ký chú bé nhút nhát",
   },
   {
     id: 206,
@@ -51,6 +57,8 @@ export const flashSaleData = [
     originalPrice: 58108,
     discount: 26,
     soldPercent: 10,
+    sold: 150,
+    name: "Sách Mẹ tớ là đặc vụ ngầm",
   },
   {
     id: 207,
@@ -59,6 +67,8 @@ export const flashSaleData = [
     originalPrice: 59000,
     discount: 17,
     soldPercent: 10,
+    sold: 150,
+    name: "Dầu gội Selsun chống gàu, sạch sâu & hết ngứa da đầu",
   },
   {
     id: 208,
@@ -67,6 +77,8 @@ export const flashSaleData = [
     originalPrice: 1130189,
     discount: 47,
     soldPercent: 10,
+    sold: 150,
+    name: "Sách nơi nào có mẹ nơi đó là nhà",
   },
   {
     id: 209,
@@ -75,6 +87,7 @@ export const flashSaleData = [
     originalPrice: 652174,
     discount: 31,
     soldPercent: 10,
+    name: "Điện thoại Redmi note 14",
   },
   {
     id: 210,
@@ -83,6 +96,8 @@ export const flashSaleData = [
     originalPrice: 348261,
     discount: 31,
     soldPercent: 10,
+    sold: 15000,
+    name: "Kem Dưỡng Trắng Da Dạng Gel Hada Labo 50g",
   },
   {
     id: 211,
@@ -91,6 +106,8 @@ export const flashSaleData = [
     originalPrice: 2994872,
     discount: 22,
     soldPercent: 10,
+    sold: 150,
+    name: "Bộ Nồi Chảo Tefal Ingenio Daily Chef 3 Món",
   },
   {
     id: 212,

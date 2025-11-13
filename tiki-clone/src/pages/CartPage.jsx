@@ -9,7 +9,7 @@ import { suggestedProductsData } from "../data/suggestedProductsData";
 import { topDealsData } from "../data/topDealsData";
 import { flashSaleData } from "../data/flashSaleData";
 import { hotInternationalData } from "../data/hotInternationalData";
-import { youMayLikeData } from "../data/youMayLikeData";  
+import { youMayLikeData } from "../data/youMayLikeData";
 import { calculateDiscountedPrice, formatPrice } from "../utils/priceUtils";
 import "./CartPage.css";
 import { PrevArrow, NextArrow } from "../components/shared/NavigationArrows";
@@ -19,8 +19,6 @@ const CartPage = () => {
   const cartItems = useSelector((state) => state.cart.items);
 
   const [selectedItems, setSelectedItems] = useState([]);
-
-  const [currentPage, setCurrentPage] = useState(1);
 
   const handleSelectAll = (e) => {
     if (e.target.checked) {
@@ -59,8 +57,7 @@ const CartPage = () => {
     return cartItems
       .filter((item) => selectedItems.includes(item.id))
       .reduce((total, item) => {
-        const originalPrice = item.originalPrice;
-        return total + originalPrice * item.quantity;
+        return total + item.originalPrice * item.quantity;
       }, 0);
   };
 
@@ -94,19 +91,16 @@ const CartPage = () => {
     );
   };
 
-  const itemsPerPage = 6;
+  const [currentPage, setCurrentPage] = useState(1);
   // Tính toán chuyển slice
+  const itemsPerPage = 6;
   const totalPages = Math.ceil(topDealsData.length / itemsPerPage);
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = topDealsData.slice(
-    indexOfFirstItem,
-    indexOfLastItem
-  );
+  const currentItems = topDealsData.slice(indexOfFirstItem, indexOfLastItem);
 
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
-    
   };
 
   const handlePrevPage = () => {
@@ -120,8 +114,6 @@ const CartPage = () => {
       handlePageChange(currentPage + 1);
     }
   };
-
-
 
   const renderStars = (rating) => {
     const stars = [];
@@ -152,8 +144,6 @@ const CartPage = () => {
     }
     return stars;
   };
-
-
 
   return (
     <div className="cart-page">
@@ -409,9 +399,9 @@ const CartPage = () => {
                     <div className="similar-product-info">
                       <h3 className="similar-product-name">{item.title}</h3>
                       <div>
-                        <span class ="rating-stars">
-                            {renderStars(item.rating)}
-                          </span>
+                        <span class="rating-stars">
+                          {renderStars(item.rating)}
+                        </span>
                       </div>
                       <div className="similar-product-price">
                         <span className="price">

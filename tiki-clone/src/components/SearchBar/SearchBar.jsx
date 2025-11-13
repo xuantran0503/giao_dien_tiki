@@ -108,9 +108,7 @@ const SearchBar = () => {
         setShowDropdown(false);
       }
     };
-
     document.addEventListener("mousedown", handleClickOutside);
-
     // Cleanup khi component unmount
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
