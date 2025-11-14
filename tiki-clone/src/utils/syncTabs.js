@@ -17,7 +17,7 @@ export const setupCrossTabSync = (store, syncAction) => {
   };
 
   window.addEventListener("storage", handleStorageChange);
-  // Trả về function để cleanup (gỡ bỏ listener)
+
   return () => {
     window.removeEventListener("storage", handleStorageChange);
   };

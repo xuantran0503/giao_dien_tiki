@@ -102,6 +102,8 @@ const SearchBar = () => {
   }, []);
 
   const searchRef = useRef(null);
+  console.log(searchRef);
+
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (searchRef.current && !searchRef.current.contains(event.target)) {
@@ -109,7 +111,7 @@ const SearchBar = () => {
       }
     };
     document.addEventListener("mousedown", handleClickOutside);
-    // Cleanup khi component unmount
+    
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };

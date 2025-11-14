@@ -6,7 +6,7 @@ const AddressSelector = ({ onLoginClick, forceOpen = false, onClose }) => {
   const [selectedCity, setSelectedCity] = useState("");
   const [selectedDistrict, setSelectedDistrict] = useState("");
   const [selectedWard, setSelectedWard] = useState("");
-  
+
   const [showLocationModal, setShowLocationModal] = useState(false);
 
   React.useEffect(() => {
@@ -28,11 +28,15 @@ const AddressSelector = ({ onLoginClick, forceOpen = false, onClose }) => {
         setSelectedAddress(addr);
       }
     };
-    
+
+    window.addEventListener("addressChange", handleAddressChange);
+
+    //  CLEANUP: Hủy đăng ký khi component unmount
+    return () => {
+      window.removeEventListener("addressChange", handleAddressChange);
+    };
   }, []);
 
-
-  
   const [selectedAddress, setSelectedAddress] = useState(
     "P. Minh Khai, Q. Hoàng Mai, Hà Nội"
   );
@@ -105,14 +109,12 @@ const AddressSelector = ({ onLoginClick, forceOpen = false, onClose }) => {
         "X. Xuân Hồng",
       ],
       "H. Giao Thủy": [
-        
         "X. Giao Hải",
         "X. Giao Hương",
         "X. Giao Long",
         "X. Giao Xuân",
       ],
       "H. Hải Hậu ": [
-        
         "X. Hải Sơn",
         "X. Hải Phú",
         "X. Hải An",
@@ -243,16 +245,13 @@ const AddressSelector = ({ onLoginClick, forceOpen = false, onClose }) => {
     },
   };
 
-  
   const cities = Object.keys(addressData);
-  
+
   const getDistrictsByCity = (city) => {
-    if (!city || !addressData[city]) 
-      return [];
+    if (!city || !addressData[city]) return [];
     return Object.keys(addressData[city]);
   };
 
-  
   const getWardsByDistrict = (city, district) => {
     if (
       !city ||
@@ -266,7 +265,7 @@ const AddressSelector = ({ onLoginClick, forceOpen = false, onClose }) => {
 
   const handleLocationClick = (e) => {
     // e.preventDefault();
-    
+
     setLocationType("default");
     setSelectedCity("");
     setSelectedDistrict("");
@@ -276,11 +275,10 @@ const AddressSelector = ({ onLoginClick, forceOpen = false, onClose }) => {
 
   const handleSaveLocation = () => {
     if (locationType === "default") {
-      
       setShowLocationModal(false);
-      
+
       window.localStorage.setItem("selectedAddress", selectedAddress);
-      
+
       window.dispatchEvent(
         new CustomEvent("addressChange", {
           detail: { address: selectedAddress },
@@ -293,16 +291,15 @@ const AddressSelector = ({ onLoginClick, forceOpen = false, onClose }) => {
       selectedDistrict &&
       selectedWard
     ) {
-      
       const newAddr = `${selectedWard}, ${selectedDistrict}, ${selectedCity}`;
       setSelectedAddress(newAddr);
       setShowLocationModal(false);
-      
+
       window.localStorage.setItem("selectedAddress", newAddr);
 
       window.dispatchEvent(
-        new CustomEvent("addressChange", { 
-          detail: { address: newAddr } 
+        new CustomEvent("addressChange", {
+          detail: { address: newAddr },
         })
       );
       // if (onClose) onClose();
@@ -312,7 +309,9 @@ const AddressSelector = ({ onLoginClick, forceOpen = false, onClose }) => {
   const handleLoginClick = () => {
     setShowLocationModal(false);
     // if (onClose) onClose();
-    if (onLoginClick) {onLoginClick();}
+    if (onLoginClick) {
+      onLoginClick();
+    }
   };
 
   return (
