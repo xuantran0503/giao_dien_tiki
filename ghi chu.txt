@@ -15,6 +15,23 @@ sửa data cho đồng bộ thông tin cho chuẩn
 
 +++++++++++++ĐANG LÀM ++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
+so sánh sự khác nhau giữa useState với useRef , và chỉ ra khi nào giá trị của useRef thay đổi
+
+giải thích key là gì trong code này và các key có gì khác nhau <div className="deals-grid-wrapper" style={{ position: 'relative' }}>
+        <PrevArrow onClick={handlePrev} />
+        <div className={`deals-grid slide-${direction}`} key={currentPage}>
+          {deals.map((deal) => (
+            <Link to={`/product/${deal.id}`} key={deal.id} className="deal-card">
+
+              <div className="deal-image-wrapper">
+                <img src={deal.image} alt={deal.title} className="deal-image" />
+
+                <span className="discount-tag">{deal.date}</span>
+
+                {deal.imageBadges && (
+                  <img src={deal.imageBadges} alt="Badge" className="mini-badge" />
+                )}
+
 làm form nhập thông tin người mua hàng bằng react-hook-form 
 
  dùng API address này để lấy đầy đủ dữ liệu  :

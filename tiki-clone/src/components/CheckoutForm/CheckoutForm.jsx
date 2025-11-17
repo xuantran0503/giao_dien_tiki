@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import './CheckoutForm.css';
 
 const CheckoutForm = ({ onSubmit, onCancel }) => {
-    const { register, handleSubmit, formState: { errors }, watch } = useForm();
+    const { register, handleSubmit, formState: { errors } } = useForm();
 
     const [selectedCity, setSelectedCity] = React.useState('');
     const [selectedDistrict, setSelectedDistrict] = React.useState('');
@@ -178,7 +178,7 @@ const CheckoutForm = ({ onSubmit, onCancel }) => {
     const getDistrictsByCity = (city) => {
         if (!city || !addressData[city]) return [];
         const districts = Object.keys(addressData[city]);
-        console.log('Districts for', city, ':', districts);
+        // console.log('Districts for', city, ':', districts);
         return districts;
     };
 
@@ -198,31 +198,58 @@ const CheckoutForm = ({ onSubmit, onCancel }) => {
 
     const handleDistrictChange = (e) => {
         const district = e.target.value;
+        console.log('District changed to:', district);
         setSelectedDistrict(district);
         setSelectedWard('');
     };
 
     const handleWardChange = (e) => {
-        setSelectedWard(e.target.value);
+        const ward = e.target.value;
+        console.log('Ward changed to:', ward);
+        setSelectedWard(ward);
     };
+
+    // const handleCheckoutSubmit = (Data) => {
+    //     // console.log('Thông tin người mua:', Data);
+        
+    //     // console.log('Sản phẩm đã chọn:', selectedItems);
+    
+    //     // Xóa các sản phẩm đã chọn khỏi giỏ hàng
+    //     // selectedItems.forEach(itemId => {
+    //     //   dispatch(removeFromCart(itemId));
+    //     // });
+    
+    //     // Reset selected items
+    //     // setSelectedItems([]);
+    
+    //     // Xử lý logic đặt hàng ở đây
+    //     // alert('Đặt hàng thành công! Chúng tôi sẽ liên hệ với bạn sớm.');
+    //     // setShowCheckoutForm(false);
+    // };
 
     const onFormSubmit = (data) => {
         // Validate address fields manually
-        if (!selectedCity) {
-            alert('Vui lòng chọn tỉnh/thành phố');
-            return;
-        }
-        if (!selectedDistrict) {
-            alert('Vui lòng chọn quận/huyện');
-            return;
-        }
-        if (!selectedWard) {
-            alert('Vui lòng chọn phường/xã');
-            return;
-        }
+        // if (!selectedCity) {
+        //     alert('Vui lòng chọn tỉnh/thành phố');
+        //     return;
+        // }
+        // if (!selectedDistrict) {
+        //     alert('Vui lòng chọn quận/huyện');
+        //     return;
+        // }
+        // if (!selectedWard) {
+        //     alert('Vui lòng chọn phường/xã');
+        //     return;
+        // }
 
-        const fullAddress = `${data.addressDetail}, ${selectedWard}, ${selectedDistrict}, ${selectedCity}`;
-        onSubmit({ ...data, address: fullAddress });
+        // const fullAddress = `${data.addressDetail}, ${selectedWard}, ${selectedDistrict}, ${selectedCity}`;
+        // onSubmit({ ...data, address: fullAddress });
+
+
+        // onSubmit(data);
+        // const fullAddress =  `${data.fullName}, ${data.phone}, ${data.email}, ${selectedWard}, ${selectedDistrict},${selectedCity},${data.addressDetail}`;
+
+        onSubmit(data);
     };
 
     return (
@@ -233,7 +260,7 @@ const CheckoutForm = ({ onSubmit, onCancel }) => {
                     {/* <button className="close-btn" onClick={onCancel}>×</button> */}
                 </div>
 
-                <form onSubmit={handleSubmit(onFormSubmit)} className="checkout-form">
+                <form onSubmit={handleSubmit(onFormSubmit)} className="checkout-form">   
                     <div className="form-group">
                         <label htmlFor="fullName">Họ và tên *</label>
                         <input
@@ -289,6 +316,9 @@ const CheckoutForm = ({ onSubmit, onCancel }) => {
                         <label htmlFor="city">Tỉnh/Thành phố *</label>
                         <select
                             id="city"
+                            {...register("city", {
+                                required: "Vui lòng chọn tỉnh/thành phố",
+                            })}
                             value={selectedCity}
                             onChange={handleCityChange}
                             className={selectedCity ? "selected" : ""}
@@ -296,11 +326,13 @@ const CheckoutForm = ({ onSubmit, onCancel }) => {
                             <option value="" disabled hidden>
                                 Vui lòng chọn tỉnh/thành phố
                             </option>
+
                             {cities.map((city) => (
                                 <option key={city} value={city}>
                                     {city}
                                 </option>
                             ))}
+
                         </select>
                         {errors.city && <span className="error-message">{errors.city.message}</span>}
                     </div>
@@ -309,6 +341,9 @@ const CheckoutForm = ({ onSubmit, onCancel }) => {
                         <label htmlFor="district">Quận/Huyện *</label>
                         <select
                             id="district"
+                            {...register("district", {
+                                required: "Vui lòng chọn quận/huyện",
+                            })}
                             value={selectedDistrict}
                             onChange={handleDistrictChange}
                             disabled={!selectedCity}
@@ -317,15 +352,17 @@ const CheckoutForm = ({ onSubmit, onCancel }) => {
                             <option value="" disabled hidden>
                                 Vui lòng chọn quận/huyện
                             </option>
+
                             {(() => {
                                 const districts = getDistrictsByCity(selectedCity);
-                                console.log('Rendering districts for', selectedCity, ':', districts);
+                                // console.log('Rendering districts for', selectedCity, ':', districts);
                                 return districts.map((district) => (
                                     <option key={district} value={district}>
                                         {district}
                                     </option>
                                 ));
                             })()}
+
                         </select>
                         {errors.district && <span className="error-message">{errors.district.message}</span>}
                     </div>
@@ -334,6 +371,9 @@ const CheckoutForm = ({ onSubmit, onCancel }) => {
                         <label htmlFor="ward">Phường/Xã *</label>
                         <select
                             id="ward"
+                            {...register("ward", {
+                                required: "Vui lòng chọn phường/xã",
+                            })}
                             value={selectedWard}
                             onChange={handleWardChange}
                             disabled={!selectedDistrict}
@@ -342,11 +382,13 @@ const CheckoutForm = ({ onSubmit, onCancel }) => {
                             <option value="" disabled hidden>
                                 Vui lòng chọn phường/xã
                             </option>
+
                             {getWardsByDistrict(selectedCity, selectedDistrict).map((ward) => (
                                 <option key={ward} value={ward}>
                                     {ward}
                                 </option>
                             ))}
+
                         </select>
                         {errors.ward && <span className="error-message">{errors.ward.message}</span>}
                     </div>
@@ -355,7 +397,7 @@ const CheckoutForm = ({ onSubmit, onCancel }) => {
                         <label htmlFor="addressDetail">Địa chỉ chi tiết *</label>
                         <textarea
                             id="addressDetail"
-                            rows="2"
+                            // rows="2"
                             placeholder="Nhập số nhà, tên đường..."
                             {...register('addressDetail', {
                                 required: 'Vui lòng nhập địa chỉ chi tiết',
@@ -372,7 +414,7 @@ const CheckoutForm = ({ onSubmit, onCancel }) => {
                         <label htmlFor="note">Ghi chú (tùy chọn)</label>
                         <textarea
                             id="note"
-                            rows="2"
+                            // rows="2"
                             placeholder="Ghi chú thêm về đơn hàng của bạn"
                             {...register('note')}
                         />

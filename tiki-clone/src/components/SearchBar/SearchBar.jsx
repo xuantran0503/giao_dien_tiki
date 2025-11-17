@@ -102,8 +102,7 @@ const SearchBar = () => {
   }, []);
 
   const searchRef = useRef(null);
-  console.log(searchRef);
-
+  // console.log(searchRef);
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (searchRef.current && !searchRef.current.contains(event.target)) {

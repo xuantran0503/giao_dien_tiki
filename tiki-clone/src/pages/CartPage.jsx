@@ -25,6 +25,7 @@ const CartPage = () => {
   const handleSelectAll = (e) => {
     if (e.target.checked) {
       setSelectedItems(cartItems.map((item) => item.id));
+      console.log('Selected items:', cartItems.map((item) => item.id));
     } else {
       setSelectedItems([]);
     }
@@ -34,31 +35,36 @@ const CartPage = () => {
     if (selectedItems.includes(id)) {
       //neu da chon thi bo ra khoi danh sach bang filter
       setSelectedItems(selectedItems.filter((itemId) => itemId !== id));
+      // console.log('Selected items:', selectedItems);
+      console.log('Removed sel item with id:', id);
     } else {
       //neu chua chon thi them vao
       setSelectedItems([...selectedItems, id]);
+      console.log('Selected items:', id);
     }
   };
 
   const handleIncrease = (id, currentQuantity) => {
     dispatch(updateQuantity({ id, quantity: currentQuantity + 1 }));
+    console.log('Increased quantity for item with id:', id);
   };
 
   const handleDecrease = (id, currentQuantity) => {
     if (currentQuantity > 1) {
       dispatch(updateQuantity({ id, quantity: currentQuantity - 1 }));
+      console.log('Decreased quantity for item with id:', id);
     }
   };
 
   const handleCheckoutClick = () => {
     console.log('Checkout clicked, selectedItems:', selectedItems);
     setShowCheckoutForm(true);
-    console.log('showCheckoutForm set to true');
+    // console.log('showCheckoutForm set to true');
   };
 
   const handleCheckoutSubmit = (formData) => {
     console.log('Thông tin người mua:', formData);
-    console.log('Sản phẩm đã chọn:', selectedItems);
+    console.log('Sản phẩm đã chọn mua :', selectedItems);
 
     // Xóa các sản phẩm đã chọn khỏi giỏ hàng
     selectedItems.forEach(itemId => {
@@ -80,6 +86,7 @@ const CartPage = () => {
   const handleRemove = (id) => {
     dispatch(removeFromCart(id));
     setSelectedItems(selectedItems.filter((itemId) => itemId !== id));
+    console.log('Removed item with id:', id);
   };
 
   const calculateSubtotal = () => {
@@ -110,7 +117,7 @@ const CartPage = () => {
     dispatch(
       addToCart({
         id: item.id,
-        name: item.name,
+        name: item.title,
         image: item.image,
         price: itemFinalPrice,
         originalPrice: item.originalPrice,
