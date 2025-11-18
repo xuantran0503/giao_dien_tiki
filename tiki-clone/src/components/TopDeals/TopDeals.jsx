@@ -20,12 +20,12 @@ const TopDeals = () => {
 
   const handlePrev = () => {
     setDirection('prev');
-    setCurrentPage((prev) => (prev > 0 ? prev - 1 : totalPages - 1));
+    setCurrentPage((current) => (current > 0 ? current - 1 : totalPages - 1));
   };
 
   const handleNext = () => {
     setDirection('next');
-    setCurrentPage((prev) => (prev < totalPages - 1 ? prev + 1 : 0));
+    setCurrentPage((current) => (current < totalPages - 1 ? current + 1 : 0));
   };
 
   const renderStars = (rating) => {
