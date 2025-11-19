@@ -16,9 +16,9 @@ import { calculateDiscountedPrice, formatPrice } from "../utils/priceUtils";
 import "./ProductDetailPage.css";
 
 const ProductDetailPage = () => {
-  const { productId } = useParams();
   const dispatch = useDispatch();
   const [quantity, setQuantity] = useState(1);
+  const { productId } = useParams();
   const [notification, setNotification] = useState({
     show: false,
     message: "",

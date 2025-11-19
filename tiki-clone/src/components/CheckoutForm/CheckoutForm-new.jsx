@@ -9,28 +9,30 @@ const CheckoutForm = ({ onSubmit, onCancel }) => {
     const [selectedDistrict, setSelectedDistrict] = React.useState('');
     const [selectedWard, setSelectedWard] = React.useState('');
     const [addressData, setAddressData] = React.useState([]);
-    // const [loading, setLoading] = React.useState(true);
+    const [loading, setLoading] = React.useState(true);
 
-
+    // Gọi API để lấy dữ liệu địa chỉ thực
     React.useEffect(() => {
         fetch("https://provinces.open-api.vn/api/?depth=3")
             .then(res => res.json())
             .then(data => {
                 setAddressData(data);
-                // setLoading(false);
-                // console.log('API data loaded:', data);
+                setLoading(false);
+                console.log('API data loaded:', data);
             })
             .catch(err => {
                 console.log("Lỗi API:", err);
-                // setLoading(false);
+                setLoading(false);
             });
     }, []);
 
+    // Lấy danh sách districts theo city code
     const getDistrictsByCity = (cityCode) => {
         const city = addressData.find(c => c.code === Number(cityCode));
         return city ? city.districts : [];
     };
-    
+
+    // Lấy danh sách wards theo city code và district code
     const getWardsByDistrict = (cityCode, districtCode) => {
         const city = addressData.find(c => c.code === Number(cityCode));
         if (!city) return [];
@@ -60,18 +62,35 @@ const CheckoutForm = ({ onSubmit, onCancel }) => {
         setSelectedWard(wardCode);
     };
 
+    // const handleCheckoutSubmit = (Data) => {
+    //     // console.log('Thông tin người mua:', Data);
+        
+    //     // console.log('Sản phẩm đã chọn:', selectedItems);
+    
+    //     // Xóa các sản phẩm đã chọn khỏi giỏ hàng
+    //     // selectedItems.forEach(itemId => {
+    //     //   dispatch(removeFromCart(itemId));
+    //     // });
+    
+    //     // Reset selected items
+    //     // setSelectedItems([]);
+    
+    //     // Xử lý logic đặt hàng ở đây
+    //     // alert('Đặt hàng thành công! Chúng tôi sẽ liên hệ với bạn sớm.');
+    //     // setShowCheckoutForm(false);
+    // };
 
     const onFormSubmit = (data) => {
-        
-        // const city = addressData.find(c => c.code === Number(data.city));
-        // const district = getDistrictsByCity(data.city).find(d => d.code === Number(data.district));
-        // const ward = getWardsByDistrict(data.city, data.district).find(w => w.code === Number(data.ward));
+        // Tìm tên city, district, ward từ code
+        const city = addressData.find(c => c.code === Number(data.city));
+        const district = getDistrictsByCity(data.city).find(d => d.code === Number(data.district));
+        const ward = getWardsByDistrict(data.city, data.district).find(w => w.code === Number(data.ward));
 
         // Tạo địa chỉ đầy đủ
-        // const fullAddress = `${data.addressDetail}, ${ward?.name || ''}, ${district?.name || ''}, ${city?.name || ''}`;
+        const fullAddress = `${data.addressDetail}, ${ward?.name || ''}, ${district?.name || ''}, ${city?.name || ''}`;
 
-        console.log('Thông tin người mua :', { ...data });
-        onSubmit({ ...data });
+        console.log('Thông tin người mua :', { ...data, fullAddress });
+        onSubmit({ ...data, fullAddress });
     };
 
     return (
@@ -79,21 +98,12 @@ const CheckoutForm = ({ onSubmit, onCancel }) => {
             <div className="checkout-form-container">
                 <div className="checkout-form-header">
                     <h2>Thông tin người mua hàng</h2>
-                    
+                    {/* <button className="close-btn" onClick={onCancel}>×</button> */}
                 </div>
 
                 <form onSubmit={handleSubmit(onFormSubmit)} className="checkout-form">   
                     <div className="form-group">
                         <label htmlFor="fullName">Họ và tên *</label>
-
-                        {/* const [formData, setFormData] = useState({ name: "", phone: "" });
-
-                    <input
-                    value={formData.name}
-                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                    />
-                    */}
-
                         <input
                             id="fullName"
                             type="text"
@@ -153,11 +163,10 @@ const CheckoutForm = ({ onSubmit, onCancel }) => {
                             value={selectedCity}
                             onChange={handleCityChange}
                             className={selectedCity ? "selected" : ""}
-                            // disabled={loading}
+                            disabled={loading}
                         >
                             <option value="" disabled hidden>
-                                {/* {loading ? "Đang tải..." : "Vui lòng chọn tỉnh/thành phố"} */}
-                                Vui lòng chọn tỉnh/thành phố
+                                {loading ? "Đang tải..." : "Vui lòng chọn tỉnh/thành phố"}
                             </option>
 
                             {addressData.map((city) => (

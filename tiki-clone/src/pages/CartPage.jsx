@@ -63,18 +63,19 @@ const CartPage = () => {
   };
 
   const handleCheckoutSubmit = (formData) => {
-    console.log('Thông tin người mua:', formData);
+    // console.log('Thông tin người mua:', formData);
     console.log('Sản phẩm đã chọn mua :', selectedItems);
 
-    // Xóa các sản phẩm đã chọn khỏi giỏ hàng
+    
     selectedItems.forEach(itemId => {
       dispatch(removeFromCart(itemId));
     });
 
+    
     // Reset selected items
     setSelectedItems([]);
 
-    // Xử lý logic đặt hàng ở đây
+    
     alert('Đặt hàng thành công! Chúng tôi sẽ liên hệ với bạn sớm.');
     setShowCheckoutForm(false);
   };

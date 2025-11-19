@@ -9,8 +9,7 @@ import "./TopDeals.css";
 
 const TopDeals = () => {
   const [currentPage, setCurrentPage] = useState(0);
-  const [direction, setDirection] = useState('next');
-
+  
 
   const itemsPerPage = 6;
   const totalPages = Math.ceil(topDealsData.length / itemsPerPage);
@@ -18,6 +17,7 @@ const TopDeals = () => {
   const endIndex = startIndex + itemsPerPage;
   const deals = topDealsData.slice(startIndex, endIndex);
 
+  const [direction, setDirection] = useState('next');
   const handlePrev = () => {
     setDirection('prev');
     setCurrentPage((current) => (current > 0 ? current - 1 : totalPages - 1));
@@ -59,7 +59,7 @@ const TopDeals = () => {
 
       <div className="deals-grid-wrapper" style={{ position: 'relative' }}>
         <PrevArrow onClick={handlePrev} />
-        <div className={`deals-grid slide-${direction}`} key={currentPage}>
+        <div className={`deals-grid slide-${direction}`} >
           {deals.map((deal) => (
             <Link to={`/product/${deal.id}`} key={deal.id} className="deal-card">
 

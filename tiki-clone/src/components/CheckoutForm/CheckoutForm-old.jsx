@@ -8,70 +8,248 @@ const CheckoutForm = ({ onSubmit, onCancel }) => {
     const [selectedCity, setSelectedCity] = React.useState('');
     const [selectedDistrict, setSelectedDistrict] = React.useState('');
     const [selectedWard, setSelectedWard] = React.useState('');
-    const [addressData, setAddressData] = React.useState([]);
-    // const [loading, setLoading] = React.useState(true);
 
-
-    React.useEffect(() => {
-        fetch("https://provinces.open-api.vn/api/?depth=3")
-            .then(res => res.json())
-            .then(data => {
-                setAddressData(data);
-                // setLoading(false);
-                // console.log('API data loaded:', data);
-            })
-            .catch(err => {
-                console.log("Lỗi API:", err);
-                // setLoading(false);
-            });
-    }, []);
-
-    const getDistrictsByCity = (cityCode) => {
-        const city = addressData.find(c => c.code === Number(cityCode));
-        return city ? city.districts : [];
+    const addressData = {
+        "Nam Định": {
+            "H. Vụ Bản": [
+                "X. Liên Bảo",
+                "X. Kim Thái",
+                "X. Đại An",
+                "X. Đại Thắng",
+                "X. Quang Trung",
+            ],
+            "H. Mỹ Lộc": [
+                "X. Mỹ Thịnh",
+                "X. Mỹ Hà",
+                "X. Mỹ Thành",
+                "X. Mỹ Phúc",
+                "X. Mỹ Tân",
+            ],
+            "H. Trực Ninh": [
+                "X. Trực Đại",
+                "X. Trực Phương",
+                "X. Trực Định",
+                "X. Trực Thanh",
+                "X. Trực Cường",
+            ],
+            "H. Xuân Trường": [
+                "X. Xuân Bắc",
+                "X. Xuân Phương",
+                "X. Xuân Thượng",
+                "X. Xuân Thủy",
+                "X. Xuân Hồng",
+            ],
+            "H. Giao Thủy": [
+                "X. Giao Hải",
+                "X. Giao Hương",
+                "X. Giao Long",
+                "X. Giao Xuân",
+            ],
+            "H. Hải Hậu ": [
+                "X. Hải Sơn",
+                "X. Hải Phú",
+                "X. Hải An",
+                "X. Hải Bắc",
+                "X. Hải Châu",
+                "X. Hải Đông",
+                "X. Hải Giang",
+                "X. Hải Hà",
+                "X. Hải Phong",
+                "X. Hải Hòa",
+                "X. Hải Hưng",
+                "X. Hải Quang",
+                "X. Hải Chính",
+                "X. Hải Lộc",
+                "X. Hải Lý",
+            ],
+        },
+        "Hà Nội": {
+            "Q. Hoàng Mai": [
+                "P. Minh Khai",
+                "P. Đại Kim",
+                "P. Hoàng Văn Thụ",
+                "P. Giáp Bát",
+                "P. Thịnh Liệt",
+            ],
+            "Q. Cầu Giấy": [
+                "P. Mai Dịch",
+                "P. Dịch Vọng",
+                "P. Nghĩa Đô",
+                "P. Yên Hòa",
+                "P. Trung Hòa",
+            ],
+            "Q. Ba Đình": [
+                "P. Liễu Giai",
+                "P. Ngọc Hà",
+                "P. Đội Cấn",
+                "P. Kim Mã",
+                "P. Thành Công",
+            ],
+            "Q. Hai Bà Trưng": [
+                "P. Minh Khai",
+                "P. Bạch Mai",
+                "P. Đồng Nhân",
+                "P. Lê Đại Hành",
+                "P. Bạch Đằng",
+            ],
+            "Q. Đống Đa": [
+                "P. Khâm Thiên",
+                "P. Nam Đồng",
+                "P. Văn Chương",
+                "P. Hàng Bột",
+                "P. Láng Hạ",
+            ],
+        },
+        "TP. Hồ Chí Minh": {
+            "Q. 1": [
+                "P. Bến Nghé",
+                "P. Bến Thành",
+                "P. Cầu Kho",
+                "P. Cầu Ông Lãnh",
+                "P. Cô Giang",
+            ],
+            "Q. 3": [
+                "P. 1",
+                "P. 2",
+                "P. 3",
+                "P. 4",
+                "P. 5",
+            ],
+            "Q. Bình Thạnh": [
+                "P. 1",
+                "P. 2",
+                "P. 3",
+                "P. 13",
+                "P. 14",
+            ],
+        },
+        "Đà Nẵng": {
+            "Q. Hải Châu": [
+                "P. Hải Châu 1",
+                "P. Hải Châu 2",
+                "P. Thanh Bình",
+                "P. Thuận Phước",
+                "P. Thạch Thang",
+            ],
+            "Q. Thanh Khê": [
+                "P. An Khê",
+                "P. Chính Gián",
+                "P. Hòa Khê",
+                "P. Tam Thuận",
+                "P. Thanh Khê Đông",
+            ],
+        },
+        "Hải Phòng": {
+            "Q. Hồng Bàng": [
+                "P. Cầu Đất",
+                "P. Dư Hàng Kênh",
+                "P. Hoàng Văn Thụ",
+                "P. Minh Khai",
+                "P. Nam Sơn",
+            ],
+            "Q. Ngô Quyền": [
+                "P. Cầu Đỏ",
+                "P. Cầu Tre",
+                "P. Đồng Khôi",
+                "P. Lạc Viên",
+                "P. Máy Tơ",
+            ],
+        },
+        "Cần Thơ": {
+            "Q. Ninh Kiều": [
+                "P. An Bình",
+                "P. An Cư",
+                "P. An Hòa",
+                "P. An Khánh",
+                "P. An Nghiệp",
+            ],
+            "Q. Bình Thủy": [
+                "P. An Thới",
+                "P. Bình Thủy",
+                "P. Bình Thới",
+                "P. Cái Khế",
+                "P. Long Hòa",
+            ],
+        },
     };
-    
-    const getWardsByDistrict = (cityCode, districtCode) => {
-        const city = addressData.find(c => c.code === Number(cityCode));
-        if (!city) return [];
 
-        const district = city.districts.find(d => d.code === Number(districtCode));
-        return district ? district.wards : [];
+    const cities = Object.keys(addressData);
+
+    const getDistrictsByCity = (city) => {
+        if (!city || !addressData[city]) return [];
+        const districts = Object.keys(addressData[city]);
+        // console.log('Districts for', city, ':', districts);
+        return districts;
+    };
+
+    const getWardsByDistrict = (city, district) => {
+        if (!city || !district || !addressData[city] || !addressData[city][district])
+            return [];
+        return addressData[city][district];
     };
 
     const handleCityChange = (e) => {
-        const cityCode = e.target.value;
-        console.log('City changed to:', cityCode);
-        setSelectedCity(cityCode);
+        const city = e.target.value;
+        console.log('City changed to:', city);
+        setSelectedCity(city);
         setSelectedDistrict('');
         setSelectedWard('');
     };
 
     const handleDistrictChange = (e) => {
-        const districtCode = e.target.value;
-        console.log('District changed to:', districtCode);
-        setSelectedDistrict(districtCode);
+        const district = e.target.value;
+        console.log('District changed to:', district);
+        setSelectedDistrict(district);
         setSelectedWard('');
     };
 
     const handleWardChange = (e) => {
-        const wardCode = e.target.value;
-        console.log('Ward changed to:', wardCode);
-        setSelectedWard(wardCode);
+        const ward = e.target.value;
+        console.log('Ward changed to:', ward);
+        setSelectedWard(ward);
     };
 
+    // const handleCheckoutSubmit = (Data) => {
+    //     // console.log('Thông tin người mua:', Data);
+        
+    //     // console.log('Sản phẩm đã chọn:', selectedItems);
+    
+    //     // Xóa các sản phẩm đã chọn khỏi giỏ hàng
+    //     // selectedItems.forEach(itemId => {
+    //     //   dispatch(removeFromCart(itemId));
+    //     // });
+    
+    //     // Reset selected items
+    //     // setSelectedItems([]);
+    
+    //     // Xử lý logic đặt hàng ở đây
+    //     // alert('Đặt hàng thành công! Chúng tôi sẽ liên hệ với bạn sớm.');
+    //     // setShowCheckoutForm(false);
+    // };
 
     const onFormSubmit = (data) => {
-        
-        // const city = addressData.find(c => c.code === Number(data.city));
-        // const district = getDistrictsByCity(data.city).find(d => d.code === Number(data.district));
-        // const ward = getWardsByDistrict(data.city, data.district).find(w => w.code === Number(data.ward));
+        // Validate address fields manually
+        // if (!selectedCity) {
+        //     alert('Vui lòng chọn tỉnh/thành phố');
+        //     return;
+        // }
+        // if (!selectedDistrict) {
+        //     alert('Vui lòng chọn quận/huyện');
+        //     return;
+        // }
+        // if (!selectedWard) {
+        //     alert('Vui lòng chọn phường/xã');
+        //     return;
+        // }
 
-        // Tạo địa chỉ đầy đủ
-        // const fullAddress = `${data.addressDetail}, ${ward?.name || ''}, ${district?.name || ''}, ${city?.name || ''}`;
+        // const fullAddress = `${data.addressDetail}, ${selectedWard}, ${selectedDistrict}, ${selectedCity}`;
+        // onSubmit({ ...data, address: fullAddress });
 
-        console.log('Thông tin người mua :', { ...data });
-        onSubmit({ ...data });
+
+        // onSubmit(data);
+        // const fullAddress =  `${data.fullName}, ${data.phone}, ${data.email}, ${selectedWard}, ${selectedDistrict},${selectedCity},${data.addressDetail}`;
+
+        onSubmit(data);
     };
 
     return (
@@ -79,21 +257,12 @@ const CheckoutForm = ({ onSubmit, onCancel }) => {
             <div className="checkout-form-container">
                 <div className="checkout-form-header">
                     <h2>Thông tin người mua hàng</h2>
-                    
+                    {/* <button className="close-btn" onClick={onCancel}>×</button> */}
                 </div>
 
                 <form onSubmit={handleSubmit(onFormSubmit)} className="checkout-form">   
                     <div className="form-group">
                         <label htmlFor="fullName">Họ và tên *</label>
-
-                        {/* const [formData, setFormData] = useState({ name: "", phone: "" });
-
-                    <input
-                    value={formData.name}
-                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                    />
-                    */}
-
                         <input
                             id="fullName"
                             type="text"
@@ -153,16 +322,14 @@ const CheckoutForm = ({ onSubmit, onCancel }) => {
                             value={selectedCity}
                             onChange={handleCityChange}
                             className={selectedCity ? "selected" : ""}
-                            // disabled={loading}
                         >
                             <option value="" disabled hidden>
-                                {/* {loading ? "Đang tải..." : "Vui lòng chọn tỉnh/thành phố"} */}
                                 Vui lòng chọn tỉnh/thành phố
                             </option>
 
-                            {addressData.map((city) => (
-                                <option key={city.code} value={city.code}>
-                                    {city.name}
+                            {cities.map((city) => (
+                                <option key={city} value={city}>
+                                    {city}
                                 </option>
                             ))}
 
@@ -186,11 +353,15 @@ const CheckoutForm = ({ onSubmit, onCancel }) => {
                                 Vui lòng chọn quận/huyện
                             </option>
 
-                            {getDistrictsByCity(selectedCity).map((district) => (
-                                <option key={district.code} value={district.code}>
-                                    {district.name}
-                                </option>
-                            ))}
+                            {(() => {
+                                const districts = getDistrictsByCity(selectedCity);
+                                // console.log('Rendering districts for', selectedCity, ':', districts);
+                                return districts.map((district) => (
+                                    <option key={district} value={district}>
+                                        {district}
+                                    </option>
+                                ));
+                            })()}
 
                         </select>
                         {errors.district && <span className="error-message">{errors.district.message}</span>}
@@ -213,8 +384,8 @@ const CheckoutForm = ({ onSubmit, onCancel }) => {
                             </option>
 
                             {getWardsByDistrict(selectedCity, selectedDistrict).map((ward) => (
-                                <option key={ward.code} value={ward.code}>
-                                    {ward.name}
+                                <option key={ward} value={ward}>
+                                    {ward}
                                 </option>
                             ))}
 
