@@ -7,11 +7,7 @@ import "./FlashSale.css";
 import "../shared/NavigationArrows.css";
 
 const FlashSale = () => {
-  const [currentPage, setCurrentPage] = useState(0);
-  const [direction, setDirection] = useState('next');
-  const itemsPerPage = 6;
-  const totalPages = Math.ceil(flashSaleData.length / itemsPerPage);
-
+  
   const [timeLeft, setTimeLeft] = useState({
     hours: 0,
     minutes: 0,
@@ -26,9 +22,8 @@ const FlashSale = () => {
       const currentMinute = now.getMinutes();
       const currentSecond = now.getSeconds();
 
-      // Các khung giờ Flash Sale: 0h, 2h, 4h, 6h, 8h, 10h, 12h, 14h, 16h, 18h, 20h, 22h
+      // Các khung giờ Flash Sale:
       const saleHours = [0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22];
-
       
       let nextSaleHour = saleHours.find(hour => hour > currentHour);
       if (!nextSaleHour) {
@@ -64,6 +59,11 @@ const FlashSale = () => {
 
     return () => clearInterval(timer);
   }, []);
+
+  const [currentPage, setCurrentPage] = useState(0);
+  const [direction, setDirection] = useState('next');
+  const itemsPerPage = 6;
+  const totalPages = Math.ceil(flashSaleData.length / itemsPerPage);
 
   const startIndex = currentPage * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;

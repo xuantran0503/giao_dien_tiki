@@ -10,14 +10,16 @@ import "./TopDeals.css";
 const TopDeals = () => {
   const [currentPage, setCurrentPage] = useState(0);
   
-
   const itemsPerPage = 6;
   const totalPages = Math.ceil(topDealsData.length / itemsPerPage);
+
   const startIndex = currentPage * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
+
   const deals = topDealsData.slice(startIndex, endIndex);
 
   const [direction, setDirection] = useState('next');
+
   const handlePrev = () => {
     setDirection('prev');
     setCurrentPage((current) => (current > 0 ? current - 1 : totalPages - 1));
@@ -32,14 +34,14 @@ const TopDeals = () => {
     const stars = [];
     const fullStars = Math.floor(rating);
     const hasHalfStar = rating % 1 !== 0;
+    const emptyStars = 5 - Math.ceil(rating);
 
     for (let i = 0; i < fullStars; i++) {
-      stars.push(<span key={i} className="star filled">★</span>);
+      stars.push(<span key={`full-${i}`} className="star filled">★</span>);
     }
     if (hasHalfStar) {
       stars.push(<span key="half" className="star half">★</span>);
     }
-    const emptyStars = 5 - Math.ceil(rating);
     for (let i = 0; i < emptyStars; i++) {
       stars.push(<span key={`empty-${i}`} className="star">★</span>);
     }
@@ -59,9 +61,10 @@ const TopDeals = () => {
 
       <div className="deals-grid-wrapper" style={{ position: 'relative' }}>
         <PrevArrow onClick={handlePrev} />
-        <div className={`deals-grid slide-${direction}`} >
+        <div className={`deals-grid slide-${direction}`} key={currentPage} >
           {deals.map((deal) => (
-            <Link to={`/product/${deal.id}`} key={deal.id} className="deal-card">
+            <Link to={`/product/${deal.id}`}  key={deal.id}className="deal-card">
+              {/* installHook.js:1 Each child in a list should have a unique "key" prop. */}
 
               <div className="deal-image-wrapper">
                 <img src={deal.image} alt={deal.title} className="deal-image" />
@@ -94,6 +97,7 @@ const TopDeals = () => {
                   {deal.discount && deal.originalPrice && (
                     <div className="discount-row">
                       <span className="discount-percent">-{deal.discount}%</span>
+
                       <span className="original-price">{formatPrice(deal.originalPrice)}<sup>₫</sup></span>
                     </div>
                   )}

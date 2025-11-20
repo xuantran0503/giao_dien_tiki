@@ -7,42 +7,30 @@ import "./SuggestedProducts.css";
 const SuggestedProducts = () => {
   const [visibleProducts, setVisibleProducts] = useState(34);
 
-  // Duplicate products to have more items
-  const allProducts = [];
-  for (let i = 0; i < suggestedProductsData.length; i++) {
-    const product = suggestedProductsData[i % suggestedProductsData.length];
-    allProducts.push({
-      ...product,
-      // Giữ nguyên ID gốc để routing đúng, chỉ thêm key unique cho React
-      displayKey: i + 1,
-    });
-  }
+  const allProducts = suggestedProductsData.map((product, idx) => ({
+    ...product,
+    displayKey: idx + 1,
+  }));
 
   const loadMore = () => {
-    setVisibleProducts((prev) => Math.min(prev + 16, allProducts.length));
+    setVisibleProducts((current) => Math.min(current + 16, allProducts.length));
   };
 
   const renderStars = (rating) => {
     const stars = [];
     const fullStars = Math.floor(rating);
+    const hasHalfStar = rating % 1 !== 0;
+    const emptyStars = 5 - Math.ceil(rating);
 
     for (let i = 0; i < fullStars; i++) {
-      stars.push(
-        <span key={`full-${i}`} className="star filled">
-          ★
-        </span>
-      );
+      stars.push(<span key={`full-${i}`} className="star filled">★</span>);
     }
-
-    const emptyStars = 5 - fullStars;
+    if (hasHalfStar) {
+      stars.push(<span key="half" className="star half">★</span>);
+    }
     for (let i = 0; i < emptyStars; i++) {
-      stars.push(
-        <span key={`empty-${i}`} className="star">
-          ★
-        </span>
-      );
+      stars.push(<span key={`empty-${i}`} className="star">★</span>);
     }
-
     return stars;
   };
 
@@ -91,7 +79,8 @@ const SuggestedProducts = () => {
               key={product.displayKey}
               className="product-card-suggested product-card-ad"
             >
-              {index < 4 && <span className="ad-label">AD</span>}
+              {/* AD label for these promoted items (first row) */}
+              <span className="ad-label">AD</span>
               <div className="product-image-container">
                 <img
                   src={product.image}
@@ -180,7 +169,7 @@ const SuggestedProducts = () => {
             key={product.displayKey}
             className="product-card-suggested"
           >
-            {index < 0 && <span className="ad-label">AD</span>}
+            {/* no AD label here (previous condition `index < 0` was always false) */}
             <div className="product-image-container">
               <img
                 src={product.image}
@@ -268,12 +257,8 @@ const SuggestedProducts = () => {
             key={product.displayKey}
             className="product-card-suggested"
           >
-            {(index === 0 ||
-              index === 1 ||
-              index === 2 ||
-              index === 3 ||
-              index === 4 ||
-              index === 5) && <span className="ad-label">AD</span>}
+            {/* All items in this row are marked as AD */}
+            <span className="ad-label">AD</span>
             <div className="product-image-container">
               <img
                 src={product.image}

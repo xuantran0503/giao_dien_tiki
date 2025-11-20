@@ -219,7 +219,6 @@ Trong đoạn code:
 
 const searchRef = useRef(null);
 
-
 Bạn dùng ref để:
 
 ➤ Lấy DOM element của search box:

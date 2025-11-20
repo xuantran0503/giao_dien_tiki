@@ -107,17 +107,14 @@ const SearchBar = () => {
     const handleClickOutside = (event) => {
       if (searchRef.current && !searchRef.current.contains(event.target)) {
         setShowDropdown(false);
-      
+        // console.log(searchRef);
       }
     };
-    
     document.addEventListener("mousedown", handleClickOutside);
-    
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
-
 
   const handleSearchFocus = () => {
     setShowDropdown(true);

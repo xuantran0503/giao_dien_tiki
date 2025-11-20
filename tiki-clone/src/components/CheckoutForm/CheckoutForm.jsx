@@ -9,20 +9,15 @@ const CheckoutForm = ({ onSubmit, onCancel }) => {
     const [selectedDistrict, setSelectedDistrict] = React.useState('');
     const [selectedWard, setSelectedWard] = React.useState('');
     const [addressData, setAddressData] = React.useState([]);
-    // const [loading, setLoading] = React.useState(true);
-
 
     React.useEffect(() => {
         fetch("https://provinces.open-api.vn/api/?depth=3")
             .then(res => res.json())
             .then(data => {
                 setAddressData(data);
-                // setLoading(false);
-                // console.log('API data loaded:', data);
             })
             .catch(err => {
                 console.log("Lỗi API:", err);
-                // setLoading(false);
             });
     }, []);
 
@@ -34,7 +29,7 @@ const CheckoutForm = ({ onSubmit, onCancel }) => {
     const getWardsByDistrict = (cityCode, districtCode) => {
         const city = addressData.find(c => c.code === Number(cityCode));
         if (!city) return [];
-
+        
         const district = city.districts.find(d => d.code === Number(districtCode));
         return district ? district.wards : [];
     };
@@ -60,9 +55,7 @@ const CheckoutForm = ({ onSubmit, onCancel }) => {
         setSelectedWard(wardCode);
     };
 
-
     const onFormSubmit = (data) => {
-        
         // const city = addressData.find(c => c.code === Number(data.city));
         // const district = getDistrictsByCity(data.city).find(d => d.code === Number(data.district));
         // const ward = getWardsByDistrict(data.city, data.district).find(w => w.code === Number(data.ward));
@@ -79,7 +72,6 @@ const CheckoutForm = ({ onSubmit, onCancel }) => {
             <div className="checkout-form-container">
                 <div className="checkout-form-header">
                     <h2>Thông tin người mua hàng</h2>
-                    
                 </div>
 
                 <form onSubmit={handleSubmit(onFormSubmit)} className="checkout-form">   
@@ -87,7 +79,6 @@ const CheckoutForm = ({ onSubmit, onCancel }) => {
                         <label htmlFor="fullName">Họ và tên *</label>
 
                         {/* const [formData, setFormData] = useState({ name: "", phone: "" });
-
                     <input
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
