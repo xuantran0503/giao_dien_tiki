@@ -1,70 +1,34 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
+import { useDispatch } from 'react-redux';
+import { saveCheckout } from '../../store/checkoutSlice';
 import './CheckoutForm.css';
 
-const CheckoutForm = ({ onSubmit, onCancel }) => {
-    const { register, handleSubmit, formState: { errors } } = useForm();
+const CheckoutForm = ({ onSubmit, onCancel, meta }) => {
+    const dispatch = useDispatch();
+    const { register, handleSubmit, formState: { errors }, reset } = useForm();
 
-    const [selectedCity, setSelectedCity] = React.useState('');
-    const [selectedDistrict, setSelectedDistrict] = React.useState('');
-    const [selectedWard, setSelectedWard] = React.useState('');
-    const [addressData, setAddressData] = React.useState([]);
-
-    React.useEffect(() => {
-        fetch("https://provinces.open-api.vn/api/?depth=3")
-            .then(res => res.json())
-            .then(data => {
-                setAddressData(data);
-            })
-            .catch(err => {
-                console.log("Lỗi API:", err);
-            });
-    }, []);
-
-    const getDistrictsByCity = (cityCode) => {
-        const city = addressData.find(c => c.code === Number(cityCode));
-        return city ? city.districts : [];
-    };
-    
-    const getWardsByDistrict = (cityCode, districtCode) => {
-        const city = addressData.find(c => c.code === Number(cityCode));
-        if (!city) return [];
+    // const onFormSubmit = async (data) => {
+    //     const payload = { ...data, meta };
         
-        const district = city.districts.find(d => d.code === Number(districtCode));
-        return district ? district.wards : [];
-    };
+    //     dispatch(saveCheckout(payload));
+        
+    //     if (onSubmit) {
+    //         await onSubmit(payload);
+    //     }
+    //     reset();
+    //     console.log("thông tin người mua hàng", payload);
+    // };
 
-    const handleCityChange = (e) => {
-        const cityCode = e.target.value;
-        console.log('City changed to:', cityCode);
-        setSelectedCity(cityCode);
-        setSelectedDistrict('');
-        setSelectedWard('');
-    };
-
-    const handleDistrictChange = (e) => {
-        const districtCode = e.target.value;
-        console.log('District changed to:', districtCode);
-        setSelectedDistrict(districtCode);
-        setSelectedWard('');
-    };
-
-    const handleWardChange = (e) => {
-        const wardCode = e.target.value;
-        console.log('Ward changed to:', wardCode);
-        setSelectedWard(wardCode);
-    };
-
-    const onFormSubmit = (data) => {
-        // const city = addressData.find(c => c.code === Number(data.city));
-        // const district = getDistrictsByCity(data.city).find(d => d.code === Number(data.district));
-        // const ward = getWardsByDistrict(data.city, data.district).find(w => w.code === Number(data.ward));
-
-        // Tạo địa chỉ đầy đủ
-        // const fullAddress = `${data.addressDetail}, ${ward?.name || ''}, ${district?.name || ''}, ${city?.name || ''}`;
-
-        console.log('Thông tin người mua :', { ...data });
-        onSubmit({ ...data });
+    const onFormSubmit =  (data) => {
+        const payload = { ...data, meta };
+        
+        dispatch(saveCheckout(payload));
+        
+        onSubmit(payload);
+        
+        reset();
+        console.log("thông tin người mua hàng", payload);
     };
 
     return (
@@ -77,14 +41,6 @@ const CheckoutForm = ({ onSubmit, onCancel }) => {
                 <form onSubmit={handleSubmit(onFormSubmit)} className="checkout-form">   
                     <div className="form-group">
                         <label htmlFor="fullName">Họ và tên *</label>
-
-                        {/* const [formData, setFormData] = useState({ name: "", phone: "" });
-                    <input
-                    value={formData.name}
-                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                    />
-                    */}
-
                         <input
                             id="fullName"
                             type="text"
@@ -109,7 +65,7 @@ const CheckoutForm = ({ onSubmit, onCancel }) => {
                             {...register('phone', {
                                 required: 'Vui lòng nhập số điện thoại',
                                 pattern: {
-                                    value: /(0[3-9])+([0-9]{8})\b/,
+                                    value: /(0[3|5|7|8|9])+([0-9]{8})\b/,
                                     message: 'Số điện thoại không hợp lệ'
                                 }
                             })}
@@ -135,95 +91,15 @@ const CheckoutForm = ({ onSubmit, onCancel }) => {
                     </div>
 
                     <div className="form-group">
-                        <label htmlFor="city">Tỉnh/Thành phố *</label>
-                        <select
-                            id="city"
-                            {...register("city", {
-                                required: "Vui lòng chọn tỉnh/thành phố",
-                            })}
-                            value={selectedCity}
-                            onChange={handleCityChange}
-                            className={selectedCity ? "selected" : ""}
-                            // disabled={loading}
-                        >
-                            <option value="" disabled hidden>
-                                {/* {loading ? "Đang tải..." : "Vui lòng chọn tỉnh/thành phố"} */}
-                                Vui lòng chọn tỉnh/thành phố
-                            </option>
-
-                            {addressData.map((city) => (
-                                <option key={city.code} value={city.code}>
-                                    {city.name}
-                                </option>
-                            ))}
-
-                        </select>
-                        {errors.city && <span className="error-message">{errors.city.message}</span>}
-                    </div>
-
-                    <div className="form-group">
-                        <label htmlFor="district">Quận/Huyện *</label>
-                        <select
-                            id="district"
-                            {...register("district", {
-                                required: "Vui lòng chọn quận/huyện",
-                            })}
-                            value={selectedDistrict}
-                            onChange={handleDistrictChange}
-                            disabled={!selectedCity}
-                            className={selectedDistrict ? "selected" : ""}
-                        >
-                            <option value="" disabled hidden>
-                                Vui lòng chọn quận/huyện
-                            </option>
-
-                            {getDistrictsByCity(selectedCity).map((district) => (
-                                <option key={district.code} value={district.code}>
-                                    {district.name}
-                                </option>
-                            ))}
-
-                        </select>
-                        {errors.district && <span className="error-message">{errors.district.message}</span>}
-                    </div>
-
-                    <div className="form-group">
-                        <label htmlFor="ward">Phường/Xã *</label>
-                        <select
-                            id="ward"
-                            {...register("ward", {
-                                required: "Vui lòng chọn phường/xã",
-                            })}
-                            value={selectedWard}
-                            onChange={handleWardChange}
-                            disabled={!selectedDistrict}
-                            className={selectedWard ? "selected" : ""}
-                        >
-                            <option value="" disabled hidden>
-                                Vui lòng chọn phường/xã
-                            </option>
-
-                            {getWardsByDistrict(selectedCity, selectedDistrict).map((ward) => (
-                                <option key={ward.code} value={ward.code}>
-                                    {ward.name}
-                                </option>
-                            ))}
-
-                        </select>
-                        {errors.ward && <span className="error-message">{errors.ward.message}</span>}
-                    </div>
-
-                    <div className="form-group">
                         <label htmlFor="addressDetail">Địa chỉ chi tiết *</label>
                         <textarea
                             id="addressDetail"
-                            // rows="2"
                             placeholder="Nhập số nhà, tên đường..."
                             {...register('addressDetail', {
                                 required: 'Vui lòng nhập địa chỉ chi tiết',
                                 minLength: {
-                                    value: 5,
-                                    message: 'Địa chỉ chi tiết phải có ít nhất 5 ký tự'
+                                    value: 3,
+                                    message: 'Địa chỉ chi tiết phải có ít nhất 3 ký tự'
                                 }
                             })}
                         />
@@ -234,7 +110,6 @@ const CheckoutForm = ({ onSubmit, onCancel }) => {
                         <label htmlFor="note">Ghi chú (tùy chọn)</label>
                         <textarea
                             id="note"
-                            // rows="2"
                             placeholder="Ghi chú thêm về đơn hàng của bạn"
                             {...register('note')}
                         />
@@ -244,6 +119,7 @@ const CheckoutForm = ({ onSubmit, onCancel }) => {
                         <button type="button" className="btn-cancel" onClick={onCancel}>
                             Hủy
                         </button>
+
                         <button type="submit" className="btn-submit">
                             Xác nhận đặt hàng
                         </button>

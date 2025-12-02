@@ -9,6 +9,7 @@ import FlashSalePage from "./pages/FlashSalePage";
 import PromotionPage from "./pages/PromotionPage";
 import BrandPage from "./pages/BrandPage";
 import AboutPage from "./pages/AboutPage";
+import BuyerInfo from "./pages/BuyerInfo";
 import "./App.css";
 
 function App() {
@@ -23,7 +24,9 @@ function App() {
         <Route path="/flash-sale" element={<FlashSalePage />} />
         <Route path="/promotion/:promoType" element={<PromotionPage />} />
         <Route path="/brand/:brandId" element={<BrandPage />} />
+        <Route path="/buyer-info" element={<BuyerInfo />} />
         <Route path="/about" element={<AboutPage />} />
+        {/* <Route path="/view-all-top-deals" element={<ViewAllTopDeals />} /> */}
       </Routes>
     </Router>
   );

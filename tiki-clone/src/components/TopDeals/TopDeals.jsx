@@ -22,12 +22,16 @@ const TopDeals = () => {
 
   const handlePrev = () => {
     setDirection('prev');
-    setCurrentPage((current) => (current > 0 ? current - 1 : totalPages - 1));
+    if (currentPage > 0) {
+      setCurrentPage(currentPage - 1);
+    }
   };
 
   const handleNext = () => {
     setDirection('next');
-    setCurrentPage((current) => (current < totalPages - 1 ? current + 1 : 0));
+    if (currentPage < totalPages - 1) {
+      setCurrentPage(currentPage + 1);
+    }
   };
 
   const renderStars = (rating) => {
@@ -54,17 +58,22 @@ const TopDeals = () => {
         <div className="header-left">
           <img src="../img_top_deal_sieu_re.png" alt="top deal siêu rẻ" />
         </div>
-        <Link to="/top-deals" className="view-all">
+        <Link to="/view-all-top-deals" className="view-all">
           Xem tất cả
         </Link>
       </div>
 
-      <div className="deals-grid-wrapper" style={{ position: 'relative' }}>
-        <PrevArrow onClick={handlePrev} />
+      <div className="deals-grid-wrapper" >
+
+        {totalPages > 1 && currentPage > 0 && (
+          <PrevArrow onClick={handlePrev} />
+        )}
+
         <div className={`deals-grid slide-${direction}`} key={currentPage} >
           {deals.map((deal) => (
-            <Link to={`/product/${deal.id}`}  key={deal.id}className="deal-card">
-              {/* installHook.js:1 Each child in a list should have a unique "key" prop. */}
+            <Link to={`/product/${deal.id}`}  key={deal.id} className="deal-card">
+
+              {/* Error: installHook.js:1 Each child in a list should have a unique "key" prop. */}
 
               <div className="deal-image-wrapper">
                 <img src={deal.image} alt={deal.title} className="deal-image" />
@@ -89,7 +98,7 @@ const TopDeals = () => {
                 <div className="price-section">
 
                   <div className="price-row">
-                    <span className={`current-price ${!deal.discount || !deal.originalPrice ? 'no-discount' : ''}`}>
+                    <span className={`current-price `}>
                       {formatPrice(calculateDiscountedPrice(deal.originalPrice, deal.discount))}<sup>₫</sup>
                     </span>
                   </div>
@@ -107,7 +116,6 @@ const TopDeals = () => {
                   <div className="made-in">{deal.madeIn}</div>
                 )}
 
-
                 <div className="deal-bottom-badges">
                   <div className="divider"></div>
                   <div className="badge-row">
@@ -124,7 +132,10 @@ const TopDeals = () => {
             </Link>
           ))}
         </div>
-        <NextArrow onClick={handleNext} />
+      
+        {totalPages > 1 && currentPage < totalPages - 1 && (
+          <NextArrow onClick={handleNext} />
+        )}
       </div>
     </div>
   );

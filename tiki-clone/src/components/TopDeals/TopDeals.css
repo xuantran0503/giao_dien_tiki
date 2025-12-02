@@ -88,9 +88,11 @@
     border-radius: 8px;
     overflow: hidden;
     text-decoration: none;
-    color: inherit;
+    /* color: inherit; */
+
+    color: rgb(36, 36, 36);
     border: 1px solid #e0e0e0;
-    /* transition: transform 0.2s ease, box-shadow 0.2s ease; */
+    
     display: flex;
     flex-direction: column;
     width: 100%;

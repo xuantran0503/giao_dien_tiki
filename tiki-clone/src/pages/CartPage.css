@@ -292,7 +292,7 @@
 }
 
 .qty-input {
-  width: 50px;
+  width: 80px;
   height: 32px;
   border: none;
   border-left: 1px solid #ebebf0;
@@ -301,6 +301,17 @@
   font-size: 14px;
   font-weight: 500;
   color: #242424;
+}
+
+/* Ẩn mũi tên lên/xuống trên input type="number" */
+.qty-input::-webkit-outer-spin-button,
+.qty-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.qty-input[type="number"] {
+  -moz-appearance: textfield;
 }
 
 .item-total {

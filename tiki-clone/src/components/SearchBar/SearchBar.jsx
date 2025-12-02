@@ -102,12 +102,13 @@ const SearchBar = () => {
   }, []);
 
   const searchRef = useRef(null);
+  // const searchRef = useRef(); //undefined
   console.log(searchRef);
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (searchRef.current && !searchRef.current.contains(event.target)) {
         setShowDropdown(false);
-        // console.log(searchRef);
+        
       }
     };
     document.addEventListener("mousedown", handleClickOutside);
@@ -133,21 +134,20 @@ const SearchBar = () => {
       setSearchHistory(newHistory);
       localStorage.setItem("searchHistory", JSON.stringify(newHistory));
       setShowDropdown(false);
-
       // console.log("Searching for:", searchValue);
     }
-  };
-
-  const handleHistoryClick = (text) => {
-    setSearchValue(text);
-    setShowDropdown(false);
-    // console.log("Searching for:", text);
   };
 
   const handleKeyPress = (e) => {
     if (e.key === "Enter") {
       handleSearch();
     }
+  };
+  
+  const handleHistoryClick = (text) => {
+    setSearchValue(text);
+    setShowDropdown(false);
+    // console.log("Searching for:", text);
   };
 
   return (
@@ -224,7 +224,7 @@ const SearchBar = () => {
                   <div
                     key={item.id}
                     className="popular-search-item-horizontal"
-                    onClick={() => handleHistoryClick(item.text)}
+                    // onClick={() => handleHistoryClick(item.text)}
                   >
                     <div className="popular-item-thumbnail">
                       <img src={item.image} alt={item.text} />

@@ -9,7 +9,7 @@ const SuggestedProducts = () => {
 
   const allProducts = suggestedProductsData.map((product, idx) => ({
     ...product,
-    displayKey: idx + 1,
+    // displayKey: idx + 1,
   }));
 
   const loadMore = () => {
@@ -76,7 +76,7 @@ const SuggestedProducts = () => {
           {allProducts.slice(0, 4).map((product, index) => (
             <Link
               to={`/product/${product.id}`}
-              key={product.displayKey}
+              key={product.id}
               className="product-card-suggested product-card-ad"
             >
               {/* AD label for these promoted items (first row) */}
@@ -166,7 +166,7 @@ const SuggestedProducts = () => {
         {allProducts.slice(4, 10).map((product, index) => (
           <Link
             to={`/product/${product.id}`}
-            key={product.displayKey}
+            key={product.id}
             className="product-card-suggested"
           >
             {/* no AD label here (previous condition `index < 0` was always false) */}
@@ -254,7 +254,7 @@ const SuggestedProducts = () => {
         {allProducts.slice(10, 16).map((product, index) => (
           <Link
             to={`/product/${product.id}`}
-            key={product.displayKey}
+            key={product.id}
             className="product-card-suggested"
           >
             {/* All items in this row are marked as AD */}
@@ -344,7 +344,7 @@ const SuggestedProducts = () => {
         {allProducts.slice(16, 19).map((product, index) => (
           <Link
             to={`/product/${product.id}`}
-            key={product.displayKey}
+            key={product.id}
             className="product-card-suggested"
           >
             {index === 0 && <span className="ad-label">AD</span>}
@@ -494,7 +494,7 @@ const SuggestedProducts = () => {
         {allProducts.slice(19, 20).map((product) => (
           <Link
             to={`/product/${product.id}`}
-            key={product.displayKey}
+            key={product.id}
             className="product-card-suggested"
           >
             <div className="product-image-container">
@@ -581,7 +581,7 @@ const SuggestedProducts = () => {
         {allProducts.slice(20, visibleProducts).map((product, index) => (
           <Link
             to={`/product/${product.id}`}
-            key={product.displayKey}
+            key={product.id}
             className="product-card-suggested"
           >
             {(index === 0 ||

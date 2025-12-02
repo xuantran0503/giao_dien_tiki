@@ -71,6 +71,13 @@ const Header = () => {
 
                     <span className="cart-badge">{cartItemsCount}</span>
                   </Link>
+
+                  <Link to="/buyer-info" className="icon-btn-with-text">
+                    {/* <div className="img-info">
+                      <img src="/info.png" alt="info" />
+                    </div> */}
+                    <span className="text">📋 Thông tin đơn hàng</span>
+                  </Link>
                 </div>
               </div>
 

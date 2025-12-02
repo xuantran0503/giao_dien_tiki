@@ -11,7 +11,7 @@ export const setupCrossTabSync = (store, syncAction) => {
           // console.log("Cart synced from another tab:", cartState);
         }
       } catch (error) {
-        // console.error("Error syncing cart from storage event:", error);
+        console.error("Error syncing cart from storage event:", error);
       }
     }
   };

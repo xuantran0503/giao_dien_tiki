@@ -1,6 +1,8 @@
 export const youMayLikeData = [
   {
     id: 401,
+    // image:
+    //   "https://salt.tikicdn.com/cache/750x750/ts/product/7d/6c/28/6ac093d160682fb58038a471d7fd7c02.jpg.webp",
     image:
       "https://salt.tikicdn.com/cache/750x750/ts/product/dd/2b/a6/fefd132c5ba9b5629c0119f57549e5d4.png.webp",
     name: "Apple iPhone 13",

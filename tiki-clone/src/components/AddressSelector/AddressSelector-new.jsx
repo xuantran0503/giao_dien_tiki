@@ -15,7 +15,7 @@ const AddressSelector = ({ onLoginClick, forceOpen = false, onClose }) => {
     }
   }, [forceOpen]);
 
-  // đồng bộ địa chỉ đã chọn với localStorage và các tab/ component khác
+  // Sync selected address with localStorage and across tabs/components
   React.useEffect(() => {
     const saved = window.localStorage.getItem("selectedAddress");
     if (saved && typeof saved === "string") {
@@ -39,7 +39,7 @@ const AddressSelector = ({ onLoginClick, forceOpen = false, onClose }) => {
     "P. Minh Khai, Q. Hoàng Mai, Hà Nội"
   );
 
-  
+  // addressData will be populated from provinces.open-api.vn (depth=3)
   const [addressData, setAddressData] = useState([]);
 
   React.useEffect(() => {
@@ -71,7 +71,8 @@ const AddressSelector = ({ onLoginClick, forceOpen = false, onClose }) => {
   };
 
   const handleLocationClick = (e) => {
-    
+    // e.preventDefault();
+
     setLocationType("default");
     setSelectedCity("");
     setSelectedDistrict("");

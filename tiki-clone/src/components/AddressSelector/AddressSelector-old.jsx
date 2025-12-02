@@ -15,7 +15,7 @@ const AddressSelector = ({ onLoginClick, forceOpen = false, onClose }) => {
     }
   }, [forceOpen]);
 
-  // đồng bộ địa chỉ đã chọn với localStorage và các tab/ component khác
+  // Đồng bộ địa chỉ với localStorage + event listener
   React.useEffect(() => {
     const saved = window.localStorage.getItem("selectedAddress");
     if (saved && typeof saved === "string") {
@@ -30,6 +30,8 @@ const AddressSelector = ({ onLoginClick, forceOpen = false, onClose }) => {
     };
 
     window.addEventListener("addressChange", handleAddressChange);
+
+    //  CLEANUP: Hủy đăng ký khi component unmount
     return () => {
       window.removeEventListener("addressChange", handleAddressChange);
     };
@@ -39,39 +41,231 @@ const AddressSelector = ({ onLoginClick, forceOpen = false, onClose }) => {
     "P. Minh Khai, Q. Hoàng Mai, Hà Nội"
   );
 
-  
-  const [addressData, setAddressData] = useState([]);
-
-  React.useEffect(() => {
-    fetch("https://provinces.open-api.vn/api/?depth=3")
-      .then((res) => res.json())
-      .then((data) => setAddressData(data || []))
-      .catch((err) => console.log("Lỗi API địa chỉ:", err));
-  }, []);
-
-  const cities = addressData; // array of { code, name, districts }
-
-  const getDistrictsByCity = (cityCode) => {
-    if (!cityCode) return [];
-
-    const city = addressData.find((c) => c.code === Number(cityCode));
-    return city && city.districts ? city.districts : [];
+  const addressData = {
+    "Hà Nội": {
+      "Q. Hoàng Mai": [
+        "P. Minh Khai",
+        "P. Đại Kim",
+        "P. Hoàng Văn Thụ",
+        "P. Giáp Bát",
+        "P. Thịnh Liệt",
+      ],
+      "Q. Cầu Giấy": [
+        "P. Mai Dịch",
+        "P. Dịch Vọng",
+        "P. Nghĩa Đô",
+        "P. Yên Hòa",
+        "P. Trung Hòa",
+      ],
+      "Q. Ba Đình": [
+        "P. Liễu Giai",
+        "P. Ngọc Hà",
+        "P. Đội Cấn",
+        "P. Kim Mã",
+        "P. Thành Công",
+      ],
+      "Q. Hai Bà Trưng": [
+        "P. Minh Khai",
+        "P. Bạch Mai",
+        "P. Đồng Nhân",
+        "P. Lê Đại Hành",
+        "P. Bạch Đằng",
+      ],
+      "Q. Đống Đa": [
+        "P. Khâm Thiên",
+        "P. Nam Đồng",
+        "P. Văn Chương",
+        "P. Hàng Bột",
+        "P. Láng Hạ",
+      ],
+    },
+    "Nam Định": {
+      "H. Vụ Bản": [
+        "X. Liên Bảo",
+        "X. Kim Thái",
+        "X. Đại An",
+        "X. Đại Thắng",
+        "X. Quang Trung",
+      ],
+      "H. Mỹ Lộc": [
+        "X. Mỹ Thịnh",
+        "X. Mỹ Hà",
+        "X. Mỹ Thành",
+        "X. Mỹ Phúc",
+        "X. Mỹ Tân",
+      ],
+      "H. Trực Ninh": [
+        "X. Trực Đại",
+        "X. Trực Phương",
+        "X. Trực Định",
+        "X. Trực Thanh",
+        "X. Trực Cường",
+      ],
+      "H. Xuân Trường": [
+        "X. Xuân Bắc",
+        "X. Xuân Phương",
+        "X. Xuân Thượng",
+        "X. Xuân Thủy",
+        "X. Xuân Hồng",
+      ],
+      "H. Giao Thủy": [
+        "X. Giao Hải",
+        "X. Giao Hương",
+        "X. Giao Long",
+        "X. Giao Xuân",
+      ],
+      "H. Hải Hậu ": [
+        "X. Hải Sơn",
+        "X. Hải Phú",
+        "X. Hải An",
+        "X. Hải Bắc",
+        "X. Hải Châu",
+        "X. Hải Đông",
+        "X. Hải Giang",
+        "X. Hải Hà",
+        "X. Hải Phong",
+        "X. Hải Hòa",
+        "X. Hải Hưng",
+        "X. Hải Quang",
+        "X. Hải Chính",
+        "X. Hải Lộc",
+        "X. Hải Lý",
+      ],
+    },
+    "Thái Bình": {
+      "H. Đông Hưng": [
+        "X. An Châu",
+        "X. Bạch Đằng",
+        "X. Chương Dương",
+        "X. Đông La",
+        "X. Đông Sơn",
+      ],
+      "H. Hưng Hà": [
+        "X. Bắc Sơn",
+        "X. Độc Lập",
+        "X. Đông Đô",
+        "X. Hồng Đức",
+        "X. Hùng Dũng",
+      ],
+      "H. Kiến Xương": [
+        "X. Bình Định",
+        "X. Bình Minh",
+        "X. Bình Nguyên",
+        "X. Bình Thanh",
+        "X. Bình Định",
+      ],
+      "H. Quỳnh Phụ": [
+        "X. An Ấp",
+        "X. An Cầu",
+        "X. An Dục",
+        "X. An Hiệp",
+        "X. An Khê",
+      ],
+      "H. Vũ Thư": [
+        "X. Hiệp Hòa",
+        "X. Hòa Bình",
+        "X. Minh Khai",
+        "X. Minh Quang",
+        "X. Nguyên Xá",
+      ],
+    },
+    "Hà Giang": {
+      "H. Bắc Quang": [
+        "X. Bằng Hành",
+        "X. Đồng Tâm",
+        "X. Đông Thành",
+        "X. Minh Khai",
+        "X. Quang Minh",
+      ],
+      "H. Quản Bạ": [
+        "X. Cán Tỷ",
+        "X. Cao Mã Pờ",
+        "X. Lùng Tám",
+        "X. Nghĩa Thuận",
+        "X. Quản Bạ",
+      ],
+      "H. Vị Xuyên": [
+        "X. Bạch Ngọc",
+        "X. Cao Bồ",
+        "X. Đạo Đức",
+        "X. Kim Linh",
+        "X. Kim Thạch",
+      ],
+      "H. Yên Minh": [
+        "X. Bạch Đích",
+        "X. Đông Minh",
+        "X. Du Già",
+        "X. Du Tiến",
+        "X. Lao Và Chải",
+      ],
+      "H. Đồng Văn": [
+        "X. Đồng Văn",
+        "X. Hố Quáng Phìn",
+        "X. Lũng Cú",
+        "X. Lũng Phìn",
+        "X. Má Lé",
+      ],
+    },
+    "Hưng Yên": {
+      "H. Kim Động": [
+        "X. Đồng Thanh",
+        "X. Hiệp Cường",
+        "X. Hùng An",
+        "X. Lương Bằng",
+        "X. Nghĩa Dân",
+      ],
+      "H. Mỹ Hào": [
+        "X. Bạch Sam",
+        "X. Minh Đức",
+        "X. Phùng Chí Kiên",
+        "X. Xuân Dục",
+        "X. Ngọc Lâm",
+      ],
+      "H. Phù Cừ": [
+        "X. Đình Cao",
+        "X. Đoàn Đào",
+        "X. Minh Hoàng",
+        "X. Nhật Quang",
+        "X. Tiền Tiến",
+      ],
+      "H. Tiên Lữ": [
+        "X. An Viên",
+        "X. Dị Chế",
+        "X. Đức Thắng",
+        "X. Hải Triều",
+        "X. Hưng Đạo",
+      ],
+      "H. Văn Lâm": [
+        "X. Chỉ Đạo",
+        "X. Đại Đồng",
+        "X. Lạc Đạo",
+        "X. Lạc Hồng",
+        "X. Việt Hưng",
+      ],
+    },
   };
 
-  const getWardsByDistrict = (cityCode, districtCode) => {
-    if (!cityCode || !districtCode) return [];
+  const cities = Object.keys(addressData);
 
-    const city = addressData.find((c) => c.code === Number(cityCode));
+  const getDistrictsByCity = (city) => {
+    if (!city || !addressData[city]) return [];
+    return Object.keys(addressData[city]);
+  };
 
-    if (!city || !city.districts) return [];
-
-    const district = city.districts.find((d) => d.code === Number(districtCode));
-    
-    return district && district.wards ? district.wards : [];
+  const getWardsByDistrict = (city, district) => {
+    if (
+      !city ||
+      !district ||
+      !addressData[city] ||
+      !addressData[city][district]
+    )
+      return [];
+    return addressData[city][district];
   };
 
   const handleLocationClick = (e) => {
-    
+    // e.preventDefault();
+
     setLocationType("default");
     setSelectedCity("");
     setSelectedDistrict("");
@@ -97,18 +291,7 @@ const AddressSelector = ({ onLoginClick, forceOpen = false, onClose }) => {
       selectedDistrict &&
       selectedWard
     ) {
-      const cityObj = addressData.find((c) => c.code === Number(selectedCity));
-      const districtObj = cityObj?.districts?.find(
-        (d) => d.code === Number(selectedDistrict)
-      );
-      const wardObj = districtObj?.wards?.find(
-        (w) => w.code === Number(selectedWard)
-      );
-
-      const newAddr = `${wardObj?.name || ""}, ${districtObj?.name || ""}, ${
-        cityObj?.name || ""
-      }`;
-
+      const newAddr = `${selectedWard}, ${selectedDistrict}, ${selectedCity}`;
       setSelectedAddress(newAddr);
       setShowLocationModal(false);
 
@@ -223,8 +406,8 @@ const AddressSelector = ({ onLoginClick, forceOpen = false, onClose }) => {
                               Vui lòng chọn tỉnh/thành phố
                             </option>
                             {cities.map((city) => (
-                              <option key={city.code} value={city.code}>
-                                {city.name}
+                              <option key={city} value={city}>
+                                {city}
                               </option>
                             ))}
                           </select>
@@ -262,8 +445,8 @@ const AddressSelector = ({ onLoginClick, forceOpen = false, onClose }) => {
                             </option>
                             {getDistrictsByCity(selectedCity).map(
                               (district) => (
-                                <option key={district.code} value={district.code}>
-                                  {district.name}
+                                <option key={district} value={district}>
+                                  {district}
                                 </option>
                               )
                             )}
@@ -301,8 +484,8 @@ const AddressSelector = ({ onLoginClick, forceOpen = false, onClose }) => {
                               selectedCity,
                               selectedDistrict
                             ).map((ward) => (
-                              <option key={ward.code} value={ward.code}>
-                                {ward.name}
+                              <option key={ward} value={ward}>
+                                {ward}
                               </option>
                             ))}
                           </select>

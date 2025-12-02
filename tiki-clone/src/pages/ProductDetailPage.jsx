@@ -553,6 +553,7 @@ const ProductDetailPage = () => {
       {showCheckoutForm && (
         <CheckoutForm
           onSubmit={handleCheckoutSubmit}
+          meta={{ productId: product.id, productName: product.name, quantity }}
           onCancel={handleCheckoutCancel}
         />
       )}

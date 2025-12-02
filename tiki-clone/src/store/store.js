@@ -1,4 +1,5 @@
 import cartReducer from "./cartSlice";
+import checkoutReducer from "./checkoutSlice";
 
 import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import {
@@ -15,12 +16,13 @@ import storage from "redux-persist/lib/storage";
 
 const rootReducer = combineReducers({
   cart: cartReducer,
+  checkout: checkoutReducer,
 });
 
 const persistConfig = {
   key: "root",
   storage,
-  whitelist: ["cart"],
+  whitelist: ["cart"], // CHỈ persist cart, KHÔNG persist checkout
 };
 
 // Wrap root reducer với persistReducer
@@ -36,7 +38,9 @@ const store = configureStore({
       },
       immutableCheck: {
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+        warnAfter: 128,
       },
+      // immutableCheck: false,
     }),
 });
 

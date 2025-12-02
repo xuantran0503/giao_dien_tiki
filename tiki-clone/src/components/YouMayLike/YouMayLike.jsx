@@ -55,7 +55,7 @@ const YouMayLike = () => {
                         <Link to={`/product/${product.id}`} key={product.id} className="product-card">
 
                             <div className="product-image-wrapper">
-                                <img src={product.image} alt={product.name} className="product-image" />
+                                <img src={product.image} alt={product.name} className="yml-product-image" />
                                 {product.badgeIcon && (
                                     <img src={product.badgeIcon} alt="Badge" className="product-badge-icon" />
                                 )}

@@ -1,15 +1,11 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { removeFromCart, updateQuantity } from "../store/cartSlice";
+import { removeFromCart, removeManyFromCart, updateQuantity } from "../store/cartSlice";
 import Header from "../components/Header/Header";
 import Footer from "../components/Footer/Footer";
 import { addToCart } from "../store/cartSlice";
-import { suggestedProductsData } from "../data/suggestedProductsData";
 import { topDealsData } from "../data/topDealsData";
-import { flashSaleData } from "../data/flashSaleData";
-import { hotInternationalData } from "../data/hotInternationalData";
-import { youMayLikeData } from "../data/youMayLikeData";
 import { calculateDiscountedPrice, formatPrice } from "../utils/priceUtils";
 import "./CartPage.css";
 import { PrevArrow, NextArrow } from "../components/shared/NavigationArrows";
@@ -21,6 +17,8 @@ const CartPage = () => {
 
   const [selectedItems, setSelectedItems] = useState([]);
   const [showCheckoutForm, setShowCheckoutForm] = useState(false);
+  const [editingQuantity, setEditingQuantity] = useState(null);
+  const [quantityInput, setQuantityInput] = useState('');
 
   const handleSelectAll = (e) => {
     if (e.target.checked) {
@@ -35,8 +33,7 @@ const CartPage = () => {
     if (selectedItems.includes(id)) {
       //neu da chon thi bo ra khoi danh sach bang filter
       setSelectedItems(selectedItems.filter((itemId) => itemId !== id));
-      // console.log('Selected items:', selectedItems);
-      console.log('Removed sel item with id:', id);
+      console.log('Bo Selected item voi id:', id);
     } else {
       //neu chua chon thi them vao
       setSelectedItems([...selectedItems, id]);
@@ -46,38 +43,61 @@ const CartPage = () => {
 
   const handleIncrease = (id, currentQuantity) => {
     dispatch(updateQuantity({ id, quantity: currentQuantity + 1 }));
-    console.log('Increased quantity for item with id:', id);
+    console.log('Tang so luong cho item voi id:', id);
   };
 
   const handleDecrease = (id, currentQuantity) => {
     if (currentQuantity > 1) {
       dispatch(updateQuantity({ id, quantity: currentQuantity - 1 }));
-      console.log('Decreased quantity for item with id:', id);
+      console.log('Giam so luong cho item voi id:', id);
+    }
+  };
+
+  const handleQuantityClick = (id, quantity) => {
+    setEditingQuantity(id);
+    setQuantityInput(quantity.toString());
+  };
+
+  const handleQuantityChange = (e) => {
+    setQuantityInput(e.target.value);
+  };
+
+  const handleQuantityBlur = (id) => {
+    const newQuantity = parseInt(quantityInput) || 1;
+    if (newQuantity > 0) {
+      dispatch(updateQuantity({ id, quantity: newQuantity }));
+    }
+    setEditingQuantity(null);
+    setQuantityInput('');
+  };
+
+  const handleQuantityKeyPress = (e, id) => {
+    if (e.key === 'Enter') {
+      handleQuantityBlur(id);
+    } else if (e.key === 'Escape') {
+      setEditingQuantity(null);
+      setQuantityInput('');
     }
   };
 
   const handleCheckoutClick = () => {
     console.log('Checkout clicked, selectedItems:', selectedItems);
     setShowCheckoutForm(true);
-    // console.log('showCheckoutForm set to true');
   };
 
   const handleCheckoutSubmit = (formData) => {
-    // console.log('Thông tin người mua:', formData);
-    console.log('Sản phẩm đã chọn mua :', selectedItems);
-
+    // console.log('Checkout form submitted with data:', formData);
+    // Lưu danh sách sản phẩm cần xóa trước khi state thay đổi
+    const itemsToRemove = [...selectedItems];
+    console.log('Items to remove:', itemsToRemove);
     
-    selectedItems.forEach(itemId => {
-      dispatch(removeFromCart(itemId));
-    });
-
+    dispatch(removeManyFromCart(itemsToRemove));
     
-    // Reset selected items
     setSelectedItems([]);
-
-    
-    alert('Đặt hàng thành công! Chúng tôi sẽ liên hệ với bạn sớm.');
+  
     setShowCheckoutForm(false);
+    
+    alert('Đặt hàng thành công! Bạn có thể xem lịch sử đơn hàng trong menu ở cạnh icon giỏ hàng.');
   };
 
   const handleCheckoutCancel = () => {
@@ -85,9 +105,11 @@ const CartPage = () => {
   };
 
   const handleRemove = (id) => {
-    dispatch(removeFromCart(id));
-    setSelectedItems(selectedItems.filter((itemId) => itemId !== id));
-    console.log('Removed item with id:', id);
+    if (window.confirm('Bạn có chắc chắn muốn xóa sản phẩm này khỏi giỏ hàng?')) {
+      dispatch(removeFromCart(id));
+      setSelectedItems(selectedItems.filter((itemId) => itemId !== id));
+      console.log('Removed item with id:', id);
+    }
   };
 
   const calculateSubtotal = () => {
@@ -129,7 +151,7 @@ const CartPage = () => {
   };
 
   const [currentPage, setCurrentPage] = useState(1);
-  // Tính toán chuyển slice
+
   const itemsPerPage = 6;
   const totalPages = Math.ceil(topDealsData.length / itemsPerPage);
   const indexOfLastItem = currentPage * itemsPerPage;
@@ -287,12 +309,27 @@ const CartPage = () => {
                         -
                       </button>
 
-                      <input
-                        type="text"
-                        className="qty-input"
-                        value={item.quantity}
-                        readOnly
-                      />
+                      {editingQuantity === item.id ? (
+                        <input
+                          type="number"
+                          className="qty-input editing"
+                          value={quantityInput}
+                          onChange={handleQuantityChange}
+                          onBlur={() => handleQuantityBlur(item.id)}
+                          onKeyPress={(e) => handleQuantityKeyPress(e, item.id)}
+                          autoFocus
+                          min="1"
+                        />
+                      ) : (
+                        <input
+                          type="text"
+                          className="qty-input"
+                          value={item.quantity}
+                          onClick={() => handleQuantityClick(item.id, item.quantity)}
+                          readOnly
+                          style={{ cursor: 'pointer' }}
+                        />
+                      )}
 
                       <button
                         className="qty-btn"
@@ -333,39 +370,7 @@ const CartPage = () => {
         {/* Sidebar */}
         {cartItems.length > 0 && (
           <div className="cart-sidebar">
-            <div className="delivery-info-card">
-              <div className="delivery-header">
-                <span className="delivery-label">Giao tới</span>
-                <button className="btn-change-address">Thay đổi</button>
-              </div>
-
-              <div className="delivery-address">
-                <strong>Trần Văn Xuân</strong> | 0383477786
-                <p>Xóm 1, Xã Hải Sơn, Huyện Hải Hậu, Nam Định</p>
-              </div>
-              <div className="delivery-note">
-                Lưu ý: Sử dụng địa chỉ nhận hàng trước sáp nhập
-              </div>
-            </div>
-
-            <div className="promotion-card">
-              <div className="promotion-header">
-                <span className="promotion-icon">🎫</span>
-                <span>Tiki Khuyến Mãi</span>
-              </div>
-              <div className="promotion-select">
-                <span>Có thể chọn 2</span>
-                <span className="promotion-info">ⓘ</span>
-              </div>
-              <div className="promotion-voucher">
-                <div className="voucher-item">
-                  <span className="voucher-icon">🎁</span>
-                  <span className="voucher-text">Giảm 50K</span>
-                  <button className="voucher-action">Bỏ Chọn</button>
-                </div>
-              </div>
-            </div>
-
+            
             <div className="order-summary">
               <div className="summary-row">
                 <span>Tổng tiền hàng</span>
@@ -381,14 +386,7 @@ const CartPage = () => {
                   <sup>₫</sup>
                 </span>
               </div>
-
-              {/* <div className="summary-row">
-                <span>Mã khuyến mãi từ nhà bán</span>
-                <span className="summary-value discount">
-                  -17.440<sup>₫</sup>
-                </span>
-              </div> */}
-
+            
               <div className="summary-divider"></div>
               <div className="summary-row total-row">
                 <span>Tổng tiền thanh toán</span>
@@ -419,6 +417,7 @@ const CartPage = () => {
           <h2 className="suggested-title">Sản phẩm mua kèm</h2>
 
           <div className="similar-products-wrapper">
+
             {totalPages > 1 && currentPage > 1 && (
               <PrevArrow onClick={handlePrevPage} />
             )}
@@ -437,7 +436,7 @@ const CartPage = () => {
                     <div className="similar-product-info">
                       <h3 className="similar-product-name">{item.title}</h3>
                       <div>
-                        <span class="rating-stars">
+                        <span className="rating-stars">
                           {renderStars(item.rating)}
                         </span>
                       </div>
@@ -489,6 +488,7 @@ const CartPage = () => {
         <CheckoutForm
           onSubmit={handleCheckoutSubmit}
           onCancel={handleCheckoutCancel}
+          meta={{ products: cartItems.filter(item => selectedItems.includes(item.id)) }}
         />
       )}
     </div>
