@@ -9,6 +9,7 @@ import "./TopDeals.css";
 
 const TopDeals = () => {
   const [currentPage, setCurrentPage] = useState(0);
+  const [direction, setDirection] = useState('next');
   
   const itemsPerPage = 6;
   const totalPages = Math.ceil(topDealsData.length / itemsPerPage);
@@ -18,12 +19,11 @@ const TopDeals = () => {
 
   const deals = topDealsData.slice(startIndex, endIndex);
 
-  const [direction, setDirection] = useState('next');
-
   const handlePrev = () => {
     setDirection('prev');
     if (currentPage > 0) {
       setCurrentPage(currentPage - 1);
+      // console.log(currentPage);
     }
   };
 
@@ -31,8 +31,13 @@ const TopDeals = () => {
     setDirection('next');
     if (currentPage < totalPages - 1) {
       setCurrentPage(currentPage + 1);
+      // console.log(currentPage);
     }
   };
+
+  // console.log(currentPage);
+
+  // console.log(direction);
 
   const renderStars = (rating) => {
     const stars = [];
@@ -52,6 +57,7 @@ const TopDeals = () => {
     return stars;
   };
 
+
   return (
     <div className="top-deals has-navigation">
       <div className="deals-header">
@@ -69,7 +75,7 @@ const TopDeals = () => {
           <PrevArrow onClick={handlePrev} />
         )}
 
-        <div className={`deals-grid slide-${direction}`} key={currentPage} >
+        <div className={`deals-grid slide-${direction}`}   key={currentPage}  >
           {deals.map((deal) => (
             <Link to={`/product/${deal.id}`}  key={deal.id} className="deal-card">
 
@@ -79,10 +85,8 @@ const TopDeals = () => {
                 <img src={deal.image} alt={deal.title} className="deal-image" />
 
                 <span className="discount-tag">{deal.date}</span>
-
-                {deal.imageBadges && (
-                  <img src={deal.imageBadges} alt="Badge" className="mini-badge" />
-                )}
+                
+                <img src={deal.imageBadges} alt="Badge" className="mini-badge" />
 
               </div>
 
@@ -103,13 +107,13 @@ const TopDeals = () => {
                     </span>
                   </div>
 
-                  {deal.discount && deal.originalPrice && (
+                  
                     <div className="discount-row">
                       <span className="discount-percent">-{deal.discount}%</span>
 
                       <span className="original-price">{formatPrice(deal.originalPrice)}<sup>₫</sup></span>
                     </div>
-                  )}
+                  
                 </div>
 
                 {deal.madeIn && (
@@ -122,9 +126,9 @@ const TopDeals = () => {
                     {deal.badge && (
                       <img src="../img_giao_ngay.png" alt="now" />
                     )}
-                    {deal.shippingBadge && (
+                    
                       <span className="shipping-info">{deal.shippingBadge}</span>
-                    )}
+                    
                   </div>
                 </div>
 

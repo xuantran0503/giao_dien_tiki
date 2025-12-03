@@ -102,13 +102,12 @@ const SearchBar = () => {
   }, []);
 
   const searchRef = useRef(null);
-  // const searchRef = useRef(); //undefined
-  console.log(searchRef);
+  // const searchRef = useRef(); //undefinedf
+  // console.log(searchRef);
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (searchRef.current && !searchRef.current.contains(event.target)) {
         setShowDropdown(false);
-        
       }
     };
     document.addEventListener("mousedown", handleClickOutside);

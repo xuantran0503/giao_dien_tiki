@@ -7,9 +7,9 @@ import "./SuggestedProducts.css";
 const SuggestedProducts = () => {
   const [visibleProducts, setVisibleProducts] = useState(34);
 
-  const allProducts = suggestedProductsData.map((product, idx) => ({
+  const allProducts = suggestedProductsData.map((product) => ({
     ...product,
-    // displayKey: idx + 1,
+    
   }));
 
   const loadMore = () => {

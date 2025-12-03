@@ -149,35 +149,35 @@ const Footer = () => {
                     <div className="footer-section">
                         <h4>Thương Hiệu Nổi Bật</h4>
                         <div className="footer-links">
-                            <Link to="/brand/vaccarm">vaccarm</Link>
-                            <Link to="/brand/dior">dior</Link>
-                            <Link to="/brand/esteedauder">esteedauder</Link>
-                            <Link to="/brand/jm-truemilk">jm truemilk</Link>
-                            <Link to="/brand/barbie">barbie</Link>
-                            <Link to="/brand/owen">owen</Link>
-                            <Link to="/brand/ensure">ensure</Link>
-                            <Link to="/brand/durex">durex</Link>
-                            <Link to="/brand/bioderma">bioderma</Link>
-                            <Link to="/brand/elly">elly</Link>
-                            <Link to="/brand/milo">milo</Link>
-                            <Link to="/brand/skechers">skechers</Link>
-                            <Link to="/brand/aldo">aldo</Link>
-                            <Link to="/brand/triumph">triumph</Link>
-                            <Link to="/brand/nutifood">nutifood</Link>
-                            <Link to="/brand/kindle">kindle</Link>
-                            <Link to="/brand/neiman">neiman</Link>
-                            <Link to="/brand/wacom">wacom</Link>
-                            <Link to="/brand/anessa">anessa</Link>
-                            <Link to="/brand/yoosee">yoosee</Link>
-                            <Link to="/brand/olay">olay</Link>
-                            <Link to="/brand/similac">similac</Link>
-                            <Link to="/brand/comfort">comfort</Link>
-                            <Link to="/brand/bliss">bliss</Link>
-                            <Link to="/brand/shiseido">shiseido</Link>
-                            <Link to="/brand/langherm">langherm</Link>
-                            <Link to="/brand/hukan">hukan</Link>
-                            <Link to="/brand/vichy">vichy</Link>
-                            <Link to="/brand/fila">fila</Link>
+                            <Link to="/brand/vaccarm">vaccarm</Link><span className="sep">/</span>
+                            <Link to="/brand/dior">dior</Link><span className="sep">/</span>
+                            <Link to="/brand/esteedauder">esteedauder</Link><span className="sep">/</span>
+                            <Link to="/brand/jm-truemilk">jm truemilk</Link><span className="sep">/</span>
+                            <Link to="/brand/barbie">barbie</Link><span className="sep">/</span>
+                            <Link to="/brand/owen">owen</Link><span className="sep">/</span>
+                            <Link to="/brand/ensure">ensure</Link><span className="sep">/</span>
+                            <Link to="/brand/durex">durex</Link><span className="sep">/</span>
+                            <Link to="/brand/bioderma">bioderma</Link><span className="sep">/</span>
+                            <Link to="/brand/elly">elly</Link><span className="sep">/</span>
+                            <Link to="/brand/milo">milo</Link><span className="sep">/</span>
+                            <Link to="/brand/skechers">skechers</Link><span className="sep">/</span>
+                            <Link to="/brand/aldo">aldo</Link><span className="sep">/</span>
+                            <Link to="/brand/triumph">triumph</Link><span className="sep">/</span>
+                            <Link to="/brand/nutifood">nutifood</Link><span className="sep">/</span>
+                            <Link to="/brand/kindle">kindle</Link><span className="sep">/</span>
+                            <Link to="/brand/neiman">neiman</Link><span className="sep">/</span>
+                            <Link to="/brand/wacom">wacom</Link><span className="sep">/</span>
+                            <Link to="/brand/anessa">anessa</Link><span className="sep">/</span>
+                            <Link to="/brand/yoosee">yoosee</Link><span className="sep">/</span>
+                            <Link to="/brand/olay">olay</Link><span className="sep">/</span>
+                            <Link to="/brand/similac">similac</Link><span className="sep">/</span>
+                            <Link to="/brand/comfort">comfort</Link><span className="sep">/</span>
+                            <Link to="/brand/bliss">bliss</Link><span className="sep">/</span>
+                            <Link to="/brand/shiseido">shiseido</Link><span className="sep">/</span>
+                            <Link to="/brand/langherm">langherm</Link><span className="sep">/</span>
+                            <Link to="/brand/hukan">hukan</Link><span className="sep">/</span>
+                            <Link to="/brand/vichy">vichy</Link><span className="sep">/</span>
+                            <Link to="/brand/fila">fila</Link><span className="sep">/</span>    
                             <Link to="/brand/tsubaki">tsubaki</Link>
                         </div>
                     </div>
@@ -193,64 +193,64 @@ const Footer = () => {
                             <div className="footer-category">
                                 <div>
                                     <h5>Đồ Chơi - Mẹ & Bé</h5>
-                                    <Link to="/category/me-va-be">Thời Trang Cho Mẹ Và Bé</Link>
-                                    <Link to="/category/do-choi">Đồ chơi</Link>
-                                    <Link to="/category/do-dung-cho-be">Đồ dùng cho bé</Link>
-                                    <Link to="/category/cham-soc-nha-cua">Chăm sóc nhà cửa</Link>
-                                    <Link to="/category/cham-soc-suc-khoe">Chăm sóc sức khỏe</Link>
-                                    <Link to="/category/do-dung-du-lich">Đồ dùng du lịch</Link>
-                                    <Link to="/category/tam-bim">Tã, bỉm</Link>
-                                    <Link to="/category/dinh-duong-cho-nguoi-lon">Dinh dưỡng cho người lớn</Link>
-                                    <Link to="/category/dinh-duong-cho-tre">Dinh dưỡng cho Trẻ</Link>
-                                    <Link to="/category/phum-tin-dung">Phụm tín dụng</Link>
+                                    <Link to="/category/me-va-be">Thời Trang Cho Mẹ Và Bé</Link><span className="sep">/ </span>
+                                    <Link to="/category/do-choi">Đồ chơi</Link><span className="sep">/ </span>
+                                    <Link to="/category/do-dung-cho-be">Đồ dùng cho bé</Link><span className="sep">/ </span>
+                                    <Link to="/category/cham-soc-nha-cua">Chăm sóc nhà cửa</Link><span className="sep">/ </span>
+                                    <Link to="/category/cham-soc-suc-khoe">Chăm sóc sức khỏe</Link><span className="sep">/ </span>
+                                    <Link to="/category/do-dung-du-lich">Đồ dùng du lịch</Link><span className="sep">/ </span>
+                                    <Link to="/category/tam-bim">Tã, bỉm</Link><span className="sep">/ </span>
+                                    <Link to="/category/dinh-duong-cho-nguoi-lon">Dinh dưỡng cho người lớn</Link><span className="sep">/ </span>
+                                    <Link to="/category/dinh-duong-cho-tre">Dinh dưỡng cho Trẻ</Link><span className="sep">/ </span>
+                                    <Link to="/category/phum-tin-dung">Phụm tín dụng</Link><span className="sep">/ </span>
                                     <Link to="/category/chuan-bi-mang-thai">Chuẩn bị mang thai</Link>
                                 </div>
 
                                 <div>
                                     <h5>Thực Phẩm Tươi Sống</h5>
-                                    <Link to="/category/trai-cay">Trái Cây</Link>
-                                    <Link to="/category/thit-trung">Thịt, Trứng</Link>
-                                    <Link to="/category/ca-thu-hai-san">Cá, thủy hải sản</Link>
-                                    <Link to="/category/rau-cu-quat-tuoi">Rau củ quả</Link>
-                                    <Link to="/category/thuc-pham-viet">Thực phẩm Việt</Link>
-                                    <Link to="/category/sua-bo-pho-mai">Sữa, bơ, phô mai</Link>
-                                    <Link to="/category/dong-lanh-mat">Đông lạnh, mát</Link>
-                                    <Link to="/category dau-an-gia-vi">Dầu ăn, gia vị</Link>
-                                    <Link to="/category/gao-mi">Gạo, mì</Link>
-                                    <Link to="/category/do-uong">Đồ uống</Link>
+                                    <Link to="/category/trai-cay">Trái Cây</Link><span className="sep">/ </span>
+                                    <Link to="/category/thit-trung">Thịt, Trứng</Link><span className="sep">/ </span>
+                                    <Link to="/category/ca-thu-hai-san">Cá, thủy hải sản</Link><span className="sep">/ </span>
+                                    <Link to="/category/rau-cu-quat-tuoi">Rau củ quả</Link><span className="sep">/ </span>
+                                    <Link to="/category/thuc-pham-viet">Thực phẩm Việt</Link><span className="sep">/ </span>
+                                    <Link to="/category/sua-bo-pho-mai">Sữa, bơ, phô mai</Link><span className="sep">/ </span>
+                                    <Link to="/category/dong-lanh-mat">Đông lạnh, mát</Link><span className="sep">/ </span>
+                                    <Link to="/category dau-an-gia-vi">Dầu ăn, gia vị</Link><span className="sep">/ </span>
+                                    <Link to="/category/gao-mi">Gạo, mì</Link><span className="sep">/ </span>
+                                    <Link to="/category/do-uong">Đồ uống</Link><span className="sep">/ </span>
                                     <Link to="/category/bia-do-uong">Bia, đồ uống</Link>
                                 </div>
 
                                 <div>
                                     <h5>Điện Thoại - Máy Tính Bảng</h5>
-                                    <Link to="/category/dien-thoai-smartphone">Điện thoại Smartphone</Link>
-                                    <Link to="/category/dien-thoai-ban">Điện thoai bàn</Link>
-                                    <Link to="/category/may-tinh-bang">Máy tính bảng</Link>
-                                    <Link to="/category/phu-kien-dien-thoai">Phụ kiện điện thoại</Link>
+                                    <Link to="/category/dien-thoai-smartphone">Điện thoại Smartphone</Link><span className="sep">/ </span>
+                                    <Link to="/category/dien-thoai-ban">Điện thoai bàn</Link><span className="sep">/ </span>
+                                    <Link to="/category/may-tinh-bang">Máy tính bảng</Link><span className="sep">/ </span>
+                                    <Link to="/category/phu-kien-dien-thoai">Phụ kiện điện thoại</Link><span className="sep">/ </span>
                                     <Link to="/category/may-tinh-bang">Máy tính bảng</Link>
                                 </div>
 
                                 <div>
                                     <h5>Làm Đẹp - Sức Khỏe</h5>
-                                    <Link to="/category/cham-soc-da-mat">Chăm sóc da mặt</Link>
-                                    <Link to="/category/dung-cu-lam-dep">Dụng cụ làm đẹp</Link>
-                                    <Link to="/category/thuc-pham-chuc-nang">Thực phẩm chức năng</Link>
-                                    <Link to="/category/trang-diem">Trang điểm</Link>
-                                    <Link to="/category/cham-soc-suc-khoe">Chăm sóc sức khỏe</Link>
-                                    <Link to="/category/cham-soc-co-the">Chăm sóc cơ thể</Link>
-                                    <Link to="/category/massage-thiet-bi-cham-soc-suc-khoe">Massage & Thiết bị chăm sóc sức khỏe</Link>
-                                    <Link to="/category/san-pham-thien-nhien-khoa-hoc">Sản phẩm thiên nhiên & Khoa học</Link>
-                                    <Link to="/category/cham-soc-toc-va-da-dau">Chăm sóc tóc và da đầu</Link>
-                                    <Link to="/category/cham-soc-ca-nhan">Chăm sóc cá nhân</Link>
-                                    <Link to="/category/nước-hoa">Nước hoa</Link>
-                                    <Link to="/category/ho-tro-tinh-duc">Hỗ trợ tình dục</Link>
-                                    <Link to="/category/buon-san-pham-lam-dep">Bộ sản phẩm làm đẹp</Link>
+                                    <Link to="/category/cham-soc-da-mat">Chăm sóc da mặt</Link><span className="sep">/ </span>
+                                    <Link to="/category/dung-cu-lam-dep">Dụng cụ làm đẹp</Link><span className="sep">/ </span>
+                                    <Link to="/category/thuc-pham-chuc-nang">Thực phẩm chức năng</Link><span className="sep">/ </span>
+                                    <Link to="/category/trang-diem">Trang điểm</Link><span className="sep">/ </span>
+                                    <Link to="/category/cham-soc-suc-khoe">Chăm sóc sức khỏe</Link><span className="sep">/ </span>
+                                    <Link to="/category/cham-soc-co-the">Chăm sóc cơ thể</Link><span className="sep">/ </span>
+                                    <Link to="/category/massage-thiet-bi-cham-soc-suc-khoe">Massage & Thiết bị chăm sóc sức khỏe</Link><span className="sep">/ </span>
+                                    <Link to="/category/san-pham-thien-nhien-khoa-hoc">Sản phẩm thiên nhiên & Khoa học</Link><span className="sep">/ </span>
+                                    <Link to="/category/cham-soc-toc-va-da-dau">Chăm sóc tóc và da đầu</Link><span className="sep">/ </span>
+                                    <Link to="/category/cham-soc-ca-nhan">Chăm sóc cá nhân</Link><span className="sep">/ </span>
+                                    <Link to="/category/nước-hoa">Nước hoa</Link><span className="sep">/ </span>
+                                    <Link to="/category/ho-tro-tinh-duc">Hỗ trợ tình dục</Link><span className="sep">/ </span>
+                                    <Link to="/category/buon-san-pham-lam-dep">Bộ sản phẩm làm đẹp</Link><span className="sep">/ </span>
                                     <Link to="/category/duoc-my-pham">Dược mỹ phẩm</Link>
                                 </div>
 
                                 <div>
                                     <h5>Điện Gia Dụng</h5>
-                                    <Link to="/category/do-dung-nha-bep">Đồ dùng nhà bếp</Link>
+                                    <Link to="/category/do-dung-nha-bep">Đồ dùng nhà bếp</Link><span className="sep">/ </span>
                                     <Link to="/category/thiet-bi-gia-dinh">Thiết bị gia đình</Link>
                                 </div>
                             </div>
@@ -258,73 +258,73 @@ const Footer = () => {
                             <div className="footer-category">
                                 <div>
                                     <h4>Thời trang nữ</h4>
-                                    <Link to="/category/ao-nu">Áo nữ</Link>
-                                    <Link to="/category/dam-vay">Đầm / Váy</Link>
-                                    <Link to="/category/quan-nu">Quần nữ</Link>
-                                    <Link to="/category/ao-lien-quan">Áo liền quần</Link>
-                                    <Link to="/category/bot-trang-phuc">Bộ trang phục</Link>
-                                    <Link to="/category/ao-khoac">Áo khoác</Link>
-                                    <Link to="/category/chan-vay">Chân váy</Link>
-                                    <Link to="/category/trang-phuc-boi">Trang phục bơi</Link>
-                                    <Link to="/category/do-nu">Đồ ngủ</Link>
+                                    <Link to="/category/ao-nu">Áo nữ</Link><span className="sep">/ </span>
+                                    <Link to="/category/dam-vay">Đầm / Váy</Link><span className="sep">/ </span>
+                                    <Link to="/category/quan-nu">Quần nữ</Link><span className="sep">/ </span>
+                                    <Link to="/category/ao-lien-quan">Áo liền quần</Link><span className="sep">/ </span>
+                                    <Link to="/category/bot-trang-phuc">Bộ trang phục</Link><span className="sep">/ </span>
+                                    <Link to="/category/ao-khoac">Áo khoác</Link><span className="sep">/ </span>
+                                    <Link to="/category/chan-vay">Chân váy</Link><span className="sep">/ </span>
+                                    <Link to="/category/trang-phuc-boi">Trang phục bơi</Link><span className="sep">/ </span>
+                                    <Link to="/category/do-nu">Đồ ngủ</Link><span className="sep">/ </span>
                                     <Link to="/category/thoi-trang-trung-nien">Thời trang trung niên</Link>
                                 </div>
 
                                 <div>
                                     <h4>Thời trang nam</h4>
-                                    <Link to="/category/ao-thun">Áo thun</Link>
-                                    <Link to="/category/quan-nam">Quần nam</Link>
-                                    <Link to="/category/ao-khoac-nam">Áo khoác nam</Link>
-                                    <Link to="/category/ao-so-mi">Áo sơ mi</Link>
-                                    <Link to="/category/do-mac-nha-nam">Đồ mặc nhà nam</Link>
-                                    <Link to="/category/do-doi">Đồ đôi</Link>
-                                    <Link to="/category/ao-len">Áo len</Link>
-                                    <Link to="/category/do-boi-do-gai-dinh">Đồ bơi - Đồ già đình</Link>
-                                    <Link to="/category/quan-ao-nam">Quần áo nam</Link>
-                                    <Link to="/category/ao-gio-ao-phong">Áo giô - Áo phông</Link>
-                                    <Link to="/category/do-lot-nam">Đồ lót nam</Link>
-                                    <Link to="/category/quan-ao-nam">Quần áo nam</Link>
+                                    <Link to="/category/ao-thun">Áo thun</Link><span className="sep">/ </span>
+                                    <Link to="/category/quan-nam">Quần nam</Link><span className="sep">/ </span>
+                                    <Link to="/category/ao-khoac-nam">Áo khoác nam</Link><span className="sep">/ </span>
+                                    <Link to="/category/ao-so-mi">Áo sơ mi</Link><span className="sep">/ </span>
+                                    <Link to="/category/do-mac-nha-nam">Đồ mặc nhà nam</Link><span className="sep">/ </span>
+                                    <Link to="/category/do-doi">Đồ đôi</Link><span className="sep">/ </span>
+                                    <Link to="/category/ao-len">Áo len</Link><span className="sep">/ </span>
+                                    <Link to="/category/do-boi-do-gai-dinh">Đồ bơi - Đồ già đình</Link><span className="sep">/ </span>
+                                    <Link to="/category/quan-ao-nam">Quần áo nam</Link><span className="sep">/ </span>
+                                    <Link to="/category/ao-gio-ao-phong">Áo giô - Áo phông</Link><span className="sep">/ </span>
+                                    <Link to="/category/do-lot-nam">Đồ lót nam</Link><span className="sep">/ </span>
+                                    <Link to="/category/quan-ao-nam">Quần áo nam</Link><span className="sep">/ </span>
                                     <Link to="/category/quan-kaki-co-cao">Quần kaki cỡ lớn</Link>
                                 </div>
 
                                 <div>
                                     <h4>Giày - Dép nữ</h4>
-                                    <Link to="/category/giay-cao-got">Giày cao gót</Link>
-                                    <Link to="/category/dep">Dép</Link>
-                                    <Link to="/category/guco-nu">Guốc nữ</Link>
-                                    <Link to="/category/giay-the-thao-nu">Giày thể thao nữ</Link>
-                                    <Link to="/category/giay-de-bang">Giày đế bằng</Link>
-                                    <Link to="/category/giay-bup-be">Giày búp bê</Link>
-                                    <Link to="/category/giay-boots-nu">Giày boots nữ</Link>
-                                    <Link to="/category/giay-loi">Giày lười</Link>
-                                    <Link to="/category/phu-kien-giay">Phụ kiện giày</Link>
+                                    <Link to="/category/giay-cao-got">Giày cao gót</Link><span className="sep">/ </span>
+                                    <Link to="/category/dep">Dép</Link><span className="sep">/ </span>
+                                    <Link to="/category/guco-nu">Guốc nữ</Link><span className="sep">/ </span>
+                                    <Link to="/category/giay-the-thao-nu">Giày thể thao nữ</Link><span className="sep">/ </span>
+                                    <Link to="/category/giay-de-bang">Giày đế bằng</Link><span className="sep">/ </span>
+                                    <Link to="/category/giay-bup-be">Giày búp bê</Link><span className="sep">/ </span>
+                                    <Link to="/category/giay-boots-nu">Giày boots nữ</Link><span className="sep">/ </span>
+                                    <Link to="/category/giay-loi">Giày lười</Link><span className="sep">/ </span>
+                                    <Link to="/category/phu-kien-giay">Phụ kiện giày</Link><span className="sep">/ </span>
                                     <Link to="/category/giay-be-xuong-nu">Giày Bé xướng nữ</Link>
                                 </div>
 
                                 <div>
                                     <h4>Giày - Dép nam</h4>
-                                    <Link to="/category/giay-the-thao-nam">Giày thể thao nam</Link>
-                                    <Link to="/category/giay-the-thao-nam">Giày thể thao nam</Link>
-                                    <Link to="/category/dep-nam">Dép nam</Link>
-                                    <Link to="/category/giay-sandals-nam">Giày sandals nam</Link>
-                                    <Link to="/category/phu-kien-giay">Phụ kiện giày</Link>
+                                    <Link to="/category/giay-the-thao-nam">Giày thể thao nam</Link><span className="sep">/ </span>
+                                    <Link to="/category/giay-the-thao-nam">Giày thể thao nam</Link><span className="sep">/ </span>
+                                    <Link to="/category/dep-nam">Dép nam</Link><span className="sep">/ </span>
+                                    <Link to="/category/giay-sandals-nam">Giày sandals nam</Link><span className="sep">/ </span>
+                                    <Link to="/category/phu-kien-giay">Phụ kiện giày</Link><span className="sep">/ </span>
                                     <Link to="/category/giay-boots-nam">Giày boots nam</Link>
                                 </div>
 
                                 <div>
                                     <h4>Túi thời trang nữ</h4>
-                                    <Link to="/category/tui-deo-choeo-tui-deo-vai-nu">Túi déo chéo, túi déo vai nữ</Link>
-                                    <Link to="/category/vi-nu">Vi nữ</Link>
-                                    <Link to="/category/tui-xach-tay-nu">Túi xách tay nữ</Link>
-                                    <Link to="/category/tui-xach-tay-nu">Túi xách tay nữ</Link>
+                                    <Link to="/category/tui-deo-choeo-tui-deo-vai-nu">Túi déo chéo, túi déo vai nữ</Link><span className="sep">/ </span>
+                                    <Link to="/category/vi-nu">Vi nữ</Link><span className="sep">/ </span>
+                                    <Link to="/category/tui-xach-tay-nu">Túi xách tay nữ</Link><span className="sep">/ </span>
+                                    <Link to="/category/tui-xach-tay-nu">Túi xách tay nữ</Link><span className="sep">/ </span>
                                     <Link to="/category/phu-kien-tui">Phụ kiện túi</Link>
                                 </div>
 
                                 <div>
                                     <h4>Túi thời trang nam</h4>
-                                    <Link to="/category/vi-nam">Vi nam</Link>
-                                    <Link to="/category/tui-deo-choeo-nam">Túi déo chéo nam</Link>
-                                    <Link to="/category/tui-xach-cong-so-nam">Túi xách công sở nam</Link>
+                                    <Link to="/category/vi-nam">Vi nam</Link><span className="sep">/ </span>
+                                    <Link to="/category/tui-deo-choeo-nam">Túi déo chéo nam</Link><span className="sep">/ </span>
+                                    <Link to="/category/tui-xach-cong-so-nam">Túi xách công sở nam</Link><span className="sep">/ </span>
                                     <Link to="/category/tui-bao-tu-tui-deo-bung">Túi bao tử, túi đéo bụng</Link>
                                 </div>
                             </div>
@@ -332,69 +332,69 @@ const Footer = () => {
                             <div className="footer-category">
                                 <div>
                                     <h4>Balo và Vali</h4>
-                                    <Link to="/category/balo">Balo</Link>
-                                    <Link to="/category/balo-du-lich-va-phu-kien">Balo du lịch và phụ kiện</Link>
-                                    <Link to="/category/balo-cac-balo-tui-chong-so-c-laptop">Balo, cặp, túi chống sốc laptop</Link>
-                                    <Link to="/category/vali-phu-kien-vali">Vali, phụ kiện vali</Link>
-                                    <Link to="/category/tui-chong-so-c">Túi chống sốc</Link>
-                                    <Link to="/category/tui-dung-laptop">Túi đựng laptop</Link>
-                                    <Link to="/category/tui-xach-thoi-trang">Túi xách thời trang</Link>
+                                    <Link to="/category/balo">Balo</Link><span className="sep">/ </span>
+                                    <Link to="/category/balo-du-lich-va-phu-kien">Balo du lịch và phụ kiện</Link><span className="sep">/ </span>
+                                    <Link to="/category/balo-cac-balo-tui-chong-so-c-laptop">Balo, cặp, túi chống sốc laptop</Link><span className="sep">/ </span>
+                                    <Link to="/category/vali-phu-kien-vali">Vali, phụ kiện vali</Link><span className="sep">/ </span>
+                                    <Link to="/category/tui-chong-so-c">Túi chống sốc</Link><span className="sep">/ </span>
+                                    <Link to="/category/tui-dung-laptop">Túi đựng laptop</Link><span className="sep">/ </span>
+                                    <Link to="/category/tui-xach-thoi-trang">Túi xách thời trang</Link><span className="sep">/ </span>
                                     <Link to="/category/khan-quang-co">Khăn quang cổ</Link>
                                 </div>
 
                                 <div>
                                     <h4>Phụ kiện thời trang</h4>
-                                    <Link to="/category/phu-kien-thoi-trang-nu">Phụ kiện thời trang nữ</Link>
-                                    <Link to="/category/mat-kinh">Mắt kính</Link>
-                                    <Link to="/category/phu-kien-thoi-trang-nam">Phụ kiện thời trang nam</Link>
-                                    <Link to="/category/trang-suc">Trang sức</Link>
-                                    <Link to="/category/that-lung">Thắt lưng</Link>
-                                    <Link to="/category/khan-quang-co">Khăn quang cổ</Link>
-                                    <Link to="/category/mu-non-thoi-trang">Mũ nón thời trang</Link>
-                                    <Link to="/category/gang-tay">Găng tay</Link>
+                                    <Link to="/category/phu-kien-thoi-trang-nu">Phụ kiện thời trang nữ</Link><span className="sep">/ </span>
+                                    <Link to="/category/mat-kinh">Mắt kính</Link><span className="sep">/ </span>
+                                    <Link to="/category/phu-kien-thoi-trang-nam">Phụ kiện thời trang nam</Link><span className="sep">/ </span>
+                                    <Link to="/category/trang-suc">Trang sức</Link><span className="sep">/ </span>
+                                    <Link to="/category/that-lung">Thắt lưng</Link><span className="sep">/ </span>
+                                    <Link to="/category/khan-quang-co">Khăn quang cổ</Link><span className="sep">/ </span>
+                                    <Link to="/category/mu-non-thoi-trang">Mũ nón thời trang</Link><span className="sep">/ </span>
+                                    <Link to="/category/gang-tay">Găng tay</Link><span className="sep">/ </span>
                                     <Link to="/category/phu-kien-toc">Phụ kiện tóc</Link>
                                 </div>
 
                                 <div>
                                     <h4>Đồng hồ và Trang sức</h4>
-                                    <Link to="/category/trang-ho-nam">Trang hồ nam</Link>
-                                    <Link to="/category/phu-kien-dong-ho">Phụ kiện đồng hồ</Link>
-                                    <Link to="/category/dong-ho-nu">Đồng hồ nữ</Link>
-                                    <Link to="/category/dong-ho-tre-em">Đồng hồ trẻ em</Link>
-                                    <Link to="/category/phu-kien-dong-ho">Phụ kiện đồng hồ</Link>
+                                    <Link to="/category/trang-ho-nam">Trang hồ nam</Link><span className="sep">/ </span>
+                                    <Link to="/category/phu-kien-dong-ho">Phụ kiện đồng hồ</Link><span className="sep">/ </span>
+                                    <Link to="/category/dong-ho-nu">Đồng hồ nữ</Link><span className="sep">/ </span>
+                                    <Link to="/category/dong-ho-tre-em">Đồng hồ trẻ em</Link><span className="sep">/ </span>
+                                    <Link to="/category/phu-kien-dong-ho">Phụ kiện đồng hồ</Link><span className="sep">/ </span>
                                     <Link to="/category/ke-em">Ké em</Link>
                                 </div>
 
                                 <div>
                                     <h4>Laptop - Máy Vi Tính - Linh kiện</h4>
-                                    <Link to="/category/linh-kien-may-tinh-va-phu-kien-may-tinh">Linh Kiện Máy Tính - Phụ Kiện Máy Tính</Link>
-                                    <Link to="/category/laptop">Laptop</Link>
-                                    <Link to="/category/thiet-bi-am-thanh-va-phu-kien">Thiết Bi Âm Thanh và Phụ Kiện</Link>
-                                    <Link to="/category/man-hinh">Màn hình</Link>
-                                    <Link to="/category/linh-kien-may-tinh">Linh kiện máy tính</Link>
-                                    <Link to="/category/thiet-bi-mang">Thiết bị mạng</Link>
-                                    <Link to="/category/thiet-bi-mang">Thiết bị mạng</Link>
+                                    <Link to="/category/linh-kien-may-tinh-va-phu-kien-may-tinh">Linh Kiện Máy Tính - Phụ Kiện Máy Tính</Link><span className="sep">/ </span>
+                                    <Link to="/category/laptop">Laptop</Link><span className="sep">/ </span>
+                                    <Link to="/category/thiet-bi-am-thanh-va-phu-kien">Thiết Bi Âm Thanh và Phụ Kiện</Link><span className="sep">/ </span>
+                                    <Link to="/category/man-hinh">Màn hình</Link><span className="sep">/ </span>
+                                    <Link to="/category/linh-kien-may-tinh">Linh kiện máy tính</Link><span className="sep">/ </span>
+                                    <Link to="/category/thiet-bi-mang">Thiết bị mạng</Link><span className="sep">/ </span>
+                                    <Link to="/category/thiet-bi-mang">Thiết bị mạng</Link><span className="sep">/ </span>
                                     <Link to="/category/phu-kien-may-tinh">Phụ kiện máy tính</Link>
                                 </div>
 
                                 <div>
                                     <h4>Nhà Cửa - Đời Sống</h4>
-                                    <Link to="/category/trang-tri-nha-cua">Trang trí nhà cửa</Link>
-                                    <Link to="/category/dung-cu-nha-bep">Dụng cụ nhà bếp</Link>
-                                    <Link to="/category/do-dung-phong-ngu">Đồ dùng phòng ngủ</Link>
+                                    <Link to="/category/trang-tri-nha-cua">Trang trí nhà cửa</Link><span className="sep">/ </span>
+                                    <Link to="/category/dung-cu-nha-bep">Dụng cụ nhà bếp</Link><span className="sep">/ </span>
+                                    <Link to="/category/do-dung-phong-ngu">Đồ dùng phòng ngủ</Link><span className="sep">/ </span><span className="sep">/ </span>
                                     <Link to="/category/noi-that">Nội thất</Link>
                                 </div>
 
                                 <div>
                                     <h4>Bách Hóa Online</h4>
-                                    <Link to="/category/cham-soc-thu-cung">Chăm sóc thú cưng</Link>
-                                    <Link to="/category/dong-dung-pha-chiет-dang-bot">Đồ dùng - Pha chế đăng bột</Link>
-                                    <Link to="/category/thuc-pham-dong-hop-va-kho">Thực phẩm Đông hộp và Khô</Link>
-                                    <Link to="/category/gia-vi-va-che-bien-hat-cac-loai">Gia Vị và Chè Biến & Hạt Các Loại</Link>
-                                    <Link to="/category/bau-hat-cac-loai">Báu & Hạt Các Loại</Link>
-                                    <Link to="/category/vat-va-cac-san-pham-tu-vat">Vật và các Sản phẩm từ Vật</Link>
-                                    <Link to="/category/sua-va-cac-san-pham-tu-sua">Sữa và các Sản phẩm từ sữa</Link>
-                                    <Link to="/category/do-uong-khong-con">Đồ Uống Không Cồn</Link>
+                                    <Link to="/category/cham-soc-thu-cung">Chăm sóc thú cưng</Link><span className="sep">/ </span>
+                                    <Link to="/category/dong-dung-pha-chiет-dang-bot">Đồ dùng - Pha chế đăng bột</Link><span className="sep">/ </span>
+                                    <Link to="/category/thuc-pham-dong-hop-va-kho">Thực phẩm Đông hộp và Khô</Link><span className="sep">/ </span>
+                                    <Link to="/category/gia-vi-va-che-bien-hat-cac-loai">Gia Vị và Chè Biến & Hạt Các Loại</Link><span className="sep">/ </span>
+                                    <Link to="/category/bau-hat-cac-loai">Báu & Hạt Các Loại</Link><span className="sep">/ </span>
+                                    <Link to="/category/vat-va-cac-san-pham-tu-vat">Vật và các Sản phẩm từ Vật</Link><span className="sep">/ </span>
+                                    <Link to="/category/sua-va-cac-san-pham-tu-sua">Sữa và các Sản phẩm từ sữa</Link><span className="sep">/ </span>
+                                    <Link to="/category/do-uong-khong-con">Đồ Uống Không Cồn</Link><span className="sep">/ </span>
                                     <Link to="/category/bo-quat-tang">Bộ quà tặng</Link>
                                 </div>
 
@@ -403,34 +403,34 @@ const Footer = () => {
                             <div className="footer-category">
                                 <div>
                                     <h4>Hàng Quốc Tế</h4>
-                                    <Link to="/category/nha-cua-doi-song">Nhà Cửa - Đời Sống</Link>
-                                    <Link to="/category/thiet-bi-so">Thiết Bị Số</Link>
-                                    <Link to="/category/thoi-trang">Thời Trang</Link>
-                                    <Link to="/category/to-to-xe-may-xe-dap">Ô tô, xe máy, xe đạp</Link>
-                                    <Link to="/category/thiet-bi-so">Thiết Bị Số</Link>
-                                    <Link to="/category/phu-kien-so">Phụ Kiện Số</Link>
-                                    <Link to="/category/thiet-bi-phu-kien-tiec-suc-kien">Thiết bị - Phụ kiện tiệc - sự kiện</Link>
-                                    <Link to="/category/lam-dep-suc-khoe">Làm Đẹp - Sức Khỏe</Link>
-                                    <Link to="/category/sach-van-phong-pham-qua-luu-ly">Sách, văn phòng phẩm & quà lưu niệm</Link>
-                                    <Link to="/category/me-be">Mẹ & Bé</Link>
-                                    <Link to="/category/dien-gia-dung">Điện gia dụng</Link>
-                                    <Link to="/category/bach-hoa-online">Bách hóa online</Link>
-                                    <Link to="/category/may-anh-may-quay-phim">Máy Ảnh - Máy Quay Phim</Link>
-                                    <Link to="/category/laptop-may-vi-tinh">Laptop & Máy Vi Tính</Link>
-                                    <Link to="/category/thiet-bi-phu-kien-tiec-suc-kien-cong-nghiep">Thiết bị - phụ kiện tiệc - sự kiện công nghiệp</Link>
-                                    <Link to="/category/tivi-thiet-bi-nghe-nhin">Tivi & Thiết Bị Nghe Nhìn</Link>
-                                    <Link to="/category/thiet-bi-thong-minh">Thiết bị Thông Minh</Link>
+                                    <Link to="/category/nha-cua-doi-song">Nhà Cửa - Đời Sống</Link><span className="sep">/ </span>
+                                    <Link to="/category/thiet-bi-so">Thiết Bị Số</Link><span className="sep">/ </span>
+                                    <Link to="/category/thoi-trang">Thời Trang</Link><span className="sep">/ </span>
+                                    <Link to="/category/to-to-xe-may-xe-dap">Ô tô, xe máy, xe đạp</Link><span className="sep">/ </span>
+                                    <Link to="/category/thiet-bi-so">Thiết Bị Số</Link><span className="sep">/ </span>
+                                    <Link to="/category/phu-kien-so">Phụ Kiện Số</Link><span className="sep">/ </span>
+                                    <Link to="/category/thiet-bi-phu-kien-tiec-suc-kien">Thiết bị - Phụ kiện tiệc - sự kiện</Link><span className="sep">/ </span>
+                                    <Link to="/category/lam-dep-suc-khoe">Làm Đẹp - Sức Khỏe</Link><span className="sep">/ </span>
+                                    <Link to="/category/sach-van-phong-pham-qua-luu-ly">Sách, văn phòng phẩm & quà lưu niệm</Link><span className="sep">/ </span>
+                                    <Link to="/category/me-be">Mẹ & Bé</Link><span className="sep">/ </span>
+                                    <Link to="/category/dien-gia-dung">Điện gia dụng</Link><span className="sep">/ </span>
+                                    <Link to="/category/bach-hoa-online">Bách hóa online</Link><span className="sep">/ </span>
+                                    <Link to="/category/may-anh-may-quay-phim">Máy Ảnh - Máy Quay Phim</Link><span className="sep">/ </span>
+                                    <Link to="/category/laptop-may-vi-tinh">Laptop & Máy Vi Tính</Link><span className="sep">/ </span>
+                                    <Link to="/category/thiet-bi-phu-kien-tiec-suc-kien-cong-nghiep">Thiết bị - phụ kiện tiệc - sự kiện công nghiệp</Link><span className="sep">/ </span>
+                                    <Link to="/category/tivi-thiet-bi-nghe-nhin">Tivi & Thiết Bị Nghe Nhìn</Link><span className="sep">/ </span>
+                                    <Link to="/category/thiet-bi-thong-minh">Thiết bị Thông Minh</Link><span className="sep">/ </span>
                                     <Link to="/category/thiet-bi-phu-kien-game-va-phu-kien">Thiết bị - Phụ Kiện Game và Phụ Kiện</Link>
                                 </div>
 
                                 <div>
                                     <h4>Thiết Bị Số - Phụ Kiện Số</h4>
-                                    <Link to="/category/phu-kien-dien-thoai-va-may-tinh-bang">Phụ Kiện Điện Thoại và Máy Tính Bảng</Link>
-                                    <Link to="/category/phu-kien-dien-thoai-va-may-tinh-bang">Phụ kiện thời trang nam</Link>
-                                    <Link to="/category/laptop">Laptop</Link>
-                                    <Link to="/category/thiet-bi-am-thanh-va-phu-kien">Thiết Bi Âm Thanh và Phụ Kiện</Link>
-                                    <Link to="/category/may-tinh-bang">Máy tính bảng</Link>
-                                    <Link to="/category/thiet-bi-deo-thong-minh-va-phu-chot">Thiết Bị Đeo Thông Minh và Phụ Chốt</Link>
+                                    <Link to="/category/phu-kien-dien-thoai-va-may-tinh-bang">Phụ Kiện Điện Thoại và Máy Tính Bảng</Link><span className="sep">/ </span>
+                                    <Link to="/category/phu-kien-dien-thoai-va-may-tinh-bang">Phụ kiện thời trang nam</Link><span className="sep">/ </span>
+                                    <Link to="/category/laptop">Laptop</Link><span className="sep">/ </span>
+                                    <Link to="/category/thiet-bi-am-thanh-va-phu-kien">Thiết Bi Âm Thanh và Phụ Kiện</Link><span className="sep">/ </span>
+                                    <Link to="/category/may-tinh-bang">Máy tính bảng</Link><span className="sep">/ </span>
+                                    <Link to="/category/thiet-bi-deo-thong-minh-va-phu-chot">Thiết Bị Đeo Thông Minh và Phụ Chốt</Link><span className="sep">/ </span>
                                     <Link to="/category/may-va-thiet-bi-game">Máy và Thiết Bị Game</Link>
                                 </div>
 
@@ -438,30 +438,30 @@ const Footer = () => {
 
                                 <div>
                                     <h4>Voucher - Dịch vụ</h4>
-                                    <Link to="/category/thanh-toan-hoa-don">Thanh toán hóa đơn</Link>
-                                    <Link to="/category/khoa-hoc">Khóa học</Link>
-                                    <Link to="/category/dich-vu-khach-san-spa-lam-dep">Dịch vụ - Khách sạn & Spa & Làm đẹp</Link>
-                                    <Link to="/category/dich-vu-khac">Dịch vụ khác</Link>
-                                    <Link to="/category/nha-hang-an-uong">Nhà hàng ăn uống</Link>
-                                    <Link to="/category/su-kien-giai-tri">Sự kiện - Giải trí</Link>
-                                    <Link to="/category/suc-khoe-suc-khoe">Sức khỏe - Sức khỏe</Link>
-                                    <Link to="/category/phi-quà">Phiếu quà</Link>
+                                    <Link to="/category/thanh-toan-hoa-don">Thanh toán hóa đơn</Link><span className="sep">/ </span>
+                                    <Link to="/category/khoa-hoc">Khóa học</Link><span className="sep">/ </span>
+                                    <Link to="/category/dich-vu-khach-san-spa-lam-dep">Dịch vụ - Khách sạn & Spa & Làm đẹp</Link><span className="sep">/ </span>
+                                    <Link to="/category/dich-vu-khac">Dịch vụ khác</Link><span className="sep">/ </span>
+                                    <Link to="/category/nha-hang-an-uong">Nhà hàng ăn uống</Link><span className="sep">/ </span>
+                                    <Link to="/category/su-kien-giai-tri">Sự kiện - Giải trí</Link><span className="sep">/ </span>
+                                    <Link to="/category/suc-khoe-suc-khoe">Sức khỏe - Sức khỏe</Link><span className="sep">/ </span>
+                                    <Link to="/category/phi-quà">Phiếu quà</Link><span className="sep">/ </span>
                                     <Link to="/category/sim-so-thẻ-nap-thẻ-game">Sim số - Thẻ nạp - Thẻ game</Link>
                                 </div>
 
                                 <div>
                                     <h4>Ô Tô - Xe Máy - Xe Đạp</h4>
-                                    <Link to="/category/phu-kien-cham-soc-xe">Phụ kiện - Chăm sóc xe</Link>
-                                    <Link to="/category/xe-dien">Xe điện</Link>
-                                    <Link to="/category/may-do-ap-xe-scooter">Máy đo áp / Xe Scooter</Link>
+                                    <Link to="/category/phu-kien-cham-soc-xe">Phụ kiện - Chăm sóc xe</Link><span className="sep">/ </span>
+                                    <Link to="/category/xe-dien">Xe điện</Link><span className="sep">/ </span>
+                                    <Link to="/category/may-do-ap-xe-scooter">Máy đo áp / Xe Scooter</Link><span className="sep">/ </span>
                                     <Link to="/category/dich-vu-lap-dat">Dịch vụ, lập đặt</Link>
                                 </div>
 
                                 <div>
                                     <h4>Nhà Sách Tiki</h4>
-                                    <Link to="/category/sach-tieng-viet">Sách tiếng Việt</Link>
-                                    <Link to="/category/van-phong-pham">Văn phòng phẩm</Link>
-                                    <Link to="/category/quan-lu-niem">Quà lưu niệm</Link>
+                                    <Link to="/category/sach-tieng-viet">Sách tiếng Việt</Link><span className="sep">/ </span>
+                                    <Link to="/category/van-phong-pham">Văn phòng phẩm</Link><span className="sep">/ </span>
+                                    <Link to="/category/quan-lu-niem">Quà lưu niệm</Link><span className="sep">/ </span>
                                     <Link to="/category/english-books">English Books</Link>
                                 </div>
                             </div>
@@ -469,65 +469,65 @@ const Footer = () => {
                             <div className="footer-category">
                                 <div>
                                     <h4>Điện Tử - Điện Lạnh</h4>
-                                    <Link to="/category/an-toan-nha-phan-kien-dien-lanh">An toàn nhà & Phụ kiện điện lạnh</Link>
-                                    <Link to="/category/tu-lanh">Tủ lạnh</Link>
-                                    <Link to="/category/may-lanh">Máy lạnh</Link>
-                                    <Link to="/category/may-giat">Máy giặt</Link>
-                                    <Link to="/category/may-rua-chen">Máy rửa chén</Link>
-                                    <Link to="/category/tivi">Tivi</Link>
-                                    <Link to="/category/may-nuoc-nong">Máy nước nóng</Link>
-                                    <Link to="/category/may-hut-bui">Máy hút bụi</Link>
+                                    <Link to="/category/an-toan-nha-phan-kien-dien-lanh">An toàn nhà & Phụ kiện điện lạnh</Link><span className="sep">/ </span>
+                                    <Link to="/category/tu-lanh">Tủ lạnh</Link><span className="sep">/ </span>
+                                    <Link to="/category/may-lanh">Máy lạnh</Link><span className="sep">/ </span>
+                                    <Link to="/category/may-giat">Máy giặt</Link><span className="sep">/ </span>
+                                    <Link to="/category/may-rua-chen">Máy rửa chén</Link><span className="sep">/ </span>
+                                    <Link to="/category/tivi">Tivi</Link><span className="sep">/ </span>
+                                    <Link to="/category/may-nuoc-nong">Máy nước nóng</Link><span className="sep">/ </span>
+                                    <Link to="/category/may-hut-bui">Máy hút bụi</Link><span className="sep">/ </span>
                                     <Link to="/category/tu-dong-rong">Tủ đông rượu</Link>
                                 </div>
 
                                 <div>
                                     <h4>Thể Thao - Dã Ngoại</h4>
-                                    <Link to="/category/trang-phuc-the-thao-nam">Trang phục thể thao nam</Link>
-                                    <Link to="/category/phan-kien-the-thao">Phụ kiện thể thao</Link>
-                                    <Link to="/category/dung-cu-the-thao">Dụng cụ thể thao</Link>
-                                    <Link to="/category/giay-the-thao">Giày thể thao</Link>
-                                    <Link to="/category/dung-cu-thiet-bi-tap-the-thao">Dụng cụ - thiết bị tập thể thao</Link>
-                                    <Link to="/category/the-thao-nuoc">Thể thao nước</Link>
-                                    <Link to="/category/dung-cu-cau-ca">Dụng cụ câu cá</Link>
-                                    <Link to="/category/the-thao-dong-doi">Thể thao động đội</Link>
-                                    <Link to="/category/cac-mon-the-thao-khac">Các môn thể thao khác</Link>
-                                    <Link to="/category/the-thao-dan-ngoai">Thể thao - Dã ngoại</Link>
-                                    <Link to="/category/giay-the-thao-nu">Giày thể thao nữ</Link>
-                                    <Link to="/category/thuc-pham-bo sung-nang-luong">Thực phẩm bổ sung năng lượng</Link>
-                                    <Link to="/category/dung-cu-bo sung">Dụng cụ bổ sung</Link>
+                                    <Link to="/category/trang-phuc-the-thao-nam">Trang phục thể thao nam</Link><span className="sep">/ </span>
+                                    <Link to="/category/phan-kien-the-thao">Phụ kiện thể thao</Link><span className="sep">/ </span>
+                                    <Link to="/category/dung-cu-the-thao">Dụng cụ thể thao</Link><span className="sep">/ </span>
+                                    <Link to="/category/giay-the-thao">Giày thể thao</Link><span className="sep">/ </span>
+                                    <Link to="/category/dung-cu-thiet-bi-tap-the-thao">Dụng cụ - thiết bị tập thể thao</Link><span className="sep">/ </span>
+                                    <Link to="/category/the-thao-nuoc">Thể thao nước</Link><span className="sep">/ </span>
+                                    <Link to="/category/dung-cu-cau-ca">Dụng cụ câu cá</Link><span className="sep">/ </span>
+                                    <Link to="/category/the-thao-dong-doi">Thể thao động đội</Link><span className="sep">/ </span>
+                                    <Link to="/category/cac-mon-the-thao-khac">Các môn thể thao khác</Link><span className="sep">/ </span>
+                                    <Link to="/category/the-thao-dan-ngoai">Thể thao - Dã ngoại</Link><span className="sep">/ </span>
+                                    <Link to="/category/giay-the-thao-nu">Giày thể thao nữ</Link><span className="sep">/ </span>
+                                    <Link to="/category/thuc-pham-bo-sung-nang-luong">Thực phẩm bổ sung năng lượng</Link><span className="sep">/ </span>
+                                    <Link to="/category/dung-cu-bo-sung">Dụng cụ bổ sung</Link>
                                 </div>
 
 
 
                                 <div>
                                     <h4>Máy Ảnh - Máy Quay Phim</h4>
-                                    <Link to="/category/phu-kien-may-anh-may-quay">Phụ Kiện Máy Ảnh, Máy Quay</Link>
-                                    <Link to="/category/camera-giam-sat">Camera Giám Sát</Link>
-                                    <Link to="/category/thiet-bi-camera-hanh-trinh">Thiết Bị Camera Hành Trình</Link>
-                                    <Link to="/category/action-camera-va-phu-kien">Action Camera và Phụ Kiện</Link>
-                                    <Link to="/category/balo-tui-dung-may-anh-flycam">Balo - Túi đựng Máy Ảnh - Flycam</Link>
-                                    <Link to="/category/may-anh-may-quay-phim-flycam">Máy ảnh - Máy quay phím - Flycam</Link>
-                                    <Link to="/category/ong-kinh-lens">Ông Kinh [Lens]</Link>
-                                    <Link to="/category/thiet-bi-studio">Thiết Bị Studio</Link>
-                                    <Link to="/category/quay-phim-may-quay">Quầy Phim / Máy Quay</Link>
-                                    <Link to="/category/phu-kien">Phụ Kiện</Link>
+                                    <Link to="/category/phu-kien-may-anh-may-quay">Phụ Kiện Máy Ảnh, Máy Quay</Link><span className="sep">/ </span>
+                                    <Link to="/category/camera-giam-sat">Camera Giám Sát</Link><span className="sep">/ </span>
+                                    <Link to="/category/thiet-bi-camera-hanh-trinh">Thiết Bị Camera Hành Trình</Link><span className="sep">/ </span>
+                                    <Link to="/category/action-camera-va-phu-kien">Action Camera và Phụ Kiện</Link><span className="sep">/ </span>
+                                    <Link to="/category/balo-tui-dung-may-anh-flycam">Balo - Túi đựng Máy Ảnh - Flycam</Link><span className="sep">/ </span>
+                                    <Link to="/category/may-anh-may-quay-phim-flycam">Máy ảnh - Máy quay phím - Flycam</Link><span className="sep">/ </span>
+                                    <Link to="/category/ong-kinh-lens">Ông Kinh [Lens]</Link><span className="sep">/ </span>
+                                    <Link to="/category/thiet-bi-studio">Thiết Bị Studio</Link><span className="sep">/ </span>
+                                    <Link to="/category/quay-phim-may-quay">Quầy Phim / Máy Quay</Link><span className="sep">/ </span>
+                                    <Link to="/category/phu-kien">Phụ Kiện</Link><span className="sep">/ </span>
                                     <Link to="/category/may-anh">Máy Ảnh</Link>
                                 </div>
 
                                 <div>
                                     <h4>Tủ Khóa Được Quan Tâm</h4>
-                                    <Link to="/category/may-suoi">máy suối</Link>
-                                    <Link to="/category/den-suoi-tran">den suối trần</Link>
-                                    <Link to="/category/mai-noi-dien-sunhouse">mái nội điện sunhouse</Link>
-                                    <Link to="/category/may-say-toc-philips">may sấy tóc philips</Link>
-                                    <Link to="/category/ban-uu-hoi-hoi-nuoc-cong-la-hoi-nuoc-philp">bàn ủi hơi nước công là hơi nước philp</Link>
-                                    <Link to="/category/may-suoi-xiaomi">máy suối xiaomi</Link>
-                                    <Link to="/category/binh-nuoc-nong-ariston">bình nước nóng ariston</Link>
-                                    <Link to="/category/may-suoi-xiaomi">máy suối xiaomi</Link>
-                                    <Link to="/category/may-hut-bui-giu-nem">máy hút bụi giường nệm</Link>
-                                    <Link to="/category/cay-nuoc-nong-lanh-toshiba">cây nước nóng lạnh toshiba</Link>
-                                    <Link to="/category/robot-hut-bui-lau-nha-cua-nhat">robot hút bụi lau nhà của nhật</Link>
-                                    <Link to="/category/den-suoi-tran">den suối trần</Link>
+                                    <Link to="/category/may-suoi">máy suối</Link><span className="sep">/ </span>
+                                    <Link to="/category/den-suoi-tran">den suối trần</Link><span className="sep">/ </span>
+                                    <Link to="/category/mai-noi-dien-sunhouse">mái nội điện sunhouse</Link><span className="sep">/ </span>
+                                    <Link to="/category/may-say-toc-philips">may sấy tóc philips</Link><span className="sep">/ </span>
+                                    <Link to="/category/ban-uu-hoi-hoi-nuoc-cong-la-hoi-nuoc-philp">bàn ủi hơi nước công là hơi nước philp</Link><span className="sep">/ </span>
+                                    <Link to="/category/may-suoi-xiaomi">máy suối xiaomi</Link><span className="sep">/ </span>
+                                    <Link to="/category/binh-nuoc-nong-ariston">bình nước nóng ariston</Link><span className="sep">/ </span>
+                                    <Link to="/category/may-suoi-xiaomi">máy suối xiaomi</Link><span className="sep">/ </span>
+                                    <Link to="/category/may-hut-bui-giu-nem">máy hút bụi giường nệm</Link><span className="sep">/ </span>
+                                    <Link to="/category/cay-nuoc-nong-lanh-toshiba">cây nước nóng lạnh toshiba</Link><span className="sep">/ </span>
+                                    <Link to="/category/robot-hut-bui-lau-nha-cua-nhat">robot hút bụi lau nhà của nhật</Link><span className="sep">/ </span>
+                                    <Link to="/category/den-suoi-tran">den suối trần</Link><span className="sep">/ </span>
                                     <Link to="/category/noi-co-kiem-tefal">nồi cơm điện tefal</Link>
                                 </div>
                             </div>

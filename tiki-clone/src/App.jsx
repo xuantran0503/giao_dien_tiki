@@ -24,8 +24,8 @@ function App() {
         <Route path="/flash-sale" element={<FlashSalePage />} />
         <Route path="/promotion/:promoType" element={<PromotionPage />} />
         <Route path="/brand/:brandId" element={<BrandPage />} />
-        <Route path="/buyer-info" element={<BuyerInfo />} />
         <Route path="/about" element={<AboutPage />} />
+        <Route path="/buyer-info" element={<BuyerInfo />} />
         {/* <Route path="/view-all-top-deals" element={<ViewAllTopDeals />} /> */}
       </Routes>
     </Router>

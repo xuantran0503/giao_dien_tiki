@@ -27,7 +27,7 @@ const FlashSale = () => {
       
       let nextSaleHour = saleHours.find(hour => hour > currentHour);
       if (!nextSaleHour) {
-        nextSaleHour = saleHours[0]; // Nếu qua 22h thì lấy 0h ngày mai
+        nextSaleHour = saleHours[0]; 
       }
 
       // Tính số giờ, phút, giây còn lại
