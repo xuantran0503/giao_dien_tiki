@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { clearCheckoutHistory, syncFromStorage } from '../store/checkoutSlice';
+import { clearCheckoutHistory } from '../store/checkoutSlice';
 import { Link } from 'react-router-dom';
 import { formatPrice } from '../utils/priceUtils';
 import './BuyerInfo.css';
@@ -9,38 +9,12 @@ const BuyerInfo = () => {
   const dispatch = useDispatch();
   
   const history = useSelector(state => state.checkout.history);
-  // const history = useSelector((state) => state.checkout?.history || []);
-
-  useEffect(() => {
-    const handleStorageChange = (e) => {
-      if (e.key === 'checkout_history') {
-        // try {
-        //   const checkoutState = JSON.parse(e.newValue);
-        //   if (checkoutState) {
-        //     dispatch(syncFromStorage(checkoutState));
-        //   }
-        // } catch (err) {
-        //   console.error('Failed to sync from storage:', err);
-        // }
-
-        const checkoutState = JSON.parse(e.newValue);
-        
-        dispatch(syncFromStorage(checkoutState));
-          
-      }
-    };
-    window.addEventListener('storage', handleStorageChange);
-    return () => window.removeEventListener('storage', handleStorageChange);
-  }, []);
+  // console.log(history)
 
   const handleClear = () => {
     if (window.confirm('Bạn có chắc chắn muốn xóa toàn bộ lịch sử mua hàng?')) {
       dispatch(clearCheckoutHistory());
-      // alert('Đã xóa lịch sử mua hàng.');
     }
-    // else {
-    //   alert('Hủy xóa lịch sử mua hàng.');
-    // }
   };
 
   return (

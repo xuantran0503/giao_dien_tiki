@@ -1,6 +1,3 @@
-import cartReducer from "./cartSlice";
-import checkoutReducer from "./checkoutSlice";
-
 import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import {
   persistStore,
@@ -12,7 +9,13 @@ import {
   PURGE,
   REGISTER,
 } from "redux-persist";
+
 import storage from "redux-persist/lib/storage";
+
+import { setupCrossTabSync } from "../utils/syncTabs";
+
+import cartReducer from "./cartSlice";
+import checkoutReducer from "./checkoutSlice";
 
 const rootReducer = combineReducers({
   cart: cartReducer,
@@ -22,7 +25,6 @@ const rootReducer = combineReducers({
 const persistConfig = {
   key: "root",
   storage,
-  whitelist: ["cart"], // CHỈ persist cart, KHÔNG persist checkout
 };
 
 // Wrap root reducer với persistReducer
@@ -38,11 +40,11 @@ const store = configureStore({
       },
       immutableCheck: {
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
-        warnAfter: 128,
       },
-      // immutableCheck: false,
     }),
 });
+
+setupCrossTabSync(store);
 
 export const persistor = persistStore(store);
 export default store;

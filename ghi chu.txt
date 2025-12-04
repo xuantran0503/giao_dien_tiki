@@ -1,9 +1,6 @@
 
 -----------Lỗi chưa sửa được ----------------------------------------------------
 
-
-tính năng khi cuộn chuột mà phần menu sản phẩm bên trái vẫn giữ nguyên khi nào di chuột vào dó thì mới lăn xuống riêng không kéo theo phần main , và khi kéo xuống tiếp khi quá độ dài của Danh mục là phần đó bị trôi mất luôn và không giữ lại,dùng sticky
-
 khoảng cách trái phải của 2 ảnh với 2 bên  viền chưa bằng nhau ( bên trái 16px , phải 10px)
 
 nên để các mục ở chế độ random hiển thị sản phẩm
@@ -13,10 +10,13 @@ sửa data cho đồng bộ thông tin cho chuẩn và sửa tên biến phần 
 
 +++++++++++++ĐANG LÀM ++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
+học và sử dụng typeScript, 
 
+học và sử dụng createAsyncThunk 
 
+sử dụng axios thay cho fetch để dùng api 
 
-
+áp dụng vào cho code AddressSelector
 
 
 

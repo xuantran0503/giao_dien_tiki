@@ -1,51 +1,30 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const getStoredState = () => {
-  try {
-    return (
-      JSON.parse(localStorage.getItem("checkout_history")) || {
-        history: [],
-        data: null,
-      }
-    );
-  } catch {
-    return { history: [], data: null };
-  }
+const initialState = {
+  history: [],
+  data: null,
 };
 
 const checkoutSlice = createSlice({
   name: "checkout",
-  initialState: getStoredState(),
+  initialState,
   reducers: {
-    saveCheckout: (state, action) => {
-      const newOrder = action.payload;
+    addCheckout: (state, action) => {
+      state.history.push(action.payload);
+      state.data = action.payload;
+    },
 
-      const latestHistory = getStoredState().history;
-
-      state.history = [...latestHistory, newOrder];
-      state.data = newOrder;
-
-      localStorage.setItem("checkout_history", JSON.stringify(state));
+    syncCheckout: (state, action) => {
+      state.history = action.payload.history;
+      state.data = action.payload.data;
     },
 
     clearCheckoutHistory: (state) => {
       state.history = [];
       state.data = null;
-      localStorage.setItem("checkout_history", JSON.stringify(state));
-    },
-
-    syncFromStorage: (state, action) => {
-      // const { history = [], data = null } = action.payload || {};
-      // const { history, data } = action.payload;
-      const history = action.payload.history;
-      const data = action.payload.data;
-
-      state.history = history;
-      state.data = data;
     },
   },
 });
 
-export const { saveCheckout, clearCheckoutHistory, syncFromStorage } =
-  checkoutSlice.actions;
+export const { addCheckout, clearCheckoutHistory } = checkoutSlice.actions;
 export default checkoutSlice.reducer;

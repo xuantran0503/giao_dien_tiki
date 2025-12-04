@@ -90,44 +90,28 @@
 }
 
 .banner-content {
-    display: flex;
-    gap: 16px;
-    /* position: sticky;
-    top: 0;
-    z-index: 10; */
+    display: block;
+    position: sticky;
+    top: 16px;
+    z-index: 10;
+    height: fit-content;
 }
 
 .banner-left-categories {
-    /* position: sticky; */
-    /* width: 240px;
-    margin-left: 20px;
-    top: 8px;
-    align-self: flex-start;
-
-    max-height: calc(100vh - 120px);
-    overflow-y: auto;
-    overflow-x: hidden;
-
-    scrollbar-width: none;
-    -ms-overflow-style: none; */
-
     margin-left: 20px;
     width: 240px;
-    max-height: 100vh;
-    position: sticky;
-    overflow-y: scroll;
+    max-height: calc(100vh - 32px);
+    overflow-y: auto;
     scrollbar-width: none;
-    top: 8px;
     background-color: transparent;
     display: flex;
-    padding-bottom: 117px;
+    padding-bottom: 20px;
     flex-direction: column;
     color: rgb(56, 56, 61);
     font-size: 14px;
     line-height: 20px;
     border-top-left-radius: 4px;
     border-bottom-left-radius: 4px;
-
 }
 
 .left-card {

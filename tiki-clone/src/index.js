@@ -9,7 +9,7 @@ import store, { persistor } from "./store/store";
 import { PersistGate } from "redux-persist/integration/react";
 import { setupCrossTabSync } from "./utils/syncTabs";
 
-setupCrossTabSync(store, syncCart);
+// setupCrossTabSync(store, syncCart);
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(

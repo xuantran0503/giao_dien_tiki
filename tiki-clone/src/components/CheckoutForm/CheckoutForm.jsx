@@ -1,32 +1,18 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
-import { saveCheckout } from '../../store/checkoutSlice';
+import { addCheckout } from '../../store/checkoutSlice';
 import './CheckoutForm.css';
 
 const CheckoutForm = ({ onSubmit, onCancel, meta }) => {
     const dispatch = useDispatch();
     const { register, handleSubmit, formState: { errors }, reset } = useForm();
 
-    // const onFormSubmit = async (data) => {
-    //     const payload = { ...data, meta };
-        
-    //     dispatch(saveCheckout(payload));
-        
-    //     if (onSubmit) {
-    //         await onSubmit(payload);
-    //     }
-    //     reset();
-    //     console.log("thông tin người mua hàng", payload);
-    // };
-
-    const onFormSubmit =  (data) => {
+    const onFormSubmit = (data) => {
         const payload = { ...data, meta };
         
-        dispatch(saveCheckout(payload));
-        
+        dispatch(addCheckout(payload));
         onSubmit(payload);
-        
         reset();
         console.log("thông tin người mua hàng", payload);
     };

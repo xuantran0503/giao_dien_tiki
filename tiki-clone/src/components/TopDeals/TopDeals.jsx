@@ -36,7 +36,6 @@ const TopDeals = () => {
   };
 
   // console.log(currentPage);
-
   // console.log(direction);
 
   const renderStars = (rating) => {
@@ -56,7 +55,6 @@ const TopDeals = () => {
     }
     return stars;
   };
-
 
   return (
     <div className="top-deals has-navigation">

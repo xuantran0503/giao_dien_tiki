@@ -1,4 +1,4 @@
-export const setupCrossTabSync = (store, syncAction) => {
+export const setupCrossTabSync = (store) => {
   const handleStorageChange = (event) => {
     if (event.key === "persist:root" && event.newValue) {
       try {
@@ -6,12 +6,20 @@ export const setupCrossTabSync = (store, syncAction) => {
 
         if (newState.cart) {
           const cartState = JSON.parse(newState.cart);
-          // Dispatch action để sync state
-          store.dispatch(syncAction(cartState));
-          // console.log("Cart synced from another tab:", cartState);
+          store.dispatch({ type: "cart/syncCart", payload: cartState });
+
+          // store.dispatch({ type: "cart/syncCart", payload: newState.cart });
+        }
+
+        if (newState.checkout) {
+          const checkoutState = JSON.parse(newState.checkout);
+          store.dispatch({
+            type: "checkout/syncCheckout",
+            payload: checkoutState,
+          });
         }
       } catch (error) {
-        console.error("Error syncing cart from storage event:", error);
+        console.error("Error syncing state:", error);
       }
     }
   };
