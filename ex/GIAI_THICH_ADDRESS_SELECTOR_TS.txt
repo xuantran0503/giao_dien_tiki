@@ -1,0 +1,133 @@
+GIẢI THÍCH CHI TIẾT FILE src/components/AddressSelector/AddressSelector.tsx
+================================================================================
+
+1. PHẦN IMPORT
+--------------------------------------------------------------------------------
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import "./AddressSelector.css";
+
+// Import các actions và selectors từ Redux slice
+import {
+  fetchAddressData,
+  // ... (các actions khác)
+  selectAddressData,
+  // ... (các selectors khác)
+  // ĐẶC BIỆT: Import các kiểu dữ liệu (Types) để dùng trong Component này
+  City,      // Kiểu dữ liệu cho Thành phố
+  District,  // Kiểu dữ liệu cho Quận/Huyện
+  Ward       // Kiểu dữ liệu cho Phường/Xã
+} from "../../store/addressSlice";
+
+2. ĐỊNH NGHĨA PROPS (Tham số đầu vào)
+--------------------------------------------------------------------------------
+// Interface này quy định những gì Component này ĐƯỢC PHÉP nhận vào từ cha.
+interface AddressSelectorProps {
+  onLoginClick?: () => void; // Dấu '?' nghĩa là không bắt buộc. Nếu có thì phải là hàm void.
+  forceOpen?: boolean;       // Không bắt buộc. Nếu có phải là true/false.
+  onClose?: () => void;      // Không bắt buộc.
+}
+
+3. KHAI BÁO COMPONENT
+--------------------------------------------------------------------------------
+// React.FC<AddressSelectorProps>: Khai báo đây là "Function Component" của React
+// và nó sử dụng các props tuân theo interface AddressSelectorProps ở trên.
+const AddressSelector: React.FC<AddressSelectorProps> = ({ 
+  onLoginClick, 
+  forceOpen = false, // Giá trị mặc định là false nếu không truyền vào
+  onClose 
+}) => {
+
+  // useDispatch<any>(): 
+  // Trong dự án lớn, ta nên dùng AppDispatch để chặt chẽ hơn. 
+  // Ở đây dùng <any> để tạm thời bỏ qua kiểm tra kiểu cho dispatch, giúp code chạy được ngay.
+  const dispatch = useDispatch<any>(); 
+
+  // useSelector: Lấy dữ liệu từ Store.
+  // Vì các selectors (như selectAddressData) đã được định nghĩa kiểu ở file slice,
+  // nên biến 'addressData' ở đây sẽ tự động có kiểu City[] mà không cần khai báo lại.
+  const addressData = useSelector(selectAddressData);
+  // ... (các selectors khác tương tự)
+
+4. CÁC HOOKS (useEffect)
+--------------------------------------------------------------------------------
+  // useEffect này chạy khi component mới hiện ra (mount) hoặc khi 'status' thay đổi.
+  useEffect(() => {
+    if (status === "idle") {
+      dispatch(fetchAddressData()); // Gọi API tải danh sách tỉnh thành
+    }
+    dispatch(loadAddressFromStorage()); // Lấy địa chỉ đã lưu trong LocalStorage
+  }, [dispatch, status]);
+
+5. XỬ LÝ SỰ KIỆN (HANDLERS)
+--------------------------------------------------------------------------------
+  const handleSaveLocation = () => {
+    // ... logic kiểm tra locationType ...
+
+    } else if (
+      locationType === "custom" &&
+      selectedCity &&
+      selectedDistrict &&
+      selectedWard
+    ) {
+      // TÌM ĐỐI TƯỢNG TỈNH/THÀNH PHỐ
+      // (c: City): Khai báo rõ 'c' là kiểu City để TypeScript hỗ trợ gợi ý code.
+      const cityObj = addressData.find((c: City) => c.code === Number(selectedCity));
+      
+      // TÌM QUẬN/HUYỆN
+      // ?. (Optional Chaining): Nếu cityObj là null/undefined thì dừng lại, không báo lỗi, trả về undefined.
+      const districtObj = cityObj?.districts?.find(
+        (d: District) => d.code === Number(selectedDistrict)
+      );
+
+      // TÌM PHƯỜNG/XÃ
+      const wardObj = districtObj?.wards?.find(
+        (w: Ward) => w.code === Number(selectedWard)
+      );
+
+      // Tạo chuỗi địa chỉ mới
+      // || "" : Nếu tên bị undefined thì lấy chuỗi rỗng để tránh in ra chữ "undefined"
+      const newAddr = `${wardObj?.name || ""}, ${districtObj?.name || ""}, ${
+        cityObj?.name || ""
+      }`;
+
+      dispatch(setSelectedAddress(newAddr));
+      // ...
+    }
+  };
+
+6. PHẦN GIAO DIỆN (JSX)
+--------------------------------------------------------------------------------
+  // RADIO BUTTON
+  <input
+    type="radio"
+    name="location-type"
+    value="default"
+    // ...
+    // e.target.value luôn là string.
+    // Hàm setLocationType chỉ nhận "default" hoặc "custom".
+    // -> Dùng 'as' để ép kiểu, cam kết với TS rằng giá trị này an toàn.
+    onChange={(e) => dispatch(setLocationType(e.target.value as "default" | "custom"))}
+  />
+
+  // DROPDOWN CHỌN TỈNH/THÀNH
+  <select
+    value={selectedCity}
+    onChange={(e) => dispatch(setSelectedCity(e.target.value))}
+    // ...
+  >
+    {/* Vòng lặp hiển thị danh sách */}
+    {addressData.map((city: City) => (
+      <option key={city.code} value={city.code}>
+        {city.name}
+      </option>
+    ))}
+  </select>
+
+================================================================================
+TÓM TẮT CÁC CÚ PHÁP TYPESCRIPT QUAN TRỌNG TRONG FILE NÀY:
+1. Interface: Định nghĩa khuôn mẫu cho Props.
+2. React.FC<T>: Định nghĩa kiểu cho Component React.
+3. Optional Chaining (?.): Truy cập an toàn vào thuộc tính con (tránh lỗi "Cannot read property of undefined").
+4. Type Assertion (as): Ép kiểu thủ công khi ta biết chắc chắn kiểu dữ liệu (ví dụ từ input radio).
+5. Type Annotation (biến: Kiểu): Khai báo kiểu tường minh cho tham số hàm (ví dụ trong .find() hoặc .map()).

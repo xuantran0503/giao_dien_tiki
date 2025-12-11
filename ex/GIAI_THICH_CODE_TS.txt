@@ -1,0 +1,120 @@
+Dưới đây là giải thích chi tiết từng phần code trong 2 file đã được chuyển đổi sang TypeScript.
+
+================================================================================
+FILE 1: src/store/addressSlice.ts
+(Quản lý state địa chỉ bằng Redux Toolkit với TypeScript)
+================================================================================
+
+1. IMPORT VÀ KHAI BÁO INTERFACE (Giao diện dữ liệu)
+---------------------------------------------------
+import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
+-> PayloadAction: Là một type (kiểu) có sẵn của Redux Toolkit dùng để định nghĩa kiểu dữ liệu cho action.payload.
+
+export interface Ward { code: number; name: string; }
+export interface District { code: number; name: string; wards: Ward[]; }
+export interface City { code: number; name: string; districts: District[]; }
+-> Interface: Dùng để mô tả cấu trúc của một đối tượng (Object).
+   Ví dụ: City bắt buộc phải có 'code' là số, 'name' là chuỗi, và 'districts' là mảng các District.
+   Điều này giúp VS Code gợi ý code và báo lỗi nếu bạn truy cập sai tên thuộc tính (ví dụ: city.id thay vì city.code).
+
+export interface AddressState { ... }
+-> Định nghĩa toàn bộ cấu trúc của State trong slice này.
+   - status: Chỉ được phép nhận 1 trong 4 giá trị chuỗi cụ thể ("idle" | "pending"...).
+   - locationType: Chỉ được phép là "default" hoặc "custom".
+
+2. INITIAL STATE (Trạng thái khởi tạo)
+--------------------------------------
+const initialState: AddressState = { ... };
+-> Khai báo biến initialState có kiểu là AddressState.
+   Nếu bạn quên khai báo một trường nào đó (ví dụ quên 'showLocationModal'), TypeScript sẽ báo lỗi ngay.
+
+3. ASYNC THUNK (Gọi API)
+------------------------
+export const fetchAddressData = createAsyncThunk<City[], void, { rejectValue: string }>(...)
+-> Cú pháp Generic <Return, Arg, Config>:
+   - City[]: Kiểu dữ liệu trả về khi thành công (mảng các thành phố).
+   - void: Kiểu dữ liệu của tham số đầu vào (ở đây không cần tham số gì nên là void).
+   - { rejectValue: string }: Kiểu dữ liệu trả về khi lỗi (rejectWithValue sẽ trả về chuỗi).
+
+   async (_, { rejectWithValue }) => { ... }
+   -> _: Dấu gạch dưới là quy ước đặt tên cho tham số không dùng đến (tham số đầu tiên).
+
+   const response = await axios.get<City[]>(...)
+   -> Báo cho axios biết API này sẽ trả về dữ liệu kiểu City[].
+
+4. SLICE & REDUCERS (Xử lý logic)
+---------------------------------
+setLocationType: (state, action: PayloadAction<"default" | "custom">) => { ... }
+-> action: PayloadAction<Type>: Quy định action này bắt buộc phải gửi kèm payload đúng kiểu.
+   Nếu bạn dispatch(setLocationType("abc")) -> Lỗi ngay vì "abc" không phải "default" hay "custom".
+
+syncAddress: (state, action: PayloadAction<{ selectedAddress: string }>) => { ... }
+-> Payload là một object có thuộc tính selectedAddress là string.
+
+5. SELECTORS (Lấy dữ liệu từ State)
+-----------------------------------
+interface RootState { address: AddressState; }
+-> Giả lập cấu trúc của toàn bộ Store để dùng trong các selector.
+   (Trong dự án thực tế, RootState thường được export từ file store.ts).
+
+export const selectDistrictsByCity = (state: RootState) => { ... }
+-> Hàm này tính toán danh sách quận dựa trên thành phố đang chọn.
+   TypeScript giúp đảm bảo:
+   - state.address tồn tại.
+   - addressData là mảng City.
+   - city.districts tồn tại trước khi return.
+
+================================================================================
+FILE 2: src/components/AddressSelector/AddressSelector.tsx
+(Component React hiển thị và chọn địa chỉ)
+================================================================================
+
+1. IMPORT
+---------
+import { City, District, Ward } from "../../store/addressSlice";
+-> Import các Interface đã định nghĩa ở file slice để dùng lại, không cần khai báo lại.
+
+2. PROPS INTERFACE
+------------------
+interface AddressSelectorProps {
+  onLoginClick?: () => void;  // Dấu ? nghĩa là props này không bắt buộc (optional)
+  forceOpen?: boolean;        // Kiểu boolean (true/false)
+  onClose?: () => void;       // Hàm không trả về giá trị (void)
+}
+-> Định nghĩa các tham số đầu vào cho Component.
+
+3. COMPONENT DEFINITION
+-----------------------
+const AddressSelector: React.FC<AddressSelectorProps> = ({ ... }) => { ... }
+-> React.FC (Function Component): Kiểu chuẩn cho component React.
+   Nó đảm bảo component này nhận đúng các props đã khai báo trong AddressSelectorProps.
+
+4. HOOKS
+--------
+const dispatch = useDispatch<any>();
+-> <any>: Tạm thời chấp nhận mọi kiểu action (để tránh lỗi phức tạp khi chưa cấu hình AppDispatch chuẩn).
+
+const addressData = useSelector(selectAddressData);
+-> useSelector tự động hiểu kiểu dữ liệu trả về nhờ vào việc ta đã định nghĩa type cho selector ở file slice.
+
+5. EVENT HANDLERS (Xử lý sự kiện)
+---------------------------------
+onChange={(e) => dispatch(setLocationType(e.target.value as "default" | "custom"))}
+-> as "default" | "custom": Đây là "Type Assertion" (Ép kiểu).
+   Vì e.target.value của thẻ input luôn là string, nhưng setLocationType chỉ nhận "default" hoặc "custom".
+   Ta dùng 'as' để cam kết với TypeScript rằng giá trị này chắc chắn hợp lệ.
+
+const cityObj = addressData.find((c: City) => c.code === Number(selectedCity));
+-> (c: City): Khai báo rõ biến 'c' là một City để TypeScript gợi ý code (c.code, c.name...).
+
+6. RENDER (JSX)
+---------------
+{addressData.map((city: City) => ( ... ))}
+-> Khi map qua mảng, ta cũng định nghĩa kiểu cho từng phần tử để code trong vòng lặp được kiểm tra lỗi.
+
+================================================================================
+TÓM TẮT LỢI ÍCH
+================================================================================
+1. Gợi ý code (IntelliSense): Gõ "city." là hiện ra "code", "name", "districts". Không cần nhớ tên.
+2. Bắt lỗi sớm: Truyền sai kiểu dữ liệu (số thay vì chuỗi, thiếu trường bắt buộc) sẽ báo đỏ ngay trong code, không cần chạy lên mới biết lỗi.
+3. Dễ bảo trì: Nhìn vào Interface là hiểu ngay cấu trúc dữ liệu, không cần mò mẫm log ra console xem nó có gì.

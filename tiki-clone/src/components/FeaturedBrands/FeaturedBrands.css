@@ -1,0 +1,136 @@
+.featured-brands {
+    /* background: linear-gradient(180deg, #E8F0FE 0%, #F0F4FF 100%); */
+    padding: 16px;
+    border-radius: 8px;
+    margin-top: 12px;
+    width: 100%;
+    box-sizing: border-box;
+    background: linear-gradient(rgba(255, 255, 255, 0) 22.49%, rgb(255, 255, 255) 73.49%), linear-gradient(264.03deg, rgb(220, 229, 251) -10.27%, rgb(234, 236, 255) 35.65%, rgb(213, 236, 253) 110.66%);
+    font-family: Inter, Arial, sans-serif;
+}
+
+.brands-header {
+    margin-bottom: 12px;
+}
+
+.brands-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: #27272a;
+    margin: 0;
+    padding: 0;
+}
+
+.brands-grid-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.brands-grid {
+
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 10px;
+    width: 100%;
+}
+
+.brands-grid.slide-next {
+    animation: slideInFromRight 0.4s ease-out;
+}
+
+.brands-grid.slide-prev {
+    animation: slideInFromLeft 0.4s ease-out;
+}
+
+@keyframes slideInFromRight {
+    from {
+        opacity: 0;
+        transform: translateX(40px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes slideInFromLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-40px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.brand-card {
+    background: #fff;
+    border-radius: 8px;
+    border: 1px solid #ebebf0;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    /* flex: 1; */
+    /* min-width: 0; */
+    /* transition: transform 0.2s ease, box-shadow 0.2s ease; */
+    cursor: pointer;
+    padding: 12px;
+    text-decoration: none;
+    color: inherit;
+}
+
+/* .brand-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    border-color: #0B74E5;
+} */
+
+.brand-image-wrapper {
+    position: relative;
+    width: 100%;
+    /* aspect-ratio: 1 / 1; */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 8px;
+    background: #fff;
+}
+
+.brand-image {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    border-radius: 8px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .featured-brands {
+        padding: 12px;
+    }
+
+    .brands-grid {
+        gap: 8px;
+    }
+
+    .brand-card {
+        padding: 8px;
+    }
+
+    .brand-title {
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 480px) {
+    .featured-brands {
+        padding: 8px;
+    }
+
+    .brands-title {
+        font-size: 14px;
+    }
+}
