@@ -13,9 +13,66 @@ nhạc : nắng hoa niên
 
 học và sử dụng typeScript, 
 
+tạo code .ts tương ứng từ các code .js bắt buộc phải chuyển sang chuẩn cấu trúc ts ở dưới đây và vẫn phải giữ nguyên file code js cũ src/index.js → src/index.tsx
+src/App.jsx → src/App.tsx src/utils/ (2 files)
+
+Khi NÀO nên chuyển sang TypeScript?
+✅ Nên chuyển:
+File mới: Tạo file mới thì nên dùng .ts/.tsx
+File phức tạp: Logic business quan trọng
+API calls: Xử lý data từ server
+Redux slices: State management
+Shared utilities: Functions được dùng nhiều nơi
+Type definitions: Interfaces, types
+⚠️ Có thể để JavaScript:
+File đơn giản: Chỉ có UI logic cơ bản
+Prototype code: Code thử nghiệm
+Legacy code: Code cũ hoạt động tốt
+Third-party code: Thư viện bên ngoài
+
+ PRIORITY 1 - Core Files (4 files):
+src/index.js → src/index.tsx
+src/App.jsx → src/App.tsx
+src/store/store.js → src/store.ts
+src/utils/ (2 files)
+
+🔶 PRIORITY 2 - Complex Components (8 files):
+CheckoutForm.jsx, Login.jsx, SearchBar.jsx, Header.jsx
+FlashSale.jsx, TopDeals.jsx, SuggestedProducts.jsx
+
+🔷 PRIORITY 3 - Pages (13 files):
+Main pages: Home.jsx, CartPage.jsx, ProductDetailPage.jsx
+Feature pages: CategoryPage.jsx, FlashSalePage.jsx, etc.
+
+🔹 PRIORITY 4 - UI Components (16 files):
+Layout: Banner.jsx, Footer.jsx, HeroSlider.jsx
+Features: FeaturedBrands.jsx, MiniCategories.jsx, etc.
+
+🔸 PRIORITY 5 - Data Files (6 files):
+src/data/ - Tất cả data files
+🎯 RECOMMENDATION:
+Bắt đầu với Priority 1 (Core files) vì chúng ảnh hưởng toàn bộ app. Sau đó tiếp tục theo thứ tự ưu tiên.
+
+Thời gian ước tính: 5-6 tuần nếu làm full-time, hoặc có thể kéo dài hơn nếu làm part-time.
+
+Chiến lược: Migration từ từ, test kỹ sau mỗi file để đảm bảo không break functionality!
+
+
+Trong TypeScript (TS), number (chữ thường) là một kiểu dữ liệu nguyên thủy (primitive type) dùng để biểu diễn tất cả các giá trị số (số nguyên, số thập phân), còn Number (chữ hoa) là một constructor function (hàm tạo) hoặc kiểu wrapper object (đối tượng bao bọc) tương ứng với kiểu number, có thể dùng để tạo đối tượng số (nhưng thường không cần thiết) và đóng vai trò trong việc định nghĩa kiểu, nhưng number là cách dùng phổ biến và chuẩn hơn trong TypeScript. 
+
 học và sử dụng createAsyncThunk 
 
 sử dụng axios thay cho fetch để dùng api 
+
+Fetch là một công cụ được tích hợp sẵn trong các trình duyệt hiện nay, là một phần tiêu chuẩn JavaScript mà bạn không cần cài đặt gì thêm. Đấy là ưu điểm nhưng cũng là nhược điểm của Fetch so với Axios. Fetch nhẹ nhàng, không cần đòi hỏi cài đặt thêm như Axios nhưng mức độ tương thích giữa các trình duyệt lại có sự khác nhau; trong khi đó Axios đảm bảo được tính nhất quán mà không phụ thuộc vào version của trình duyệt.
+
+Ngoài ra, Axios cung cấp cho chúng ta nhiều tính năng hơn so với Fetch, cụ thể:
+
+Xử lý JSON tự động. Fetch sẽ yêu cầu bạn gọi .json() để chuyển đổi
+Tính năng Interceptors. Fetch không tích hợp
+Tính năng hủy request. Fetch không có tính năng này
+Hỗ trợ cài đặt plugin mở rộng. Fetch yêu cầu viết mã tùy chỉnh nếu muốn
+Thực tế dự án với các ứng dụng Web đơn giản, không đòi hỏi các tương tác nhiều với người dùng như các Web tin tức, giới thiệu,… thì sử dụng Fetch là đủ. Axios sẽ phù hợp hơn cho các ứng dụng client có nhiều chức năng hơn như Single Page Application, các hệ thống quản trị nội dung, thao tác CRUD với dữ liệu.
 
 áp dụng vào cho code AddressSelector
 
@@ -25,12 +82,32 @@ location?:string là khi khai báo có thể có hoặc không
 async (_, { rejectWithValue }) => { ... }
    -> _: Dấu gạch dưới là quy ước đặt tên cho tham số không dùng đến (tham số đầu tiên).
 
+rejectWithValue là một hàm tiện ích mà bạn có thể return (hoặc throw ) trong trình tạo hành động để trả về phản hồi bị từ chối với một payload và meta đã xác định. 
 
 'idle': Không hoạt động, sẵn sàng để bắt đầu .
 'loading': Đang diễn ra (đang chờ phản hồi) .
 'succeeded': Đã hoàn thành thành công .
 'failed': Đã hoàn thành nhưng gặp lỗi .
 
+Dùng Class khi bạn cần tạo đối tượng có trạng thái (properties) và hành vi (methods) cụ thể, có thể kế thừa và có thể được instantiate (tạo thể hiện) trong JS, còn dùng Interface khi bạn chỉ cần định nghĩa "khuôn mẫu" (blueprint) cho cấu trúc của đối tượng/class, một hợp đồng về thuộc tính và phương thức cần có, không thể instantiate, và hữu ích cho việc kiểm tra kiểu và hợp nhất khai báo (declaration merging) trong TypeScript. 
+
+Khi nào dùng Class:
+Tạo thể hiện (Instantiation): Khi bạn muốn tạo ra các đối tượng cụ thể có trạng thái và hành vi giống nhau (ví dụ: new User(), new Product()).
+Kế thừa & Thực thi: Khi cần kế thừa logic từ lớp cha (class) hoặc thực thi một hợp đồng từ interface.
+Trạng thái & Hành vi: Khi đối tượng cần giữ trạng thái (dữ liệu) và có các phương thức để thao tác với trạng thái đó.
+Runtime Value: Class có tồn tại trong JavaScript sau khi biên dịch (dù đã bị loại bỏ phần logic kiểm tra kiểu), dùng được cho các mục đích runtime như instanceof. 
+Khi nào dùng Interface:
+Định nghĩa cấu trúc: Để mô tả hình dạng (shape) của các đối tượng hoặc các lớp, đảm bảo chúng có các thuộc tính và phương thức nhất định.
+Hợp đồng (Contracts): Để áp đặt một "giao kèo" lên các class (hoặc đối tượng), đảm bảo chúng tuân thủ một bộ quy tắc nhất định.
+Kiểm tra kiểu: Chủ yếu dùng cho mục đích kiểm tra kiểu của TypeScript (type-checking), không tạo ra code JavaScript thực tế.
+Hợp nhất khai báo (Declaration Merging): Cho phép bạn mở rộng định nghĩa của một interface bằng cách khai báo lại cùng tên ở nhiều nơi.
+API công khai: Định nghĩa API công khai cho các module hoặc thư viện, nơi không cần tạo đối tượng mà chỉ cần kiểm tra cấu trúc. 
+Tóm lại sự khác biệt:
+Class: Là một bản thiết kế + triển khai (có thể có logic bên trong) và tạo ra đối tượng thực.
+Interface: Chỉ là một bản thiết kế (blueprint) cho cấu trúc, dùng để kiểm tra kiểu, không tạo ra đối tượng.
+Ví dụ:
+class Person { ... } -> Tạo ra các thể hiện person1 = new Person().
+interface IPerson { name: string; age: number; } -> Dùng để đảm bảo một đối tượng hoặc class có name và age, ví dụ: const user: IPerson = { name: "Alice", age: 30 };. 
 
 "compilerOptions": {
     // 1. Mục tiêu JavaScript đầu ra

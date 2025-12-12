@@ -29,7 +29,7 @@ import {
   Ward
 } from "../../store/addressSlice";
 
-// Define Props Interface
+
 interface AddressSelectorProps {
   onLoginClick?: () => void;
   forceOpen?: boolean;
@@ -38,31 +38,30 @@ interface AddressSelectorProps {
 
 const AddressSelector: React.FC<AddressSelectorProps> = ({ onLoginClick, forceOpen = false, onClose }) => {
   const dispatch = useDispatch<any>(); 
-
   
   const addressData = useSelector(selectAddressData);
   const status = useSelector(selectAddressStatus);
   const error = useSelector(selectAddressError);
+
   const selectedAddress = useSelector(selectSelectedAddress);
   const locationType = useSelector(selectLocationType);
+
   const selectedCity = useSelector(selectSelectedCity);
   const selectedDistrict = useSelector(selectSelectedDistrict);
   const selectedWard = useSelector(selectSelectedWard);
+
   const showLocationModal = useSelector(selectShowLocationModal);
   
   // Lấy danh sách districts và wards từ selectors
   const districts = useSelector(selectDistrictsByCity);
   const wards = useSelector(selectWardsByDistrict);
 
-
   // Fetch dữ liệu địa chỉ khi component mount
   useEffect(() => {
-    // Chỉ fetch nếu chưa có dữ liệu hoặc status là 'idle'
     if (status === "idle") {
       dispatch(fetchAddressData());
     }
     
-    // Load địa chỉ đã lưu từ localStorage
     dispatch(loadAddressFromStorage());
   }, [dispatch, status]);
 
@@ -72,20 +71,15 @@ const AddressSelector: React.FC<AddressSelectorProps> = ({ onLoginClick, forceOp
       dispatch(setShowLocationModal(true));
     }
   }, [forceOpen, dispatch]);
-
   
-  // Sync selectedAddress với localStorage
   
   useEffect(() => {
-    // Redux-persist đã tự động lưu state vào localStorage
-    // Nhưng chúng ta vẫn lưu riêng selectedAddress để dễ access
     if (selectedAddress) {
         window.localStorage.setItem("selectedAddress", selectedAddress);
     }
   }, [selectedAddress]);
 
 
-  // Event Handlers
   const handleLocationClick = () => {
     dispatch(resetSelection());
     dispatch(setShowLocationModal(true));
@@ -114,7 +108,6 @@ const AddressSelector: React.FC<AddressSelectorProps> = ({ onLoginClick, forceOp
       }`;
 
       dispatch(setSelectedAddress(newAddr));
-      // Redux-persist sẽ tự động sync với các tab khác qua storage event
       
       dispatch(setShowLocationModal(false));
       if (onClose) onClose();
@@ -133,18 +126,17 @@ const AddressSelector: React.FC<AddressSelectorProps> = ({ onLoginClick, forceOp
     if (onClose) onClose();
   };
 
-  
   //  Hiển thị trạng thái loading và error
   
-  const renderLoadingState = () => {
-    if (status === "pending") {
-      return <div className="loading-message">Đang tải dữ liệu địa chỉ...</div>;
-    }
-    if (status === "failed") {
-      return <div className="error-message">Lỗi: {error}</div>;
-    }
-    return null;
-  };
+  // const renderLoadingState = () => {
+  //   if (status === "pending") {
+  //     return <div className="loading-message">Đang tải dữ liệu địa chỉ...</div>;
+  //   }
+  //   if (status === "failed") {
+  //     return <div className="error-message">Lỗi: {error}</div>;
+  //   }
+  //   return null;
+  // };
 
   return (
     <>
@@ -186,7 +178,7 @@ const AddressSelector: React.FC<AddressSelectorProps> = ({ onLoginClick, forceOp
                 <div className="or-divider">hoặc</div>
 
                 {/* Hiển thị loading/error state */}
-                {renderLoadingState()}
+                {/* {renderLoadingState()} */}
 
                 <div className="location-options">
                   <label className="location-option">

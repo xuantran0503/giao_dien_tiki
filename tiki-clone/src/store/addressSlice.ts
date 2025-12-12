@@ -44,7 +44,6 @@ const initialState: AddressState = {
   showLocationModal: false,
 };
 
-// Async Thunk
 export const fetchAddressData = createAsyncThunk<City[], void, { rejectValue: string }>(
   "address/fetchAddressData",
   async (_, { rejectWithValue }) => {
@@ -54,7 +53,7 @@ export const fetchAddressData = createAsyncThunk<City[], void, { rejectValue: st
       );
       return response.data;
     } catch (error: any) {
-      return rejectWithValue(error.response.data );
+      return rejectWithValue(error.response.data);
     }
   }
 );
@@ -122,22 +121,18 @@ const addressSlice = createSlice({
 });
 
 // Selectors
-// We define a partial RootState interface for the selectors to use
-interface RootState {
-  address: AddressState;
-}
+// Note: RootState will be imported from store.ts in components
+export const selectAddressData = (state: { address: AddressState }) => state.address.addressData;
+export const selectAddressStatus = (state: { address: AddressState }) => state.address.status;
+export const selectAddressError = (state: { address: AddressState }) => state.address.error;
+export const selectSelectedAddress = (state: { address: AddressState }) => state.address.selectedAddress;
+export const selectLocationType = (state: { address: AddressState }) => state.address.locationType;
+export const selectSelectedCity = (state: { address: AddressState }) => state.address.selectedCity;
+export const selectSelectedDistrict = (state: { address: AddressState }) => state.address.selectedDistrict;
+export const selectSelectedWard = (state: { address: AddressState }) => state.address.selectedWard;
+export const selectShowLocationModal = (state: { address: AddressState }) => state.address.showLocationModal;
 
-export const selectAddressData = (state: RootState) => state.address.addressData;
-export const selectAddressStatus = (state: RootState) => state.address.status;
-export const selectAddressError = (state: RootState) => state.address.error;
-export const selectSelectedAddress = (state: RootState) => state.address.selectedAddress;
-export const selectLocationType = (state: RootState) => state.address.locationType;
-export const selectSelectedCity = (state: RootState) => state.address.selectedCity;
-export const selectSelectedDistrict = (state: RootState) => state.address.selectedDistrict;
-export const selectSelectedWard = (state: RootState) => state.address.selectedWard;
-export const selectShowLocationModal = (state: RootState) => state.address.showLocationModal;
-
-export const selectDistrictsByCity = (state: RootState) => {
+export const selectDistrictsByCity = (state: { address: AddressState }) => {
   const { addressData, selectedCity } = state.address;
   if (!selectedCity) return [];
 
@@ -145,7 +140,7 @@ export const selectDistrictsByCity = (state: RootState) => {
   return city && city.districts ? city.districts : [];
 };
 
-export const selectWardsByDistrict = (state: RootState) => {
+export const selectWardsByDistrict = (state: { address: AddressState }) => {
   const { addressData, selectedCity, selectedDistrict } = state.address;
   if (!selectedCity || !selectedDistrict) return [];
 
