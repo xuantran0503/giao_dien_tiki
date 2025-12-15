@@ -18,6 +18,7 @@
   from {
     opacity: 0;
   }
+
   to {
     opacity: 1;
   }
@@ -41,6 +42,7 @@
     transform: translateY(50px);
     opacity: 0;
   }
+
   to {
     transform: translateY(0);
     opacity: 1;
@@ -84,6 +86,12 @@
   margin-bottom: 24px;
 }
 
+.login-back-btn img {
+  width: 21px;
+  height: 21px;
+
+}
+
 /* .login-back-btn:hover {
   background: #f5f5f5;
 } */
@@ -104,7 +112,7 @@
   max-width: 300px;
   width: 100%;
   /* flex: 1; */
-    background: rgb(222, 235, 255);
+  background: rgb(222, 235, 255);
   /* background: linear-gradient(136.47deg, #e3f4ff 9.13%, #f6faff 88.41%); */
   display: flex;
   align-items: center;
@@ -314,7 +322,7 @@
 .login-divider span {
   background: #fff;
   padding: 0 16px;
-color: rgb(120, 120, 120);
+  color: rgb(120, 120, 120);
   /* color: #808089; */
   font-size: 15px;
   position: relative;
@@ -356,6 +364,7 @@ color: rgb(120, 120, 120);
   /* height: 20px; */
   width: 58px;
 }
+
 .login-social-btn:hover {
   border-color: #0a68ff;
   box-shadow: 0 2px 8px rgba(10, 104, 255, 0.2);
@@ -374,7 +383,7 @@ color: rgb(120, 120, 120);
   text-align: center;
   font-weight: 400;
   font-family: Arial, sans-serif;
-  
+
 }
 
 .login-email-link:hover {
@@ -522,4 +531,3 @@ color: rgb(120, 120, 120);
     padding: 30px 20px;
   }
 }
-

@@ -1,11 +1,17 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
 
-// Interfaces for API data
-export interface Ward {
+export interface City {
   code: number;
   name: string;
+  districts: District[];
 }
+// Type tương đương
+// export type City = {
+//   code: number;
+//   name: string;
+//   districts: District[];
+// };
 
 export interface District {
   code: number;
@@ -13,13 +19,11 @@ export interface District {
   wards: Ward[];
 }
 
-export interface City {
+export interface Ward {
   code: number;
   name: string;
-  districts: District[];
 }
 
-// Interface for Slice State
 export interface AddressState {
   addressData: City[];
   status: "idle" | "pending" | "succeeded" | "failed";
@@ -120,8 +124,7 @@ const addressSlice = createSlice({
   },
 });
 
-// Selectors
-// Note: RootState will be imported from store.ts in components
+// RootState will be imported from store.ts in components
 export const selectAddressData = (state: { address: AddressState }) => state.address.addressData;
 export const selectAddressStatus = (state: { address: AddressState }) => state.address.status;
 export const selectAddressError = (state: { address: AddressState }) => state.address.error;

@@ -1,13 +1,3 @@
-/**
- * Utility functions for price calculations and formatting
- */
-
-/**
- * Calculate discounted price based on original price and discount percentage
- * @param originalPrice - The original price of the item
- * @param discount - The discount percentage (0-100)
- * @returns The discounted price rounded to nearest integer
- */
 export const calculateDiscountedPrice = (
     originalPrice: number | string,
     discount?: number | string
@@ -33,11 +23,7 @@ export const calculateDiscountedPrice = (
     return Math.round(discountedPrice);
 };
 
-/**
- * Format price according to Vietnamese locale
- * @param price - The price to format
- * @returns Formatted price string (e.g., "1.000.000")
- */
+
 export const formatPrice = (price: number | string): string => {
     // const numPrice = Number(price);
 
@@ -49,12 +35,7 @@ export const formatPrice = (price: number | string): string => {
     return new Intl.NumberFormat("vi-VN").format(price as number);
 };
 
-/**
- * Format price with currency symbol
- * @param price - The price to format
- * @param currency - Currency code (default: VND)
- * @returns Formatted price with currency (e.g., "1.000.000 ₫")
- */
+
 // export const formatPriceWithCurrency = (
 //     price: number | string,
 //     currency: string = "VND"
@@ -76,12 +57,7 @@ export const formatPrice = (price: number | string): string => {
 //     }).format(numPrice);
 // };
 
-/**
- * Calculate discount percentage between two prices
- * @param originalPrice - The original price
- * @param discountedPrice - The discounted price
- * @returns Discount percentage rounded to 1 decimal place
- */
+
 // export const calculateDiscountPercentage = (
 //     originalPrice: number | string,
 //     discountedPrice: number | string
@@ -98,12 +74,7 @@ export const formatPrice = (price: number | string): string => {
 //     return Math.round(discountPercentage * 10) / 10; // Round to 1 decimal place
 // };
 
-/**
- * Check if a price has a valid discount
- * @param originalPrice - The original price
- * @param discountedPrice - The discounted price
- * @returns True if there's a valid discount
- */
+
 // export const hasValidDiscount = (
 //     originalPrice: number | string,
 //     discountedPrice: number | string

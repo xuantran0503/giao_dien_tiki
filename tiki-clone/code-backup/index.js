@@ -1,13 +1,13 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { Provider } from "react-redux";
-import App from "./App";
+import App from "../src/App";
 import "./index.css";
 
-import { syncCart } from "./store/cartSlice";
-import store, { persistor } from "./store/store";
+import { syncCart } from "../src/store/cartSlice";
+import store, { persistor } from "../src/store/store";
 import { PersistGate } from "redux-persist/integration/react";
-import { setupCrossTabSync } from "./utils/syncTabs";
+import { setupCrossTabSync } from "../src/utils/syncTabs";
 
 // setupCrossTabSync(store, syncCart);
 

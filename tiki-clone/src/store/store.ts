@@ -13,12 +13,10 @@ import {
 import storage from "redux-persist/lib/storage";
 import { setupCrossTabSync } from "../utils/syncTabs";
 
-// Import reducers with their state types
 import cartReducer, { CartState } from "./cartSlice";
 import checkoutReducer, { CheckoutState } from "./checkoutSlice";
 import addressReducer, { AddressState } from "./addressSlice";
 
-// Define RootState interface
 export interface RootState {
   cart: CartState;
   checkout: CheckoutState;
@@ -32,18 +30,14 @@ const rootReducer = combineReducers({
   address: addressReducer,
 });
 
-// Persist config with proper typing
 const persistConfig: PersistConfig<RootState> = {
   key: "root",
   storage,
-  // Optional: specify which slices to persist
   whitelist: ["cart", "address", "checkout"],
 };
 
-// Persisted reducer with proper typing
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
-// Configure store with proper typing
 const store = configureStore({
   reducer: persistedReducer,
   middleware: (getDefaultMiddleware) =>
@@ -64,15 +58,11 @@ const store = configureStore({
     }),
 });
 
-// Setup cross-tab synchronization
 setupCrossTabSync(store);
 
-// Export types for use in components
 export type AppDispatch = typeof store.dispatch;
 export type AppStore = typeof store;
 
-// Create persistor
 export const persistor = persistStore(store);
 
-// Export store as default
 export default store;

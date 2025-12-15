@@ -3,9 +3,7 @@ import type { CartState } from "../store/cartSlice";
 import type { CheckoutState } from "../store/checkoutSlice";
 import type { AddressState } from "../store/addressSlice";
 
-/**
- * Interface for persisted state structure
- */
+
 interface PersistedState {
     cart?: string;
     checkout?: string;
@@ -16,27 +14,16 @@ interface PersistedState {
     // };
 }
 
-/**
- * Interface for storage event data
- */
+
 interface StorageEventData {
     key: string | null;
     newValue: string | null;
     // oldValue: string | null;
 }
 
-/**
- * Setup cross-tab synchronization for Redux store
- * This function listens to localStorage changes and syncs state across browser tabs
- * 
- * @param store - The Redux store instance
- * @returns Cleanup function to remove event listeners
- */
+
 export const setupCrossTabSync = (store: AppStore): (() => void) => {
-    /**
-     * Handle localStorage change events
-     * @param event - Storage event from localStorage
-     */
+
     const handleStorageChange = (event: StorageEvent): void => {
         const { key, newValue } = event as StorageEventData;
 
@@ -48,7 +35,7 @@ export const setupCrossTabSync = (store: AppStore): (() => void) => {
         try {
             const persistedState: PersistedState = JSON.parse(newValue);
 
-            // Sync cart state across tabs
+            // Sync cart state 
             if (persistedState.cart) {
                 try {
                     const cartState: CartState = JSON.parse(persistedState.cart);
@@ -61,7 +48,7 @@ export const setupCrossTabSync = (store: AppStore): (() => void) => {
                 }
             }
 
-            // Sync checkout state across tabs
+            // Sync checkout state
             if (persistedState.checkout) {
                 try {
                     const checkoutState: CheckoutState = JSON.parse(persistedState.checkout);
@@ -74,7 +61,7 @@ export const setupCrossTabSync = (store: AppStore): (() => void) => {
                 }
             }
 
-            // Sync address state across tabs
+            // Sync address state
             if (persistedState.address) {
                 try {
                     const addressState: AddressState = JSON.parse(persistedState.address);
@@ -92,20 +79,16 @@ export const setupCrossTabSync = (store: AppStore): (() => void) => {
         }
     };
 
-    // Add event listener for storage changes
+
     window.addEventListener("storage", handleStorageChange);
 
-    // Return cleanup function
+
     return (): void => {
         window.removeEventListener("storage", handleStorageChange);
     };
 };
 
-/**
- * Manually trigger cross-tab sync for specific state slice
- * @param store - The Redux store instance
- * @param sliceName - Name of the slice to sync
- */
+
 // export const triggerCrossTabSync = (
 //     store: AppStore,
 //     sliceName: "cart" | "checkout" | "address"
@@ -149,10 +132,7 @@ export const setupCrossTabSync = (store: AppStore): (() => void) => {
 //     }
 // };
 
-/**
- * Check if cross-tab sync is supported
- * @returns True if localStorage and storage events are supported
- */
+
 // export const isCrossTabSyncSupported = (): boolean => {
 //     try {
 //         return (
@@ -166,10 +146,7 @@ export const setupCrossTabSync = (store: AppStore): (() => void) => {
 //     }
 // };
 
-/**
- * Get current persisted state from localStorage
- * @returns Parsed persisted state or null if not available
- */
+
 // export const getCurrentPersistedState = (): PersistedState | null => {
 //     try {
 //         const persistedData = localStorage.getItem("persist:root");

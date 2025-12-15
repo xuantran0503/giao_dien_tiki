@@ -1,17 +1,16 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import "./AddressSelector.css";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
 
 import {
+
+  City,
+  District,
+  Ward,
+
   fetchAddressData,
-  setLocationType,
-  setSelectedCity,
-  setSelectedDistrict,
-  setSelectedWard,
-  setSelectedAddress,
-  setShowLocationModal,
-  resetSelection,
-  loadAddressFromStorage,
+
   selectAddressData,
   selectAddressStatus,
   selectAddressError,
@@ -21,14 +20,19 @@ import {
   selectSelectedDistrict,
   selectSelectedWard,
   selectShowLocationModal,
+
   selectDistrictsByCity,
   selectWardsByDistrict,
-  // Import types
-  City,
-  District,
-  Ward
-} from "../../store/addressSlice";
 
+  setLocationType,
+  setSelectedCity,
+  setSelectedDistrict,
+  setSelectedWard,
+  setShowLocationModal,
+  setSelectedAddress,
+  resetSelection,
+  loadAddressFromStorage,
+} from "../../store/addressSlice";
 
 interface AddressSelectorProps {
   onLoginClick?: () => void;
@@ -37,21 +41,36 @@ interface AddressSelectorProps {
 }
 
 const AddressSelector: React.FC<AddressSelectorProps> = ({ onLoginClick, forceOpen = false, onClose }) => {
-  const dispatch = useDispatch<any>(); 
-  
-  const addressData = useSelector(selectAddressData);
-  const status = useSelector(selectAddressStatus);
-  const error = useSelector(selectAddressError);
+  // const dispatch = useDispatch<any>();
+  const dispatch = useAppDispatch();
 
-  const selectedAddress = useSelector(selectSelectedAddress);
-  const locationType = useSelector(selectLocationType);
+  // const addressData = useSelector(selectAddressData);
+  const addressData = useAppSelector(selectAddressData);
 
-  const selectedCity = useSelector(selectSelectedCity);
-  const selectedDistrict = useSelector(selectSelectedDistrict);
-  const selectedWard = useSelector(selectSelectedWard);
+  // const status = useSelector(selectAddressStatus);
+  const status = useAppSelector(selectAddressStatus);
 
-  const showLocationModal = useSelector(selectShowLocationModal);
-  
+  // const error = useSelector(selectAddressError);
+  const error = useAppSelector(selectAddressError);
+
+  // const selectedAddress = useSelector(selectSelectedAddress);
+  const selectedAddress = useAppSelector(selectSelectedAddress);
+
+  // const locationType = useSelector(selectLocationType);
+  const locationType = useAppSelector(selectLocationType);
+
+  // const selectedCity = useSelector(selectSelectedCity);
+  const selectedCity = useAppSelector(selectSelectedCity);
+
+  // const selectedDistrict = useSelector(selectSelectedDistrict);
+  const selectedDistrict = useAppSelector(selectSelectedDistrict);
+
+  // const selectedWard = useSelector(selectSelectedWard);
+  const selectedWard = useAppSelector(selectSelectedWard);
+
+  // const showLocationModal = useSelector(selectShowLocationModal);
+  const showLocationModal = useAppSelector(selectShowLocationModal);
+
   // Lấy danh sách districts và wards từ selectors
   const districts = useSelector(selectDistrictsByCity);
   const wards = useSelector(selectWardsByDistrict);
@@ -61,24 +80,20 @@ const AddressSelector: React.FC<AddressSelectorProps> = ({ onLoginClick, forceOp
     if (status === "idle") {
       dispatch(fetchAddressData());
     }
-    
     dispatch(loadAddressFromStorage());
   }, [dispatch, status]);
 
-  //  Xử lý forceOpen từ props
   useEffect(() => {
     if (forceOpen) {
       dispatch(setShowLocationModal(true));
     }
   }, [forceOpen, dispatch]);
-  
-  
+
   useEffect(() => {
     if (selectedAddress) {
-        window.localStorage.setItem("selectedAddress", selectedAddress);
+      window.localStorage.setItem("selectedAddress", selectedAddress);
     }
   }, [selectedAddress]);
-
 
   const handleLocationClick = () => {
     dispatch(resetSelection());
@@ -96,6 +111,7 @@ const AddressSelector: React.FC<AddressSelectorProps> = ({ onLoginClick, forceOp
       selectedWard
     ) {
       const cityObj = addressData.find((c: City) => c.code === Number(selectedCity));
+
       const districtObj = cityObj?.districts?.find(
         (d: District) => d.code === Number(selectedDistrict)
       );
@@ -103,12 +119,11 @@ const AddressSelector: React.FC<AddressSelectorProps> = ({ onLoginClick, forceOp
         (w: Ward) => w.code === Number(selectedWard)
       );
 
-      const newAddr = `${wardObj?.name || ""}, ${districtObj?.name || ""}, ${
-        cityObj?.name || ""
-      }`;
+      const newAddr = `${wardObj?.name || ""}, ${districtObj?.name || ""}, ${cityObj?.name || ""
+        }`;
 
       dispatch(setSelectedAddress(newAddr));
-      
+
       dispatch(setShowLocationModal(false));
       if (onClose) onClose();
     }
@@ -127,16 +142,15 @@ const AddressSelector: React.FC<AddressSelectorProps> = ({ onLoginClick, forceOp
   };
 
   //  Hiển thị trạng thái loading và error
-  
-  // const renderLoadingState = () => {
-  //   if (status === "pending") {
-  //     return <div className="loading-message">Đang tải dữ liệu địa chỉ...</div>;
-  //   }
-  //   if (status === "failed") {
-  //     return <div className="error-message">Lỗi: {error}</div>;
-  //   }
-  //   return null;
-  // };
+  const renderLoadingState = () => {
+    if (status === "pending") {
+      return <div className="loading-message">Đang tải dữ liệu địa chỉ...</div>;
+    }
+    if (status === "failed") {
+      return <div className="error-message">Lỗi: {error}</div>;
+    }
+    return null;
+  };
 
   return (
     <>
@@ -178,7 +192,7 @@ const AddressSelector: React.FC<AddressSelectorProps> = ({ onLoginClick, forceOp
                 <div className="or-divider">hoặc</div>
 
                 {/* Hiển thị loading/error state */}
-                {/* {renderLoadingState()} */}
+                {renderLoadingState()}
 
                 <div className="location-options">
                   <label className="location-option">

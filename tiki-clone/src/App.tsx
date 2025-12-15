@@ -26,7 +26,7 @@ const App: React.FC = () => {
                 <Route path="/brand/:brandId" element={<BrandPage />} />
                 <Route path="/about" element={<AboutPage />} />
                 <Route path="/buyer-info" element={<BuyerInfo />} />
-                {/* Future routes can be added here */}
+
                 {/* <Route path="/view-all-top-deals" element={<ViewAllTopDeals />} /> */}
             </Routes>
         </Router>

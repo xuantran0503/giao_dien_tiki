@@ -12,11 +12,11 @@ import {
 
 import storage from "redux-persist/lib/storage";
 
-import { setupCrossTabSync } from "../utils/syncTabs";
+import { setupCrossTabSync } from "../src/utils/syncTabs";
 
-import cartReducer from "./cartSlice";
-import checkoutReducer from "./checkoutSlice";
-import addressReducer from "./addressSlice";
+import cartReducer from "../src/store/cartSlice";
+import checkoutReducer from "../src/store/checkoutSlice";
+import addressReducer from "../src/store/addressSlice";
 
 const rootReducer = combineReducers({
   cart: cartReducer,

@@ -1,19 +1,24 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { removeFromCart, removeManyFromCart, updateQuantity } from "../store/cartSlice";
+import { addToCart, removeFromCart, removeManyFromCart, updateQuantity } from "../store/cartSlice";
 import Header from "../components/Header/Header";
 import Footer from "../components/Footer/Footer";
-import { addToCart } from "../store/cartSlice";
+// import { addToCart } from "../store/cartSlice";
 import { topDealsData } from "../data/topDealsData";
 import { calculateDiscountedPrice, formatPrice } from "../utils/priceUtils";
 import "./CartPage.css";
 import { PrevArrow, NextArrow } from "../components/shared/NavigationArrows";
 import CheckoutForm from "../components/CheckoutForm/CheckoutForm";
 
+import { useAppDispatch, useAppSelector } from "../store/hooks";
+
 const CartPage = () => {
-  const dispatch = useDispatch();
-  const cartItems = useSelector((state) => state.cart.items);
+  // const dispatch = useDispatch();
+  // const cartItems = useSelector((state) => state.cart.items);
+
+  const dispatch = useAppDispatch();
+  const cartItems = useAppSelector((state) => state.cart.items);
 
   const [selectedItems, setSelectedItems] = useState([]);
   const [showCheckoutForm, setShowCheckoutForm] = useState(false);
@@ -90,13 +95,13 @@ const CartPage = () => {
     // Lưu danh sách sản phẩm cần xóa trước khi state thay đổi
     const itemsToRemove = [...selectedItems];
     console.log('Items to remove:', itemsToRemove);
-    
+
     dispatch(removeManyFromCart(itemsToRemove));
-    
+
     setSelectedItems([]);
-  
+
     setShowCheckoutForm(false);
-    
+
     alert('Đặt hàng thành công! Bạn có thể xem lịch sử đơn hàng trong menu ở cạnh icon giỏ hàng.');
   };
 
@@ -370,7 +375,7 @@ const CartPage = () => {
         {/* Sidebar */}
         {cartItems.length > 0 && (
           <div className="cart-sidebar">
-            
+
             <div className="order-summary">
               <div className="summary-row">
                 <span>Tổng tiền hàng</span>
@@ -386,7 +391,7 @@ const CartPage = () => {
                   <sup>₫</sup>
                 </span>
               </div>
-            
+
               <div className="summary-divider"></div>
               <div className="summary-row total-row">
                 <span>Tổng tiền thanh toán</span>

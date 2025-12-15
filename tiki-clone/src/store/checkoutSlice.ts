@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { CartItem } from "./cartSlice";
 
-// Interface for Checkout Data
+
 export interface CheckoutData {
   id: string;
   items: CartItem[];
@@ -12,7 +12,7 @@ export interface CheckoutData {
   status: "pending" | "confirmed" | "shipping" | "delivered" | "cancelled";
 }
 
-// Interface for Checkout State
+
 export interface CheckoutState {
   history: CheckoutData[];
   data: CheckoutData | null;
@@ -59,8 +59,7 @@ const checkoutSlice = createSlice({
   },
 });
 
-// Selectors
-// Note: RootState will be imported from store.ts in components
+
 export const selectCheckoutHistory = (state: { checkout: CheckoutState }) => state.checkout.history;
 export const selectCurrentCheckout = (state: { checkout: CheckoutState }) => state.checkout.data;
 export const selectCheckoutById = (state: { checkout: CheckoutState }, id: string) =>

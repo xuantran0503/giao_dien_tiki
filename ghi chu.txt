@@ -13,18 +13,17 @@ nhạc : nắng hoa niên
 
 học và sử dụng typeScript, 
 
-tạo code .ts tương ứng từ các code .js bắt buộc phải chuyển sang chuẩn cấu trúc ts ở dưới đây và vẫn phải giữ nguyên file code js cũ src/index.js → src/index.tsx
-src/App.jsx → src/App.tsx src/utils/ (2 files)
+tạo code .ts tương ứng từ các code .js bắt buộc phải chuyển sang chuẩn cấu trúc ts ở dưới đây và vẫn phải giữ nguyên file code js cũ : SearchBar.tsx , Login.tsx
 
 Khi NÀO nên chuyển sang TypeScript?
-✅ Nên chuyển:
+ Nên chuyển:
 File mới: Tạo file mới thì nên dùng .ts/.tsx
 File phức tạp: Logic business quan trọng
 API calls: Xử lý data từ server
 Redux slices: State management
 Shared utilities: Functions được dùng nhiều nơi
 Type definitions: Interfaces, types
-⚠️ Có thể để JavaScript:
+ Có thể để JavaScript:
 File đơn giản: Chỉ có UI logic cơ bản
 Prototype code: Code thử nghiệm
 Legacy code: Code cũ hoạt động tốt
@@ -36,30 +35,165 @@ src/App.jsx → src/App.tsx
 src/store/store.js → src/store.ts
 src/utils/ (2 files)
 
-🔶 PRIORITY 2 - Complex Components (8 files):
+ PRIORITY 2 - Complex Components (8 files):
 CheckoutForm.jsx, Login.jsx, SearchBar.jsx, Header.jsx
 FlashSale.jsx, TopDeals.jsx, SuggestedProducts.jsx
 
-🔷 PRIORITY 3 - Pages (13 files):
+ PRIORITY 3 - Pages (13 files):
 Main pages: Home.jsx, CartPage.jsx, ProductDetailPage.jsx
 Feature pages: CategoryPage.jsx, FlashSalePage.jsx, etc.
 
-🔹 PRIORITY 4 - UI Components (16 files):
+ PRIORITY 4 - UI Components (16 files):
 Layout: Banner.jsx, Footer.jsx, HeroSlider.jsx
 Features: FeaturedBrands.jsx, MiniCategories.jsx, etc.
 
-🔸 PRIORITY 5 - Data Files (6 files):
+ PRIORITY 5 - Data Files (6 files):
 src/data/ - Tất cả data files
-🎯 RECOMMENDATION:
-Bắt đầu với Priority 1 (Core files) vì chúng ảnh hưởng toàn bộ app. Sau đó tiếp tục theo thứ tự ưu tiên.
+-------------------------------------------------
 
-Thời gian ước tính: 5-6 tuần nếu làm full-time, hoặc có thể kéo dài hơn nếu làm part-time.
+Bạn dùng createAsyncThunk để gọi API trong Redux Toolkit vì nó đơn giản hóa việc xử lý các tác vụ bất đồng bộ (như gọi API) bằng cách tự động tạo ra các action types (pending, fulfilled, rejected) và xử lý các trạng thái này trong slice [1].
+Trước đây, trong Redux truyền thống, bạn cần dùng các middleware như redux-thunk hoặc redux-saga, đồng thời phải tự định nghĩa và gửi đi ba action riêng biệt (trước khi gọi, khi thành công, khi thất bại) [1]. createAsyncThunk đóng gói toàn bộ logic này vào một hàm duy nhất, giúp code sạch sẽ và dễ bảo trì hơn, đặc biệt khi làm việc với createSlice [1]. 
+Cụ thể hơn:
+Tự động xử lý vòng đời request: Nó tự động dispatch các action pending, fulfilled, và rejected trong các giai đoạn khác nhau của lời gọi API [1].
+Tích hợp với extraReducers: createSlice được thiết kế để lắng nghe các action được tạo ra bởi createAsyncThunk thông qua extraReducers, giúp cập nhật state một cách dễ dàng và có cấu trúc [1].
+Xử lý lỗi tích hợp: Cho phép bạn trả về một giá trị lỗi (dùng rejectWithValue) mà sau đó sẽ được đưa vào payload của action rejected, giúp quản lý lỗi hiệu quả hơn [1].
+Trong đoạn code của bạn:
+Bạn định nghĩa fetchAddressData bằng createAsyncThunk.
+Phần extraReducers trong addressSlice lắng nghe các action pending, fulfilled, và rejected của fetchAddressData để cập nhật status, error, và addressData trong store Redux. 
+Tóm lại, createAsyncThunk là cách chuẩn và hiệu quả được Redux Toolkit khuyến nghị để xử lý các tác vụ bất đồng bộ. 
 
-Chiến lược: Migration từ từ, test kỹ sau mỗi file để đảm bảo không break functionality!
+=======================================
 
+Khi nào nên dùng Interface (Lý do cho đoạn code trên)
+Lý do chính khiến interface được sử dụng trong đoạn mã của bạn là vì nó được thiết kế tối ưu hơn cho việc định nghĩa cấu trúc đối tượng (object shapes).
+Cú pháp sạch sẽ và tập trung vào đối tượng: interface có cú pháp trực quan hơn khi mô tả một đối tượng có nhiều thuộc tính.
+typescript
+// Interface (sử dụng trong code của bạn)
+export interface City {
+  code: number;
+  name: string;
+  districts: District[];
+}
+Hãy thận trọng khi sử dụng mã.
+
+So với type cần dấu = và không cần dấu phẩy (nếu viết theo dạng interface):
+typescript
+// Type tương đương
+export type City = {
+  code: number;
+  name: string;
+  districts: District[];
+};
+Hãy thận trọng khi sử dụng mã.
+
+Khả năng mở rộng (Declaration Merging): Đây là điểm khác biệt quan trọng nhất. interface có thể được mở rộng bằng cách khai báo lại cùng tên ở những nơi khác nhau, TypeScript sẽ tự động gộp chúng lại.Điều này cực kỳ hữu ích trong các thư viện lớn hoặc khi bạn muốn mở rộng các kiểu dữ liệu toàn cục (ví dụ: mở rộng đối tượng Window trong trình duyệt).
+typescript
+interface AddressState {
+  addressData: City[];
+  status: string;
+}
+
+// Ở một file khác, bạn có thể thêm thuộc tính mới mà không sửa file gốc
+interface AddressState {
+  // TypeScript sẽ gộp thuộc tính này vào
+  locationType: 'default' | 'custom';
+}
+Hãy thận trọng khi sử dụng mã.
+
+type thì không làm được điều này; nếu bạn khai báo lại một type cùng tên, bạn sẽ gặp lỗi.
+Quy ước trong cộng đồng (Convention): Trong cộng đồng React/Redux/TypeScript, quy ước chung là sử dụng interface cho các đối tượng (props, state, models) và sử dụng type cho các kiểu phức tạp hơn (union types, intersection types, tuples).
+Khi nào thì dùng Type (Trường hợp không dùng Interface được)
+Mặc dù interface tuyệt vời cho đối tượng, type lại linh hoạt hơn nhiều trong các trường hợp khác mà interface không hỗ trợ.
+Trong chính đoạn mã của bạn, bạn đã sử dụng type một cách khéo léo cho các kiểu kết hợp (union types/literals):
+Kiểu kết hợp (Union Types):
+typescript
+// Interface không thể định nghĩa kiểu này trực tiếp
+type LocationType = 'default' | 'custom';
+
+// Được dùng trong PayloadAction:
+setLocationType: (state, action: PayloadAction< 'default' | 'custom' >) => { ... }
+Hãy thận trọng khi sử dụng mã.
+
+Trạng thái (Literal Types):
+typescript
+// Interface không thể định nghĩa kiểu này trực tiếp
+type Status = 'idle' | 'pending' | 'succeeded' | 'failed';
+
+// Được dùng trong AddressState:
+status: 'idle' | 'pending' | 'succeeded' | 'failed';
+Hãy thận trọng khi sử dụng mã.
+
+Tóm tắt sự lựa chọn
+Tính năng	Interface	Type
+Mô tả đối tượng	Tốt nhất, cú pháp sạch	Tốt, linh hoạt
+Mở rộng (Merging)	Có (Tự động gộp)	Không
+Định nghĩa Union/Literal Types	Không thể trực tiếp	Có (Rất linh hoạt)
+Trong đoạn mã của bạn, interface được dùng để định nghĩa các mô hình dữ liệu (City, District, Ward) và cấu trúc trạng thái lớn (AddressState), tận dụng sự rõ ràng và khả năng mở rộng của nó.
+Nếu bạn thay tất cả interface bằng type trong mã của mình, nó vẫn sẽ chạy và hoạt động chính xác. Việc lựa chọn sử dụng cái nào chủ yếu dựa trên quy ước nhóm, sở thích cá nhân và nhu cầu về tính năng mở rộng (merging).
+
+
+--------------------------------
+Mục đích chính của interface ở đây là để định nghĩa cấu trúc (kiểu dữ liệu) rõ ràng cho dữ liệu trong ứng dụng của bạn. 
+Dưới đây là những lý do cụ thể tại sao chúng ta phải dùng interface trong ngữ cảnh này:
+1. Đảm bảo an toàn kiểu dữ liệu (Type Safety)
+TypeScript được thiết kế để giúp bạn bắt các lỗi liên quan đến kiểu dữ liệu ngay trong quá trình viết mã (biên dịch) thay vì chờ đến lúc chạy chương trình (runtime).
+Ví dụ: Khi bạn định nghĩa export interface City { code: number; name: string; districts: District[]; }, bạn đang nói với trình biên dịch rằng mọi đối tượng kiểu City phải có các thuộc tính code (kiểu số), name (kiểu chuỗi) và districts (một mảng các District).
+Nếu ở đâu đó trong code, bạn cố gắng truy cập myCity.city_name (sai tên thuộc tính) hoặc gán một chuỗi vào myCity.code, TypeScript sẽ báo lỗi ngay lập tức.
+2. Cung cấp tài liệu rõ ràng (Self-Documentation)
+Các interface đóng vai trò như tài liệu mô tả chính xác dữ liệu của bạn trông như thế nào:
+Bất kỳ lập trình viên nào đọc mã này (kể cả bạn trong tương lai) đều hiểu ngay lập tức cấu trúc của dữ liệu địa chỉ mà API trả về (City, District, Ward) và cấu trúc của trạng thái Redux (AddressState).
+3. Tận dụng tính năng của Redux Toolkit và Axios
+Cả createAsyncThunk của Redux Toolkit và thư viện axios đều hoạt động hiệu quả hơn khi biết kiểu dữ liệu:
+Với createAsyncThunk: Bạn dùng <City[], void, { rejectValue: string }> để khai báo rõ kiểu dữ liệu mà hàm thunk sẽ trả về (City[]) và kiểu dữ liệu cho lỗi.
+Với axios: Bạn dùng axios.get<City[]>(...) để yêu cầu Axios đảm bảo dữ liệu nhận được từ API có kiểu City[].
+4. Hỗ trợ IntelliSense/Gợi ý mã (Code Autocomplete)
+Trong các trình chỉnh sửa mã (như VS Code), nhờ có interface, khi bạn gõ state.addressData[0]. (dấu chấm), trình biên dịch sẽ ngay lập tức gợi ý các thuộc tính code, name, districts, giúp tăng tốc độ lập trình và giảm lỗi chính tả.
+Tóm tắt
+Bạn phải dùng interface vì đoạn mã đang sử dụng TypeScript, và interface là cách để áp dụng kỷ luật về kiểu dữ liệu, làm cho mã nguồn minh bạch hơn, dễ bảo trì hơn và ít lỗi hơn.
+
+=============================
+
+import { useDispatch, useSelector, TypedUseSelectorHook } from 'react-redux';
+import type { RootState, AppDispatch } from './store';
+
+export const useAppDispatch = () => useDispatch<AppDispatch>();
+export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
+
+1. Các dòng import
+typescript
+import { useDispatch, useSelector, TypedUseSelectorHook } from 'react-redux';
+import type { RootState, AppDispatch } from './store';
+useDispatch, useSelector: Đây là các hooks tiêu chuẩn từ thư viện react-redux dùng để tương tác với store Redux.
+TypedUseSelectorHook: Một kiểu dữ liệu (type) đặc biệt từ react-redux giúp định nghĩa một phiên bản hook useSelector đã được gõ kiểu.
+type { RootState, AppDispatch } from './store';: Dòng này nhập (import) các kiểu dữ liệu đã được định nghĩa sẵn trong file ./store của bạn:
+RootState: Kiểu dữ liệu mô tả toàn bộ cấu trúc của trạng thái Redux (toàn bộ dữ liệu trong store).
+AppDispatch: Kiểu dữ liệu mô tả chính xác hàm dispatch của store, bao gồm tất cả các loại hành động (actions) mà nó có thể gửi đi. 
+2. Định nghĩa các hooks đã được gõ kiểu 
+typescript
+// Typed hooks for use throughout the app
+export const useAppDispatch = () => useDispatch<AppDispatch>();
+export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
+Đây là nơi tạo ra các hooks tùy chỉnh mà bạn sẽ sử dụng trong toàn bộ ứng dụng thay vì hooks gốc:
+useAppDispatch:
+Nó bọc hàm useDispatch gốc.
+Tham số generic <AppDispatch> nói với TypeScript rằng hàm dispatch này chỉ có thể nhận các hành động đã được định nghĩa trong AppDispatch.
+Công dụng: Khi bạn gọi const dispatch = useAppDispatch(), TypeScript sẽ biết chính xác những hành động nào hợp lệ và sẽ báo lỗi nếu bạn cố gắng gửi một hành động không tồn tại hoặc sai cấu trúc.
+useAppSelector:
+Nó gán kiểu TypedUseSelectorHook<RootState> cho hàm useSelector gốc.
+Công dụng: Khi bạn sử dụng useAppSelector để lấy dữ liệu từ store (ví dụ: const user = useAppSelector(state => state.user)), TypeScript sẽ tự động hiểu cấu trúc của state là gì (RootState) và biết thuộc tính user có tồn tại hay không, giúp ngăn ngừa lỗi truy cập thuộc tính không xác định. 
+Tóm tắt
+Thay vì sử dụng useDispatch và useSelector trực tiếp từ react-redux (vốn không biết gì về cấu trúc store cụ thể của bạn), đoạn code này định nghĩa các phiên bản "thông minh hơn" (useAppDispatch và useAppSelector) để cung cấp trải nghiệm phát triển an toàn hơn với TypeScript. Bạn sẽ sử dụng 2 hooks mới này trong mọi component React của mình. 
+
+================================
+
+const AddressSelector: React.FC<AddressSelectorProps> = ({ ... }) => { ... }
+-> React.FC (Function Component): Kiểu chuẩn cho component React.
+   Nó đảm bảo component này nhận đúng các props đã khai báo trong AddressSelectorProps.
+
+---------------------
 
 Trong TypeScript (TS), number (chữ thường) là một kiểu dữ liệu nguyên thủy (primitive type) dùng để biểu diễn tất cả các giá trị số (số nguyên, số thập phân), còn Number (chữ hoa) là một constructor function (hàm tạo) hoặc kiểu wrapper object (đối tượng bao bọc) tương ứng với kiểu number, có thể dùng để tạo đối tượng số (nhưng thường không cần thiết) và đóng vai trò trong việc định nghĩa kiểu, nhưng number là cách dùng phổ biến và chuẩn hơn trong TypeScript. 
-
+========================================
 học và sử dụng createAsyncThunk 
 
 sử dụng axios thay cho fetch để dùng api 
@@ -73,7 +207,7 @@ Tính năng Interceptors. Fetch không tích hợp
 Tính năng hủy request. Fetch không có tính năng này
 Hỗ trợ cài đặt plugin mở rộng. Fetch yêu cầu viết mã tùy chỉnh nếu muốn
 Thực tế dự án với các ứng dụng Web đơn giản, không đòi hỏi các tương tác nhiều với người dùng như các Web tin tức, giới thiệu,… thì sử dụng Fetch là đủ. Axios sẽ phù hợp hơn cho các ứng dụng client có nhiều chức năng hơn như Single Page Application, các hệ thống quản trị nội dung, thao tác CRUD với dữ liệu.
-
++++++++++++++++++++++++++++++------------------------------------
 áp dụng vào cho code AddressSelector
 
 
@@ -144,7 +278,7 @@ interface IPerson { name: string; age: number; } -> Dùng để đảm bảo m�
     // Việc tạo ra file .js cuối cùng để chạy sẽ do React-Scripts (Webpack/Babel) đảm nhiệm.
 }
 
-
+---------------------------------------------------------------
 
 1. let và const giống nhau ở điểm nào?
 
@@ -260,7 +394,7 @@ Khi nào dùng	Khi giá trị sẽ thay đổi	Khi giá trị cố định
 
 
 
-
+---------------------------------------------------------
 
 
  const payload = { ...data, meta: meta || null, id: String(Math.floor(Math.random() * 1000000000)) };

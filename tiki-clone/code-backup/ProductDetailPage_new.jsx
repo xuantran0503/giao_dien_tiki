@@ -1,18 +1,18 @@
 import React, { useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { addToCart } from "../store/cartSlice";
-import Header from "../components/Header/Header";
-import Footer from "../components/Footer/Footer";
-import CheckoutForm from "../components/CheckoutForm/CheckoutForm";
-import AddressSelector from "../components/AddressSelector/AddressSelector";
-import { PrevArrow, NextArrow } from "../components/shared/NavigationArrows";
-import { suggestedProductsData } from "../data/suggestedProductsData";
-import { topDealsData } from "../data/topDealsData";
-import { flashSaleData } from "../data/flashSaleData";
-import { hotInternationalData } from "../data/hotInternationalData";
-import { youMayLikeData } from "../data/youMayLikeData";
-import { calculateDiscountedPrice, formatPrice } from "../utils/priceUtils";
+import { addToCart } from "../src/store/cartSlice";
+import Header from "../src/components/Header/Header";
+import Footer from "../src/components/Footer/Footer";
+import CheckoutForm from "../src/components/CheckoutForm/CheckoutForm";
+import AddressSelector from "../src/components/AddressSelector/AddressSelector";
+import { PrevArrow, NextArrow } from "../src/components/shared/NavigationArrows";
+import { suggestedProductsData } from "../src/data/suggestedProductsData";
+import { topDealsData } from "../src/data/topDealsData";
+import { flashSaleData } from "../src/data/flashSaleData";
+import { hotInternationalData } from "../src/data/hotInternationalData";
+import { youMayLikeData } from "../src/data/youMayLikeData";
+import { calculateDiscountedPrice, formatPrice } from "../src/utils/priceUtils";
 import "./ProductDetailPage.css";
 
 const ProductDetailPage = () => {

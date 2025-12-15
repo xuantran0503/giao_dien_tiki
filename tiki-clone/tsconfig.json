@@ -24,5 +24,17 @@
   "include": [
     "src",
     "src/types"
-  ]
+
+
+// , "code-backup/ProductDetailPage_new.jsx", "code-backup/SearchBar_new.jsx", "code-backup/SearchBar-old.jsx", "code-backup/SearchBar.jsx", "code-backup/Login.jsx"  
+
+
+],
+// , "code-backup/checkoutSlice, "code-backup/App.jsx".js", "code-backup/cartSlice.js", "code-backup/index.js"  ]
+
+
+// , "code-backup/syncTabs.js", "code-backup/priceUtils.js", "code-backup/store.js", "code-backup/AddressSelector-array-old.jsx", "code-b, "code-backup/AddressSelector-new.jsx"ackup/, "code-backup/AddressSelector-fetch-js, "code-backup/CheckoutForm-new.jsx"-api.jsx"add, "code-backup/CheckoutForm-old.jsx"ressSlice-axios-createAsyncThunk.js", "code-backup/cartSlice_new.js", "code-backup/cartSlice-old.js"  ]
+// }
+
+
 }

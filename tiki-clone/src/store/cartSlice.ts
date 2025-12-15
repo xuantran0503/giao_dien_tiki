@@ -1,6 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-// Interface for Cart Item
 export interface CartItem {
   id: number;
   name: string;
@@ -11,7 +10,6 @@ export interface CartItem {
   quantity: number;
 }
 
-// Interface for Cart State
 export interface CartState {
   items: CartItem[];
   totalQuantity: number;
@@ -104,8 +102,7 @@ const cartSlice = createSlice({
   },
 });
 
-// Selectors
-// Note: RootState will be imported from store.ts in components
+
 export const selectCartItems = (state: { cart: CartState }) => state.cart.items;
 export const selectTotalQuantity = (state: { cart: CartState }) => state.cart.totalQuantity;
 export const selectCartTotal = (state: { cart: CartState }) =>

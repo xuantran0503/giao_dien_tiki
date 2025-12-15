@@ -1,15 +1,15 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import ScrollToTop from "./components/ScrollToTop";
-import HomePage from "./pages/HomePage";
-import CategoryPage from "./pages/CategoryPage";
-import ProductDetailPage from "./pages/ProductDetailPage";
-import CartPage from "./pages/CartPage";
-import FlashSalePage from "./pages/FlashSalePage";
-import PromotionPage from "./pages/PromotionPage";
-import BrandPage from "./pages/BrandPage";
-import AboutPage from "./pages/AboutPage";
-import BuyerInfo from "./pages/BuyerInfo";
+import ScrollToTop from "../src/components/ScrollToTop";
+import HomePage from "../src/pages/HomePage";
+import CategoryPage from "../src/pages/CategoryPage";
+import ProductDetailPage from "../src/pages/ProductDetailPage";
+import CartPage from "../src/pages/CartPage";
+import FlashSalePage from "../src/pages/FlashSalePage";
+import PromotionPage from "../src/pages/PromotionPage";
+import BrandPage from "../src/pages/BrandPage";
+import AboutPage from "../src/pages/AboutPage";
+import BuyerInfo from "../src/pages/BuyerInfo";
 import "./App.css";
 
 function App() {
