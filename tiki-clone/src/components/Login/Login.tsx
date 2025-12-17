@@ -5,7 +5,6 @@ interface LoginProps {
   onClose: () => void;
 }
 
-// Type for login steps
 type LoginStep = 1 | 2 | 3 | 4;
 
 interface FormErrors {
@@ -31,28 +30,23 @@ const Login: React.FC<LoginProps> = ({ onClose }) => {
     resetAccount: "",
   });
 
-
   const validatePhoneNumber = (phone: string): boolean => {
     const phoneRegex = /^(0[3|5|7|8|9])+([0-9]{8})$/;
     return phoneRegex.test(phone);
   };
-
 
   const validateEmail = (email: string): boolean => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
   };
 
-
   const clearError = (field: keyof FormErrors): void => {
     setErrors(prev => ({ ...prev, [field]: "" }));
   };
 
-
   const setError = (field: keyof FormErrors, message: string): void => {
     setErrors(prev => ({ ...prev, [field]: message }));
   };
-
 
   const handlePhoneChange = (e: ChangeEvent<HTMLInputElement>): void => {
     const value = e.target.value;
@@ -60,7 +54,6 @@ const Login: React.FC<LoginProps> = ({ onClose }) => {
     setEmail(onlyNumbers);
     clearError("phone");
   };
-
 
   const handleContinue = (): void => {
     const phone = email.trim();
@@ -80,18 +73,15 @@ const Login: React.FC<LoginProps> = ({ onClose }) => {
     clearError("phone");
   };
 
-
   const handleEmailChange = (e: ChangeEvent<HTMLInputElement>): void => {
     setEmail(e.target.value);
     clearError("email");
   };
 
-
   const handlePasswordChange = (e: ChangeEvent<HTMLInputElement>): void => {
     setPassword(e.target.value);
     clearError("password");
   };
-
 
   const handleLogin = (e: FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
@@ -124,7 +114,6 @@ const Login: React.FC<LoginProps> = ({ onClose }) => {
       onClose();
     }
   };
-
 
   const handlePhoneLogin = (e: FormEvent<HTMLFormElement>): void => {
     e.preventDefault();

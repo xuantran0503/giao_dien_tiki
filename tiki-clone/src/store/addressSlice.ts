@@ -1,4 +1,5 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
+import { createSelector } from "reselect";
 import axios from "axios";
 
 export interface City {
@@ -6,7 +7,7 @@ export interface City {
   name: string;
   districts: District[];
 }
-// Type tương đương
+//kiểu Type tương đương
 // export type City = {
 //   code: number;
 //   name: string;
@@ -40,12 +41,14 @@ const initialState: AddressState = {
   addressData: [],
   status: "idle",
   error: null,
+  showLocationModal: false,
+
+
   selectedAddress: "P. Minh Khai, Q. Hoàng Mai, Hà Nội",
   selectedCity: "",
   selectedDistrict: "",
   selectedWard: "",
   locationType: "default",
-  showLocationModal: false,
 };
 
 export const fetchAddressData = createAsyncThunk<City[], void, { rejectValue: string }>(
@@ -56,8 +59,10 @@ export const fetchAddressData = createAsyncThunk<City[], void, { rejectValue: st
         "https://provinces.open-api.vn/api/?depth=3"
       );
       return response.data;
-    } catch (error: any) {
-      return rejectWithValue(error.response.data);
+    } catch (error: unknown) {
+      // return rejectWithValue(error.response.data)
+
+      return rejectWithValue( error instanceof Error ? error.message : "Failed to fetch address data" );
     }
   }
 );
@@ -66,6 +71,7 @@ const addressSlice = createSlice({
   name: "address",
   initialState,
   reducers: {
+
     setLocationType: (state, action: PayloadAction<"default" | "custom">) => {
       state.locationType = action.payload;
     },
@@ -82,6 +88,7 @@ const addressSlice = createSlice({
       state.selectedWard = action.payload;
     },
     setSelectedAddress: (state, action: PayloadAction<string>) => {
+      console.log(" Setting address:", action.payload);
       state.selectedAddress = action.payload;
     },
     setShowLocationModal: (state, action: PayloadAction<boolean>) => {
@@ -93,18 +100,13 @@ const addressSlice = createSlice({
       state.selectedDistrict = "";
       state.selectedWard = "";
     },
-    loadAddressFromStorage: (state) => {
-      const saved = window.localStorage.getItem("selectedAddress");
-      if (saved && typeof saved === "string") {
-        state.selectedAddress = saved;
-      }
-    },
     syncAddress: (state, action: PayloadAction<{ selectedAddress: string }>) => {
       if (action.payload && action.payload.selectedAddress) {
         state.selectedAddress = action.payload.selectedAddress;
       }
     },
   },
+  
   extraReducers: (builder) => {
     builder
       .addCase(fetchAddressData.pending, (state) => {
@@ -135,26 +137,33 @@ export const selectSelectedDistrict = (state: { address: AddressState }) => stat
 export const selectSelectedWard = (state: { address: AddressState }) => state.address.selectedWard;
 export const selectShowLocationModal = (state: { address: AddressState }) => state.address.showLocationModal;
 
-export const selectDistrictsByCity = (state: { address: AddressState }) => {
-  const { addressData, selectedCity } = state.address;
-  if (!selectedCity) return [];
+// Memoized selectors using reselect to prevent unnecessary re-renders
+const EMPTY_ARRAY: never[] = [];
 
-  const city = addressData.find((c) => c.code === Number(selectedCity));
-  return city && city.districts ? city.districts : [];
-};
+export const selectDistrictsByCity = createSelector(
+  [selectAddressData, selectSelectedCity],
+  (addressData, selectedCity) => {
+    if (!selectedCity) return EMPTY_ARRAY;
 
-export const selectWardsByDistrict = (state: { address: AddressState }) => {
-  const { addressData, selectedCity, selectedDistrict } = state.address;
-  if (!selectedCity || !selectedDistrict) return [];
+    const city = addressData.find((c) => c.code === Number(selectedCity));
+    return city?.districts || EMPTY_ARRAY;
+  }
+);
 
-  const city = addressData.find((c) => c.code === Number(selectedCity));
-  if (!city || !city.districts) return [];
+export const selectWardsByDistrict = createSelector(
+  [selectAddressData, selectSelectedCity, selectSelectedDistrict],
+  (addressData, selectedCity, selectedDistrict) => {
+    if (!selectedCity || !selectedDistrict) return EMPTY_ARRAY;
 
-  const district = city.districts.find(
-    (d) => d.code === Number(selectedDistrict)
-  );
-  return district && district.wards ? district.wards : [];
-};
+    const city = addressData.find((c) => c.code === Number(selectedCity));
+    if (!city?.districts) return EMPTY_ARRAY;
+
+    const district = city.districts.find(
+      (d) => d.code === Number(selectedDistrict)
+    );
+    return district?.wards || EMPTY_ARRAY;
+  }
+);
 
 export const {
   setLocationType,
@@ -164,7 +173,6 @@ export const {
   setSelectedAddress,
   setShowLocationModal,
   resetSelection,
-  loadAddressFromStorage,
   syncAddress,
 } = addressSlice.actions;
 

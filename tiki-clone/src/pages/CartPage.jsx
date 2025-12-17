@@ -1,7 +1,6 @@
-import React, { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
-import { addToCart, removeFromCart, removeManyFromCart, updateQuantity } from "../store/cartSlice";
+import { addToCart, removeFromCart, removeSelectBuysFromCart, updateQuantity } from "../store/cartSlice";
 import Header from "../components/Header/Header";
 import Footer from "../components/Footer/Footer";
 // import { addToCart } from "../store/cartSlice";
@@ -14,6 +13,7 @@ import CheckoutForm from "../components/CheckoutForm/CheckoutForm";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 
 const CartPage = () => {
+
   // const dispatch = useDispatch();
   // const cartItems = useSelector((state) => state.cart.items);
 
@@ -24,6 +24,12 @@ const CartPage = () => {
   const [showCheckoutForm, setShowCheckoutForm] = useState(false);
   const [editingQuantity, setEditingQuantity] = useState(null);
   const [quantityInput, setQuantityInput] = useState('');
+
+  // Log giỏ hàng khi có thay đổi
+  useEffect(() => {
+    console.log('giỏ hàng hiện tại:', cartItems.length, 'sản phẩm');
+    console.log(cartItems.map(item => ({ id: item.id, name: item.name, quantity: item.quantity })));
+  }, [cartItems]);
 
   const handleSelectAll = (e) => {
     if (e.target.checked) {
@@ -87,25 +93,60 @@ const CartPage = () => {
 
   const handleCheckoutClick = () => {
     console.log('Checkout clicked, selectedItems:', selectedItems);
+    console.log('Selected cart items for checkout:', cartItems.filter(item => selectedItems.includes(item.id)));
+    // console.log('Total amount for checkout:', cartItems
+    //   .filter(item => selectedItems.includes(item.id))
+    //   .reduce((total, item) => total + (item.price * item.quantity), 0));
     setShowCheckoutForm(true);
   };
 
-  const handleCheckoutSubmit = (formData) => {
-    // console.log('Checkout form submitted with data:', formData);
+
+  // useEffect(() => {
+  //     console.log(
+  //       'Cart items updated:',
+  //       cartItems.map(item => ({ id: item.id, name: item.name }))
+  //     );
+  //   }, [cartItems]);
+
+  const handleCheckoutSubmit = (checkoutData) => {
+    console.log('Add completed:', checkoutData);
+
     // Lưu danh sách sản phẩm cần xóa trước khi state thay đổi
     const itemsToRemove = [...selectedItems];
-    console.log('Items to remove:', itemsToRemove);
+    console.log('Items to remove from cart:', itemsToRemove);
+    console.log('Cart items before removal:', cartItems.map(item => ({ id: item.id, type: typeof item.id, name: item.name })));
+    // console.log('Selected items types:', selectedItems.map(id => ({ id, type: typeof id })));
 
-    dispatch(removeManyFromCart(itemsToRemove));
+    // Xóa các sản phẩm đã mua khỏi giỏ hàng
+    dispatch(removeSelectBuysFromCart(itemsToRemove));
+    console.log('Dispatched removeSelectBuysFromCart with IDs:', itemsToRemove);
 
     setSelectedItems([]);
 
-    setShowCheckoutForm(false);
+    // Log sẽ được thực hiện trong useEffect khi cartItems thay đổi
+    // console.log('Cart items after removal:', cartItems.map(item => ({ id: item.id, name: item.name })));
 
-    alert('Đặt hàng thành công! Bạn có thể xem lịch sử đơn hàng trong menu ở cạnh icon giỏ hàng.');
+
+    // Reset selected items - KHÔNG đóng form ngay lập tức
+    // setShowCheckoutForm(false); // Để CheckoutForm tự đóng sau khi hiển thị thông báo
+
+    // Thông báo thành công sẽ được hiển thị từ CheckoutForm
+    // console.log('Order completed successfully, products should be removed from cart');
+
+
+
+    // Thêm timeout để kiểm tra cart sau khi dispatch
+    // setTimeout(() => {
+    //   console.log('Cart items after removal (delayed check):', cartItems.map(item => ({ id: item.id, name: item.name })));
+    // }, 100);
   };
 
   const handleCheckoutCancel = () => {
+    setShowCheckoutForm(false);
+  };
+
+  const handleCheckoutClose = () => {
+    // console.log('Closing checkout form from callback');
     setShowCheckoutForm(false);
   };
 
@@ -321,7 +362,7 @@ const CartPage = () => {
                           value={quantityInput}
                           onChange={handleQuantityChange}
                           onBlur={() => handleQuantityBlur(item.id)}
-                          onKeyPress={(e) => handleQuantityKeyPress(e, item.id)}
+                          onKeyDown={(e) => handleQuantityKeyPress(e, item.id)}
                           autoFocus
                           min="1"
                         />
@@ -493,7 +534,13 @@ const CartPage = () => {
         <CheckoutForm
           onSubmit={handleCheckoutSubmit}
           onCancel={handleCheckoutCancel}
-          meta={{ products: cartItems.filter(item => selectedItems.includes(item.id)) }}
+          onClose={handleCheckoutClose}
+          meta={{
+            items: cartItems.filter(item => selectedItems.includes(item.id)),
+            totalAmount: cartItems
+              .filter(item => selectedItems.includes(item.id))
+              .reduce((total, item) => total + (item.price * item.quantity), 0)
+          }}
         />
       )}
     </div>

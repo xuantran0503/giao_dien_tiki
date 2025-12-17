@@ -279,3 +279,31 @@
 }
 
 /* Search and Location styles are now in their respective component files */
+/* Order History Button */
+.order-history-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  color: inherit;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.order-history-btn:hover {
+  color: #0066cc;
+}
+
+.order-history-btn .text {
+  font-size: 12px;
+  color: #333;
+  white-space: nowrap;
+}
+
+.order-history-btn:hover .text {
+  color: #0066cc;
+}

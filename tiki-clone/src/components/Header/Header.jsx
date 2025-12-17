@@ -73,10 +73,7 @@ const Header = () => {
                   </Link>
 
                   <Link to="/buyer-info" className="icon-btn-with-text">
-                    {/* <div className="img-info">
-                      <img src="/info.png" alt="info" />
-                    </div> */}
-                    <span className="text">📋 Thông tin đơn hàng</span>
+                    <span className="text">📋 Lịch sử đơn hàng</span>
                   </Link>
                 </div>
               </div>

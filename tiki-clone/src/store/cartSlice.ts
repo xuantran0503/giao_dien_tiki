@@ -64,7 +64,7 @@ const cartSlice = createSlice({
       }
     },
 
-    removeManyFromCart: (state, action: PayloadAction<number[]>) => {
+    removeSelectBuysFromCart: (state, action: PayloadAction<number[]>) => {
       const idsToRemove = action.payload;
       // Chuyển đổi tất cả ID sang string để so sánh chính xác
       const stringIdsToRemove = idsToRemove.map(String);
@@ -113,7 +113,7 @@ export const selectCartItemById = (state: { cart: CartState }, id: number) =>
 export const {
   addToCart,
   removeFromCart,
-  removeManyFromCart,
+  removeSelectBuysFromCart,
   updateQuantity,
   clearCart,
   syncCart,

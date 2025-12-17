@@ -3,7 +3,6 @@ import type { CartState } from "../store/cartSlice";
 import type { CheckoutState } from "../store/checkoutSlice";
 import type { AddressState } from "../store/addressSlice";
 
-
 interface PersistedState {
     cart?: string;
     checkout?: string;
@@ -14,20 +13,17 @@ interface PersistedState {
     // };
 }
 
-
 interface StorageEventData {
     key: string | null;
     newValue: string | null;
     // oldValue: string | null;
 }
 
-
 export const setupCrossTabSync = (store: AppStore): (() => void) => {
 
     const handleStorageChange = (event: StorageEvent): void => {
         const { key, newValue } = event as StorageEventData;
-
-        // Only handle redux-persist root key changes
+        // only care about changes to the persisted root state
         if (key !== "persist:root" || !newValue) {
             return;
         }
@@ -79,9 +75,7 @@ export const setupCrossTabSync = (store: AppStore): (() => void) => {
         }
     };
 
-
     window.addEventListener("storage", handleStorageChange);
-
 
     return (): void => {
         window.removeEventListener("storage", handleStorageChange);

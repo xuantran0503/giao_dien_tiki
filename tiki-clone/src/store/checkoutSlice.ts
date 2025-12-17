@@ -2,6 +2,12 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { CartItem } from "./cartSlice";
 
 
+export interface AddressSnapshot {
+  detailedAddress: string;
+  generalAddress: string;
+  timestamp: string;
+}
+
 export interface CheckoutData {
   id: string;
   items: CartItem[];
@@ -10,6 +16,13 @@ export interface CheckoutData {
   paymentMethod: string;
   orderDate: string;
   status: "pending" | "confirmed" | "shipping" | "delivered" | "cancelled";
+  customerInfo?: {
+    fullName: string;
+    phone: string;
+    email: string;
+    note?: string;
+  };
+  addressSnapshot?: AddressSnapshot; // Địa chỉ tại thời điểm mua hàng
 }
 
 
@@ -28,8 +41,26 @@ const checkoutSlice = createSlice({
   initialState,
   reducers: {
     addCheckout: (state, action: PayloadAction<CheckoutData>) => {
-      state.history.push(action.payload);
-      state.data = action.payload;
+      const newOrder = action.payload;
+      // console.log("Processing new order:", {
+      //   id: newOrder.id,
+      //   itemCount: newOrder.items.length,
+      //   totalAmount: newOrder.totalAmount,
+      //   items: newOrder.items.map(item => ({ id: item.id, name: item.name, quantity: item.quantity }))
+      // });
+
+      // Simple duplicate check based on ID only
+      const isDuplicate = state.history.some(existingOrder => existingOrder.id === newOrder.id);
+
+      if (!isDuplicate) {
+        // console.log("Adding new order to history:", newOrder.id);
+        // console.log("Current history length:", state.history.length);
+        state.history.push(newOrder);
+        state.data = newOrder;
+        // console.log("New history length:", state.history.length);
+      } else {
+        console.log("Duplicate order detected, skipping:", newOrder.id);
+      }
     },
 
     syncCheckout: (state, action: PayloadAction<{ history: CheckoutData[]; data: CheckoutData | null }>) => {
@@ -40,7 +71,6 @@ const checkoutSlice = createSlice({
     updateCheckoutStatus: (state, action: PayloadAction<{ id: string; status: CheckoutData["status"] }>) => {
       const { id, status } = action.payload;
 
-      // Update in history
       const historyItem = state.history.find(item => item.id === id);
       if (historyItem) {
         historyItem.status = status;
@@ -53,8 +83,30 @@ const checkoutSlice = createSlice({
     },
 
     clearCheckoutHistory: (state) => {
+      console.log("Clearing checkout history...");
+      console.log("History length before clear:", state.history.length);
+
       state.history = [];
       state.data = null;
+
+      console.log("History length after clear:", state.history.length);
+      console.log("Checkout history cleared successfully");
+
+      // Force clear from localStorage to prevent redux-persist from restoring
+      try {
+        const persistKey = "persist:root";
+        const persistedData = localStorage.getItem(persistKey);
+        if (persistedData) {
+          const parsed = JSON.parse(persistedData);
+          if (parsed.checkout) {
+            parsed.checkout = JSON.stringify({ history: [], data: null });
+            localStorage.setItem(persistKey, JSON.stringify(parsed));
+            console.log("Cleared checkout from localStorage");
+          }
+        }
+      } catch (error) {
+        console.error("Error clearing checkout from localStorage:", error);
+      }
     },
   },
 });

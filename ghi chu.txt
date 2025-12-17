@@ -7,9 +7,12 @@ nên để các mục ở chế độ random hiển thị sản phẩm
 
 sửa data cho đồng bộ thông tin cho chuẩn và sửa tên biến phần tên và title của các dữ liệu cho giống nhau
 
-nhạc : nắng hoa niên
+nhạc : nắng hoa niên , cơn mưa khẽ rơi, thế em làm sao , 
 
 +++++++++++++ĐANG LÀM ++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+addressSlice.ts , AddressSelector.tsx , store.ts, syncTabs.ts
+hooks.ts , checkoutSlice.ts , cartSlice.ts , priceUtils.ts, App.tsx, index.tsx, SearchBar.tsx , Login.tsx
 
 học và sử dụng typeScript, 
 
@@ -50,6 +53,73 @@ Features: FeaturedBrands.jsx, MiniCategories.jsx, etc.
  PRIORITY 5 - Data Files (6 files):
 src/data/ - Tất cả data files
 -------------------------------------------------
+Trước khi chúng ta tìm hiểu reselect có tác dụng gì thì trước tiên, chúng ta phải hiểu được selector là gì ?. selector có thể hiểu là một đoạn logic được sử dụng để tính toán ra một giá trị nào đó từ các giá trị có sẵn, hoặc chỉ đơn giản là lấy một giá trị từ một giá trị có sẵn.
+
+Trong một ứng dụng React có sử dụng Redux, Chúng ta hoàn toàn có thể viết các selector của riêng mình để lấy hoặc tính toán một giá trị từ các giá trị trong store của redux để tái sử dụng chúng trong function mapStateToProps. VD:
+
+// *** selector dùng để lấy property 'users' từ store của redux
+const getUsers = state => state.users;
+
+// *** selector dùng để tính toán một giá trị dựa trên property 'users' của store
+const getUserViaId = (state, id) => state.users.map(user => user.id === id);
+
+Thế nhưng, mỗi khi users được update, hàm getUserViaId và getUser sẽ phải tính toán lại. Đây chính là vấn đề của các selector đơn giản, khi users trở nên lớn hơn, hoặc việc tính toán bên trong getUserViaId phức tạp hơn, tốn nhiều tài nguyên hơn và kết quả là app của chúng ta sẽ ... chậm hơn 🐌🐌🐌. Đây chính là lúc thư viện Reselect toả sáng. 💨💨💨
+
+reselector đơn giản là một thư viện giúp chúng ta giải quyết được vấn đề ở trên bằng cách so sánh các tham số của một selector (được tạo bằng thư viện reselect) với nhau, selector đó sẽ chỉ thực hiện tính toán nếu các tham số cũ khác với tham số mới.
+
+----------------------------------------
+addCase will run the reducer if the dispatched action's action.type field exactly matches the string that you provide
+addMatcher will run the reducer if the callback function you provide returns true, and it's up to you to decide how the matching behavior works. Typically this is done by looking to see if the action.type field is a partial match, such as return action.type.endsWith("/pending")
+
+Phương thức `addCase` sẽ chạy reducer nếu trường `action.type` của action được gửi đi khớp chính xác với chuỗi bạn cung cấp.
+Phương thức `addMatcher` sẽ chạy reducer nếu hàm callback bạn cung cấp trả về `true`, và bạn sẽ quyết định cách thức hoạt động của việc khớp. Thông thường, điều này được thực hiện bằng cách kiểm tra xem trường `action.type` có khớp một phần hay không, ví dụ như `return action.type.endsWith("/pending")`.
+
+
+====================
+Kết luận:
+
+City, District, Ward là tên interface (do developer đặt để dễ hiểu)
+API chỉ có districts và wards là property names
+Không có property tên city trong JSON response! 🎯
+============================
+
+throttle (đơn vị: milliseconds)
+Tác dụng: Giới hạn tần suất ghi dữ liệu vào localStorage
+
+Giá trị: 100 = 100 milliseconds (0.1 giây)
+Ý nghĩa: Redux state chỉ được lưu vào localStorage tối đa 1 lần mỗi 100ms
+Tại sao cần throttle?
+Khi bạn dispatch nhiều actions liên tiếp (ví dụ: thêm 5 sản phẩm vào giỏ hàng trong 1 giây):
+
+❌ Không có throttle:
+Action 1 → Lưu localStorage (0ms)
+Action 2 → Lưu localStorage (50ms)
+Action 3 → Lưu localStorage (100ms)
+Action 4 → Lưu localStorage (150ms)
+Action 5 → Lưu localStorage (200ms)
+→ 5 lần ghi = tốn performance, có thể gây lag UI
+
+✅ Có throttle: 100:
+Action 1 → Lưu localStorage (0ms)
+Action 2 → Bỏ qua (50ms - chưa đủ 100ms)
+Action 3 → Lưu localStorage (100ms)
+Action 4 → Bỏ qua (150ms - chưa đủ 100ms)
+Action 5 → Lưu localStorage (200ms)
+→ 3 lần ghi = tiết kiệm performance
+
+=================================
+instanceof kiểm tra xem error có phải là instance của class Error hay không:
+
+Cách hoạt động:
+Nếu error instanceof Error === true:
+error là một Error object (hoặc subclass của Error)
+Có thể an toàn truy cập error.message
+Trả về: error.message (thông báo lỗi cụ thể)
+Nếu error instanceof Error === false:
+error có thể là string, number, object thông thường, v.v.
+Không có thuộc tính .message đáng tin cậy
+Trả về: "Failed to fetch address data" (fallback message)
+=======================================
 
 Bạn dùng createAsyncThunk để gọi API trong Redux Toolkit vì nó đơn giản hóa việc xử lý các tác vụ bất đồng bộ (như gọi API) bằng cách tự động tạo ra các action types (pending, fulfilled, rejected) và xử lý các trạng thái này trong slice [1].
 Trước đây, trong Redux truyền thống, bạn cần dùng các middleware như redux-thunk hoặc redux-saga, đồng thời phải tự định nghĩa và gửi đi ba action riêng biệt (trước khi gọi, khi thành công, khi thất bại) [1]. createAsyncThunk đóng gói toàn bộ logic này vào một hàm duy nhất, giúp code sạch sẽ và dễ bảo trì hơn, đặc biệt khi làm việc với createSlice [1]. 
@@ -62,7 +132,260 @@ Bạn định nghĩa fetchAddressData bằng createAsyncThunk.
 Phần extraReducers trong addressSlice lắng nghe các action pending, fulfilled, và rejected của fetchAddressData để cập nhật status, error, và addressData trong store Redux. 
 Tóm lại, createAsyncThunk là cách chuẩn và hiệu quả được Redux Toolkit khuyến nghị để xử lý các tác vụ bất đồng bộ. 
 
+
+========================================
+const timestamp = Date.now();
+👉 Date.now() là gì?
+
+Trả về số milliseconds (ms) kể từ:
+
+00:00:00 – 01/01/1970 (Unix Epoch)
+
+Ví dụ thực tế:
+Date.now() // 1731918723456
+
+👉 Con số này:
+
+Luôn tăng dần
+Gần như không trùng
+Rất phù hợp để:
+Đánh dấu thời điểm
+
+Kết hợp tạo ID
+
+📌 1 giây = 1000 ms
+👉 1 ms đã đủ phân biệt 2 lần click rất nhanh
+
+👉 Vì sao không dùng new Date()?
+Date.now()	new Date()
+Số	Object
+Dùng tạo ID tốt	Không tiện
+So sánh nhanh	Chủ yếu để format
+🔹 orderDate: new Date().toISOString()
+👉 Dòng này dùng để làm gì?
+
+Lưu ngày giờ đặt hàng
+
+Theo chuẩn ISO 8601
+
+Giá trị thực tế:
+"2025-11-16T03:21:45.123Z"
+
+Ý nghĩa:
+Phần	Ý nghĩa
+2025-11-16	Ngày
+T03:21:45	Giờ (UTC)
+.123	milliseconds
+Z	UTC timezone
+
+📌 Chuẩn này:
+Backend rất thích
+Dễ parse
+Không bị lỗi timezone
+
+❓ Vì sao KHÔNG dùng Date.now() cho orderDate?
+👉 Vì:
+orderDate cần hiển thị
+Date.now() chỉ là số → phải convert lại
+
+3️⃣ Phần ID RANDOM – CỰC KỲ QUAN TRỌNG
+🔹 const randomId = Math.random().toString(36).substring(2, 11);
+Mổ xẻ từng phần 👇
+① Math.random()
+Math.random() // 0.583742913847
+
+
+Trả về số 0 → 0.999999
+
+Không trùng xác suất rất thấp
+
+② .toString(36)
+
+👉 Chuyển số sang hệ cơ số 36:
+
+Ký tự	Bao gồm
+0–9	Số
+a–z	Chữ thường
+
+Ví dụ:
+
+0.5837429 → "0.l9k4fa3x"
+
+③ .substring(2, 11)
+"0.l9k4fa3x9z"
+   ↑
+   cắt từ đây
+
+
+👉 Bỏ:
+
+"0."
+
+Lấy 9 ký tự ngẫu nhiên
+
+Ví dụ kết quả:
+
+"l9k4fa3x9"
+
+
+📌 Đây chính là random string ngắn gọn, dễ đọc
+
+🔹 Ghép ID hoàn chỉnh
+id: `order_${timestamp}_${randomId}`
+
+Ví dụ thực tế:
+order_1731918723456_l9k4fa3x9
+
+Tại sao ghép như vậy?
+Phần	Lý do
+order_	Phân biệt loại dữ liệu
+timestamp	Đảm bảo tăng dần
+randomId	Tránh trùng khi click nhanh
+
+👉 Gần như KHÔNG BAO GIỜ trùng
+
+4️⃣ Vì sao KHÔNG dùng UUID?
+Cách	Lý do chọn / không chọn
+uuidv4()	Dài, khó debug
+Backend tự sinh ID	Phải có server
+timestamp + random	✔ Gọn, offline tốt
+
+📌 Với frontend + localStorage → cách bạn đang dùng là rất chuẩn
+
+5️⃣ Các field còn lại (giải thích nhanh)
+items: meta.items || []
+
+
+Snapshot danh sách sản phẩm tại thời điểm mua
+
+totalAmount: meta.totalAmount || 0
+
+
+Tổng tiền (tránh undefined)
+
+deliveryAddress: `Địa chỉ chi tiết: ${data.addressDetail}\nĐịa chỉ: ${selectedAddress}`
+
+
+Ghép string để dễ lưu / hiển thị
+
+paymentMethod: "COD"
+
+
+Phương thức thanh toán
+
+status: "pending"
+
+
+Trạng thái đơn hàng ban đầu
+
+customerInfo: { ... }
+
+
+Thông tin khách tại thời điểm mua
+
+addressSnapshot
+
+
+Rất quan trọng: lưu địa chỉ đúng lúc đặt hàng
+👉 Sau này user đổi địa chỉ → đơn hàng cũ không bị ảnh hưởng
+
+6️⃣ Tóm tắt ngắn gọn
+Thành phần	Mục đích
+Date.now()	Tạo timestamp duy nhất
+Math.random()	Thêm độ ngẫu nhiên
+order_${timestamp}_${randomId}	ID đơn hàng
+toISOString()	Ngày giờ chuẩn backend
+addressSnapshot	Snapshot dữ liệu lịch sử
+
+
 =======================================
+const addressTransform = createTransform(
+  // Save: Remove large fields before persisting
+  (inboundState: AddressState) => {
+    const { addressData, status, error, showLocationModal, ...rest } = inboundState; // loại bỏ không lưu các trường này 
+
+    console.log("Saving address to localStorage:", rest);
+    return rest;
+  },
+
+  // Load: Restore default values for excluded fields
+  (outboundState: Partial<AddressState>): AddressState => {
+    // Partial vì Vì redux-persist KHÔNG trả về full state.
+    const result = {
+      ...outboundState, // lưu trước khi thêm lại các trường trước đó đã không lưu 
+      
+      addressData: [],
+      status: "idle" as const,
+      error: null,
+      showLocationModal: false,
+    } as AddressState;
+	
+	//Lấy phần đã lưu (outboundState)
+
+	Thêm lại các field bị thiếu
+
+	Ép kiểu (as AddressState) vì lúc này đã đủ field
+
+📌 Lúc này mới đúng là AddressState hoàn chỉnh.
+    
+    console.log("Loading address from localStorage:", result);
+    return result;
+  },
+
+  { whitelist: ["address"] }
+);
+
+
+----------------------------
+Partial là gì?
+
+Partial<T> là utility type của TypeScript.
+👉 Nó biến tất cả các thuộc tính của T thành optional.
+Định nghĩa (TypeScript có sẵn)
+type Partial<T> = {
+  [P in keyof T]?: T[P];
+};
+
+📌 Nghĩa là:
+Nếu AddressState có 10 field
+Partial<AddressState> → có thể chỉ có 1, 2, hoặc vài field
+2️⃣ Partial ở đâu ra?
+Nó nằm sẵn trong TypeScript
+
+3️⃣ Áp vào code của bạn
+(outboundState: Partial<AddressState>): AddressState => {
+
+❓ Vì sao outboundState lại là Partial<AddressState>?
+
+👉 Vì redux-persist KHÔNG trả về full state.
+
+Nhớ lại bước SAVE 👇
+const { addressData, status, error, showLocationModal, ...rest } = inboundState;
+return rest;
+
+
+⛔ Bạn không lưu mấy field này:
+addressData
+status
+error
+showLocationModal
+
+➡️ Nên khi LOAD lên:
+
+outboundState = {
+  selectedCity,
+  selectedDistrict,
+  selectedWard,
+  addressDetail
+}
+
+❗ Nó KHÔNG phải AddressState đầy đủ
+
+👉 Vì vậy:
+outboundState: Partial<AddressState>
+là bắt buộc và đúng chuẩn
+
+----------------------------------
 
 Khi nào nên dùng Interface (Lý do cho đoạn code trên)
 Lý do chính khiến interface được sử dụng trong đoạn mã của bạn là vì nó được thiết kế tối ưu hơn cho việc định nghĩa cấu trúc đối tượng (object shapes).

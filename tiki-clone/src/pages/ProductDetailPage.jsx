@@ -180,13 +180,15 @@ const ProductDetailPage = () => {
     console.log('showCheckoutForm set to true');
   };
 
-  const handleCheckoutSubmit = (formData) => {
-    console.log('Thông tin người mua:', formData);
+  const handleCheckoutSubmit = (checkoutData) => {
+    console.log('Checkout completed:', checkoutData);
     console.log('Sản phẩm mua ngay:', product);
     console.log('Số lượng:', quantity);
-    // Xử lý logic đặt hàng ở đây
-    alert('Đặt hàng thành công! Chúng tôi sẽ liên hệ với bạn sớm.');
+    
+    // Đóng form checkout
     setShowCheckoutForm(false);
+    
+    alert('Đặt hàng thành công! Chúng tôi sẽ liên hệ với bạn sớm.');
   };
 
   const handleCheckoutCancel = () => {
@@ -553,7 +555,18 @@ const ProductDetailPage = () => {
       {showCheckoutForm && (
         <CheckoutForm
           onSubmit={handleCheckoutSubmit}
-          meta={{ productId: product.id, productName: product.name, quantity }}
+          meta={{
+            items: [{
+              id: product.id,
+              name: product.name,
+              image: product.image,
+              price: calculateDiscountedPrice(product.price, product.discount),
+              originalPrice: product.price,
+              discount: product.discount,
+              quantity: quantity
+            }],
+            totalAmount: calculateDiscountedPrice(product.price, product.discount) * quantity
+          }}
           onCancel={handleCheckoutCancel}
         />
       )}

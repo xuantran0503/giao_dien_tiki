@@ -2,6 +2,7 @@ import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import {
   persistStore,
   persistReducer,
+  createTransform,
   FLUSH,
   REHYDRATE,
   PAUSE,
@@ -23,6 +24,35 @@ export interface RootState {
   address: AddressState;
 }
 
+const addressTransform = createTransform(
+  // SAVE: Loại bỏ các field không cần thiết
+  (inboundState: AddressState) => {
+    const { addressData, status, error, showLocationModal, ...rest } = inboundState;
+
+    // console.log("Saving address to localStorage:", rest);
+    return rest;
+  },
+
+  //LOAD: Khôi phục giá trị mặc định cho các field đã loại bỏ
+  (outboundState: Partial<AddressState>): AddressState => {
+
+    const result = {
+      ...outboundState,
+      
+      // Khôi phục giá trị mặc định
+      addressData: [],
+      status: "idle" as const, // Type assertion để giữ nguyên kiểu
+      error: null,
+      showLocationModal: false,
+    } as AddressState;
+
+    // console.log("Loading address from localStorage:", result);
+    return result;
+  },
+
+  { whitelist: ["address"] }
+);
+
 // Root reducer with proper typing
 const rootReducer = combineReducers({
   cart: cartReducer,
@@ -30,10 +60,13 @@ const rootReducer = combineReducers({
   address: addressReducer,
 });
 
-const persistConfig: PersistConfig<RootState> = {
+const persistConfig: any = {
   key: "root",
   storage,
-  whitelist: ["cart", "address", "checkout"],
+  whitelist: ["cart", "address", "checkout"], 
+  transforms: [addressTransform],
+  throttle: 100, // Lưu localStorage tối đa 1 lần/100ms
+  // debug: true, // Enable debug logging
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

@@ -120,9 +120,9 @@ const SearchBar: React.FC = () => {
             console.error("Error loading search history:", error);
             setSearchHistory([]);
         }
-    }, []);
+    }, [])
 
-    // Handle click outside to close dropdown
+    //  xử lí khi click ngoài để đóng dropdown
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
             if (searchRef.current && !searchRef.current.contains(event.target as Node)) {
@@ -158,10 +158,8 @@ const SearchBar: React.FC = () => {
             } catch (error) {
                 console.error("Error saving search history:", error);
             }
-
             setShowDropdown(false);
-
-            // TODO: Implement actual search functionality
+            
             // console.log("Searching for:", searchValue);
         }
     };
@@ -176,7 +174,6 @@ const SearchBar: React.FC = () => {
         setSearchValue(text);
         setShowDropdown(false);
 
-        // TODO: Implement actual search functionality
         // console.log("Searching for:", text);
     };
 
@@ -184,14 +181,12 @@ const SearchBar: React.FC = () => {
         // setSearchValue(text);
         // setShowDropdown(false);
 
-        // // TODO: Implement actual search functionality
         // console.log("Searching for:", text);
     };
 
     const handleCategoryClick = (categoryName: string): void => {
         // setShowDropdown(false);
-
-        // // TODO: Navigate to category page
+        
         // console.log("Navigate to category:", categoryName);
     };
 

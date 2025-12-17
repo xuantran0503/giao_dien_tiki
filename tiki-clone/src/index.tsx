@@ -19,12 +19,15 @@ if (!rootElement) {
 
 const root = ReactDOM.createRoot(rootElement);
 
+// Chỉ sử dụng StrictMode trong production để tránh double rendering trong development
+const AppWrapper = process.env.NODE_ENV === 'production' ? React.StrictMode : React.Fragment;
+
 root.render(
-    <React.StrictMode>
+    <AppWrapper>
         <Provider store={store}>
             <PersistGate loading={null} persistor={persistor}>
                 <App />
             </PersistGate>
         </Provider>
-    </React.StrictMode>
+    </AppWrapper>
 );

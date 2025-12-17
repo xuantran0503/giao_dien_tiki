@@ -31,7 +31,6 @@ import {
   setShowLocationModal,
   setSelectedAddress,
   resetSelection,
-  loadAddressFromStorage,
 } from "../../store/addressSlice";
 
 interface AddressSelectorProps {
@@ -43,57 +42,41 @@ interface AddressSelectorProps {
 const AddressSelector: React.FC<AddressSelectorProps> = ({ onLoginClick, forceOpen = false, onClose }) => {
   // const dispatch = useDispatch<any>();
   const dispatch = useAppDispatch();
-
   // const addressData = useSelector(selectAddressData);
   const addressData = useAppSelector(selectAddressData);
-
   // const status = useSelector(selectAddressStatus);
   const status = useAppSelector(selectAddressStatus);
-
   // const error = useSelector(selectAddressError);
   const error = useAppSelector(selectAddressError);
-
   // const selectedAddress = useSelector(selectSelectedAddress);
   const selectedAddress = useAppSelector(selectSelectedAddress);
-
   // const locationType = useSelector(selectLocationType);
   const locationType = useAppSelector(selectLocationType);
-
   // const selectedCity = useSelector(selectSelectedCity);
   const selectedCity = useAppSelector(selectSelectedCity);
-
   // const selectedDistrict = useSelector(selectSelectedDistrict);
   const selectedDistrict = useAppSelector(selectSelectedDistrict);
-
   // const selectedWard = useSelector(selectSelectedWard);
   const selectedWard = useAppSelector(selectSelectedWard);
-
   // const showLocationModal = useSelector(selectShowLocationModal);
   const showLocationModal = useAppSelector(selectShowLocationModal);
-
   // Lấy danh sách districts và wards từ selectors
-  const districts = useSelector(selectDistrictsByCity);
-  const wards = useSelector(selectWardsByDistrict);
+  const districts = useAppSelector(selectDistrictsByCity);
+  const wards = useAppSelector(selectWardsByDistrict);
 
   // Fetch dữ liệu địa chỉ khi component mount
   useEffect(() => {
     if (status === "idle") {
       dispatch(fetchAddressData());
     }
-    dispatch(loadAddressFromStorage());
+    
   }, [dispatch, status]);
 
   useEffect(() => {
-    if (forceOpen) {
+    if (forceOpen === true) {
       dispatch(setShowLocationModal(true));
     }
   }, [forceOpen, dispatch]);
-
-  useEffect(() => {
-    if (selectedAddress) {
-      window.localStorage.setItem("selectedAddress", selectedAddress);
-    }
-  }, [selectedAddress]);
 
   const handleLocationClick = () => {
     dispatch(resetSelection());
@@ -110,6 +93,12 @@ const AddressSelector: React.FC<AddressSelectorProps> = ({ onLoginClick, forceOp
       selectedDistrict &&
       selectedWard
     ) {
+      //xác thực địa chỉ đã tải
+      if (!addressData || addressData.length === 0) {
+        alert("Dữ liệu địa chỉ đang được tải, vui lòng đợi một chút...");
+        return;
+      }
+
       const cityObj = addressData.find((c: City) => c.code === Number(selectedCity));
 
       const districtObj = cityObj?.districts?.find(
@@ -339,6 +328,11 @@ const AddressSelector: React.FC<AddressSelectorProps> = ({ onLoginClick, forceOp
                 <button
                   className="btn-save-location"
                   onClick={handleSaveLocation}
+                  disabled={
+                    status === "pending" ||
+                    (locationType === "custom" &&
+                      (!selectedCity || !selectedDistrict || !selectedWard || !addressData.length))
+                  }
                 >
                   GIAO ĐẾN ĐỊA CHỈ NÀY
                 </button>

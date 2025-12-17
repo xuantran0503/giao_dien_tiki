@@ -163,3 +163,104 @@
 .product-price {
   font-weight: 500;
 }
+/* Order Header Styles */
+.order-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px;
+  background-color: #f8f9fa;
+  border-bottom: 1px solid #e8e8e8;
+}
+
+.order-id {
+  color: #333;
+  font-size: 14px;
+}
+
+.order-status {
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.status-pending {
+  background: #fff3cd;
+  color: #856404;
+}
+
+.status-confirmed {
+  background: #d4edda;
+  color: #155724;
+}
+
+.status-shipping {
+  background: #cce7ff;
+  color: #004085;
+}
+
+.status-delivered {
+  background: #d1ecf1;
+  color: #0c5460;
+}
+
+.status-cancelled {
+  background: #f8d7da;
+  color: #721c24;
+}
+
+/* Order Info Styles */
+.order-info {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px 16px;
+  background-color: #fafafa;
+  border-bottom: 1px solid #e8e8e8;
+  font-size: 13px;
+  color: #666;
+}
+
+.order-date,
+.payment-method {
+  display: flex;
+  align-items: center;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .buyer-info-container {
+    padding: 16px;
+  }
+  
+  .buyer-info-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+  
+  .order-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  
+  .order-info {
+    flex-direction: column;
+    gap: 4px;
+  }
+  
+  .order-body {
+    flex-direction: column;
+  }
+  
+  .customer-info {
+    border-right: none;
+    border-bottom: 1px solid #e8e8e8;
+  }
+  
+  .order-footer {
+    flex-direction: column;
+    gap: 8px;
+  }
+}
