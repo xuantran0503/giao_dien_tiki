@@ -7,10 +7,237 @@ nên để các mục ở chế độ random hiển thị sản phẩm
 
 sửa data cho đồng bộ thông tin cho chuẩn và sửa tên biến phần tên và title của các dữ liệu cho giống nhau
 
+thêm phần điều chỉnh số lượng kí tự để xuống dòng khi Địa chỉ chi tiết trong lịch sử đơn hàng quá dài 
+
+
 nhạc : nắng hoa niên , cơn mưa khẽ rơi, thế em làm sao , 
 
 +++++++++++++ĐANG LÀM ++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
+
+
+
+
+=================================================
+Props (viết tắt của "Properties") là cơ chế truyền dữ liệu một chiều từ component cha xuống component con trong các framework như React, giúp component con nhận dữ liệu đầu vào (như tên, màu sắc,...) để tùy chỉnh hiển thị hoặc hành vi, giống như các thuộc tính (attributes) trong HTML nhưng có thể định nghĩa tự do và bất biến (chỉ đọc, không được sửa) bên trong component con. 
+Đặc điểm chính của Props:
+Truyền dữ liệu: Là cách để component cha gửi thông tin (dữ liệu, hàm) cho component con.
+Bất biến (Read-only): Component con chỉ có thể đọc giá trị của props, không được thay đổi chúng. Nếu cần thay đổi, component cha phải gửi lại một props mới.
+Tái sử dụng: Giúp tạo ra các component linh hoạt, có thể dùng ở nhiều nơi với các dữ liệu đầu vào khác nhau, chỉ cần thay đổi props là có giao diện/chức năng khác.
+Luồng dữ liệu đơn hướng: Dữ liệu luôn chảy từ cha xuống con, giúp ứng dụng dễ quản lý hơn. 
+Ví dụ đơn giản:
+Component Cha (App): <Greeting name="Alice" />.
+Component Con (Greeting): Nhận name là prop và hiển thị "Hello, Alice!". 
+Tóm lại:
+Props là cầu nối dữ liệu quan trọng nhất, giúp các thành phần trong ứng dụng React giao tiếp, chia sẻ thông tin và trở nên linh hoạt, dễ bảo trì. 
+
+=================================================
+
+installHook.js:1 SerializableStateInvariantMiddleware took 34ms, which is more than the warning threshold of 32ms. 
+If your state or actions are very large, you may want to disable the middleware as it might cause too much of a slowdown in development mode. See https://redux-toolkit.js.org/api/getDefaultMiddleware for instructions.
+It is disabled in production builds, so you don't need to worry about that.
+
+============================================
+DẤU ? TRONG INTERFACE LÀ GÌ?
+interface AddressSelectorProps {
+  onLoginClick?: () => void;
+  forceOpen?: boolean;
+  onClose?: () => void;
+}
+
+👉 Dấu ? có nghĩa là: thuộc tính KHÔNG BẮT BUỘC (optional)
+
+2️⃣ CỤ THỂ TỪNG DÒNG
+🔹 onLoginClick?: () => void;
+
+Có thể có hoặc không truyền
+
+Nếu có → là function
+
+Nếu không → undefined
+
+✅ Hợp lệ:
+
+<AddressSelector />
+<AddressSelector onLoginClick={() => console.log("login")} />
+
+❌ Nếu không có ? thì dòng dưới sẽ lỗi:
+
+<AddressSelector /> // ❌ thiếu onLoginClick
+
+🔹 forceOpen?: boolean;
+
+Không truyền → undefined
+
+Nhưng trong component bạn đã set default:
+
+forceOpen = false
+
+👉 Nên luôn an toàn
+
+🔹 onClose?: () => void;
+
+Có thể không cần truyền nếu component không cần đóng
+
+3️⃣ KHÔNG CÓ ? THÌ SẼ NHƯ THẾ NÀO?
+interface AddressSelectorProps {
+  onLoginClick: () => void; // ❌ BẮT BUỘC
+}
+
+👉 Khi dùng:
+
+<AddressSelector /> // ❌ TypeScript báo lỗi
+
+⚠️ Điều này rất bất tiện với component tái sử dụng
+
+=============================================================
+
+const addressTransform = createTransform(
+  // SAVE: Loại bỏ các field không cần thiết
+  (inboundState: AddressState) => {
+    const { addressData, status, error, showLocationModal, ...rest } = inboundState;
+
+    // console.log("Saving address to localStorage:", rest);
+    return rest;
+  },
+
+  //LOAD: Khôi phục giá trị mặc định cho các field đã loại bỏ
+  (outboundState: Partial<AddressState>): AddressState => {
+
+    const result = {
+      ...outboundState,
+      
+      // Khôi phục giá trị mặc định
+      addressData: [],
+      status: "idle" as const, // Type assertion để giữ nguyên kiểu
+      error: null,
+      showLocationModal: false,
+    } as AddressState;
+
+    // console.log("Loading address from localStorage:", result);
+    return result;
+  },
+
+  { whitelist: ["address"] }
+);
+==================================================
+Các thành phần chính của RESTful API: Trình bày các yếu tố cấu thành RESTful API như resource, method, endpoint, và status code.
+
+200 OK – Thành công
+201 Created – Tạo mới thành công
+400 Bad Request – Lỗi cú pháp yêu cầu
+401 Unauthorized – Chưa xác thực
+404 Not Found – Không tìm thấy tài nguyên
+500 Internal Server Error – Lỗi từ phía server
+
+
+Khi request một API, có một số status code thường gặp như sau:
+
+200 OK: Trả về thành công cho những phương thức GET, PUT, PATCH hoặc DELETE.
+201 Created: Trả về khi tạo thành công một Resouce.
+204 No Content: Trả về khi xóa thành công Resource.
+304 Not Modified: Client có thể sử dụng dữ liệu cache.
+400 Bad Request: Request không hợp lệ.
+401 Unauthorized: Request cần phải có auth.
+403 Forbidden: Bị từ chối không cho phép.
+404 Not Found: Không tìm thấy resource từ URI.
+405 Method Not Allowed: Phương thức không cho phép với user hiện tại.
+410 Gone: Resource không còn tồn tại, version cũ không còn hỗ trợ.
+415 Unsupported Media Type: Không hỗ trợ kiểu Resource này.
+422 Unprocessable Entity: Dữ liệu không được xác thực.
+429 Too Many Requests: Request bị từ chối do bị giới hạn.
+
+==============================================================
+const AddressSelector: React.FC<AddressSelectorProps> = ({ onLoginClick, forceOpen = false, onClose }) => {
+  // const dispatch = useDispatch<any>();
+  const dispatch = useAppDispatch();
+  // const addressData = useSelector(selectAddressData);
+  const addressData = useAppSelector(selectAddressData);
+  // const status = useSelector(selectAddressStatus);
+  const status = useAppSelector(selectAddressStatus);
+  // const error = useSelector(selectAddressError);
+  const error = useAppSelector(selectAddressError);
+  // const selectedAddress = useSelector(selectSelectedAddress);
+  const selectedAddress = useAppSelector(selectSelectedAddress);
+  // const locationType = useSelector(selectLocationType);
+  const locationType = useAppSelector(selectLocationType);
+  // const selectedCity = useSelector(selectSelectedCity);
+  const selectedCity = useAppSelector(selectSelectedCity);
+  // const selectedDistrict = useSelector(selectSelectedDistrict);
+  const selectedDistrict = useAppSelector(selectSelectedDistrict);
+  // const selectedWard = useSelector(selectSelectedWard);
+  const selectedWard = useAppSelector(selectSelectedWard);
+  // const showLocationModal = useSelector(selectShowLocationModal);
+  const showLocationModal = useAppSelector(selectShowLocationModal);
+  // Lấy danh sách districts và wards từ selectors
+  const districts = useAppSelector(selectDistrictsByCity);
+  const wards = useAppSelector(selectWardsByDistrict);
+
+============================================================
+export const fetchAddressData = createAsyncThunk<City[], void, { rejectValue: string }>(
+  "address/fetchAddressData",
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await axios.get<City[]>(
+        "https://provinces.open-api.vn/api/?depth=3"
+      );
+      return response.data;
+    } catch (error) // type error :unknown
+    //nếu type:any Lỗi runtime nếu error là string, number, null...
+    {
+      // return rejectWithValue(error.response.data)
+      //nếu error k phải instance of Error thì ta trả về message mặc định
+      return rejectWithValue( error instanceof Error ? error.message : "Failed to fetch address data" );
+    }
+  }
+);
+
+====================================================
+const persistConfig: any = {
+  key: "root",
+  storage,
+  whitelist: ["cart", "address", "checkout"], 
+  transforms: [addressTransform],
+  throttle: 100, // Lưu localStorage tối đa 1 lần/100ms
+  // debug: true, // Enable debug logging
+};
+
+======================================
+Trong code của bạn:
+
+_ = tham số đầu tiên (không sử dụng vì ArgType là void)
+{ rejectWithValue } = destructuring từ thunkAPI
+Khi dispatch: dispatch(fetchAddressData()) - không cần truyền gì
+
+
+Đây là hàm async được truyền vào createAsyncThunk của Redux Toolkit.
+data (tham số đầu tiên): Là payload hoặc giá trị mà bạn truyền vào khi gọi action async (ví dụ: dispatch(login('user@example.com'))).
+{ rejectWithValue }: Là một tiện ích (utility) do Redux Toolkit cung cấp, cho phép bạn trả về một đối tượng lỗi tùy chỉnh, thay vì chỉ là reject(error) thông thường. Lỗi này sẽ được gửi đến rejected action với payload là giá trị bạn truyền vào rejectWithValue.
+==============================
+Trong đoạn mã trên, City[] đóng vai trò là một TypeScript Type Annotation (định nghĩa kiểu dữ liệu) để mô tả cấu trúc của dữ liệu mà hàm sẽ trả về.
+Cụ thể, City[] có ý nghĩa sau:
+Dạng mảng (Array): Cặp ngoặc vuông [] cho biết đây là một danh sách (mảng) chứa nhiều đối tượng có kiểu dữ liệu là City.
+Kiểu dữ liệu City: Đây là một interface hoặc type (thường được định nghĩa ở một file khác) đại diện cho cấu trúc của một đơn vị hành chính (Thành phố/Tỉnh) từ API.
+Vị trí trong createAsyncThunk:
+Nó xác định kiểu của dữ liệu trả về khi Thunk thành công (fulfilled).
+Nó giúp TypeScript thực hiện Type Checking: Đảm bảo response.data từ axios phải khớp với cấu trúc của City[]. 
+Cấu trúc dự đoán của City
+Dựa vào API provinces.open-api.vn với depth=3, một đối tượng City thường sẽ có cấu trúc như sau:
+typescript
+interface City {
+  name: string;
+  code: number;
+  division_type: string;
+  codename: string;
+  phone_code: number;
+  districts: District[]; // Danh sách các Quận/Huyện bên trong
+}
+Hãy thận trọng khi sử dụng mã.
+
+Tóm lại
+City[] giúp trình biên dịch và lập trình viên biết rằng: "Hàm fetchAddressData này sau khi chạy xong sẽ trả về một mảng các Tỉnh/Thành phố, mỗi phần tử trong mảng đó tuân thủ các thuộc tính của đối tượng City".
+
+==================================
 addressSlice.ts , AddressSelector.tsx , store.ts, syncTabs.ts
 hooks.ts , checkoutSlice.ts , cartSlice.ts , priceUtils.ts, App.tsx, index.tsx, SearchBar.tsx , Login.tsx
 
@@ -52,6 +279,270 @@ Features: FeaturedBrands.jsx, MiniCategories.jsx, etc.
 
  PRIORITY 5 - Data Files (6 files):
 src/data/ - Tất cả data files
+------------------------------------
+1. Phân biệt Class và Object
+Class (Lớp) - Bản thiết kế
+Class là một bản thiết kế (blueprint) hoặc khuôn mẫu để tạo ra các object.
+
+typescript
+// Class là bản thiết kế
+class Person {
+  // Thuộc tính (properties)
+  name: string;
+  age: number;
+  
+  // Constructor - hàm khởi tạo
+  constructor(name: string, age: number) {
+    this.name = name;
+    this.age = age;
+  }
+  
+  // Phương thức (methods)
+  greet() {
+    return `Xin chào, tôi là ${this.name}`;
+  }
+}
+Object (Đối tượng) - Thể hiện cụ thể
+Object là một thể hiện cụ thể (instance) được tạo ra từ class.
+
+typescript
+// Object là thể hiện cụ thể từ class
+const person1 = new Person("Nguyễn Văn A", 25);
+const person2 = new Person("Trần Thị B", 30);
+console.log(person1.greet());  // "Xin chào, tôi là Nguyễn Văn A"
+console.log(person2.greet());  // "Xin chào, tôi là Trần Thị B"
+So sánh trực quan
+Class	Object
+Bản thiết kế nhà	Ngôi nhà thực tế
+Công thức làm bánh	Chiếc bánh đã làm
+Khuôn đúc	Sản phẩm đúc ra
+Định nghĩa	Thể hiện cụ thể
+typescript
+// Class = Khuôn mẫu
+class Car {
+  brand: string;
+  model: string;
+  
+  constructor(brand: string, model: string) {
+    this.brand = brand;
+    this.model = model;
+  }
+}
+// Objects = Các xe cụ thể được tạo từ khuôn mẫu
+const car1 = new Car("Toyota", "Camry");    // Object 1
+const car2 = new Car("Honda", "Civic");     // Object 2
+const car3 = new Car("BMW", "X5");          // Object 3
+2. Các kiểu dữ liệu trong JavaScript/TypeScript
+A. Kiểu dữ liệu nguyên thủy (Primitive Types)
+Đây là các kiểu dữ liệu cơ bản, không phải object.
+
+typescript
+// 1. String - Chuỗi
+let name: string = "Nguyễn Văn A";
+let message: string = 'Hello World';
+// 2. Number - Số
+let age: number = 25;
+let price: number = 99.99;
+let negative: number = -10;
+// 3. Boolean - Đúng/Sai
+let isActive: boolean = true;
+let isCompleted: boolean = false;
+// 4. Null - Giá trị rỗng
+let emptyValue: null = null;
+// 5. Undefined - Chưa được gán giá trị
+let notAssigned: undefined = undefined;
+// 6. Symbol - Giá trị duy nhất (ES6+)
+let uniqueId: symbol = Symbol("id");
+// 7. BigInt - Số nguyên lớn (ES2020+)
+let bigNumber: bigint = 9007199254740991n;
+B. Kiểu dữ liệu phức tạp (Reference Types) - ĐÂY LÀ OBJECT
+typescript
+// 1. Object - Đối tượng
+let person: object = {
+  name: "John",
+  age: 30
+};
+// 2. Array - Mảng (là một loại object đặc biệt)
+let numbers: number[] = [1, 2, 3, 4, 5];
+let fruits: string[] = ["apple", "banana", "orange"];
+// 3. Function - Hàm (cũng là object)
+function greet(name: string): string {
+  return `Hello ${name}`;
+}
+// 4. Date - Ngày tháng (object)
+let today: Date = new Date();
+// 5. RegExp - Biểu thức chính quy (object)
+let pattern: RegExp = /[a-z]+/;
+// 6. Error - Lỗi (object)
+let error: Error = new Error("Something went wrong");
+3. Ví dụ thực tế với Class và Object
+Ví dụ 1: Class Error
+typescript
+// Error là một class có sẵn trong JavaScript
+class Error {
+  name: string;
+  message: string;
+  
+  constructor(message: string) {
+    this.name = "Error";
+    this.message = message;
+  }
+}
+// Tạo object từ class Error
+const myError = new Error("File not found");  // Object
+console.log(myError instanceof Error);  // true - myError là object của class Error
+console.log(myError.message);          // "File not found"
+Ví dụ 2: Class tự định nghĩa
+typescript
+// Định nghĩa class
+class Product {
+  id: number;
+  name: string;
+  price: number;
+  
+  constructor(id: number, name: string, price: number) {
+    this.id = id;
+    this.name = name;
+    this.price = price;
+  }
+  
+  getDiscountPrice(discount: number): number {
+    return this.price * (1 - discount / 100);
+  }
+  
+  getInfo(): string {
+    return `${this.name} - ${this.price}đ`;
+  }
+}
+// Tạo các object từ class
+const product1 = new Product(1, "iPhone 15", 25000000);
+const product2 = new Product(2, "Samsung S24", 20000000);
+console.log(product1.getInfo());              // "iPhone 15 - 25000000đ"
+console.log(product1.getDiscountPrice(10));   // 22500000
+console.log(product1 instanceof Product);     // true
+console.log(product2 instanceof Product);     // true
+4. Kiểm tra kiểu dữ liệu
+A. Kiểm tra Primitive Types - dùng typeof
+typescript
+console.log(typeof "Hello");        // "string"
+console.log(typeof 123);            // "number"
+console.log(typeof true);           // "boolean"
+console.log(typeof undefined);      // "undefined"
+console.log(typeof null);           // "object" (đây là bug lịch sử của JS)
+console.log(typeof Symbol("id"));   // "symbol"
+B. Kiểm tra Object/Class - dùng instanceof
+typescript
+const myDate = new Date();
+const myError = new Error("Oops");
+const myArray = [1, 2, 3];
+console.log(myDate instanceof Date);      // true
+console.log(myError instanceof Error);    // true
+console.log(myArray instanceof Array);    // true
+console.log(myDate instanceof Error);     // false
+console.log(myError instanceof Date);     // false
+5. Bảng tổng hợp
+Primitive vs Reference Types
+Đặc điểm	Primitive Types	Reference Types (Objects)
+Lưu trữ	Giá trị trực tiếp	Tham chiếu đến vùng nhớ
+So sánh	So sánh giá trị	So sánh địa chỉ bộ nhớ
+Kiểm tra	typeof	instanceof
+Ví dụ	string, number, boolean	Object, Array, Date, Error
+Có thể thay đổi	Không (immutable)	Có (mutable)
+Ví dụ về sự khác biệt
+typescript
+// PRIMITIVE - So sánh giá trị
+let a = 5;
+let b = 5;
+console.log(a === b);  // true (cùng giá trị)
+// OBJECT - So sánh tham chiếu
+let obj1 = { name: "John" };
+let obj2 = { name: "John" };
+console.log(obj1 === obj2);  // false (khác địa chỉ bộ nhớ)
+let obj3 = obj1;
+console.log(obj1 === obj3);  // true (cùng địa chỉ bộ nhớ)
+6. Áp dụng vào code của bạn
+typescript
+catch (error) {  // error có thể là bất cứ thứ gì
+  // Kiểm tra xem error có phải là object của class Error không
+  if (error instanceof Error) {
+    // Nếu đúng, error có thuộc tính .message
+    return rejectWithValue(error.message);
+  }
+  
+  // Nếu không phải Error object (có thể là string, number, object khác...)
+  return rejectWithValue("Failed to fetch address data");
+}
+Các trường hợp có thể xảy ra:
+typescript
+// Trường hợp 1: Error object
+throw new Error("Network error");
+// → error instanceof Error = true
+// → Trả về: "Network error"
+// Trường hợp 2: String
+throw "Something went wrong";
+// → error instanceof Error = false
+// → Trả về: "Failed to fetch address data"
+// Trường hợp 3: Object thông thường
+throw { code: 500, msg: "Server error" };
+// → error instanceof Error = false
+// → Trả về: "Failed to fetch address data"
+Tóm tắt
+Class: Bản thiết kế, khuôn mẫu (blueprint)
+Object: Thể hiện cụ thể được tạo từ class (instance)
+Primitive Types: string, number, boolean, null, undefined, symbol, bigint
+Reference Types: Object, Array, Function, Date, Error, RegExp (tất cả đều là object)
+Kiểm tra: typeof cho primitive, instanceof cho object/class
+
+========================================
+1. instanceof Error - Kiểm tra kiểu dữ liệu
+instanceof là một toán tử trong JavaScript/TypeScript dùng để kiểm tra xem một object có phải là instance (thể hiện) của một class/constructor cụ thể hay không.
+
+
+instanceof	Toán tử kiểm tra xem object có phải là instance của một class không
+
+
+Cú pháp:
+
+typescript
+object instanceof Constructor
+Trả về:
+
+true nếu object là instance của Constructor
+false nếu không phải
+
+Nếu error là một instance của class Error (tức là một object lỗi thực sự)
+Thì trả về error.message (thông báo lỗi cụ thể)
+Nếu không trả về chuỗi mặc định "Failed to fetch address data"
+
+❌ Không kiểm tra (Nguy hiểm):
+typescript
+catch (error: any) {
+  return rejectWithValue(error.message);  
+  // Lỗi runtime nếu error là string, number, null...
+}
+✅ Kiểm tra với instanceof:
+typescript
+catch (error: unknown) {
+  return rejectWithValue(
+    error instanceof Error ? error.message : "Failed to fetch"
+  );
+  // An toàn, luôn trả về string
+}
+
+
+any cho phép bạn làm mọi thứ mà không cần kiểm tra kiểu (bỏ qua việc kiểm tra kiểu), trong khi unknown yêu cầu bạn phải xác minh kiểu (type assertion) hoặc thu hẹp kiểu (type narrowing) trước khi thực hiện bất kỳ thao tác nào, khiến nó an toàn hơn nhiều và được khuyến nghị dùng khi không biết kiểu dữ liệu, còn any chỉ dùng khi cần "thoát" khỏi hệ thống kiểu của TypeScript. 
+
+any
+Tính chất: Như một "lỗ đen" kiểu dữ liệu, có thể gán cho bất kỳ giá trị nào và có thể thực hiện mọi phép toán lên nó.
+An toàn kiểu: Không an toàn, làm suy yếu hoàn toàn khả năng kiểm tra của TypeScript.
+
+unknown
+Tính chất: Giống như any ở chỗ có thể gán bất kỳ giá trị nào cho nó, nhưng lại cực kỳ hạn chế các thao tác.
+An toàn kiểu: Rất an toàn. Bạn phải nói rõ kiểu dữ liệu của nó bằng typeof, instanceof hoặc assertion (như as string) trước khi sử dụng.
+
+Khi nào dùng?
+Dùng unknown: Khi bạn nhận dữ liệu từ bên ngoài (API, localStorage) mà chưa biết chắc chắn kiểu của nó và muốn TypeScript kiểm tra tính an toàn trước khi dùng. Đây là cách tiếp cận khuyến khích.
+Dùng any: Chỉ dùng khi bạn thực sự cần "tắt" kiểm tra kiểu, ví dụ khi viết code thử nghiệm nhanh hoặc khi tương tác với thư viện cũ không có kiểu, vì nó làm mất đi lợi ích của TypeScript. 
 -------------------------------------------------
 Trước khi chúng ta tìm hiểu reselect có tác dụng gì thì trước tiên, chúng ta phải hiểu được selector là gì ?. selector có thể hiểu là một đoạn logic được sử dụng để tính toán ra một giá trị nào đó từ các giá trị có sẵn, hoặc chỉ đơn giản là lấy một giá trị từ một giá trị có sẵn.
 
@@ -386,6 +877,19 @@ outboundState: Partial<AddressState>
 là bắt buộc và đúng chuẩn
 
 ----------------------------------
+
+export interface City {
+  code: number;
+  name: string;
+  districts: District[];
+}
+
+//kiểu Type tương đương
+// export type City = {
+//   code: number;
+//   name: string;
+//   districts: District[];
+// };
 
 Khi nào nên dùng Interface (Lý do cho đoạn code trên)
 Lý do chính khiến interface được sử dụng trong đoạn mã của bạn là vì nó được thiết kế tối ưu hơn cho việc định nghĩa cấu trúc đối tượng (object shapes).

@@ -4,7 +4,6 @@ import "./AddressSelector.css";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 
 import {
-
   City,
   District,
   Ward,
@@ -40,25 +39,17 @@ interface AddressSelectorProps {
 }
 
 const AddressSelector: React.FC<AddressSelectorProps> = ({ onLoginClick, forceOpen = false, onClose }) => {
-  // const dispatch = useDispatch<any>();
   const dispatch = useAppDispatch();
-  // const addressData = useSelector(selectAddressData);
+  
   const addressData = useAppSelector(selectAddressData);
-  // const status = useSelector(selectAddressStatus);
   const status = useAppSelector(selectAddressStatus);
-  // const error = useSelector(selectAddressError);
   const error = useAppSelector(selectAddressError);
-  // const selectedAddress = useSelector(selectSelectedAddress);
   const selectedAddress = useAppSelector(selectSelectedAddress);
-  // const locationType = useSelector(selectLocationType);
+  
   const locationType = useAppSelector(selectLocationType);
-  // const selectedCity = useSelector(selectSelectedCity);
   const selectedCity = useAppSelector(selectSelectedCity);
-  // const selectedDistrict = useSelector(selectSelectedDistrict);
   const selectedDistrict = useAppSelector(selectSelectedDistrict);
-  // const selectedWard = useSelector(selectSelectedWard);
   const selectedWard = useAppSelector(selectSelectedWard);
-  // const showLocationModal = useSelector(selectShowLocationModal);
   const showLocationModal = useAppSelector(selectShowLocationModal);
   // Lấy danh sách districts và wards từ selectors
   const districts = useAppSelector(selectDistrictsByCity);

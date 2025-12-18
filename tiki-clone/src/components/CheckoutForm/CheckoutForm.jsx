@@ -14,7 +14,7 @@ const CheckoutForm = ({ onSubmit, onCancel, onClose, meta }) => {
     const [notification, setNotification] = useState(null);
     
     // Watch addressDetail field for character count
-    const addressDetailValue = watch('addressDetail', '');
+    // const addressDetailValue = watch('addressDetail', '');
 
     const showNotification = (type, message) => {
         setNotification({ type, message });
@@ -24,40 +24,9 @@ const CheckoutForm = ({ onSubmit, onCancel, onClose, meta }) => {
     };
 
     const onFormSubmit = async (data) => {
-        // Prevent double submission using ref
-        // if (isSubmittingRef.current || isSubmitting) {
-        //     console.log("Form is already submitting, ignoring...");
-        //     return;
-        // }
-
-        // isSubmittingRef.current = true;
-        // console.log("Starting form submission...");
-        // console.log("Form data received:", data);
-        // console.log("Address detail length:", data.addressDetail?.length);
-        // console.log("Selected address:", selectedAddress);
         
         try {
-            // Validate that all required fields are present
-            // if (!data.fullName || !data.phone || !data.email || !data.addressDetail) {
-            //     console.error("Missing required fields:", {
-            //         fullName: !!data.fullName,
-            //         phone: !!data.phone,
-            //         email: !!data.email,
-            //         addressDetail: !!data.addressDetail
-            //     });
-            //     showNotification('error', 'Vui lòng điền đầy đủ thông tin bắt buộc!');
-            //     isSubmittingRef.current = false; // Reset flag on validation error
-            //     return;
-            // }
-
-            // Validate selected address
-            // if (!selectedAddress || selectedAddress.trim() === '') {
-            //     console.error("No address selected");
-            //     showNotification('error', 'Vui lòng chọn địa chỉ giao hàng!');
-            //     isSubmittingRef.current = false; // Reset flag on validation error
-            //     return;
-            // }
-
+            
             // Lưu địa chỉ tại thời điểm mua hàng (snapshot)
             const addressSnapshot = {
                 detailedAddress: data.addressDetail.trim(),
@@ -68,6 +37,7 @@ const CheckoutForm = ({ onSubmit, onCancel, onClose, meta }) => {
             // Tạo đúng cấu trúc CheckoutData theo interface
             const timestamp = Date.now();
             const randomId = Math.random().toString(36).substring(2, 11);
+
             const checkoutData = {
                 id: `order_${timestamp}_${randomId}`,
                 items: meta.items || [], // Danh sách sản phẩm được mua
@@ -225,9 +195,9 @@ const CheckoutForm = ({ onSubmit, onCancel, onClose, meta }) => {
                     <div className="form-group">
                         <label htmlFor="addressDetail">
                             Địa chỉ chi tiết * 
-                            <span className={`character-count ${addressDetailValue.length > 250 ? 'warning' : ''} ${addressDetailValue.length >= 300 ? 'error' : ''}`}>
+                            {/* <span className={`character-count ${addressDetailValue.length > 250 ? 'warning' : ''} ${addressDetailValue.length >= 300 ? 'error' : ''}`}>
                                 ({addressDetailValue.length}/300 ký tự)
-                            </span>
+                            </span> */}
                         </label>
                         <textarea
                             id="addressDetail"

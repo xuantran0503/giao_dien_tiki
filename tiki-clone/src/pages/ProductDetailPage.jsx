@@ -15,6 +15,7 @@ import { youMayLikeData } from "../data/youMayLikeData";
 import { calculateDiscountedPrice, formatPrice } from "../utils/priceUtils";
 import "./ProductDetailPage.css";
 
+
 const ProductDetailPage = () => {
   const dispatch = useDispatch();
   const [quantity, setQuantity] = useState(1);
@@ -371,13 +372,8 @@ const ProductDetailPage = () => {
                 <span className="info-label">Thông tin vận chuyển</span>
               </div>
               <div className="delivery-detail">
-                {/* <img
-                  src="/img_giao_ngay.png"
-                  alt="delivery"
-                  className="delivery-icon"
-                /> */}
-
-                <div className="delivery-address-section">
+                
+                {/* <div className="delivery-address-section">
                   <AddressSelector
                     forceOpen={isAddressModalOpen}
                     onClose={() => setIsAddressModalOpen(false)}
@@ -389,7 +385,7 @@ const ProductDetailPage = () => {
                   >
                     Đổi
                   </button>
-                </div>
+                </div> */}
 
                 <div className="delivery-text">
                   <p className="delivery-main">

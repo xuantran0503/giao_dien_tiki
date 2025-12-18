@@ -1,18 +1,12 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import { createSelector } from "reselect";
 import axios from "axios";
+import { RootState } from "./store";
 
-export interface City {
+export interface Ward {
   code: number;
   name: string;
-  districts: District[];
 }
-//kiểu Type tương đương
-// export type City = {
-//   code: number;
-//   name: string;
-//   districts: District[];
-// };
 
 export interface District {
   code: number;
@@ -20,9 +14,10 @@ export interface District {
   wards: Ward[];
 }
 
-export interface Ward {
+export interface City {
   code: number;
   name: string;
+  districts: District[];
 }
 
 export interface AddressState {
@@ -43,7 +38,6 @@ const initialState: AddressState = {
   error: null,
   showLocationModal: false,
 
-
   selectedAddress: "P. Minh Khai, Q. Hoàng Mai, Hà Nội",
   selectedCity: "",
   selectedDistrict: "",
@@ -59,9 +53,8 @@ export const fetchAddressData = createAsyncThunk<City[], void, { rejectValue: st
         "https://provinces.open-api.vn/api/?depth=3"
       );
       return response.data;
-    } catch (error: unknown) {
-      // return rejectWithValue(error.response.data)
-
+    } catch (error) 
+    {
       return rejectWithValue( error instanceof Error ? error.message : "Failed to fetch address data" );
     }
   }
@@ -75,31 +68,38 @@ const addressSlice = createSlice({
     setLocationType: (state, action: PayloadAction<"default" | "custom">) => {
       state.locationType = action.payload;
     },
+
     setSelectedCity: (state, action: PayloadAction<string>) => {
       state.selectedCity = action.payload;
       state.selectedDistrict = "";
       state.selectedWard = "";
     },
+
     setSelectedDistrict: (state, action: PayloadAction<string>) => {
       state.selectedDistrict = action.payload;
       state.selectedWard = "";
     },
+
     setSelectedWard: (state, action: PayloadAction<string>) => {
       state.selectedWard = action.payload;
     },
+
     setSelectedAddress: (state, action: PayloadAction<string>) => {
-      console.log(" Setting address:", action.payload);
+      console.log("Change address new:", action.payload);
       state.selectedAddress = action.payload;
     },
+
     setShowLocationModal: (state, action: PayloadAction<boolean>) => {
       state.showLocationModal = action.payload;
     },
+
     resetSelection: (state) => {
       state.locationType = "default";
       state.selectedCity = "";
       state.selectedDistrict = "";
       state.selectedWard = "";
     },
+
     syncAddress: (state, action: PayloadAction<{ selectedAddress: string }>) => {
       if (action.payload && action.payload.selectedAddress) {
         state.selectedAddress = action.payload.selectedAddress;
@@ -127,17 +127,17 @@ const addressSlice = createSlice({
 });
 
 // RootState will be imported from store.ts in components
-export const selectAddressData = (state: { address: AddressState }) => state.address.addressData;
-export const selectAddressStatus = (state: { address: AddressState }) => state.address.status;
-export const selectAddressError = (state: { address: AddressState }) => state.address.error;
-export const selectSelectedAddress = (state: { address: AddressState }) => state.address.selectedAddress;
-export const selectLocationType = (state: { address: AddressState }) => state.address.locationType;
-export const selectSelectedCity = (state: { address: AddressState }) => state.address.selectedCity;
-export const selectSelectedDistrict = (state: { address: AddressState }) => state.address.selectedDistrict;
-export const selectSelectedWard = (state: { address: AddressState }) => state.address.selectedWard;
-export const selectShowLocationModal = (state: { address: AddressState }) => state.address.showLocationModal;
+export const selectAddressData = (state: RootState  ) => state.address.addressData;
+export const selectAddressStatus = (state: RootState) => state.address.status;
+export const selectAddressError = (state: RootState) => state.address.error;
+export const selectSelectedAddress = (state: RootState) => state.address.selectedAddress;
+export const selectLocationType = (state: RootState) => state.address.locationType;
+export const selectSelectedCity = (state: RootState) => state.address.selectedCity;
+export const selectSelectedDistrict = (state: RootState) => state.address.selectedDistrict;
+export const selectSelectedWard = (state: RootState) => state.address.selectedWard;
+export const selectShowLocationModal = (state: RootState) => state.address.showLocationModal;
 
-// Memoized selectors using reselect to prevent unnecessary re-renders
+// Memoized selectors using "reselect" to prevent unnecessary re-renders
 const EMPTY_ARRAY: never[] = [];
 
 export const selectDistrictsByCity = createSelector(

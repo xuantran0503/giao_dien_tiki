@@ -16,7 +16,6 @@ interface PersistedState {
 interface StorageEventData {
     key: string | null;
     newValue: string | null;
-    // oldValue: string | null;
 }
 
 export const setupCrossTabSync = (store: AppStore): (() => void) => {
@@ -63,7 +62,8 @@ export const setupCrossTabSync = (store: AppStore): (() => void) => {
                     const addressState: AddressState = JSON.parse(persistedState.address);
                     store.dispatch({
                         type: "address/syncAddress",
-                        payload: { selectedAddress: addressState.selectedAddress },
+                        // payload: { selectedAddress: addressState.selectedAddress },
+                        payload: addressState
                     });
                 } catch (addressError) {
                     console.error("Error syncing address state:", addressError);

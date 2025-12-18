@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { CartItem } from "./cartSlice";
-
+import { RootState } from "./store";
 
 export interface AddressSnapshot {
   detailedAddress: string;
@@ -25,7 +25,6 @@ export interface CheckoutData {
   addressSnapshot?: AddressSnapshot; // Địa chỉ tại thời điểm mua hàng
 }
 
-
 export interface CheckoutState {
   history: CheckoutData[];
   data: CheckoutData | null;
@@ -42,25 +41,8 @@ const checkoutSlice = createSlice({
   reducers: {
     addCheckout: (state, action: PayloadAction<CheckoutData>) => {
       const newOrder = action.payload;
-      // console.log("Processing new order:", {
-      //   id: newOrder.id,
-      //   itemCount: newOrder.items.length,
-      //   totalAmount: newOrder.totalAmount,
-      //   items: newOrder.items.map(item => ({ id: item.id, name: item.name, quantity: item.quantity }))
-      // });
-
-      // Simple duplicate check based on ID only
-      const isDuplicate = state.history.some(existingOrder => existingOrder.id === newOrder.id);
-
-      if (!isDuplicate) {
-        // console.log("Adding new order to history:", newOrder.id);
-        // console.log("Current history length:", state.history.length);
-        state.history.push(newOrder);
-        state.data = newOrder;
-        // console.log("New history length:", state.history.length);
-      } else {
-        console.log("Duplicate order detected, skipping:", newOrder.id);
-      }
+      state.history.push(newOrder);
+      state.data = newOrder;
     },
 
     syncCheckout: (state, action: PayloadAction<{ history: CheckoutData[]; data: CheckoutData | null }>) => {
@@ -112,11 +94,11 @@ const checkoutSlice = createSlice({
 });
 
 
-export const selectCheckoutHistory = (state: { checkout: CheckoutState }) => state.checkout.history;
-export const selectCurrentCheckout = (state: { checkout: CheckoutState }) => state.checkout.data;
-export const selectCheckoutById = (state: { checkout: CheckoutState }, id: string) =>
+export const selectCheckoutHistory = (state: RootState) => state.checkout.history;
+export const selectCurrentCheckout = (state: RootState) => state.checkout.data;
+export const selectCheckoutById = (state: RootState, id: string) =>
   state.checkout.history.find(item => item.id === id);
-export const selectCheckoutsByStatus = (state: { checkout: CheckoutState }, status: CheckoutData["status"]) =>
+export const selectCheckoutsByStatus = (state: RootState, status: CheckoutData["status"]) =>
   state.checkout.history.filter(item => item.status === status);
 
 export const {

@@ -310,7 +310,7 @@
 
 .select-group select:focus {
   outline: none;
-  border-color: #1a94ff;
+  /* border-color: #1a94ff; */
 }
 
 .select-indicators {
