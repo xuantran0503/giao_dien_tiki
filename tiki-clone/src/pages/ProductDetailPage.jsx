@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useParams, Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addToCart } from "../store/cartSlice";
 import Header from "../components/Header/Header";
 import Footer from "../components/Footer/Footer";
@@ -18,6 +18,7 @@ import "./ProductDetailPage.css";
 
 const ProductDetailPage = () => {
   const dispatch = useDispatch();
+  const { products: apiProducts } = useSelector((state) => state.listing);
   const [quantity, setQuantity] = useState(1);
   const { productId } = useParams();
   const [notification, setNotification] = useState({
@@ -33,6 +34,15 @@ const ProductDetailPage = () => {
 
   // Tìm sản phẩm từ tất cả data sources
   const findProduct = (id) => {
+    // Ưu tiên tìm trong dữ liệu từ API (Redux)
+    const apiProduct = apiProducts.find((p) => String(p.id) === String(id));
+    if (apiProduct) {
+      return {
+        ...apiProduct,
+        name: apiProduct.title, // Map title sang name để dùng chung giao diện
+      };
+    }
+
     const numId = parseInt(id);
 
     let product = suggestedProductsData.find((p) => p.id === numId);
@@ -118,19 +128,20 @@ const ProductDetailPage = () => {
 
   const product = findProduct(productId);
 
-  // if (!product) {
-  //   return (
-  //     <div className="product-detail-page">
-  //       <Header />
-  //       <div className="product-not-found">
-  //         <h2>Không tìm thấy sản phẩm</h2>
-  //         <Link to="/" className="back-home-link">
-  //           Quay về trang chủ
-  //         </Link>
-  //       </div>
-  //     </div>
-  //   );
-  // }
+  if (!product) {
+    return (
+      <div className="product-detail-page">
+        <Header />
+        <div className="product-not-found" style={{ padding: "100px", textAlign: "center" }}>
+          <h2>Rất tiếc, sản phẩm này hiện không có sẵn!</h2>
+          <Link to="/" className="back-home-link" style={{ color: "#0b74e5", marginTop: "15px", display: "inline-block" }}>
+            Quay về trang chủ
+          </Link>
+        </div>
+        <Footer />
+      </div>
+    );
+  }
 
   // Tính giá sau giảm giá
   const finalPrice = calculateDiscountedPrice(

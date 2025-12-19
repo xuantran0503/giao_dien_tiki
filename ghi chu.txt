@@ -13,12 +13,147 @@ thêm phần điều chỉnh số lượng kí tự để xuống dòng khi Đ�
 nhạc : nắng hoa niên , cơn mưa khẽ rơi, thế em làm sao , 
 
 +++++++++++++ĐANG LÀM ++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+/api-end-user/listing/get-by-page
+/api-end-user/listing/get-by-page-promotion
+/api-end-user/listing/get-by-page-by-productsid
+
+http://192.168.2.112:9092/api/swagger/index.html
+Danh mục sản phẩm
+
+GET: /api-end-user/classification/get-all
+GET: /api-end-user/classification/{id}/get-children
+
+Danh sách sản phẩm : 
+POST: /api-end-user/listing/get-by-page
+Chi tiết sản phẩm 
+GET: /api-end-user/listing/{id}
+
+tìm hiểu https và restfullAPI , request và response
+
+dùng /api-end-user/listing/get-by-page để lấy được danh  sách sản phẩm thay giá trị AId: da1e0cd8-f73b-4da2-acf2-8ddc621bcf75
+
+Example Value
+Schema
+{
+  "PageIndex": 0,
+  "PageSize": 0,
+  "FieldName": "string",
+  "Orderby": "string",
+  "Filter": [
+    {
+      "Opt": "string",
+      "Name": "string",
+      "Opt1": "string",
+      "Type": 1,
+      "Values": "string"
+    }
+  ],
+  "Keyword": "string",
+  "LanguageCode": "string",
+  "CurrencyCode": "string",
+  "ProductsId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+  "AId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+  "WareHouseId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+  "ListingPropertyCode": "string",
+  "CustomerId": "3fa85f64-5717-4562-b3fc-2c963f66afa6"
+}
+
+===================================
+
+HTTP (HyperText Transfer Protocol) là Giao thức Truyền Siêu văn bản, bộ quy tắc nền tảng cho việc trao đổi thông tin trên World Wide Web (WWW), cho phép trình duyệt (máy khách) gửi yêu cầu và nhận phản hồi từ máy chủ web để hiển thị trang web, hình ảnh, video, và các tài nguyên khác. Nó hoạt động dựa trên mô hình yêu cầu-phản hồi và là công nghệ cốt lõi giúp chúng ta truy cập Internet. 
+Cách thức hoạt động cơ bản
+Yêu cầu (Request): Trình duyệt của bạn gửi yêu cầu (ví dụ: nhập URL) đến máy chủ.
+Phản hồi (Response): Máy chủ nhận yêu cầu và gửi lại phản hồi, thường chứa mã HTML, hình ảnh, hoặc dữ liệu khác.
+Hiển thị: Trình duyệt đọc và diễn giải dữ liệu này để hiển thị trang web cho bạn. 
+Các phiên bản và biến thể
+HTTP/1.1: Phiên bản phổ biến, cho phép nhiều yêu cầu trên một kết nối.
+HTTP/2, HTTP/3: Các phiên bản mới hơn, tối ưu hóa tốc độ và hiệu suất truyền tải.
+HTTPS (HTTP Secure): Phiên bản bảo mật của HTTP, sử dụng mã hóa (TLS/SSL) để bảo vệ dữ liệu, thường thấy trên các trang web có biểu tượng khóa (ví dụ: https://). 
+Đặc điểm chính
+Nền tảng WWW: Là xương sống của Web, cho phép truy cập nội dung online.
+Mô hình Yêu cầu-Phản hồi (Request-Response): Giao tiếp theo kiểu hỏi-đáp giữa client và server.
+Không trạng thái (Stateless): Mỗi giao dịch là độc lập, nhưng các phiên bản mới đã cải thiện điều này.
+Mở rộng: Hỗ trợ nhiều loại dữ liệu (văn bản, hình ảnh, video). 
 
 
+Cổng khác: HTTP dùng cổng 80, HTTPS dùng cổng 443 (cổng bảo mật
 
+
+HTTP status code được chia thành 5 loại khác nhau, mỗi loại bắt đầu với 1 chữ số khác nhau và mang ý nghĩa riêng:
+
+1xx (Informational – Thông tin): Các status code loại này dùng để đơn giản thông báo với client rằng server đã nhận được request. Các status code này ít được sử dụng.
+2xx (Sucess – Thành công): Các status code loại này có ý nghĩa rằng request được server xử lý thành công.
+3xx (Redirect – Chuyển hướng): Các status code loại này có ý nghĩa rằng server sẽ chuyển tiếp request hiện tại sang một request khác và client cần thực hiện việc gửi request tiếp theo đó để có thể hoàn tất. Thông thường khi trình duyệt nhận được status code loại này nó sẽ tự động thực hiện việc gửi request tiếp theo để lấy về kết quả.
+4xx (Client error – Lỗi Client): Các status code loại này có ý nghĩa rằng đã có lỗi từ phía client trong khi gửi request. Ví dụ như sai URL, sai HTTP method, không có quyền truy cập vào trang…
+5xx (Server error – Lỗi Server): Các status code loại này có ý nghĩa rằng đã có lỗi từ phía server trong khi xử lý request. Ví dụ như server quá tải, hết bộ nhớ, lỗi kết nối database…
+
+=================================================
+Trong API, Request (Yêu cầu) là lời đề nghị của client gửi đến server (gồm URL, phương thức HTTP, headers, body), còn Response (Phản hồi) là câu trả lời của server sau khi xử lý yêu cầu (gồm Status Code, Headers, Body dữ liệu), tạo thành một chu trình giao tiếp cơ bản giữa Client-Server. Tìm hiểu API. Kiến thức quan trọng dành cho người mới bắt đầu trên Bác Sĩ IT Các phương thức Request trong REST API và các trạng thái trên AnhTester HTTP Request Và HTTP Response trên Viblo Tìm hiểu kiến thức cơ bản về API trên Viblo Giao thức trong kiểm thử API và HTTP Status code là gì? Các loại trên TDA Company 
+Request (Yêu cầu)
+Mục đích: Client muốn server thực hiện một hành động hoặc cung cấp dữ liệu.
+Cấu thành: Giao thức trong kiểm thử API và HTTP Status code là gì? Các loại trên TDA Company
+URL: Địa chỉ tài nguyên (resource) cần truy cập.
+Method (HTTP Method): Hành động cần làm (GET - lấy, POST - tạo, PUT - cập nhật toàn bộ, PATCH - cập nhật một phần, DELETE - xóa).
+Headers: Thông tin bổ sung (xác thực, kiểu dữ liệu).
+Body: Dữ liệu gửi đi (dùng cho POST, PUT, PATCH). 
+Response (Phản hồi)
+Mục đích: Server trả về kết quả cho yêu cầu của client.
+Cấu thành: Giao thức trong kiểm thử API và HTTP Status code là gì? Các loại trên TDA Company
+Status Code: Mã trạng thái (ví dụ: 200 OK - thành công, 201 Created - tạo mới, 404 Not Found - không tìm thấy, 500 Internal Server Error - lỗi server).
+Headers: Thông tin về response (kiểu dữ liệu trả về).
+Body: Dữ liệu thực tế (JSON, XML...) hoặc thông báo lỗi. 
+Tóm tắt hoạt động
+Client (ứng dụng điện thoại) gửi Request (GET/users) đến Server. Server xử lý, tìm dữ liệu người dùng và trả về Response (200 OK + danh sách người dùng trong Body). 
+
+=======================================================
+RESTful API là gì? | FPT Cloud là một tiêu chuẩn thiết kế giao diện lập trình ứng dụng (API) cho web, hoạt động dựa trên các nguyên tắc của kiến trúc REST (Representational State Transfer), cho phép các ứng dụng khác nhau giao tiếp bằng cách sử dụng giao thức HTTP để truyền tải dữ liệu theo định dạng chuẩn như JSON or XML, tập trung vào việc quản lý "tài nguyên" (resources) một cách hiệu quả thông qua các phương thức như GET, POST, PUT, DELETE. 
+Các thành phần chính
+API (Application Programming Interface): Bộ quy tắc cho phép phần mềm nói chuyện với nhau.
+REST (Representational State Transfer): Một phong cách kiến trúc, tập trung vào tài nguyên hệ thống (dữ liệu) và cách biểu diễn trạng thái của chúng.
+HTTP Methods: Sử dụng các phương thức HTTP như GET (lấy dữ liệu), POST (tạo dữ liệu), PUT (cập nhật), DELETE (xóa) để thao tác trên tài nguyên.
+Tài nguyên (Resources): Dữ liệu được quản lý (ví dụ: người dùng, sản phẩm) và được định danh qua URL duy nhất.
+Định dạng dữ liệu: Thường sử dụng JSON (nhẹ, phổ biến) hoặc XML để trao đổi dữ liệu. 
+Cách hoạt động cơ bản
+Client gửi yêu cầu: Ứng dụng (web, mobile) gửi yêu cầu (request) đến máy chủ, kèm theo phương thức HTTP và URL của tài nguyên.
+Máy chủ xử lý: Máy chủ nhận yêu cầu, xác thực và xử lý (ví dụ: lấy dữ liệu từ database).
+Máy chủ trả về phản hồi: Máy chủ gửi lại phản hồi (response) chứa dữ liệu (thường là JSON) và mã trạng thái (thành công/thất bại) cho client. 
+Lợi ích của RESTful API
+Đơn giản, dễ dùng: Dựa trên các chuẩn HTTP quen thuộc, dễ hiểu.
+Khả năng mở rộng: Dễ dàng mở rộng hệ thống và thêm tính năng mới.
+Tính di động (Portability): Hỗ trợ nhiều nền tảng (web, mobile, desktop) vì giao tiếp qua HTTP.
+Hiệu quả: Sử dụng ít băng thông, hiệu suất cao. 
 
 
 =================================================
+HTTPS (Hypertext Transfer Protocol Secure) là phiên bản bảo mật của giao thức HTTP, sử dụng mã hóa SSL/TLS để tạo kết nối an toàn giữa trình duyệt và website, bảo vệ dữ liệu nhạy cảm (như mật khẩu, thông tin thanh toán) khỏi bị đánh cắp hoặc can thiệp, thể hiện qua biểu tượng ổ khóa và địa chỉ bắt đầu bằng "https://". Nó mã hóa thông tin để chỉ người gửi và người nhận có thể đọc được, ngăn chặn tin tặc, nhà cung cấp dịch vụ Internet (ISP) chèn nội dung độc hại. 
+HTTPS hoạt động như thế nào?
+Mã hóa: Dữ liệu được mã hóa (biến thành dạng khó đọc) trước khi gửi đi và chỉ có thể giải mã bởi máy chủ và trình duyệt của bạn.
+SSL/TLS: Sử dụng chứng chỉ SSL (Secure Sockets Layer) hoặc TLS (Transport Layer Security) để thiết lập kết nối an toàn (bắt tay SSL/TLS).
+Cổng khác: HTTP dùng cổng 80, HTTPS dùng cổng 443 (cổng bảo mật). 
+Tại sao HTTPS quan trọng?
+Bảo mật dữ liệu: Bảo vệ thông tin cá nhân, tài chính, đăng nhập khỏi bị nghe lén.
+Tin cậy & Uy tín: Tăng niềm tin cho người dùng; các trình duyệt cảnh báo trang HTTP là "Không an toàn".
+SEO: Google và các công cụ tìm kiếm ưu tiên các trang web HTTPS. 
+Cách nhận biết?
+Địa chỉ URL bắt đầu bằng https:// thay vì http://.
+Có biểu tượng ổ khóa nhỏ trên thanh địa chỉ trình duyệt. 
+
+
+===================================================
+Endpoint (Điểm cuối) có hai nghĩa chính trong công nghệ: (1) Thiết bị vật lý kết nối mạng (máy tính, điện thoại, IoT) và (2) Địa chỉ (URL) trong API nơi ứng dụng giao tiếp để trao đổi dữ liệu, giống như cánh cửa truy cập tài nguyên của dịch vụ. Cả hai đều là điểm đầu/cuối trong quá trình truyền thông tin và đều cần được bảo mật để tránh rủi ro an ninh mạng. 
+1. Trong lĩnh vực mạng & bảo mật (Thiết bị)
+Là gì: Bất kỳ thiết bị nào kết nối với mạng, đóng vai trò là điểm cuối của một kết nối hoặc luồng dữ liệu.
+Ví dụ: Máy tính để bàn, laptop, điện thoại thông minh, máy tính bảng, máy in, máy chủ, thiết bị y tế, đồng hồ thông minh, thiết bị IoT (Internet vạn vật).
+Vai trò: Là nơi người dùng truy cập hệ thống, chứa dữ liệu nhạy cảm, nên cần được bảo vệ khỏi các mối đe dọa an ninh mạng (Endpoint Security). 
+2. Trong lập trình & API (Địa chỉ)
+Là gì: Một địa chỉ (URL) cụ thể trên máy chủ nơi các ứng dụng gửi yêu cầu (request) để nhận dữ liệu hoặc thực hiện hành động, ví dụ như https://api.example.com/users.
+Ví dụ:
+endpoint GET /posts: Lấy danh sách bài viết.
+endpoint POST /users: Tạo người dùng mới.
+Vai trò: Cầu nối giao tiếp giữa các ứng dụng (client và server), định nghĩa các chức năng mà API cung cấp và cách truy cập chúng. 
+Tóm lại: Endpoint vừa là thiết bị (máy tính, điện thoại) vừa là địa chỉ (URL API), đều là "điểm cuối" quan trọng trong hệ thống kỹ thuật số, và việc quản lý/bảo mật chúng là rất cần thiết. 
+
+=====================================================
 Props (viết tắt của "Properties") là cơ chế truyền dữ liệu một chiều từ component cha xuống component con trong các framework như React, giúp component con nhận dữ liệu đầu vào (như tên, màu sắc,...) để tùy chỉnh hiển thị hoặc hành vi, giống như các thuộc tính (attributes) trong HTML nhưng có thể định nghĩa tự do và bất biến (chỉ đọc, không được sửa) bên trong component con. 
 Đặc điểm chính của Props:
 Truyền dữ liệu: Là cách để component cha gửi thông tin (dữ liệu, hàm) cho component con.
