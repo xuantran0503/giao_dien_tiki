@@ -38,14 +38,12 @@ const BLANK_IMAGE =
 
 function transformProductData(item: any): Product {
   let imageUrl = BLANK_IMAGE;
-
   if (item.Image) {
     imageUrl = item.Image;
-  } 
-
-  else if (item.Images?.length > 0) {
+  } else if (item.Images?.length > 0) {
     const firstImage = item.Images[0];
     const imgPath = firstImage.Url || firstImage.url;
+
     imageUrl = imgPath;
   }
 

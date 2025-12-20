@@ -36,17 +36,29 @@ const initialState: ListingState = {
 const BLANK_IMAGE =
   "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7";
 
+const BACKEND_BASE_URL = "http://192.168.2.112:9092";
+
+/**
+ * Ghép backend URL với image path
+ */
+function buildImageUrl(url?: string): string {
+  if (!url) return BLANK_IMAGE;
+  if (url.startsWith("http")) return url; // Đã là full URL
+
+  // Xóa dấu / ở đầu và ghép với backend URL
+  const cleanPath = url.replace(/^\/+/, "");
+  return `${BACKEND_BASE_URL}/${cleanPath}`;
+}
+
 function transformProductData(item: any): Product {
   let imageUrl = BLANK_IMAGE;
 
   if (item.Image) {
-    imageUrl = item.Image;
-  } 
-
-  else if (item.Images?.length > 0) {
+    imageUrl = buildImageUrl(item.Image);
+  } else if (item.Images?.length > 0) {
     const firstImage = item.Images[0];
     const imgPath = firstImage.Url || firstImage.url;
-    imageUrl = imgPath;
+    imageUrl = buildImageUrl(imgPath);
   }
 
   return {
@@ -90,6 +102,10 @@ export const fetchProductsByPage = createAsyncThunk(
         },
       });
 
+      // 🔍 DEBUG: Kiểm tra API response
+      console.log("📦 Full API Response:", response.data);
+      console.log("📦 Data.Result:", response.data?.Data?.Result);
+
       const products = response.data?.Data?.Result;
 
       if (!products || products.length === 0) {
@@ -97,7 +113,18 @@ export const fetchProductsByPage = createAsyncThunk(
         return topDealsData;
       }
 
-      return products.map(transformProductData);
+      // 🔍 DEBUG: Kiểm tra sản phẩm đầu tiên
+      console.log("📦 First Product:", products[0]);
+      console.log("📦 First Product Image:", products[0]?.Image);
+      console.log("📦 First Product Images:", products[0]?.Images);
+
+      const transformedProducts = products.map(transformProductData);
+
+      // 🔍 DEBUG: Kiểm tra sau khi transform
+      console.log("✨ Transformed First Product:", transformedProducts[0]);
+      console.log("✨ Transformed Image URL:", transformedProducts[0]?.image);
+
+      return transformedProducts;
     } catch (error: any) {
       return rejectWithValue(error.message || "API Error");
     }

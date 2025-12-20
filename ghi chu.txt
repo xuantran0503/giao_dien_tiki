@@ -88,6 +88,9 @@ HTTP status code được chia thành 5 loại khác nhau, mỗi loại bắt đ
 5xx (Server error – Lỗi Server): Các status code loại này có ý nghĩa rằng đã có lỗi từ phía server trong khi xử lý request. Ví dụ như server quá tải, hết bộ nhớ, lỗi kết nối database…
 
 =================================================
+API (Application Programming Interface) là một giao diện trung gian cho phép các ứng dụng phần mềm giao tiếp với nhau. Định nghĩa cách mà các thành phần của phần mềm gửi yêu cầu và nhận phản hồi mà không cần biết chi tiết cách hệ thống bên trong hoạt động.
+
+
 Trong API, Request (Yêu cầu) là lời đề nghị của client gửi đến server (gồm URL, phương thức HTTP, headers, body), còn Response (Phản hồi) là câu trả lời của server sau khi xử lý yêu cầu (gồm Status Code, Headers, Body dữ liệu), tạo thành một chu trình giao tiếp cơ bản giữa Client-Server. Tìm hiểu API. Kiến thức quan trọng dành cho người mới bắt đầu trên Bác Sĩ IT Các phương thức Request trong REST API và các trạng thái trên AnhTester HTTP Request Và HTTP Response trên Viblo Tìm hiểu kiến thức cơ bản về API trên Viblo Giao thức trong kiểm thử API và HTTP Status code là gì? Các loại trên TDA Company 
 Request (Yêu cầu)
 Mục đích: Client muốn server thực hiện một hành động hoặc cung cấp dữ liệu.
@@ -106,7 +109,17 @@ Tóm tắt hoạt động
 Client (ứng dụng điện thoại) gửi Request (GET/users) đến Server. Server xử lý, tìm dữ liệu người dùng và trả về Response (200 OK + danh sách người dùng trong Body). 
 
 =======================================================
+
+REST là một kiến trúc, còn RESTful là cách triển khai API tuân theo các nguyên tắc của REST.
+
+RESTful API (hay REST API) là một giao diện lập trình ứng dụng (API hay web API) tuân theo các ràng buộc của kiểu kiến trúc REST, cho phép tương tác với các dịch vụ web RESTful. Hay nói đơn giản, RESTful API là một tiêu chuẩn được dùng trong việc thiết kế API dành cho các ứng dụng web (thiết kế Web Services) để hỗ trợ cho việc quản lý các resource.
 RESTful API là gì? | FPT Cloud là một tiêu chuẩn thiết kế giao diện lập trình ứng dụng (API) cho web, hoạt động dựa trên các nguyên tắc của kiến trúc REST (Representational State Transfer), cho phép các ứng dụng khác nhau giao tiếp bằng cách sử dụng giao thức HTTP để truyền tải dữ liệu theo định dạng chuẩn như JSON or XML, tập trung vào việc quản lý "tài nguyên" (resources) một cách hiệu quả thông qua các phương thức như GET, POST, PUT, DELETE. 
+
+REST: là một dạng chuyển đổi cấu trúc dữ liệu, một kiểu kiến trúc để viết API. Nó sử dụng phương thức HTTP đơn giản để tạo cho giao tiếp giữa các máy. Vì vậy, thay vì sử dụng một URL cho việc xử lý một số thông tin người dùng, REST gửi một yêu cầu HTTP như GET, POST, DELETE … đến một URL để xử lý dữ liệu.
+
+REST hoạt động dựa chủ yếu trên phương thức CRUD ( Create, Read, Update, Delete) tương đương với 4 giao thức HTTP: POST, GET, PUT, DELETE.
+
+RESTful API: là một tiêu chuẩn dùng trong việc thiết kế API cho các ứng dụng Web (như thiết kế Web services), để tiện cho việc quản lý các resource. Nó chú trọng vào resource hệ thống (như: tệp văn bản, ảnh, âm thanh, video, hoặc dữ liệu động…), bao gồm các trạng thái resource được định dạng và được truyền tải qua HTTP.
 Các thành phần chính
 API (Application Programming Interface): Bộ quy tắc cho phép phần mềm nói chuyện với nhau.
 REST (Representational State Transfer): Một phong cách kiến trúc, tập trung vào tài nguyên hệ thống (dữ liệu) và cách biểu diễn trạng thái của chúng.
@@ -123,7 +136,57 @@ Khả năng mở rộng: Dễ dàng mở rộng hệ thống và thêm tính nă
 Tính di động (Portability): Hỗ trợ nhiều nền tảng (web, mobile, desktop) vì giao tiếp qua HTTP.
 Hiệu quả: Sử dụng ít băng thông, hiệu suất cao. 
 
+RESTful là cách thiết kế API dựa trên nguyên tắc REST. RESTful API sử dụng giao thức HTTP để thực hiện các thao tác với tài nguyên (resource) như:
 
+GET – Lấy dữ liệu
+POST – Tạo mới
+PUT/PATCH – Cập nhật
+DELETE – Xóa
+Dữ liệu phản hồi thường được trả về dưới dạng JSON – định dạng nhẹ, dễ phân tích và phổ biến với các ứng dụng hiện đại.
+
+Về request
+Một cái request đúng chuẩn cần có 4 thứ:
+
+URL
+URL là địa chỉ duy nhất cho 1 request, thường là đường dẫn tới một hàm xử lí logic.
+Method
+HTTP request có tất cả 9 loại method , 2 loại được sử dụng phổ biến nhất là GET và POST
+GET: Sử dụng để lấy thông tin từ server theo URI đã cung cấp.
+HEAD: Giống với GET nhưng response trả về không có body, chỉ có header.
+POST: Gửi thông tin tới sever thông qua các parameters HTTP.
+PUT: Ghi đè tất cả thông tin của đối tượng với những gì được gửi lên.
+PATCH: Ghi đè các thông tin được thay đổi của đối tượng.
+DELETE: Xóa resource trên server.
+CONNECT: Thiết lập một kết nối tới server theo URI.
+OPTIONS: Mô tả các tùy chọn giao tiếp cho resource.
+TRACE: Thực hiện một bài test loop-back theo đường dẫn đến resource.
+Headers
+Là nơi chứa các thông tin cần thiết của 1 request nhưng end-users không biết có sự tồn tại của nó. Ví dụ: độ dài của request body, thời gian gửi request, loại thiết bị đang sử dụng, loại định dạng cái response mà client có đọc được…
+Body
+Là nơi chứa thông tin mà client sẽ điền.
+Về response
+Sau khi nhận được request từ phía client, server sẽ xử lý cái request đó và gửi ngược lại cho client 1 cái response. Cấu trúc của 1 response tương đối giống phần request nhưng Status code sẽ thay thế cho URL và Method. Tóm lại, nó có cầu trúc 3 phần:
+
+Status code
+Headers
+Body
+Phần Header và body tương đối giống với request.
+
+Khi request một API, có một số status code thường gặp như sau:
+
+200 OK: Trả về thành công cho những phương thức GET, PUT, PATCH hoặc DELETE.
+201 Created: Trả về khi tạo thành công một Resouce.
+204 No Content: Trả về khi xóa thành công Resource.
+304 Not Modified: Client có thể sử dụng dữ liệu cache.
+400 Bad Request: Request không hợp lệ.
+401 Unauthorized: Request cần phải có auth.
+403 Forbidden: Bị từ chối không cho phép.
+404 Not Found: Không tìm thấy resource từ URI.
+405 Method Not Allowed: Phương thức không cho phép với user hiện tại.
+410 Gone: Resource không còn tồn tại, version cũ không còn hỗ trợ.
+415 Unsupported Media Type: Không hỗ trợ kiểu Resource này.
+422 Unprocessable Entity: Dữ liệu không được xác thực.
+429 Too Many Requests: Request bị từ chối do bị giới hạn.
 =================================================
 HTTPS (Hypertext Transfer Protocol Secure) là phiên bản bảo mật của giao thức HTTP, sử dụng mã hóa SSL/TLS để tạo kết nối an toàn giữa trình duyệt và website, bảo vệ dữ liệu nhạy cảm (như mật khẩu, thông tin thanh toán) khỏi bị đánh cắp hoặc can thiệp, thể hiện qua biểu tượng ổ khóa và địa chỉ bắt đầu bằng "https://". Nó mã hóa thông tin để chỉ người gửi và người nhận có thể đọc được, ngăn chặn tin tặc, nhà cung cấp dịch vụ Internet (ISP) chèn nội dung độc hại. 
 HTTPS hoạt động như thế nào?
@@ -152,7 +215,21 @@ endpoint GET /posts: Lấy danh sách bài viết.
 endpoint POST /users: Tạo người dùng mới.
 Vai trò: Cầu nối giao tiếp giữa các ứng dụng (client và server), định nghĩa các chức năng mà API cung cấp và cách truy cập chúng. 
 Tóm lại: Endpoint vừa là thiết bị (máy tính, điện thoại) vừa là địa chỉ (URL API), đều là "điểm cuối" quan trọng trong hệ thống kỹ thuật số, và việc quản lý/bảo mật chúng là rất cần thiết. 
+==================================================
 
+Trong API, Param (Parameter - Tham số) là các giá trị dữ liệu mà bạn gửi từ ứng dụng của mình (client) tới máy chủ để yêu cầu một hành động hoặc lấy thông tin cụ thể; chúng giống như các "biến số" để 'nói' cho API biết bạn muốn làm gì, như username, password, id, tên_sản_phẩm, v.v., được truyền qua URL, thân yêu cầu (body) hoặc tiêu đề (header). 
+Vai trò của Param trong API
+Cung cấp thông tin cần thiết: API cần các tham số để xác định yêu cầu của bạn. Ví dụ: API đăng nhập cần username và password để xác thực.
+Lọc dữ liệu: Khi yêu cầu danh sách sản phẩm, bạn có thể dùng category=electronics để chỉ nhận sản phẩm điện tử.
+Tùy chỉnh kết quả: Gửi limit=10 để chỉ nhận 10 kết quả đầu tiên. 
+Các loại Param phổ biến
+Query Parameters (Tham số truy vấn): Gắn vào cuối URL (sau dấu ?), dùng để lọc, sắp xếp, phân trang.
+Ví dụ: https://api.example.com/products?category=electronics&sort=price_asc.
+Path Parameters (Tham số đường dẫn): Là một phần của URL, dùng để xác định tài nguyên cụ thể.
+Ví dụ: https://api.example.com/products/123 (ở đây 123 là ID sản phẩm).
+Body Parameters (Tham số thân yêu cầu): Dùng để gửi lượng lớn dữ liệu phức tạp (JSON, XML), thường dùng khi tạo hoặc cập nhật tài nguyên (POST, PUT).
+Ví dụ: Dữ liệu người dùng khi đăng ký, được gửi trong phần thân request. 
+Tóm lại, Param là cách bạn "giao tiếp" với API để yêu cầu chính xác những gì bạn cần. 
 =====================================================
 Props (viết tắt của "Properties") là cơ chế truyền dữ liệu một chiều từ component cha xuống component con trong các framework như React, giúp component con nhận dữ liệu đầu vào (như tên, màu sắc,...) để tùy chỉnh hiển thị hoặc hành vi, giống như các thuộc tính (attributes) trong HTML nhưng có thể định nghĩa tự do và bất biến (chỉ đọc, không được sửa) bên trong component con. 
 Đặc điểm chính của Props:

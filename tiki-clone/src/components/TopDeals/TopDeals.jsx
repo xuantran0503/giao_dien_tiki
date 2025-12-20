@@ -89,7 +89,22 @@ const TopDeals = () => {
           {deals.map((deal) => (
             <Link to={`/product/${deal.id}`}  key={deal.id} className="deal-card">
               <div className="deal-image-wrapper">
-                <img src={deal.image} alt={deal.title} className="deal-image" />
+                <img 
+                  src={deal.image} 
+                  alt={deal.title} 
+                  className="deal-image"
+                  ></img>
+
+                {/* <img 
+                  src={deal.image} 
+                  alt={deal.title} 
+                  className="deal-image"
+                  onError={(e) => {
+                    e.target.onerror = null; // Prevent infinite loop
+                    // Dùng base64 image thay vì external URL
+                    e.target.src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Crect fill='%23e0e0e0' width='300' height='300'/%3E%3Ctext fill='%23666' font-family='sans-serif' font-size='20' dy='10.5' font-weight='bold' x='50%25' y='50%25' text-anchor='middle'%3ENo Image%3C/text%3E%3C/svg%3E";
+                  }}
+                /> */}
                 <span className="discount-tag">{deal.date || "Hot"}</span>
                 {deal.imageBadges && <img src={deal.imageBadges} alt="Badge" className="mini-badge" />}
               </div>
