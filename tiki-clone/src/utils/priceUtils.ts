@@ -4,7 +4,7 @@ export const calculateDiscountedPrice = (
 ): number => {
     const numOriginalPrice = Number(originalPrice);
 
-    // If no discount provided, return original price
+    
     if (!discount) {
         return numOriginalPrice;
     }

@@ -15,44 +15,89 @@ const FlashSale = () => {
   });
 
   useEffect(() => {
-    
+
     const calculateTimeLeft = () => {
-      const now = new Date();
-      const currentHour = now.getHours();
-      const currentMinute = now.getMinutes();
-      const currentSecond = now.getSeconds();
+  const now = new Date();
 
-      // Các khung giờ Flash Sale:
-      const saleHours = [0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22];
+  // Các khung giờ sale (mỗi khung 2 tiếng)
+  const saleHours = [0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22];
+
+  const currentHour = now.getHours();
+
+  // Tìm khung sale hiện tại
+  let currentSaleHour = saleHours
+    .slice()
+    .reverse()
+    .find(hour => hour <= currentHour);
+
+  if (currentSaleHour === undefined) {
+    currentSaleHour = saleHours[saleHours.length - 1];
+  }
+
+  // Giờ kết thúc sale = +2h
+  let endSaleHour = currentSaleHour + 2;
+// Tính thời gian kết thúc
+  const endTime = new Date(now);
+  endTime.setHours(endSaleHour, 0, 0, 0);
+
+  // Nếu qua ngày
+  if (endSaleHour >= 24) {
+    endTime.setDate(endTime.getDate() + 1);
+    endTime.setHours(endSaleHour % 24, 0, 0, 0);
+  }
+
+  const diff = endTime.getTime() - now.getTime();
+
+  if (diff <= 0) {
+    setTimeLeft({ hours: 0, minutes: 0, seconds: 0 });
+    return;
+  }
+
+  const hours = Math.floor(diff / (1000 * 60 * 60));
+  const minutes = Math.floor((diff / (1000 * 60)) % 60);
+  const seconds = Math.floor((diff / 1000) % 60);
+
+  setTimeLeft({ hours, minutes, seconds });
+};
+
+    
+    // const calculateTimeLeft = () => {
+    //   const now = new Date();
+    //   const currentHour = now.getHours();
+    //   const currentMinute = now.getMinutes();
+    //   const currentSecond = now.getSeconds();
+
+    //   // Các khung giờ Flash Sale:
+    //   const saleHours = [0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22];
       
-      let nextSaleHour = saleHours.find(hour => hour > currentHour);
-      if (!nextSaleHour) {
-        nextSaleHour = saleHours[0]; 
-      }
+    //   let nextSaleHour = saleHours.find(hour => hour > currentHour);
+    //   if (!nextSaleHour) {
+    //     nextSaleHour = saleHours[0]; 
+    //   }
 
-      // Tính số giờ, phút, giây còn lại
-      let hoursLeft = nextSaleHour - currentHour;
-      if (hoursLeft <= 0) hoursLeft += 24;
+    //   // Tính số giờ, phút, giây còn lại
+    //   let hoursLeft = nextSaleHour - currentHour;
+    //   if (hoursLeft <= 0) hoursLeft += 24;
 
-      let minutesLeft = 59 - currentMinute;
-      let secondsLeft = 59 - currentSecond;
+    //   let minutesLeft = 59 - currentMinute;
+    //   let secondsLeft = 59 - currentSecond;
 
-      if (secondsLeft < 0) {
-        secondsLeft += 60;
-        minutesLeft -= 1;
-      }
+    //   if (secondsLeft < 0) {
+    //     secondsLeft += 60;
+    //     minutesLeft -= 1;
+    //   }
 
-      if (minutesLeft < 0) {
-        minutesLeft += 60;
-        hoursLeft -= 1;
-      }
+    //   if (minutesLeft < 0) {
+    //     minutesLeft += 60;
+    //     hoursLeft -= 1;
+    //   }
 
-      setTimeLeft({
-        hours: hoursLeft,
-        minutes: minutesLeft,
-        seconds: secondsLeft
-      });
-    };
+    //   setTimeLeft({
+    //     hours: hoursLeft,
+    //     minutes: minutesLeft,
+    //     seconds: secondsLeft
+    //   });
+    // };
 
     calculateTimeLeft();
     const timer = setInterval(calculateTimeLeft, 1000);

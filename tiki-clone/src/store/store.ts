@@ -18,12 +18,14 @@ import cartReducer, { CartState } from "./cartSlice";
 import checkoutReducer, { CheckoutState } from "./checkoutSlice";
 import addressReducer, { AddressState } from "./addressSlice";
 import listingReducer, { ListingState } from "./listingSlice";
+import categoryReducer, { CategoryState } from "./categorySlice";
 
 export interface RootState {
   cart: CartState;
   checkout: CheckoutState;
   address: AddressState;
   listing: ListingState;
+  category: CategoryState;
 }
 
 const addressTransform = createTransform(
@@ -56,6 +58,7 @@ const rootReducer = combineReducers({
   checkout: checkoutReducer,
   address: addressReducer,
   listing: listingReducer,
+  category: categoryReducer,
 });
 
 const persistConfig: any = {

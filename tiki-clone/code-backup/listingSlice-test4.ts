@@ -1,0 +1,162 @@
+import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
+import axios from "axios";
+import { topDealsData } from "../data/topDealsData";
+
+/* ================== CONFIG ================== */
+
+// bật = true nếu muốn dùng mock
+const USE_MOCK_DATA = false;
+
+// domain backend (QUAN TRỌNG)
+const BACKEND_BASE_URL = "http://192.168.2.112:9092";
+
+// ảnh rỗng fallback
+const BLANK_IMAGE =
+  "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7";
+
+/* ================== TYPES ================== */
+
+export interface Product {
+  id: string | number;
+  title: string;
+  originalPrice: number;
+  discount: number;
+  rating: number;
+  image: string;
+  imageBadges?: string;
+  shippingBadge?: string;
+  date?: string;
+  madeIn?: string | null;
+}
+
+export interface ListingState {
+  products: Product[];
+  status: "idle" | "pending" | "succeeded" | "failed";
+  error: string | null;
+  pageIndex: number;
+  pageSize: number;
+}
+
+/* ================== INITIAL STATE ================== */
+
+const initialState: ListingState = {
+  products: [],
+  status: "idle",
+  error: null,
+  pageIndex: 1,
+  pageSize: 20,
+};
+
+/* ================== HELPERS ================== */
+
+// chuẩn hóa url ảnh
+function buildImageUrl(url?: string): string {
+  if (!url) return BLANK_IMAGE;
+
+  // nếu đã là link đầy đủ
+  if (url.startsWith("http")) return url;
+
+  // ghép domain backend + xóa // thừa
+  return `${BACKEND_BASE_URL}/${url.replace(/^\/+/, "")}`;
+}
+
+// chuẩn hóa product từ backend
+function transformProductData(item: any): Product {
+  let imageUrl = BLANK_IMAGE;
+
+  if (item.Image) {
+    imageUrl = buildImageUrl(item.Image);
+  } else if (
+    item.Images &&
+    Array.isArray(item.Images) &&
+    item.Images.length > 0
+  ) {
+    imageUrl = buildImageUrl(item.Images[0].Url || item.Images[0].url);
+  }
+
+  return {
+    id: item.Id || item.id,
+    title: item.Name || item.name || "Sản phẩm",
+    image: imageUrl,
+    originalPrice: item.Price || item.OriginalPrice || 0,
+    discount: item.DiscountPercentage || item.Discount || 0,
+    rating: 5,
+    shippingBadge: "Giao nhanh 2h",
+    date: "Hot",
+  };
+}
+
+/* ================== ASYNC THUNK ================== */
+
+export const fetchProductsByPage = createAsyncThunk<
+  Product[],
+  { pageIndex: number; pageSize: number },
+  { rejectValue: string }
+>("listing/fetchProductsByPage", async (params, { rejectWithValue }) => {
+  if (USE_MOCK_DATA) {
+    return topDealsData;
+  }
+
+  try {
+    const FULL_URL =
+      "http://192.168.2.112:9092/api-end-user/listing/get-by-page";
+
+    const payload = {
+      PageIndex: params.pageIndex,
+      PageSize: params.pageSize,
+      Orderby: "CreatedDate desc",
+      AId: "da1e0cd8-f73b-4da2-acf2-8ddc621bcf75",
+      LanguageCode: "vi",
+      CurrencyCode: "VND",
+    };
+
+    const response = await axios.post(FULL_URL, payload, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    const rawProducts = response.data?.Data?.Result;
+
+    if (!Array.isArray(rawProducts) || rawProducts.length === 0) {
+      console.warn("⚠️ API không trả sản phẩm, fallback mock data");
+      return topDealsData;
+    }
+
+    return rawProducts.map(transformProductData);
+  } catch (error: any) {
+    return rejectWithValue(error.message || "Không thể tải danh sách sản phẩm");
+  }
+});
+
+/* ================== SLICE ================== */
+
+const listingSlice = createSlice({
+  name: "listing",
+  initialState,
+  reducers: {
+    setPageIndex: (state, action: PayloadAction<number>) => {
+      state.pageIndex = action.payload;
+    },
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchProductsByPage.pending, (state) => {
+        state.status = "pending";
+        state.error = null;
+      })
+      .addCase(fetchProductsByPage.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        state.products = action.payload;
+      })
+      .addCase(fetchProductsByPage.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.payload || "Failed to fetch products";
+      });
+  },
+});
+
+/* ================== EXPORT ================== */
+
+export const { setPageIndex } = listingSlice.actions;
+export default listingSlice.reducer;

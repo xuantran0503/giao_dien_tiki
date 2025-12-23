@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart } from "../store/cartSlice";
+import { fetchProductById } from "../store/listingSlice";
 import Header from "../components/Header/Header";
 import Footer from "../components/Footer/Footer";
 import CheckoutForm from "../components/CheckoutForm/CheckoutForm";
@@ -18,7 +19,7 @@ import "./ProductDetailPage.css";
 
 const ProductDetailPage = () => {
   const dispatch = useDispatch();
-  const { products: apiProducts } = useSelector((state) => state.listing);
+  const { products: apiProducts, currentProduct, productDetailStatus } = useSelector((state) => state.listing);
   const [quantity, setQuantity] = useState(1);
   const { productId } = useParams();
   const [notification, setNotification] = useState({
@@ -31,6 +32,12 @@ const ProductDetailPage = () => {
   const [showCheckoutForm, setShowCheckoutForm] = useState(false);
 
   const [currentPage, setCurrentPage] = useState(1);
+
+  useEffect(() => {
+    if (productId) {
+      dispatch(fetchProductById(productId));
+    }
+  }, [dispatch, productId]);
 
   // Tìm sản phẩm từ tất cả data sources
   const findProduct = (id) => {
@@ -126,7 +133,27 @@ const ProductDetailPage = () => {
     return product;
   };
 
-  const product = findProduct(productId);
+  // Ưu tiên sản phẩm từ API detail, sau đó là tìm trong list, cuối cùng là mock
+  let product = currentProduct || findProduct(productId);
+
+  // Chuẩn hóa dữ liệu sản phẩm để đảm bảo có đủ name và giá
+  if (product) {
+    product = {
+      ...product,
+      name: product.name || product.title || "Sản phẩm",
+      originalPrice: product.originalPrice || product.price || 0,
+    };
+  }
+
+  if (productDetailStatus === "pending") {
+    return (
+      <div className="product-detail-page">
+        <Header />
+        <div style={{ padding: "100px", textAlign: "center" }}>Đang tải thông tin sản phẩm...</div>
+        <Footer />
+      </div>
+    );
+  }
 
   if (!product) {
     return (
@@ -318,11 +345,18 @@ const ProductDetailPage = () => {
         <div className="product-main-info">
           <div className="product-images">
             <div className="main-image">
-              <img src={product.image} alt={product.name} />
+              <img 
+                src={product.image || "https://salt.tikicdn.com/cache/750x750/ts/product/ac/65/4e/e21a92395ae8a7a1c2af3da945d76944.jpg.webp"} 
+                alt={product.name} 
+                onError={(e) => {
+                  e.target.onerror = null;
+                  e.target.src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Crect fill='%23f5f5f5' width='300' height='300'/%3E%3Ctext fill='%23999' font-family='sans-serif' font-size='24' dy='10.5' font-weight='500' x='50%25' y='50%25' text-anchor='middle'%3EẢnh sản phẩm%3C/text%3E%3C/svg%3E";
+                }}
+              />
             </div>
             <div className="thumbnail-images">
               <div className="thumbnail active">
-                <img src={product.image} alt={product.name} />
+                <img src={product.image || "https://salt.tikicdn.com/cache/750x750/ts/product/ac/65/4e/e21a92395ae8a7a1c2af3da945d76944.jpg.webp"} alt={product.name} />
               </div>
             </div>
           </div>
@@ -367,9 +401,9 @@ const ProductDetailPage = () => {
                 {formatPrice(finalPrice)}
                 <sup>₫</sup>
               </div>
-              {product.discount && product.discount > 0 && (
+              {typeof product.discount === 'number' && (
                 <div className="price-discount-info">
-                  <span className="discount-badge">-{product.discount}%</span>
+                  <span className="discount-badge">- {product.discount}%</span>
                   <span className="original-price-detail">
                     {formatPrice(product.originalPrice)}
                     <sup>₫</sup>
@@ -467,18 +501,21 @@ const ProductDetailPage = () => {
         </div>
 
         {/* Product Description */}
-        {/* <div className="product-description-section">
-          <h2 className="section-title">Đặc điểm nổi bật</h2>
-          <div className="description-content">
-            <ul>
-              <li>✓ Sản phẩm chính hãng 100%</li>
-              <li>✓ Bảo hành {product.madeIn ? "chính hãng" : "toàn quốc"}</li>
-              <li>✓ Giao hàng nhanh chóng</li>
-              <li>✓ Đổi trả trong 30 ngày</li>
-              <li>✓ Hỗ trợ khách hàng 24/7</li>
-            </ul>
+        {(product.description || product.shortDescription) && (
+          <div className="product-description-section">
+            <h2 className="section-title">Mô tả sản phẩm</h2>
+            <div className="description-content">
+              {product.shortDescription && (
+                 <div className="item-short-desc" dangerouslySetInnerHTML={{ __html: product.shortDescription }} />
+              )}
+              {product.description && (
+                <div className="item-full-desc" dangerouslySetInnerHTML={{ __html: product.description }} />
+              )}
+            </div>
           </div>
-        </div> */}
+        )}
+
+        
 
         {/* Similar Products */}
         <div className="similar-products-section">
