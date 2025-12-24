@@ -7,19 +7,63 @@ nên để các mục ở chế độ random hiển thị sản phẩm
 
 sửa data cho đồng bộ thông tin cho chuẩn và sửa tên biến phần tên và title của các dữ liệu cho giống nhau
 
-thêm phần điều chỉnh số lượng kí tự để xuống dòng khi Địa chỉ chi tiết trong lịch sử đơn hàng quá dài 
+thêm phần điều chỉnh số lượng kí tự để xuống dòng khi Địa chỉ chi tiết trong lịch sử đơn hàng quá dài  trong lịch sử đơn hàng
+
 
 
 nhạc : nắng hoa niên , cơn mưa khẽ rơi, thế em làm sao , 
 
 +++++++++++++ĐANG LÀM ++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-/api-end-user/listing/get-by-page
-/api-end-user/listing/get-by-page-promotion
-/api-end-user/listing/get-by-page-by-productsid
+code tiếp api giỏ hàng với  các action 
+thêm sản phẩm vào giỏ hàng
+/api-end-user/cart/cart-public/update-item
+chi tiết sản phẩm  trong giỏ hàng
+/api-end-user/cart/cart-public/{id}
+xóa từng sản phẩm trong giỏ hàng 
+/api-end-user/cart/cart-public/remove-item
+xóa tất cả sản phẩm trong giỏ hàng
+/api-end-user/cart/cart-public/clear-item
+cập nhật thông tin sản phẩm trong giỏ hàng ( số lượng)
+/api-end-user/cart/cart-public/update-item
+
+
+và giải thích khi nào dùng useEffect và nó hoạt động , chu trình render , tại sao lại để dispatch(fetchProductsByPage({ pageIndex: 1, pageSize: 18 })); trong  useEffect
+
+useEffect(() => {
+    if (products.length === 0) {
+      dispatch(fetchProductsByPage({ pageIndex: 1, pageSize: 18 }));
+    }
+  }, [dispatch, products.length]);
+
+
+
+// Ưu tiên sản phẩm từ API detail, sau đó là tìm trong list, cuối cùng là mock
+  let product = currentProduct;
+
+  // Chuẩn hóa dữ liệu sản phẩm để đảm bảo có đủ name và giá
+  if (product) {
+    product = {
+      ...product,
+      name: product.name || product.title || "Sản phẩm",
+      originalPrice: product.originalPrice || product.price || 0,
+    };
+  }  
+  
+  tại sao currentProduct thông tin sản phẩm nó thay đổi  nhưng mà null ở các trang nhưng vẫn thêm được vào  giỏ hàng
+  
+
+	PageIndex: 1,
+      PageSize: 18,
+      Orderby: "CreatedDate desc",
+      AId: "da1e0cd8-f73b-4da2-acf2-8ddc621bcf75",
+      LanguageCode: "vi",
+      CurrencyCode: "VND",
+
+
 
 http://192.168.2.112:9092/api/swagger/index.html
-Danh mục sản phẩm
 
+Danh mục sản phẩm
 GET: /api-end-user/classification/get-all
 GET: /api-end-user/classification/{id}/get-children
 
@@ -28,10 +72,14 @@ POST: /api-end-user/listing/get-by-page
 Chi tiết sản phẩm 
 GET: /api-end-user/listing/{id}
 
+
+
 tìm hiểu https và restfullAPI , request và response
 
 dùng /api-end-user/listing/get-by-page để lấy được danh  sách sản phẩm thay giá trị AId: da1e0cd8-f73b-4da2-acf2-8ddc621bcf75
 
+
+POST: /api-end-user/listing/get-by-page
 Example Value
 Schema
 {
@@ -58,7 +106,160 @@ Schema
   "CustomerId": "3fa85f64-5717-4562-b3fc-2c963f66afa6"
 }
 
+-----------
+{
+  "PageIndex": 0,
+  "PageSize": 0,
+  "FieldName": "string",
+  "Orderby": "string",
+  "Filter": [
+    {
+      "Opt": "string",
+      "Name": "string",
+      "Opt1": "string",
+      "Type": 1,
+      "Values": "string"
+    }
+  ],
+  "Keyword": "string",
+  "LanguageCode": "string",
+  "CurrencyCode": "string",
+  "ProductsId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+  "AId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+  "WareHouseId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+  "ListingPropertyCode": "string",
+  "CustomerId": "3fa85f64-5717-4562-b3fc-2c963f66afa6"
+}
+-----------
+
+
+GET: /api-end-user/listing/{id}
+
+Parameters
+Try it out
+Name	Description
+id *
+string($uuid)
+(path)
+id
+aid
+string($uuid)
+(query)
+aid
+
+
+=====================
+useParams() là gì?
+
+Hook của React Router
+
+Dùng để lấy tham số động trong URL
+
+Ví dụ URL:
+/category/123
+
+Router:
+<Route path="/category/:categoryId" element={<CategoryPage />} />
+
+Kết quả:
+categoryId = "123"
+
+
+📌 Ý nghĩa thực tế
+👉 Biết được user đang đứng ở danh mục nào để:
+
+load danh mục con
+
+load sản phẩm tương ứng
+
+====================
+
+Nếu bạn chỉ dùng const list = data.Data;, thì biến list lúc này là một Đối tượng (Object) chứa cả Result, Total,... chứ không phải là một Mảng (Array).
+Hàm .map() chỉ chạy được trên Mảng. Vì vậy nếu list là Object, code sẽ bị lỗi ngay lập tức và không hiển thị được gì.
+======================
+Dấu ?? trong JavaScript / TypeScript gọi là Nullish Coalescing Operator
+👉 dùng để chọn giá trị hợp lệ đầu tiên KHÔNG phải null hoặc undefined
+
+🧠 Ý nghĩa ngắn gọn
+a ?? b
+
+
+➡️ Nếu a không phải null và undefined → lấy a
+➡️ Nếu a là null hoặc undefined → lấy b
 ===================================
+params dùng để gửi query string
+🔹 Axios tự nối ?aid=... vào URL
+🔹 GET API bắt buộc dùng params
+🔹 _ nghĩa là không cần tham số truyền vào
+
+PageSize = 20 → mỗi trang trả về 20 sản phẩm
+
+PageSize = 10 → mỗi trang trả về 10 sản phẩm
+
+📌 Frontend dùng cái này để:
+Render UI
+
+Tính tổng số trang
+
+CreatedDate → ngày tạo sản phẩm
+
+desc → giảm dần (mới nhất lên trước)
+
+📌 Nghĩa là:
+Lấy sản phẩm mới tạo nhất hiển thị trước
+
+🧠 Tổng hợp dễ nhớ
+Field	Ý nghĩa	Dùng để
+PageIndex	Trang hiện tại	Pagination
+PageSize	Số item / trang	Pagination
+Orderby	Sắp xếp	UI hiển thị
+AId	ID hệ thống	Phân vùng dữ liệu
+LanguageCode	Ngôn ngữ	Đa ngôn ngữ
+CurrencyCode	Tiền tệ	Đa thị trường
+
+Vì sao dùng POST chứ không dùng GET?
+
+📌 Với API listing:
+GET	                        POST
+Query string dài	        Gửi body gọn
+Lộ dữ liệu	                An toàn hơn
+Khó mở rộng	               Dễ thêm filter
+Ít dùng cho listing lớn	    Rất phổ biến
+
+===============
+Dòng chảy dữ liệu (rất quan trọng để học frontend)
+UI (Pagination)
+   ↓
+Redux (pageIndex, pageSize)
+   ↓
+payload
+   ↓
+API Backend
+   ↓
+DB query + filter + order
+   ↓
+JSON response
+   ↓
+Redux store
+   ↓
+Component render
+=====================
+Định dạng Base64 là phương pháp mã hóa dữ liệu nhị phân thành văn bản ASCII để truyền qua các kênh chỉ hỗ trợ văn bản (như email, HTTP), bằng cách sử dụng 64 ký tự (A-Z, a-z, 0-9, +, /) và ký tự padding '=' để đảm bảo dữ liệu nguyên vẹn, thường dùng để nhúng hình ảnh, tệp vào HTML/CSS/XML, hoặc mã hóa dữ liệu email
+
+==================================
+hiển thị ảnh bị lỗi 
+
+{/* <img 
+                  src={deal.image} 
+                  alt={deal.title} 
+                  className="deal-image"
+                  onError={(e) => {
+                    e.target.onerror = null; // Prevent infinite loop
+                    // Dùng base64 image thay vì external URL
+                    e.target.src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Crect fill='%23e0e0e0' width='300' height='300'/%3E%3Ctext fill='%23666' font-family='sans-serif' font-size='20' dy='10.5' font-weight='bold' x='50%25' y='50%25' text-anchor='middle'%3ENo Image%3C/text%3E%3C/svg%3E";
+                  }}
+                /> */}
+=====================
 
 HTTP (HyperText Transfer Protocol) là Giao thức Truyền Siêu văn bản, bộ quy tắc nền tảng cho việc trao đổi thông tin trên World Wide Web (WWW), cho phép trình duyệt (máy khách) gửi yêu cầu và nhận phản hồi từ máy chủ web để hiển thị trang web, hình ảnh, video, và các tài nguyên khác. Nó hoạt động dựa trên mô hình yêu cầu-phản hồi và là công nghệ cốt lõi giúp chúng ta truy cập Internet. 
 Cách thức hoạt động cơ bản
@@ -68,6 +269,7 @@ Hiển thị: Trình duyệt đọc và diễn giải dữ liệu này để hi�
 Các phiên bản và biến thể
 HTTP/1.1: Phiên bản phổ biến, cho phép nhiều yêu cầu trên một kết nối.
 HTTP/2, HTTP/3: Các phiên bản mới hơn, tối ưu hóa tốc độ và hiệu suất truyền tải.
+
 HTTPS (HTTP Secure): Phiên bản bảo mật của HTTP, sử dụng mã hóa (TLS/SSL) để bảo vệ dữ liệu, thường thấy trên các trang web có biểu tượng khóa (ví dụ: https://). 
 Đặc điểm chính
 Nền tảng WWW: Là xương sống của Web, cho phép truy cập nội dung online.
@@ -75,9 +277,7 @@ Mô hình Yêu cầu-Phản hồi (Request-Response): Giao tiếp theo kiểu h�
 Không trạng thái (Stateless): Mỗi giao dịch là độc lập, nhưng các phiên bản mới đã cải thiện điều này.
 Mở rộng: Hỗ trợ nhiều loại dữ liệu (văn bản, hình ảnh, video). 
 
-
 Cổng khác: HTTP dùng cổng 80, HTTPS dùng cổng 443 (cổng bảo mật
-
 
 HTTP status code được chia thành 5 loại khác nhau, mỗi loại bắt đầu với 1 chữ số khác nhau và mang ý nghĩa riêng:
 
@@ -113,6 +313,7 @@ Client (ứng dụng điện thoại) gửi Request (GET/users) đến Server. S
 REST là một kiến trúc, còn RESTful là cách triển khai API tuân theo các nguyên tắc của REST.
 
 RESTful API (hay REST API) là một giao diện lập trình ứng dụng (API hay web API) tuân theo các ràng buộc của kiểu kiến trúc REST, cho phép tương tác với các dịch vụ web RESTful. Hay nói đơn giản, RESTful API là một tiêu chuẩn được dùng trong việc thiết kế API dành cho các ứng dụng web (thiết kế Web Services) để hỗ trợ cho việc quản lý các resource.
+
 RESTful API là gì? | FPT Cloud là một tiêu chuẩn thiết kế giao diện lập trình ứng dụng (API) cho web, hoạt động dựa trên các nguyên tắc của kiến trúc REST (Representational State Transfer), cho phép các ứng dụng khác nhau giao tiếp bằng cách sử dụng giao thức HTTP để truyền tải dữ liệu theo định dạng chuẩn như JSON or XML, tập trung vào việc quản lý "tài nguyên" (resources) một cách hiệu quả thông qua các phương thức như GET, POST, PUT, DELETE. 
 
 REST: là một dạng chuyển đổi cấu trúc dữ liệu, một kiểu kiến trúc để viết API. Nó sử dụng phương thức HTTP đơn giản để tạo cho giao tiếp giữa các máy. Vì vậy, thay vì sử dụng một URL cho việc xử lý một số thông tin người dùng, REST gửi một yêu cầu HTTP như GET, POST, DELETE … đến một URL để xử lý dữ liệu.

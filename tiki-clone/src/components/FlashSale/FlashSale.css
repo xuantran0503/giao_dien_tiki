@@ -202,6 +202,10 @@
     /* line-height: 1; */
 }
 
+.flash-current-price.no-discount {
+    color: rgb(39, 39, 42);
+}
+
 .flash-current-price sup {
     font-size: 12px;
     text-decoration: underline;
@@ -238,15 +242,7 @@
     /* justify-content: center; */
 }
 
-.flash-progress-fill::after {
-    /* content: ''; */
-    /* position: absolute; */
-    /* top: 0;
-    right: 0; */
-    /* width: 20px; */
-    /* height: 100%; */
-    /* background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3)); */
-}
+
 
 .flash-sold-text {
     position: absolute;

@@ -15,43 +15,46 @@ const FlashSale = () => {
   });
 
   useEffect(() => {
-    
+
     const calculateTimeLeft = () => {
       const now = new Date();
       const currentHour = now.getHours();
       const currentMinute = now.getMinutes();
       const currentSecond = now.getSeconds();
 
-      // Các khung giờ Flash Sale:
-      const saleHours = [0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22];
-      
+      // Các khung giờ sale (giờ bắt đầu)
+      const saleHours = [0, 8, 12, 16, 18, 22];
+
+      // Tìm khung giờ sale tiếp theo
       let nextSaleHour = saleHours.find(hour => hour > currentHour);
-      if (!nextSaleHour) {
-        nextSaleHour = saleHours[0]; 
+      
+      // Nếu không tìm thấy (đã qua khung cuối cùng trong ngày), lấy khung đầu tiên ngày mai
+      if (nextSaleHour === undefined) {
+        nextSaleHour = saleHours[0];
       }
 
-      // Tính số giờ, phút, giây còn lại
-      let hoursLeft = nextSaleHour - currentHour;
-      if (hoursLeft <= 0) hoursLeft += 24;
+      // Tính thời gian kết thúc
+      const endTime = new Date(now);
+      
+      // Nếu nextSaleHour nhỏ hơn hoặc bằng currentHour, nghĩa là sang ngày mới
+      if (nextSaleHour <= currentHour) {
+        endTime.setDate(endTime.getDate() + 1);
+      }
+      
+      endTime.setHours(nextSaleHour, 0, 0, 0);
 
-      let minutesLeft = 59 - currentMinute;
-      let secondsLeft = 59 - currentSecond;
+      const diff = endTime.getTime() - now.getTime();
 
-      if (secondsLeft < 0) {
-        secondsLeft += 60;
-        minutesLeft -= 1;
+      if (diff <= 0) {
+        setTimeLeft({ hours: 0, minutes: 0, seconds: 0 });
+        return;
       }
 
-      if (minutesLeft < 0) {
-        minutesLeft += 60;
-        hoursLeft -= 1;
-      }
+      const hours = Math.floor(diff / (1000 * 60 * 60));
+      const minutes = Math.floor((diff / (1000 * 60)) % 60);
+      const seconds = Math.floor((diff / 1000) % 60);
 
-      setTimeLeft({
-        hours: hoursLeft,
-        minutes: minutesLeft,
-        seconds: secondsLeft
-      });
+      setTimeLeft({ hours, minutes, seconds });
     };
 
     calculateTimeLeft();
@@ -116,13 +119,13 @@ const FlashSale = () => {
             <Link to={`/product/${product.id}`} key={product.id} className="flash-sale-card">
               <div className="flash-sale-image">
                 <img src={product.image} alt="Product" />
-                <span className="flash-discount-badge">-{product.discount}%</span>
+                {product.discount > 0 && <span className="flash-discount-badge">-{product.discount}%</span>}
               </div>
 
               <div className="flash-sale-info">
 
                 <div className="flash-price-section">
-                  <span className="flash-current-price">
+                  <span className={`flash-current-price ${!product.discount || product.discount <= 0 ? 'no-discount' : ''}`}>
                     {formatPrice(calculateDiscountedPrice(product.originalPrice, product.discount))}<sup>₫</sup>
                   </span>
                 </div>

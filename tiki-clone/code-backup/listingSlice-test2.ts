@@ -102,9 +102,9 @@ export const fetchProductsByPage = createAsyncThunk(
         },
       });
 
-      // 🔍 DEBUG: Kiểm tra API response
-      console.log("📦 Full API Response:", response.data);
-      console.log("📦 Data.Result:", response.data?.Data?.Result);
+      //  DEBUG: Kiểm tra API response
+      console.log(" Full API Response:", response.data);
+      console.log(" Data.Result:", response.data?.Data?.Result);
 
       const products = response.data?.Data?.Result;
 
@@ -113,16 +113,16 @@ export const fetchProductsByPage = createAsyncThunk(
         return topDealsData;
       }
 
-      // 🔍 DEBUG: Kiểm tra sản phẩm đầu tiên
-      console.log("📦 First Product:", products[0]);
-      console.log("📦 First Product Image:", products[0]?.Image);
-      console.log("📦 First Product Images:", products[0]?.Images);
+      //  DEBUG: Kiểm tra sản phẩm đầu tiên
+      console.log(" First Product:", products[0]);
+      console.log(" First Product Image:", products[0]?.Image);
+      console.log(" First Product Images:", products[0]?.Images);
 
       const transformedProducts = products.map(transformProductData);
 
-      // 🔍 DEBUG: Kiểm tra sau khi transform
-      console.log("✨ Transformed First Product:", transformedProducts[0]);
-      console.log("✨ Transformed Image URL:", transformedProducts[0]?.image);
+      //  DEBUG: Kiểm tra sau khi transform
+      console.log(" Transformed First Product:", transformedProducts[0]);
+      console.log(" Transformed Image URL:", transformedProducts[0]?.image);
 
       return transformedProducts;
     } catch (error: any) {

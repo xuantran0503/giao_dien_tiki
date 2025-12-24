@@ -73,11 +73,11 @@ const YouMayLike = () => {
 
                                 <div className="you-may-like-price-section">
                                     <div className="price-row">
-                                        <span className={`current-price ${!product.discount || !product.originalPrice ? 'no-discount' : ''}`}>
+                                        <span className={`current-price ${!product.discount || product.discount <= 0 || !product.originalPrice ? 'no-discount' : ''}`}>
                                             {formatPrice(calculateDiscountedPrice(product.originalPrice, product.discount))}<sup>₫</sup>
                                         </span>
                                     </div>
-                                    {product.discount && product.originalPrice && (
+                                    {product.discount > 0 && product.originalPrice && (
                                         <div className="discount-row">
                                             <span className="discount-percent">-{product.discount}%</span>
                                             <span className="original-price">{formatPrice(product.originalPrice)}<sup>₫</sup></span>

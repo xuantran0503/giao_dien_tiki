@@ -2,19 +2,21 @@ import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
 import { topDealsData } from "../data/topDealsData";
 
-const USE_MOCK_DATA = false;
-
 export interface Product {
   id: string | number;
   title: string;
   originalPrice: number;
   discount: number;
-  rating: number;
+  rating?: number;
   image: string;
+  name?: string;
+  price?: number;
   imageBadges?: string;
   shippingBadge?: string;
   date?: string;
   madeIn?: string | null;
+  description?: string;
+  shortDescription?: string;
 }
 
 export interface ListingState {
@@ -23,6 +25,9 @@ export interface ListingState {
   error: string | null;
   pageIndex: number;
   pageSize: number;
+  Keyword?: string;
+  currentProduct: Product | null;
+  productDetailStatus: "idle" | "pending" | "succeeded" | "failed";
 }
 
 const initialState: ListingState = {
@@ -30,76 +35,144 @@ const initialState: ListingState = {
   status: "idle",
   error: null,
   pageIndex: 1,
-  pageSize: 20,
+  pageSize: 18,
+  currentProduct: null,
+  productDetailStatus: "idle",
 };
 
-const BLANK_IMAGE =
-  "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7";
+const API_BASE = "http://192.168.2.112:9092";
 
-function transformProductData(item: any): Product {
-  let imageUrl = BLANK_IMAGE;
-
-  if (item.Image) {
-    imageUrl = item.Image;
-  } 
-
-  else if (item.Images?.length > 0) {
-    const firstImage = item.Images[0];
-    const imgPath = firstImage.Url || firstImage.url;
-    imageUrl = imgPath;
-  }
-
-  return {
-    id: item.Id || item.id,
-    title: item.Name || item.name || "Sản phẩm",
-    image: imageUrl,
-    originalPrice: item.Price || item.OriginalPrice || 0,
-    discount: item.DiscountPercentage || item.Discount || 0,
-    rating: 5,
-    shippingBadge: "Giao nhanh 2h",
-    date: "Hot",
-  };
-}
-
+// POST products by page
 export const fetchProductsByPage = createAsyncThunk(
   "listing/fetchProductsByPage",
   async (
     params: { pageIndex: number; pageSize: number },
     { rejectWithValue }
   ) => {
-    if (USE_MOCK_DATA) {
-      return topDealsData;
-    }
-
     try {
-      const FULL_URL =
-        "http://192.168.2.112:9092/api-end-user/listing/get-by-page";
+      const { data } = await axios.post(
+        `${API_BASE}/api-end-user/listing/get-by-page`,
+        {
+          PageIndex: params.pageIndex,
+          PageSize: params.pageSize,
+          Orderby: "CreatedDate desc",
+          AId: "da1e0cd8-f73b-4da2-acf2-8ddc621bcf75",
+          // LanguageCode: "vi",
+          CurrencyCode: "VND",
+          // Keyword: params.Keyword || "",
+        }
+      );
 
-      const payload = {
-        PageIndex: params.pageIndex,
-        PageSize: params.pageSize,
-        Orderby: "CreatedDate desc",
-        AId: "da1e0cd8-f73b-4da2-acf2-8ddc621bcf75",
-        LanguageCode: "vi",
-        CurrencyCode: "VND",
+      const list = data.Data.Result;
+
+      if (list.length === 0) return topDealsData;
+
+      return list.map((item: any) => {
+        return {
+          id: item.Id,
+          title: item.Name,
+          originalPrice: item.Price,
+          discount: item.DiscountPercentage,
+          price: item.PromotionPrice,
+          // discount: item.PromotionPrice,
+
+          // name: item.Name ,
+          // image: item.Image || item.image,
+          // image: item.Image
+          //   ? item.Image.startsWith("http")
+          //     ? item.Image
+          //     : `${API_BASE}${item.Image}`
+          //   : "",
+
+          // originalPrice,
+          // currentPrice,
+          // discount,
+          // rating: item.Rating || 0,
+          // shippingBadge: item.ShippingBadge,
+          // date: item.Date,
+          // madeIn: item.ExData?.Origin || item.madeIn
+        };
+      });
+    } catch (error: any) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
+// GET product detail by id
+export const fetchProductById = createAsyncThunk(
+  "listing/fetchProductById",
+  async (id: string | number, { rejectWithValue }) => {
+    try {
+      const { data } = await axios.get(
+        `${API_BASE}/api-end-user/listing/${id}`,
+        {
+          params: {
+            aid: "da1e0cd8-f73b-4da2-acf2-8ddc621bcf75",
+          },
+        }
+      );
+
+      const ProductPrices = (item: any) => {
+        const hasPromotion = item.MinHasPromotion || item.MaxHasPromotion;
+
+        const currentPrice = hasPromotion
+          ? item.MinPromotionPrice ??
+            item.MaxPromotionPrice ??
+            item.MinPrice ??
+            item.MaxPrice ??
+            0
+          : item.Price ?? item.MinPrice ?? item.MaxPrice ?? 0;
+
+        let originalPrice = item.MaxPrice ?? item.MinPrice ?? currentPrice;
+
+        if (originalPrice < currentPrice) {
+          originalPrice = currentPrice;
+        }
+
+        let discount = 0;
+
+        //  Tính % giảm giá CHỈ khi có khuyến mãi hợp lệ
+        if (
+          (item.MaxHasPromotion === true || item.MinHasPromotion === true) &&
+          originalPrice > currentPrice &&
+          originalPrice > 0
+        ) {
+          discount = Math.round(
+            ((originalPrice - currentPrice) / originalPrice) * 100
+          );
+        }
+
+        return {
+          originalPrice,
+          currentPrice,
+          discount,
+        };
       };
 
-      const response = await axios.post(FULL_URL, payload, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      const item = data.Data;
+      // if (!item) return null;
 
-      const products = response.data?.Data?.Result;
+      const { originalPrice, discount, currentPrice } = ProductPrices(item);
 
-      if (!products || products.length === 0) {
-        console.warn("Không tìm thấy sản phẩm từ API, sử dụng mock data");
-        return topDealsData;
-      }
-
-      return products.map(transformProductData);
+      return {
+        id: item.Id,
+        title: item.Name,
+        name: item.Name,
+        // image: img,
+        image: item.Image,
+        originalPrice,
+        currentPrice,
+        discount,
+        // rating: item.Rating || 5,
+        // shippingBadge: item.ShippingBadge || "Giao nhanh 2h",
+        // date: "Hot",
+        description: item.Description,
+        shortDescription: item.ShortDescription,
+        // madeIn: item.ExData?.Origin || item.madeIn,
+      };
     } catch (error: any) {
-      return rejectWithValue(error.message || "API Error");
+      return rejectWithValue(error.message);
     }
   }
 );
@@ -114,6 +187,7 @@ const listingSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
+      // Product in list cases
       .addCase(fetchProductsByPage.pending, (state) => {
         state.status = "pending";
         state.error = null;
@@ -125,6 +199,21 @@ const listingSlice = createSlice({
       .addCase(fetchProductsByPage.rejected, (state, action) => {
         state.status = "failed";
         state.error = (action.payload as string) || "Failed to fetch products";
+      })
+
+      // Product detail cases
+      .addCase(fetchProductById.pending, (state) => {
+        state.productDetailStatus = "pending";
+        state.error = null;
+      })
+      .addCase(fetchProductById.fulfilled, (state, action) => {
+        state.productDetailStatus = "succeeded";
+        state.currentProduct = action.payload;
+      })
+      .addCase(fetchProductById.rejected, (state, action) => {
+        state.productDetailStatus = "failed";
+        state.error =
+          (action.payload as string) || "Failed to fetch product detail";
       });
   },
 });

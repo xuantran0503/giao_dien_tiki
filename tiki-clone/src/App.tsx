@@ -18,7 +18,7 @@ const App: React.FC = () => {
             <ScrollToTop />
             <Routes>
                 <Route path="/" element={<HomePage />} />
-                <Route path="/category/:categoryName" element={<CategoryPage />} />
+                <Route path="/category/:categoryId" element={<CategoryPage />} />
                 <Route path="/product/:productId" element={<ProductDetailPage />} />
                 <Route path="/cart" element={<CartPage />} />
                 <Route path="/flash-sale" element={<FlashSalePage />} />

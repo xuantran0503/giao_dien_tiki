@@ -186,6 +186,10 @@
   margin-bottom: 8px;
 }
 
+.current-price-detail.no-discount {
+  color: #242424;
+}
+
 .current-price-detail sup {
   font-size: 18px;
   text-decoration: underline;
@@ -586,6 +590,10 @@
   font-weight: 600;
   color: #ff424e;
   line-height: 150%;
+}
+
+.similar-product-price .price.no-discount {
+  color: #242424;
 }
 
 .similar-product-price .price sup {

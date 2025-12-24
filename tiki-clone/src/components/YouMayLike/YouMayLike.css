@@ -186,6 +186,10 @@
     color: rgb(255, 66, 78);
 }
 
+.current-price.no-discount {
+    color: #27272a;
+}
+
 .current-price sup {
     font-size: 12px;
     text-decoration: underline;

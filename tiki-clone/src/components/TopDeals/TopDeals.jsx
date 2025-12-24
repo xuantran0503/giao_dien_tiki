@@ -14,17 +14,15 @@ const TopDeals = () => {
   const { products, status, pageIndex } = useSelector((state) => state.listing);
   const [direction, setDirection] = useState('next');
   
-  const itemsPerPage = 6;
-  const totalPages = Math.ceil(products.length / itemsPerPage);
-
   useEffect(() => {
-    // Chỉ gọi API lần đầu nếu chưa có dữ liệu
     if (products.length === 0) {
       dispatch(fetchProductsByPage({ pageIndex: 1, pageSize: 18 }));
     }
   }, [dispatch, products.length]);
 
-  // startIndex tính toán dựa trên pageIndex của Redux (mặc định là 1)
+  const itemsPerPage = 6;
+  const totalPages = Math.ceil(products.length / itemsPerPage);
+  
   const startIndex = (pageIndex - 1) * itemsPerPage;
   const deals = products.slice(startIndex, startIndex + itemsPerPage);
 
@@ -90,21 +88,11 @@ const TopDeals = () => {
             <Link to={`/product/${deal.id}`}  key={deal.id} className="deal-card">
               <div className="deal-image-wrapper">
                 <img 
-                  src={deal.image} 
+                  src={deal.image || "https://salt.tikicdn.com/cache/750x750/ts/product/ac/65/4e/e21a92395ae8a7a1c2af3da945d76944.jpg.webp"} 
                   alt={deal.title} 
                   className="deal-image"
                   ></img>
-
-                {/* <img 
-                  src={deal.image} 
-                  alt={deal.title} 
-                  className="deal-image"
-                  onError={(e) => {
-                    e.target.onerror = null; // Prevent infinite loop
-                    // Dùng base64 image thay vì external URL
-                    e.target.src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Crect fill='%23e0e0e0' width='300' height='300'/%3E%3Ctext fill='%23666' font-family='sans-serif' font-size='20' dy='10.5' font-weight='bold' x='50%25' y='50%25' text-anchor='middle'%3ENo Image%3C/text%3E%3C/svg%3E";
-                  }}
-                /> */}
+                
                 <span className="discount-tag">{deal.date || "Hot"}</span>
                 {deal.imageBadges && <img src={deal.imageBadges} alt="Badge" className="mini-badge" />}
               </div>
@@ -120,15 +108,17 @@ const TopDeals = () => {
 
                 <div className="price-section">
                   <div className="price-row">
-                    <span className={`current-price `}>
+                    <span className={`current-price ${!deal.discount || deal.discount <= 0 ? 'no-discount' : ''}`}>
                       {formatPrice(calculateDiscountedPrice(deal.originalPrice, deal.discount))}<sup>₫</sup>
                     </span>
                   </div>
                   
-                  <div className="discount-row">
-                    <span className="discount-percent">-{deal.discount}%</span>
-                    <span className="original-price">{formatPrice(deal.originalPrice)}<sup>₫</sup></span>
-                  </div>
+                  {deal.discount > 0 && (
+                    <div className="discount-row">
+                      <span className="discount-percent">- {deal.discount}%</span>
+                      <span className="original-price">{formatPrice(deal.originalPrice)}<sup>₫</sup></span>
+                    </div>
+                  )}
                 </div>
 
                 {deal.madeIn && (
@@ -139,7 +129,7 @@ const TopDeals = () => {
                   <div className="divider"></div>
                   <div className="badge-row">
                     <img src="../img_giao_ngay.png" alt="now" />
-                    <span className="shipping-info">{deal.shippingBadge || "Giao nhanh 2h"}</span>
+                    <span className="shipping-info">{deal.shippingBadge}</span>
                   </div>
                 </div>
               </div>
