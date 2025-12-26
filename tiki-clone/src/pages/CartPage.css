@@ -4,12 +4,14 @@
 }
 
 .cart-container {
-  max-width: 1270px;
+  width: 100%;
+  max-width: 1400px;
   margin: 0 auto;
-  padding: 16px 15px;
+  padding: 20px 0;
   display: flex;
   gap: 16px;
   align-items: flex-start;
+  box-sizing: border-box;
 }
 
 /* Cart Main */
@@ -17,6 +19,7 @@
   flex: 1;
   background-color: #fff;
   border-radius: 4px;
+  box-sizing: border-box;
 }
 
 .cart-header {
@@ -78,6 +81,7 @@
   align-items: center;
   padding: 16px 20px;
   gap: 12px;
+  border-bottom: 1px solid #ebebf0;
 }
 
 /* Phần bên trái: Checkbox + Ảnh + Tên */
@@ -155,35 +159,39 @@
 .cart-columns {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 24px;
   flex-shrink: 0; /* Không co lại */
   font-size: 14px;
   color: #787878;
 }
 
 /* Định nghĩa width cố định cho các cột */
-.col-price, .item-price {
-  width: 120px;
+.col-price,
+.item-price {
+  width: 150px;
   display: flex;
   justify-content: center;
   text-align: center;
 }
 
-.col-quantity, .item-quantity {
+.col-quantity,
+.item-quantity {
   width: 120px;
   display: flex;
   justify-content: center;
 }
 
-.col-total, .item-total {
-  width: 120px;
+.col-total,
+.item-total {
+  width: 150px;
   display: flex;
   justify-content: center;
   text-align: center;
 }
 
-.col-action, .item-remove {
-  width: 100px;
+.col-action,
+.item-remove {
+  width: 120px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -192,7 +200,6 @@
 /* Cart Select All adjustments */
 .cart-select-all {
   border-bottom: 1px solid #ebebf0;
-  justify-content: space-between;
 }
 
 .cart-select-left {
@@ -278,9 +285,13 @@
 
 /* Quantity styles */
 .item-quantity {
+  display: flex;
+  align-items: center;
   border: 1px solid #ebebf0;
   border-radius: 4px;
   height: 32px;
+  overflow: hidden;
+  background-color: #fff;
 }
 
 .qty-btn {
@@ -315,6 +326,12 @@
   text-align: center;
   font-size: 13px;
   color: #333;
+  background-color: #fff;
+  outline: none;
+}
+
+.qty-input.editing {
+  background-color: #fff;
 }
 
 /* Ẩn mũi tên lên/xuống trên input type="number" */
@@ -353,8 +370,9 @@
 
 /* Sidebar */
 .cart-sidebar {
-  width: 350px;
+  width: 330px;
   flex-shrink: 0;
+  box-sizing: border-box;
 }
 
 .delivery-info-card,
@@ -574,12 +592,13 @@
 
 /* Suggested Products */
 .suggested-products-cart {
-      background-color: #fff;
-    border-radius: 4px;
-    padding: 24px;
-  max-width: 1270px;
-  margin: 0 auto;
-  /* padding: 0 15px 40px; */
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto 40px;
+  background-color: #fff;
+  border-radius: 4px;
+  padding: 20px;
+  box-sizing: border-box;
 }
 
 .suggested-title {
@@ -646,9 +665,11 @@
 
 /* Update for Select All Section */
 .cart-select-left {
+  flex: 1;
   display: flex;
   align-items: center;
   gap: 20px;
+  min-width: 0;
 }
 
 .col-action {
@@ -684,6 +705,3 @@
   color: #ff424e;
   background-color: rgba(255, 66, 78, 0.1);
 }
-
-
-

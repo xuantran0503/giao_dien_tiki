@@ -65,14 +65,15 @@ export const fetchFlashSaleProducts = createAsyncThunk(
           CurrencyCode: "VND",
           Keyword: params.keyword || "",
           // Có thể thêm filter cho Flash Sale
-          IsFlashSale: true, // Nếu API hỗ trợ
+          // IsFlashSale: true, // Nếu API hỗ trợ
         }
       );
 
       const list = data.Data.Result || [];
-      const totalCount = data.Data.TotalCount || 0;
+      // const totalCount = data.Data.TotalCount || 0;
 
-      const products = list.map((item: any) => {
+      // const products = list.map((item: any) => {
+      return list.map((item: any) => {
         // Tính toán giá
         const hasPromotion = item.MinHasPromotion || item.MaxHasPromotion;
 
@@ -112,22 +113,24 @@ export const fetchFlashSaleProducts = createAsyncThunk(
           currentPrice,
           discount,
           image: item.Image || "",
-          rating: item.Rating || 0,
-          soldPercent: item.SoldPercent || 0,
-          stock: item.Stock || 0,
-          sold: item.Sold || 0,
-          startTime: item.FlashSaleStartTime,
-          endTime: item.FlashSaleEndTime,
+          // rating: item.Rating || 0,
+          // soldPercent: item.SoldPercent || 0,
+          // stock: item.Stock || 0,
+          // sold: item.Sold || 0,
+          // startTime: item.FlashSaleStartTime,
+          // endTime: item.FlashSaleEndTime,
         };
       });
 
-      return {
-        products,
-        totalCount,
-      };
+      // return {
+      //   products,
+      //   totalCount,
+      // };
     } catch (error: any) {
       return rejectWithValue(
-        error.response?.data?.Message || error.message || "Failed to fetch flash sale products"
+        error.response?.data?.Message ||
+          error.message ||
+          "Failed to fetch flash sale products"
       );
     }
   }
@@ -189,16 +192,18 @@ export const fetchFlashSaleProductById = createAsyncThunk(
         currentPrice,
         discount,
         image: item.Image || "",
-        rating: item.Rating || 0,
-        soldPercent: item.SoldPercent || 0,
-        stock: item.Stock || 0,
-        sold: item.Sold || 0,
-        startTime: item.FlashSaleStartTime,
-        endTime: item.FlashSaleEndTime,
+        // rating: item.Rating || 0,
+        // soldPercent: item.SoldPercent || 0,
+        // stock: item.Stock || 0,
+        // sold: item.Sold || 0,
+        // startTime: item.FlashSaleStartTime,
+        // endTime: item.FlashSaleEndTime,
       };
     } catch (error: any) {
       return rejectWithValue(
-        error.response?.data?.Message || error.message || "Failed to fetch product detail"
+        error.response?.data?.Message ||
+          error.message ||
+          "Failed to fetch product detail"
       );
     }
   }
@@ -208,7 +213,7 @@ const flashSaleSlice = createSlice({
   name: "flashSale",
   initialState,
   reducers: {
-    setPageIndex: (state, action: PayloadAction<number>) => {
+    setFlashSalePageIndex: (state, action: PayloadAction<number>) => {
       state.pageIndex = action.payload;
     },
     clearFlashSaleProducts: (state) => {
@@ -227,8 +232,9 @@ const flashSaleSlice = createSlice({
       })
       .addCase(fetchFlashSaleProducts.fulfilled, (state, action) => {
         state.status = "succeeded";
-        state.products = action.payload.products;
-        state.totalCount = action.payload.totalCount;
+        state.products = action.payload;
+        // state.products = action.payload.products;
+        // state.totalCount = action.payload.totalCount;
       })
       .addCase(fetchFlashSaleProducts.rejected, (state, action) => {
         state.status = "failed";
@@ -258,8 +264,7 @@ export const selectFlashSaleProducts = (state: RootState) =>
   state.flashSale.products;
 export const selectFlashSaleStatus = (state: RootState) =>
   state.flashSale.status;
-export const selectFlashSaleError = (state: RootState) =>
-  state.flashSale.error;
+export const selectFlashSaleError = (state: RootState) => state.flashSale.error;
 export const selectFlashSaleTotalCount = (state: RootState) =>
   state.flashSale.totalCount;
 export const selectFlashSalePageIndex = (state: RootState) =>
@@ -269,5 +274,6 @@ export const selectFlashSaleCurrentProduct = (state: RootState) =>
 export const selectFlashSaleProductDetailStatus = (state: RootState) =>
   state.flashSale.productDetailStatus;
 
-export const { setPageIndex, clearFlashSaleProducts } = flashSaleSlice.actions;
+export const { setFlashSalePageIndex, clearFlashSaleProducts } =
+  flashSaleSlice.actions;
 export default flashSaleSlice.reducer;

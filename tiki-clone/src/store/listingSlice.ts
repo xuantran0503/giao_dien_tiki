@@ -181,7 +181,7 @@ const listingSlice = createSlice({
   name: "listing",
   initialState,
   reducers: {
-    setPageIndex: (state, action: PayloadAction<number>) => {
+    setListingPageIndex: (state, action: PayloadAction<number>) => {
       state.pageIndex = action.payload;
     },
     clearCurrentProduct: (state) => {
@@ -222,5 +222,6 @@ const listingSlice = createSlice({
   },
 });
 
-export const { setPageIndex, clearCurrentProduct } = listingSlice.actions;
+export const { setListingPageIndex, clearCurrentProduct } =
+  listingSlice.actions;
 export default listingSlice.reducer;

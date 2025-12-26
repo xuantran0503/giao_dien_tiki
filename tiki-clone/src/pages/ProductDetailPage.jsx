@@ -3,6 +3,10 @@ import { useParams, Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart } from "../store/cartSlice";
 import { fetchProductById, clearCurrentProduct } from "../store/listingSlice";
+import {
+  fetchFlashSaleProductById,
+  clearFlashSaleProducts,
+} from "../store/flashSaleSlice";
 import Header from "../components/Header/Header";
 import Footer from "../components/Footer/Footer";
 import CheckoutForm from "../components/CheckoutForm/CheckoutForm";
@@ -13,10 +17,14 @@ import { suggestedProductsData } from "../data/suggestedProductsData";
 import { calculateDiscountedPrice, formatPrice } from "../utils/priceUtils";
 import "./ProductDetailPage.css";
 
-
 const ProductDetailPage = () => {
   const dispatch = useDispatch();
-  const { products: apiProducts, currentProduct, productDetailStatus } = useSelector((state) => state.listing);
+  const { currentProduct: listingProduct, productDetailStatus: listingStatus } =
+    useSelector((state) => state.listing);
+  const {
+    currentProduct: flashSaleProduct,
+    productDetailStatus: flashSaleStatus,
+  } = useSelector((state) => state.flashSale);
   const [quantity, setQuantity] = useState(1);
   const { productId } = useParams();
   const [notification, setNotification] = useState({
@@ -32,18 +40,24 @@ const ProductDetailPage = () => {
 
   useEffect(() => {
     if (productId) {
+      // Gọi cả 2 API hoặc dựa vào context để gọi đúng (hiện tại gọi cả 2 để đảm bảo)
       dispatch(fetchProductById(productId));
+      dispatch(fetchFlashSaleProductById(productId));
     }
 
-    // Cleanup: Xóa dữ liệu cũ khi ID đổi hoặc component unmount
     return () => {
       dispatch(clearCurrentProduct());
+      // Không clear flash sale ở đây vì có thể gây mất data trang chủ nếu dùng chung state
     };
   }, [dispatch, productId]);
 
-  let product = currentProduct;
+  // Ưu tiên sản phẩm có dữ liệu
+  let product = listingProduct || flashSaleProduct;
+  const status =
+    listingStatus === "pending" || flashSaleStatus === "pending"
+      ? "pending"
+      : "succeeded";
 
-  // Chuẩn hóa dữ liệu sản phẩm để đảm bảo có đủ name và giá
   if (product) {
     product = {
       ...product,
@@ -52,11 +66,13 @@ const ProductDetailPage = () => {
     };
   }
 
-  if (productDetailStatus === "pending") {
+  if (status === "pending" && !product) {
     return (
       <div className="product-detail-page">
         <Header />
-        <div style={{ padding: "100px", textAlign: "center" }}>Đang tải thông tin sản phẩm...</div>
+        <div style={{ padding: "100px", textAlign: "center" }}>
+          Đang tải thông tin sản phẩm...
+        </div>
         <Footer />
       </div>
     );
@@ -66,9 +82,20 @@ const ProductDetailPage = () => {
     return (
       <div className="product-detail-page">
         <Header />
-        <div className="product-not-found" style={{ padding: "100px", textAlign: "center" }}>
+        <div
+          className="product-not-found"
+          style={{ padding: "100px", textAlign: "center" }}
+        >
           <h2>Rất tiếc, sản phẩm này hiện không có sẵn!</h2>
-          <Link to="/" className="back-home-link" style={{ color: "#0b74e5", marginTop: "15px", display: "inline-block" }}>
+          <Link
+            to="/"
+            className="back-home-link"
+            style={{
+              color: "#0b74e5",
+              marginTop: "15px",
+              display: "inline-block",
+            }}
+          >
             Quay về trang chủ
           </Link>
         </div>
@@ -121,20 +148,20 @@ const ProductDetailPage = () => {
   };
 
   const handleBuyNow = () => {
-    console.log('Buy now clicked');
+    console.log("Buy now clicked");
     setShowCheckoutForm(true);
-    console.log('showCheckoutForm set to true');
+    console.log("showCheckoutForm set to true");
   };
 
   const handleCheckoutSubmit = (checkoutData) => {
-    console.log('Checkout completed:', checkoutData);
-    console.log('Sản phẩm mua ngay:', product);
-    console.log('Số lượng:', quantity);
-    
+    console.log("Checkout completed:", checkoutData);
+    console.log("Sản phẩm mua ngay:", product);
+    console.log("Số lượng:", quantity);
+
     // Đóng form checkout
     setShowCheckoutForm(false);
-    
-    alert('Đặt hàng thành công! Chúng tôi sẽ liên hệ với bạn sớm.');
+
+    alert("Đặt hàng thành công! Chúng tôi sẽ liên hệ với bạn sớm.");
   };
 
   const handleCheckoutCancel = () => {
@@ -252,15 +279,23 @@ const ProductDetailPage = () => {
         <div className="product-main-info">
           <div className="product-images">
             <div className="main-image">
-              <img 
-                src={product.image || "https://salt.tikicdn.com/cache/750x750/ts/product/ac/65/4e/e21a92395ae8a7a1c2af3da945d76944.jpg.webp"} 
-                alt={product.name} 
-                
+              <img
+                src={
+                  product.image ||
+                  "https://salt.tikicdn.com/cache/750x750/ts/product/ac/65/4e/e21a92395ae8a7a1c2af3da945d76944.jpg.webp"
+                }
+                alt={product.name}
               />
             </div>
             <div className="thumbnail-images">
               <div className="thumbnail active">
-                <img src={product.image || "https://salt.tikicdn.com/cache/750x750/ts/product/ac/65/4e/e21a92395ae8a7a1c2af3da945d76944.jpg.webp"} alt={product.name} />
+                <img
+                  src={
+                    product.image ||
+                    "https://salt.tikicdn.com/cache/750x750/ts/product/ac/65/4e/e21a92395ae8a7a1c2af3da945d76944.jpg.webp"
+                  }
+                  alt={product.name}
+                />
               </div>
             </div>
           </div>
@@ -301,7 +336,13 @@ const ProductDetailPage = () => {
 
             {/* Price Section */}
             <div className="price-section-detail">
-              <div className={`current-price-detail ${!product.discount || product.discount <= 0 ? 'no-discount' : ''}`}>
+              <div
+                className={`current-price-detail ${
+                  !product.discount || product.discount <= 0
+                    ? "no-discount"
+                    : ""
+                }`}
+              >
                 {formatPrice(finalPrice)}
                 <sup>₫</sup>
               </div>
@@ -321,7 +362,6 @@ const ProductDetailPage = () => {
                 <span className="info-label">Thông tin vận chuyển</span>
               </div>
               <div className="delivery-detail">
-                
                 {/* <div className="delivery-address-section">
                   <AddressSelector
                     forceOpen={isAddressModalOpen}
@@ -362,9 +402,9 @@ const ProductDetailPage = () => {
                 <button
                   className="quantity-btn"
                   onClick={handleDecrease}
-                // disabled={item.quantity <= 1}
-                //  disabled={quantity <= 1}
-                //   aria-disabled={quantity <= 1}
+                  // disabled={item.quantity <= 1}
+                  //  disabled={quantity <= 1}
+                  //   aria-disabled={quantity <= 1}
                 >
                   -
                 </button>
@@ -393,7 +433,9 @@ const ProductDetailPage = () => {
 
             {/* Action Buttons */}
             <div className="action-buttons">
-              <button className="btn-buy-now" onClick={handleBuyNow}>Mua ngay</button>
+              <button className="btn-buy-now" onClick={handleBuyNow}>
+                Mua ngay
+              </button>
 
               <button className="btn-add-to-cart" onClick={handleAddToCart}>
                 Thêm vào giỏ
@@ -410,16 +452,20 @@ const ProductDetailPage = () => {
             <h2 className="section-title">Mô tả sản phẩm</h2>
             <div className="description-content">
               {product.shortDescription && (
-                <div className="item-short-desc" dangerouslySetInnerHTML={{ __html: product.shortDescription }} />
+                <div
+                  className="item-short-desc"
+                  dangerouslySetInnerHTML={{ __html: product.shortDescription }}
+                />
               )}
               {product.description && (
-                <div className="item-full-desc" dangerouslySetInnerHTML={{ __html: product.description }} />
+                <div
+                  className="item-full-desc"
+                  dangerouslySetInnerHTML={{ __html: product.description }}
+                />
               )}
             </div>
           </div>
         )}
-
-        
 
         {/* Similar Products */}
         <div className="similar-products-section">
@@ -445,7 +491,13 @@ const ProductDetailPage = () => {
                     <div className="similar-product-info">
                       <h3 className="similar-product-name">{item.name}</h3>
                       <div className="similar-product-price">
-                        <span className={`price ${!item.discount || item.discount <= 0 ? 'no-discount' : ''}`}>
+                        <span
+                          className={`price ${
+                            !item.discount || item.discount <= 0
+                              ? "no-discount"
+                              : ""
+                          }`}
+                        >
                           {formatPrice(
                             calculateDiscountedPrice(
                               item.originalPrice,
@@ -504,16 +556,18 @@ const ProductDetailPage = () => {
         <CheckoutForm
           onSubmit={handleCheckoutSubmit}
           meta={{
-            items: [{
-              id: product.id,
-              name: product.name,
-              image: product.image,
-              price: finalPrice,
-              originalPrice: product.originalPrice,
-              discount: product.discount,
-              quantity: quantity
-            }],
-            totalAmount: finalPrice * quantity
+            items: [
+              {
+                id: product.id,
+                name: product.name,
+                image: product.image,
+                price: finalPrice,
+                originalPrice: product.originalPrice,
+                discount: product.discount,
+                quantity: quantity,
+              },
+            ],
+            totalAmount: finalPrice * quantity,
           }}
           onCancel={handleCheckoutCancel}
         />
