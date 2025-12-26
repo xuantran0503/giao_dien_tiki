@@ -1,0 +1,84 @@
+.promotion-page {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+}
+
+.promotion-content {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 60px 20px;
+  text-align: center;
+}
+
+.promotion-content h1 {
+  color: white;
+  font-size: 3rem;
+  margin-bottom: 30px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.promotion-info {
+  background: white;
+  border-radius: 20px;
+  padding: 40px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+}
+
+.promo-type {
+  font-size: 1.1rem;
+  color: #00f2fe;
+  margin-bottom: 20px;
+}
+
+.promotion-description {
+  font-size: 1.2rem;
+  color: #555;
+  margin-bottom: 30px;
+  line-height: 1.6;
+}
+
+.promotion-features {
+  text-align: left;
+  margin: 30px 0;
+}
+
+.promotion-features h3 {
+  color: #333;
+  font-size: 1.5rem;
+  margin-bottom: 15px;
+}
+
+.promotion-features ul {
+  list-style: none;
+  padding: 0;
+}
+
+.promotion-features li {
+  font-size: 1.1rem;
+  color: #666;
+  padding: 10px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.promotion-features li:last-child {
+  border-bottom: none;
+}
+
+.promotion-page .back-home {
+  display: inline-block;
+  margin-top: 30px;
+  padding: 12px 30px;
+  background: #4facfe;
+  color: white;
+  text-decoration: none;
+  border-radius: 25px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(79, 172, 254, 0.3);
+}
+
+.promotion-page .back-home:hover {
+  background: #00f2fe;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 242, 254, 0.4);
+}

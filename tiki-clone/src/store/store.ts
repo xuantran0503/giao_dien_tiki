@@ -19,6 +19,7 @@ import checkoutReducer, { CheckoutState } from "./checkoutSlice";
 import addressReducer, { AddressState } from "./addressSlice";
 import listingReducer, { ListingState } from "./listingSlice";
 import categoryReducer, { CategoryState } from "./categorySlice";
+import flashSaleReducer, { FlashSaleState } from "./flashSaleSlice";
 
 export interface RootState {
   cart: CartState;
@@ -26,6 +27,7 @@ export interface RootState {
   address: AddressState;
   listing: ListingState;
   category: CategoryState;
+  flashSale: FlashSaleState;
 }
 
 const addressTransform = createTransform(
@@ -59,6 +61,7 @@ const rootReducer = combineReducers({
   address: addressReducer,
   listing: listingReducer,
   category: categoryReducer,
+  flashSale: flashSaleReducer,
 });
 
 const persistConfig: any = {

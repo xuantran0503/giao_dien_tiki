@@ -2,17 +2,14 @@ import React, { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart } from "../store/cartSlice";
-import { fetchProductById } from "../store/listingSlice";
+import { fetchProductById, clearCurrentProduct } from "../store/listingSlice";
 import Header from "../components/Header/Header";
 import Footer from "../components/Footer/Footer";
 import CheckoutForm from "../components/CheckoutForm/CheckoutForm";
 import AddressSelector from "../components/AddressSelector/AddressSelector";
 import { PrevArrow, NextArrow } from "../components/shared/NavigationArrows";
 import { suggestedProductsData } from "../data/suggestedProductsData";
-import { topDealsData } from "../data/topDealsData";
-import { flashSaleData } from "../data/flashSaleData";
-import { hotInternationalData } from "../data/hotInternationalData";
-import { youMayLikeData } from "../data/youMayLikeData";
+
 import { calculateDiscountedPrice, formatPrice } from "../utils/priceUtils";
 import "./ProductDetailPage.css";
 
@@ -37,6 +34,11 @@ const ProductDetailPage = () => {
     if (productId) {
       dispatch(fetchProductById(productId));
     }
+
+    // Cleanup: Xóa dữ liệu cũ khi ID đổi hoặc component unmount
+    return () => {
+      dispatch(clearCurrentProduct());
+    };
   }, [dispatch, productId]);
 
   let product = currentProduct;

@@ -184,6 +184,10 @@ const listingSlice = createSlice({
     setPageIndex: (state, action: PayloadAction<number>) => {
       state.pageIndex = action.payload;
     },
+    clearCurrentProduct: (state) => {
+      state.currentProduct = null;
+      state.productDetailStatus = "idle";
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -218,5 +222,5 @@ const listingSlice = createSlice({
   },
 });
 
-export const { setPageIndex } = listingSlice.actions;
+export const { setPageIndex, clearCurrentProduct } = listingSlice.actions;
 export default listingSlice.reducer;

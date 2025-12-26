@@ -1,48 +1,50 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import { PrevArrow, NextArrow } from "../shared/NavigationArrows";
-import { flashSaleData } from "../../data/flashSaleData";
+// import { flashSaleData } from "../../data/flashSaleData";
 import { calculateDiscountedPrice, formatPrice } from "../../utils/priceUtils";
+import { 
+  fetchFlashSaleProducts, 
+  selectFlashSaleProducts, 
+  selectFlashSaleStatus 
+} from "../../store/flashSaleSlice";
 import "./FlashSale.css";
 import "../shared/NavigationArrows.css";
 
 const FlashSale = () => {
-  
+  const dispatch = useDispatch();
   const [timeLeft, setTimeLeft] = useState({
     hours: 0,
     minutes: 0,
     seconds: 0
   });
 
-  useEffect(() => {
+  // Khai báo state trước các điều kiện return để tránh lỗi Hook
+  const [currentPage, setCurrentPage] = useState(0);
+  const [direction, setDirection] = useState('next');
 
+  // Fetch flash sale products from API
+  const apiProducts = useSelector(selectFlashSaleProducts);
+  const apiStatus = useSelector(selectFlashSaleStatus);
+
+  useEffect(() => {
     const calculateTimeLeft = () => {
       const now = new Date();
       const currentHour = now.getHours();
-      const currentMinute = now.getMinutes();
-      const currentSecond = now.getSeconds();
-
-      // Các khung giờ sale (giờ bắt đầu)
-      const saleHours = [0, 8, 12, 16, 18, 22];
-
-      // Tìm khung giờ sale tiếp theo
+      const saleHours = [0, 9, 12, 18, 22];
       let nextSaleHour = saleHours.find(hour => hour > currentHour);
       
-      // Nếu không tìm thấy (đã qua khung cuối cùng trong ngày), lấy khung đầu tiên ngày mai
       if (nextSaleHour === undefined) {
         nextSaleHour = saleHours[0];
       }
 
-      // Tính thời gian kết thúc
       const endTime = new Date(now);
-      
-      // Nếu nextSaleHour nhỏ hơn hoặc bằng currentHour, nghĩa là sang ngày mới
       if (nextSaleHour <= currentHour) {
         endTime.setDate(endTime.getDate() + 1);
       }
       
       endTime.setHours(nextSaleHour, 0, 0, 0);
-
       const diff = endTime.getTime() - now.getTime();
 
       if (diff <= 0) {
@@ -63,14 +65,27 @@ const FlashSale = () => {
     return () => clearInterval(timer);
   }, []);
 
-  const [currentPage, setCurrentPage] = useState(0);
-  const [direction, setDirection] = useState('next');
+  useEffect(() => {
+    dispatch(fetchFlashSaleProducts({ pageIndex: 1, pageSize: 18 }));
+  }, [dispatch]);
+
+  // Kiểm tra status và return sớm nếu cần
+  if (apiStatus === "pending") {
+    return <div className="flash-sale">Đang tải dữ liệu...</div>;
+  }
+
+  if (apiStatus === "failed") {
+    return <div className="flash-sale">Không thể tải dữ liệu sản phẩm.</div>;
+  }
+
+  // Logic hiển thị dữ liệu
+  const flashSaleDataSource = apiProducts;
   const itemsPerPage = 6;
-  const totalPages = Math.ceil(flashSaleData.length / itemsPerPage);
+  const totalPages = Math.ceil(flashSaleDataSource.length / itemsPerPage);
 
   const startIndex = currentPage * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
-  const flashSaleProducts = flashSaleData.slice(startIndex, endIndex);
+  const flashSaleProducts = flashSaleDataSource.slice(startIndex, endIndex);
 
   const handlePrev = () => {
     setDirection('prev');
@@ -113,12 +128,14 @@ const FlashSale = () => {
       </div>
 
       <div className="flash-sale-grid-wrapper">
-        <PrevArrow onClick={handlePrev} />
+        {currentPage > 0 && (
+          <PrevArrow onClick={handlePrev} />
+        )}
         <div className={`flash-sale-grid slide-${direction}`} key={currentPage}>
           {flashSaleProducts.map((product) => (
             <Link to={`/product/${product.id}`} key={product.id} className="flash-sale-card">
               <div className="flash-sale-image">
-                <img src={product.image} alt="Product" />
+                <img src={product.image || "https://salt.tikicdn.com/cache/280x280/media/catalog/producttmp/80/b9/75/829e0d96e6675f28dc46757a27120354.jpg.webp" } alt="Product" />
                 {product.discount > 0 && <span className="flash-discount-badge">-{product.discount}%</span>}
               </div>
 
@@ -126,7 +143,7 @@ const FlashSale = () => {
 
                 <div className="flash-price-section">
                   <span className={`flash-current-price ${!product.discount || product.discount <= 0 ? 'no-discount' : ''}`}>
-                    {formatPrice(calculateDiscountedPrice(product.originalPrice, product.discount))}<sup>₫</sup>
+                    {formatPrice(product.currentPrice || calculateDiscountedPrice(product.originalPrice, product.discount))}<sup>₫</sup>
                   </span>
                 </div>
 
@@ -145,7 +162,9 @@ const FlashSale = () => {
             </Link>
           ))}
         </div>
-        <NextArrow onClick={handleNext} />
+        {currentPage < totalPages - 1 && (
+          <NextArrow onClick={handleNext} />
+        )}
       </div>
     </div>
   );

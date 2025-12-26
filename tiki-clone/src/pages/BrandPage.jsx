@@ -1,22 +1,22 @@
 import React from "react";
 import { useParams, Link } from "react-router-dom";
 import Header from "../components/Header/Header";
-import "./TestPage.css";
+import "./BrandPage.css";
 
 const BrandPage = () => {
   const { brandId } = useParams();
 
   return (
-    <div className="test-page">
+    <div className="brand-page">
       <Header />
-      <div className="test-content">
+      <div className="brand-content">
         <h1>Trang Thương Hiệu</h1>
-        <div className="test-info">
+        <div className="brand-info">
           <p className="brand-id">Mã thương hiệu: <strong>#{brandId}</strong></p>
-          <p className="test-description">
+          <p className="brand-description">
             Đây là trang hiển thị tất cả sản phẩm của thương hiệu.
           </p>
-          <div className="test-features">
+          <div className="brand-features">
             <h3>Chức năng:</h3>
             <ul>
               <li>✓ Hiển thị thông tin thương hiệu</li>
@@ -33,3 +33,4 @@ const BrandPage = () => {
 };
 
 export default BrandPage;
+

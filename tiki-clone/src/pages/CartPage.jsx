@@ -14,9 +14,6 @@ import { useAppDispatch, useAppSelector } from "../store/hooks";
 
 const CartPage = () => {
 
-  // const dispatch = useDispatch();
-  // const cartItems = useSelector((state) => state.cart.items);
-
   const dispatch = useAppDispatch();
   const cartItems = useAppSelector((state) => state.cart.items);
 
@@ -100,14 +97,6 @@ const CartPage = () => {
     setShowCheckoutForm(true);
   };
 
-
-  // useEffect(() => {
-  //     console.log(
-  //       'Cart items updated:',
-  //       cartItems.map(item => ({ id: item.id, name: item.name }))
-  //     );
-  //   }, [cartItems]);
-
   const handleCheckoutSubmit = (checkoutData) => {
     console.log('Add completed:', checkoutData);
 
@@ -123,22 +112,7 @@ const CartPage = () => {
 
     setSelectedItems([]);
 
-    // Log sẽ được thực hiện trong useEffect khi cartItems thay đổi
-    // console.log('Cart items after removal:', cartItems.map(item => ({ id: item.id, name: item.name })));
-
-
-    // Reset selected items - KHÔNG đóng form ngay lập tức
-    // setShowCheckoutForm(false); // Để CheckoutForm tự đóng sau khi hiển thị thông báo
-
-    // Thông báo thành công sẽ được hiển thị từ CheckoutForm
-    // console.log('Order completed successfully, products should be removed from cart');
-
-
-
-    // Thêm timeout để kiểm tra cart sau khi dispatch
-    // setTimeout(() => {
-    //   console.log('Cart items after removal (delayed check):', cartItems.map(item => ({ id: item.id, name: item.name })));
-    // }, 100);
+    
   };
 
   const handleCheckoutCancel = () => {
@@ -155,6 +129,30 @@ const CartPage = () => {
       dispatch(removeFromCart(id));
       setSelectedItems(selectedItems.filter((itemId) => itemId !== id));
       console.log('Removed item with id:', id);
+    }
+  };
+
+  // Xóa các sản phẩm đã chọn
+  const handleClearSelected = async () => {
+    if (selectedItems.length === 0) {
+      alert('Vui lòng chọn sản phẩm cần xóa!');
+      return;
+    }
+
+    if (window.confirm(`Bạn có chắc chắn muốn xóa ${selectedItems.length} sản phẩm đã chọn khỏi giỏ hàng?`)) {
+      try {
+        // Xóa local (ưu tiên hiển thị ngay)
+        dispatch(removeSelectBuysFromCart(selectedItems));
+        
+        // Nếu muốn gọi API xóa từng cái (optional, tùy backend)
+        // selectedItems.forEach(id => dispatch(removeItemFromCart(id)));
+
+        setSelectedItems([]);
+        console.log('Đã xóa các sản phẩm đã chọn');
+      } catch (error) {
+        console.error('Lỗi khi xóa sản phẩm:', error);
+        alert('Có lỗi xảy ra khi xóa sản phẩm.');
+      }
     }
   };
 
@@ -273,26 +271,39 @@ const CartPage = () => {
             <>
               {/* Select All */}
               <div className="cart-select-all">
-                <label className="checkbox-container">
-                  <input
-                    type="checkbox"
-                    checked={
-                      selectedItems.length === cartItems.length &&
-                      cartItems.length > 0
-                    }
-                    onChange={handleSelectAll}
-                  />
-                  <span className="checkmark"></span>
-                  <span className="select-all-text">
-                    Tất cả ({cartItems.length} sản phẩm)
-                  </span>
-                </label>
+                <div className="cart-select-left">
+                  <label className="checkbox-container">
+                    <input
+                      type="checkbox"
+                      checked={
+                        selectedItems.length === cartItems.length &&
+                        cartItems.length > 0
+                      }
+                      onChange={handleSelectAll}
+                    />
+                    <span className="checkmark"></span>
+                    <span className="select-all-text">
+                      Tất cả ({cartItems.length} sản phẩm)
+                    </span>
+                  </label>
+                </div>
 
                 <div className="cart-columns">
                   <span className="col-price">Đơn giá</span>
                   <span className="col-quantity">Số lượng</span>
                   <span className="col-total">Thành tiền</span>
-                  <span className="col-action"></span>
+                  <span className="col-action">
+                    <button 
+                      className="btn-clear-all" 
+                      onClick={handleClearSelected} 
+                      title="Xóa các sản phẩm đã chọn"
+                    >
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z" fill="currentColor"/>
+                      </svg>
+                      <span>{selectedItems.length > 0 ? 'Xóa đã chọn' : 'Xóa tất cả'}</span>
+                    </button>
+                  </span>
                 </div>
               </div>
 
@@ -300,36 +311,32 @@ const CartPage = () => {
               <div className="cart-items">
                 {cartItems.map((item) => (
                   <div key={item.id} className="cart-item">
-                    <label className="checkbox-container">
-                      <input
-                        type="checkbox"
-                        checked={selectedItems.includes(item.id)}
-                        onChange={() => handleSelectItem(item.id)}
-                      />
-                      <span className="checkmark"></span>
-                    </label>
+                    <div className="cart-item-left">
+                      <label className="checkbox-container">
+                        <input
+                          type="checkbox"
+                          checked={selectedItems.includes(item.id)}
+                          onChange={() => handleSelectItem(item.id)}
+                        />
+                        <span className="checkmark"></span>
+                      </label>
 
-                    <Link
-                      to={`/product/${item.id}`}
-                      className="item-image-link"
-                    >
-                      <img
-                        src={item.image}
-                        alt={item.name}
-                        className="item-image"
-                      />
-                    </Link>
-
-                    <div className="item-info">
-                      <Link to={`/product/${item.id}`} className="item-name">
-                        {item.name}
+                      <Link
+                        to={`/product/${item.id}`}
+                        className="item-image-link"
+                      >
+                        <img
+                          src={item.image}
+                          alt={item.name}
+                          className="item-image"
+                        />
                       </Link>
-                      {/* {item.originalPrice &&
-                        item.originalPrice !== item.price && (
-                          <div className="item-promotion">
-                            Giá chưa áp dụng mã khuyến mãi
-                          </div>
-                        )} */}
+
+                      <div className="item-info">
+                        <Link to={`/product/${item.id}`} className="item-name">
+                          {item.name}
+                        </Link>
+                      </div>
                     </div>
 
                     <div className="item-price">

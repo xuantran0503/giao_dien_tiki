@@ -3,31 +3,137 @@
 
 khoảng cách trái phải của 2 ảnh với 2 bên  viền chưa bằng nhau ( bên trái 16px , phải 10px)
 
-nên để các mục ở chế độ random hiển thị sản phẩm
-
-sửa data cho đồng bộ thông tin cho chuẩn và sửa tên biến phần tên và title của các dữ liệu cho giống nhau
-
 thêm phần điều chỉnh số lượng kí tự để xuống dòng khi Địa chỉ chi tiết trong lịch sử đơn hàng quá dài  trong lịch sử đơn hàng
-
-
 
 nhạc : nắng hoa niên , cơn mưa khẽ rơi, thế em làm sao , 
 
 +++++++++++++ĐANG LÀM ++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-code tiếp api giỏ hàng với  các action 
+
+code tiếp api giỏ hàng với  các tương ứng action 
 thêm sản phẩm vào giỏ hàng
-/api-end-user/cart/cart-public/update-item
+post /api-end-user/cart/cart-public/update-item
 chi tiết sản phẩm  trong giỏ hàng
-/api-end-user/cart/cart-public/{id}
+get /api-end-user/cart/cart-public/{id}
 xóa từng sản phẩm trong giỏ hàng 
-/api-end-user/cart/cart-public/remove-item
+put /api-end-user/cart/cart-public/remove-item
 xóa tất cả sản phẩm trong giỏ hàng
-/api-end-user/cart/cart-public/clear-item
+put /api-end-user/cart/cart-public/clear-item
 cập nhật thông tin sản phẩm trong giỏ hàng ( số lượng)
-/api-end-user/cart/cart-public/update-item
+put /api-end-user/cart/cart-public/update-item
 
 
-và giải thích khi nào dùng useEffect và nó hoạt động , chu trình render , tại sao lại để dispatch(fetchProductsByPage({ pageIndex: 1, pageSize: 18 })); trong  useEffect
+đồng thời cũng thêm code api cho flash sale 
+Danh sách sản phẩm : 
+POST: /api-end-user/listing/get-by-page
+Chi tiết sản phẩm 
+GET: /api-end-user/listing/{id}
+
+và giải thích khi nào dùng useEffect và nó hoạt động , chu trình render , tại sao lại để dispatch(fetchProductsByPage({ pageIndex: 1, pageSize: 18 })); trong  useEffect mà lại không để ở ngoài  cho đỡ tốn code
+===========================================
+TÓM TẮT useEffect TRONG REACT
+
+1. useEffect là gì?
+useEffect dùng để xử lý side effects trong React function component.
+Side effects là các tác vụ không trực tiếp liên quan đến việc render UI như:
+- Gọi API
+- Set interval / timeout
+- Lắng nghe sự kiện (scroll, resize)
+- Thao tác DOM thủ công
+- Đồng bộ localStorage
+- Kết nối / ngắt kết nối (WebSocket, subscription)
+
+Nguyên tắc:
+- Render chỉ để vẽ UI
+- useEffect dùng để xử lý logic bên ngoài render
+
+2. Cú pháp cơ bản
+
+useEffect(() => {
+  // side effect logic
+
+  return () => {
+    // cleanup
+  };
+}, [dependencies]);
+
+Gồm:
+- Effect function
+- Cleanup function (tùy chọn)
+- Dependency array
+
+3. Khi nào useEffect chạy?
+
+a. Không có dependency
+useEffect(() => { ... });
+→ Chạy sau mỗi lần render (ít dùng)
+
+b. Dependency rỗng []
+useEffect(() => { ... }, []);
+→ Chỉ chạy 1 lần khi component mount
+Dùng cho:
+- Gọi API ban đầu
+- Khởi tạo dữ liệu
+- Add event listener
+
+c. Có dependency
+useEffect(() => { ... }, [count]);
+→ Chạy khi dependency thay đổi
+Dùng cho:
+- Gọi API theo điều kiện
+- Đồng bộ dữ liệu
+- Cập nhật side effect theo state
+
+4. Cleanup function
+
+Cleanup chạy khi:
+- Component unmount
+- Trước khi effect chạy lại
+
+Dùng để:
+- Clear interval / timeout
+- Remove event listener
+- Hủy subscription
+- Ngắt kết nối
+
+Nếu không cleanup có thể gây memory leak.
+
+5. Vòng đời của useEffect
+
+useEffect gắn với dữ liệu (dependency), không phải lifecycle component.
+
+Chu trình:
+- Mount: Render → Effect chạy
+- Update dependency:
+  Render → Cleanup → Effect chạy lại
+- Unmount:
+  Cleanup chạy lần cuối
+
+Thứ tự:
+Render → Effect
+Render → Cleanup → Effect
+Unmount → Cleanup
+
+6. Khi nào nên dùng useEffect?
+
+NÊN dùng:
+- Gọi API
+- Làm việc với browser API
+- Timer, event, storage
+
+KHÔNG nên dùng:
+- Tính toán dữ liệu để render
+- Gộp state từ state khác
+
+7. Tư duy đúng khi dùng useEffect
+
+Hãy hỏi:
+"Logic này có cần tương tác với thế giới bên ngoài React không?"
+
+- Có → useEffect
+- Không → xử lý trực tiếp trong render
+
+Tóm lại:
+useEffect dùng để đồng bộ component với thế giới bên ngoài và chạy theo sự thay đổi của dependency.
 
 useEffect(() => {
     if (products.length === 0) {
@@ -49,8 +155,441 @@ useEffect(() => {
     };
   }  
   
-  tại sao currentProduct thông tin sản phẩm nó thay đổi  nhưng mà null ở các trang nhưng vẫn thêm được vào  giỏ hàng
+  tại sao currentProduct thông tin sản phẩm nó thay đổi  nhưng mà null ở các trang nhưng vẫn thêm được vào  giỏ hàng và tại sao khi mở nhiều trang thì có trang currentProduct có dữ liệu có trang lại null và lúc thì có dữ liệu lúc thì lại null , hãy giải thích currentProduct hoạt động như nào 
   
+  Cách làm CHUẨN hơn (rất nên)
+Option 1: Cache theo id
+productDetails: {
+  [id]: Product
+}
+
+const product = useSelector(
+  state => state.listing.productDetails[productId]
+);
+
+
+✔ Không null nếu đã load
+✔ Mở nhiều trang không ảnh hưởng
+✔ Quay lại không cần fetch lại
+
+Option 2: Lấy từ products list nếu có
+const product =
+  currentProduct ||
+  apiProducts.find(p => p.id === productId);
+
+
+✔ Giảm null
+✔ UX mượt hơn
+  
+======================================================
+useEffect là gì? (theo react.dev)
+
+useEffect dùng để thực hiện side effects trong function component.
+
+Side effect = những việc không phải render UI thuần túy, ví dụ:
+
+Gọi API
+
+Đọc / ghi dữ liệu bên ngoài component
+
+Đồng bộ state với Redux / server
+
+Lắng nghe sự kiện (scroll, resize…)
+
+Set timer, interval…
+
+👉 React render UI trước, sau đó mới chạy useEffect.
+
+2️⃣ Cú pháp chuẩn của useEffect
+useEffect(() => {
+  // side effect
+
+  return () => {
+    // cleanup (không bắt buộc)
+  };
+}, [dependencies]);
+
+3 phần quan trọng
+Phần	Ý nghĩa
+Callback	Code side-effect cần chạy
+Dependency array	Khi nào effect chạy lại
+Cleanup	Dọn dẹp khi component unmount / dependency đổi
+3️⃣ Dependency array quyết định khi nào effect chạy
+🔹 Không có dependency
+useEffect(() => {
+  console.log("Chạy sau mỗi render");
+});
+
+
+❌ Hiếm khi dùng → dễ gây bug
+
+🔹 Dependency rỗng []
+useEffect(() => {
+  console.log("Chạy 1 lần khi component mount");
+}, []);
+
+
+✅ Dùng cho:
+
+Gọi API lần đầu
+
+Khởi tạo dữ liệu
+
+🔹 Có dependency
+useEffect(() => {
+  console.log("Chạy khi count thay đổi");
+}, [count]);
+
+
+✅ Dùng khi:
+
+Muốn theo dõi sự thay đổi của state/props
+
+Đồng bộ dữ liệu
+
+4️⃣ Khi nào NÊN dùng useEffect?
+
+✅ Dùng khi:
+
+Code phụ thuộc vào bên ngoài render
+
+Có tác động phụ
+
+❌ KHÔNG dùng khi:
+
+Chỉ để tính toán giá trị → dùng biến thường
+
+Chỉ render JSX dựa trên props/state
+
+5️⃣ Phân tích useEffect trong code TopDeals của bạn
+📌 Đoạn code bạn đang dùng
+useEffect(() => {
+  if (products.length === 0) {
+    dispatch(fetchProductsByPage({ pageIndex: 1, pageSize: 18 }));
+  }
+}, [dispatch, products.length]);
+
+6️⃣ useEffect này đang làm gì?
+
+👉 Mục đích chính:
+📦 Fetch dữ liệu sản phẩm lần đầu khi component được mount
+
+Cách hoạt động theo timeline:
+
+TopDeals render lần đầu
+
+Redux products đang là []
+
+useEffect chạy sau render
+
+Điều kiện products.length === 0 đúng
+
+dispatch(fetchProductsByPage(...)) → gọi API
+
+Redux update products
+
+Component re-render
+
+products.length !== 0 → KHÔNG fetch lại
+
+✅ Tránh gọi API nhiều lần
+
+7️⃣ Vì sao dependency là [dispatch, products.length]?
+❓ Tại sao không là [products]?
+
+👉 Vì:
+
+products là array → mỗi lần Redux update có thể tạo reference mới
+
+Dễ gây effect chạy lại không cần thiết
+
+👉 products.length:
+
+Chỉ thay đổi khi số lượng sản phẩm thay đổi
+
+Ổn định hơn
+
+Đúng mục đích kiểm tra rỗng
+
+❓ Vì sao phải có dispatch trong dependency?
+
+Theo React Hook Rules:
+
+Tất cả biến bên ngoài effect đều phải có trong dependency
+
+dispatch là stable → không gây loop
+
+8️⃣ useEffect này dùng ĐÚNG hay SAI?
+✅ Kết luận: DÙNG ĐÚNG & CHUẨN
+
+✔ Fetch dữ liệu khi cần
+✔ Không fetch lại vô hạn
+✔ Không ảnh hưởng render
+✔ Đúng tinh thần react.dev
+
+9️⃣ Nếu KHÔNG dùng useEffect thì chuyện gì xảy ra?
+
+❌ Nếu bạn dispatch trực tiếp trong component body:
+
+if (products.length === 0) {
+  dispatch(fetchProductsByPage(...));
+}
+
+
+🚨 LỖI NGHIÊM TRỌNG:
+
+Render → dispatch → render → dispatch → VÒNG LẶP VÔ HẠN
+
+App treo 💀
+
+👉 Side effect bắt buộc phải đặt trong useEffect
+
+🔟 Tóm tắt ngắn gọn để bạn nhớ
+
+useEffect = làm việc phụ sau render
+
+🔹 Gọi API → useEffect
+
+🔹 Theo dõi state thay đổi → useEffect
+
+🔹 Không ảnh hưởng JSX → useEffect
+
+🔹 Tránh gọi trực tiếp trong body component
+
+Trong code TopDeals:
+
+useEffect dùng để fetch dữ liệu ban đầu một cách an toàn
+=================================================================
+Bạn đang thấy:
+
+currentProduct:
+
+Có lúc có dữ liệu
+
+Có lúc null
+
+Mỗi tab trình duyệt khác nhau
+
+Dù currentProduct = null, bạn vẫn:
+
+Thêm được sản phẩm vào giỏ hàng
+
+Giỏ hàng vẫn đúng
+
+👉 Điều này KHÔNG mâu thuẫn, và có lý do rất rõ ràng
+
+2️⃣ Nguyên nhân GỐC: Redux store KHÔNG dùng chung giữa các tab
+🚨 Sự thật quan trọng:
+
+Mỗi tab trình duyệt = 1 Redux store riêng
+
+Hành động	Kết quả
+Mở tab A	Redux store A
+Mở tab B	Redux store B
+Reload trang	Redux store bị reset
+Mở link /product/123 trực tiếp	currentProduct = null ban đầu
+
+👉 Redux chỉ sống trong bộ nhớ (memory)
+👉 KHÔNG tự lưu lại khi refresh / mở tab mới
+
+3️⃣ Tại sao có tab currentProduct có dữ liệu, tab khác thì null?
+🔍 Flow chính xác trong code của bạn
+useEffect này:
+useEffect(() => {
+  if (productId) {
+    dispatch(fetchProductById(productId));
+  }
+}, [dispatch, productId]);
+
+Các trường hợp xảy ra:
+✅ Trường hợp 1: Click từ trang danh sách → ProductDetail
+
+Trang danh sách đã load products
+
+Bạn click <Link to="/product/5">
+
+Redux store đã có dữ liệu
+
+fetchProductById:
+
+Có thể tìm product trong products
+
+Hoặc fetch API nhanh
+
+👉 currentProduct có dữ liệu ✅
+
+❌ Trường hợp 2: Mở link product trong TAB MỚI / refresh
+
+Redux store trống
+
+currentProduct = null
+
+fetchProductById chạy (async)
+
+⏳ Trong lúc pending → currentProduct vẫn null
+
+Nếu:
+
+API chậm
+
+Hoặc reducer chưa set kịp
+
+👉 Component render thấy currentProduct = null
+
+👉 Kết quả:
+Có tab có data, có tab null → HOÀN TOÀN BÌNH THƯỜNG
+
+4️⃣ Vậy tại sao currentProduct = null mà vẫn thêm được vào giỏ hàng?
+
+Đây là chỗ rất nhiều người hiểu sai, bạn hỏi đúng 👌
+
+🔥 Lý do QUAN TRỌNG nhất
+
+👉 Bạn KHÔNG chỉ thêm currentProduct vào giỏ
+
+Bạn thêm dữ liệu ĐÃ ĐƯỢC COPY SANG action:
+dispatch(
+  addToCart({
+    id: product.id,
+    name: product.name,
+    image: product.image,
+    price: finalPrice,
+    originalPrice: product.originalPrice,
+    discount: product.discount,
+    quantity: quantity,
+  })
+);
+
+
+💡 Nghĩa là:
+
+Khi bấm nút, product KHÔNG null
+
+Dữ liệu đã được:
+
+Chuẩn hóa
+
+Copy vào cartSlice
+
+Sau đó:
+
+cartSlice KHÔNG phụ thuộc currentProduct nữa
+
+👉 Sau khi add:
+
+currentProduct có thể null
+
+Nhưng cart vẫn giữ dữ liệu cũ
+
+📌 Redux cart và Redux listing là 2 state KHÁC NHAU
+Slice	Vai trò
+listing.currentProduct	Chỉ dùng để hiển thị
+cart.items	Dữ liệu mua hàng thật
+
+👉 Thêm vào giỏ = snapshot dữ liệu tại thời điểm click
+
+5️⃣ Tại sao reload trang thì product null nhưng cart vẫn có?
+
+Rất có khả năng bạn đang dùng:
+
+redux-persist
+
+Hoặc lưu cart vào localStorage
+
+👉 Cart được persist
+👉 Listing thì KHÔNG
+
+📌 Vì thế:
+
+currentProduct mất
+
+cart vẫn còn
+
+👉 Đây là đúng thiết kế, không phải bug
+
+6️⃣ Vấn đề thật sự trong code hiện tại (quan trọng)
+❌ Hiện tại bạn đang làm:
+let product = currentProduct;
+
+if (product) {
+  product = {
+    ...product,
+    name: product.name || product.title || "Sản phẩm",
+    originalPrice: product.originalPrice || product.price || 0,
+  };
+}
+
+
+👉 Nhưng:
+
+Nếu currentProduct = null
+
+Component return sớm
+
+Không fallback từ products
+
+7️⃣ Cách FIX CHUẨN (rất nên làm)
+✅ Giải pháp đúng trong thực tế
+Nếu currentProduct null → tìm trong products
+const product =
+  currentProduct ||
+  apiProducts.find((p) => String(p.id) === String(productId));
+
+
+👉 Khi đó:
+
+Reload trang
+
+Mở tab mới
+
+Không còn null giả
+
+🧠 Redux best practice (nâng cao)
+Không lưu currentProduct riêng
+
+❌
+
+currentProduct
+
+
+✅
+
+selectProductById(state, productId)
+
+
+👉 Redux Toolkit khuyến nghị dùng selector
+
+8️⃣ Tóm tắt NGẮN – ĐÚNG – NHỚ LÂU
+❓ Vì sao currentProduct lúc null lúc không?
+
+👉 Vì Redux store:
+
+Reset khi reload
+
+Mỗi tab là 1 store
+
+Fetch async
+
+❓ Vì sao null vẫn add được vào cart?
+
+👉 Vì:
+
+Cart nhận bản copy dữ liệu
+
+Không phụ thuộc currentProduct
+
+❓ Đây có phải bug không?
+
+👉 ❌ Không
+👉 Đây là hành vi đúng của Redux
+
+✅ Cách làm chuẩn:
+
+Fallback product từ products
+
+Hoặc dùng selector theo id
+
+========================================================
 
 	PageIndex: 1,
       PageSize: 18,
@@ -149,6 +688,7 @@ aid
 
 
 =====================
+
 useParams() là gì?
 
 Hook của React Router
@@ -173,6 +713,7 @@ load danh mục con
 load sản phẩm tương ứng
 
 ====================
+
 
 Nếu bạn chỉ dùng const list = data.Data;, thì biến list lúc này là một Đối tượng (Object) chứa cả Result, Total,... chứ không phải là một Mảng (Array).
 Hàm .map() chỉ chạy được trên Mảng. Vì vậy nếu list là Object, code sẽ bị lỗi ngay lập tức và không hiển thị được gì.
@@ -206,6 +747,7 @@ CreatedDate → ngày tạo sản phẩm
 desc → giảm dần (mới nhất lên trước)
 
 📌 Nghĩa là:
+
 Lấy sản phẩm mới tạo nhất hiển thị trước
 
 🧠 Tổng hợp dễ nhớ
@@ -217,14 +759,22 @@ AId	ID hệ thống	Phân vùng dữ liệu
 LanguageCode	Ngôn ngữ	Đa ngôn ngữ
 CurrencyCode	Tiền tệ	Đa thị trường
 
+
 Vì sao dùng POST chứ không dùng GET?
 
 📌 Với API listing:
+=======
+
+Vì sao dùng POST chứ không dùng GET?
+
+📌 Với API listing:
+
 GET	                        POST
 Query string dài	        Gửi body gọn
 Lộ dữ liệu	                An toàn hơn
 Khó mở rộng	               Dễ thêm filter
 Ít dùng cho listing lớn	    Rất phổ biến
+
 
 ===============
 Dòng chảy dữ liệu (rất quan trọng để học frontend)

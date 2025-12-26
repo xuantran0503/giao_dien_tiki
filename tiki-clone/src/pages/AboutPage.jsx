@@ -1,19 +1,19 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import Header from "../components/Header/Header";
-import "./TestPage.css";
+import "./AboutPage.css";
 
 const AboutPage = () => {
   return (
-    <div className="test-page">
+    <div className="about-page">
       <Header />
-      <div className="test-content">
+      <div className="about-content">
         <h1>Trang Giới Thiệu</h1>
-        <div className="test-info">
-          <p className="test-description">
+        <div className="about-info">
+          <p className="about-description">
             Đây là trang giới thiệu về Tiki và các dịch vụ.
           </p>
-          <div className="test-features">
+          <div className="about-features">
             <h3>Nội dung:</h3>
             <ul>
               <li>✓ Về Tiki</li>
@@ -31,3 +31,4 @@ const AboutPage = () => {
 };
 
 export default AboutPage;
+

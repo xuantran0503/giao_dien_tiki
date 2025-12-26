@@ -96,19 +96,20 @@
 }
 
 /* Slide animation for Next */
-/* .flash-sale-grid.slide-next {
-    animation: slideInFromRight 0.4s ease-out;
-} */
+/* Slide animation for Next */
+.flash-sale-grid.slide-next {
+    animation: slideInFromRight 0.5s ease-out;
+}
 
 /* Slide animation for Prev */
-/* .flash-sale-grid.slide-prev {
-    animation: slideInFromLeft 0.4s ease-out;
-} */
+.flash-sale-grid.slide-prev {
+    animation: slideInFromLeft 0.5s ease-out;
+}
 
-/* @keyframes slideInFromRight {
+@keyframes slideInFromRight {
     from {
         opacity: 0;
-        transform: translateX(40px);
+        transform: translateX(50px);
     }
 
     to {
@@ -120,14 +121,14 @@
 @keyframes slideInFromLeft {
     from {
         opacity: 0;
-        transform: translateX(-40px);
+        transform: translateX(-50px);
     }
 
     to {
         opacity: 1;
         transform: translateX(0);
     }
-} */
+}
 
 .flash-sale-card {
     background: #fff;

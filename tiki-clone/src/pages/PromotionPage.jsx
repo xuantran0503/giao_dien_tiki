@@ -1,22 +1,22 @@
 import React from "react";
 import { useParams, Link } from "react-router-dom";
 import Header from "../components/Header/Header";
-import "./TestPage.css";
+import "./PromotionPage.css";
 
 const PromotionPage = () => {
   const { promoType } = useParams();
 
   return (
-    <div className="test-page">
+    <div className="promotion-page">
       <Header />
-      <div className="test-content">
+      <div className="promotion-content">
         <h1>Trang Khuyến Mãi</h1>
-        <div className="test-info">
+        <div className="promotion-info">
           <p className="promo-type">Loại khuyến mãi: <strong>{promoType || "Tất cả"}</strong></p>
-          <p className="test-description">
+          <p className="promotion-description">
             Đây là trang hiển thị các chương trình khuyến mãi đặc biệt.
           </p>
-          <div className="test-features">
+          <div className="promotion-features">
             <h3>Chức năng:</h3>
             <ul>
               <li>✓ Hiển thị sản phẩm khuyến mãi</li>
@@ -33,3 +33,4 @@ const PromotionPage = () => {
 };
 
 export default PromotionPage;
+
