@@ -5,7 +5,7 @@ import { addToCart } from "../store/cartSlice";
 import { fetchProductById, clearCurrentProduct } from "../store/listingSlice";
 import {
   fetchFlashSaleProductById,
-  clearFlashSaleProducts,
+  clearFlashSaleCurrentProduct,
 } from "../store/flashSaleSlice";
 import Header from "../components/Header/Header";
 import Footer from "../components/Footer/Footer";
@@ -47,7 +47,7 @@ const ProductDetailPage = () => {
 
     return () => {
       dispatch(clearCurrentProduct());
-      // Không clear flash sale ở đây vì có thể gây mất data trang chủ nếu dùng chung state
+      dispatch(clearFlashSaleCurrentProduct());
     };
   }, [dispatch, productId]);
 
