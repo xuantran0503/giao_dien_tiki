@@ -216,6 +216,10 @@ const flashSaleSlice = createSlice({
       state.status = "idle";
       state.error = null;
     },
+    clearFlashSaleCurrentProduct: (state) => {
+      state.currentProduct = null;
+      state.productDetailStatus = "idle";
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -268,6 +272,6 @@ export const selectFlashSaleCurrentProduct = (state: RootState) =>
 export const selectFlashSaleProductDetailStatus = (state: RootState) =>
   state.flashSale.productDetailStatus;
 
-export const { setFlashSalePageIndex, clearFlashSaleProducts } =
+export const { setFlashSalePageIndex, clearFlashSaleProducts, clearFlashSaleCurrentProduct } =
   flashSaleSlice.actions;
 export default flashSaleSlice.reducer;

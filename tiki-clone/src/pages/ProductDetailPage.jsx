@@ -40,7 +40,6 @@ const ProductDetailPage = () => {
 
     return () => {
       dispatch(clearCurrentProduct());
-      
     };
   }, [dispatch, productId]);
 
