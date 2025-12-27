@@ -29,7 +29,7 @@ const initialState: CartState = {
 };
 
 // API: Thêm/cập nhật sản phẩm vào giỏ hàng
-// POST /api-end-user/cart/cart-public/update-item
+// PUT /api-end-user/cart/cart-public/update-item
 export const addItemToCart = createAsyncThunk(
   "cart/addItemToCart",
   async (
@@ -45,7 +45,7 @@ export const addItemToCart = createAsyncThunk(
     { rejectWithValue }
   ) => {
     try {
-      const { data } = await axios.post(
+      const { data } = await axios.put(
         `${API_BASE}/api-end-user/cart/cart-public/update-item`,
         {
           ProductId: params.productId,
@@ -257,9 +257,7 @@ const cartSlice = createSlice({
       .addCase(addItemToCart.fulfilled, (state, action) => {
         state.status = "succeeded";
         const newItem = action.payload;
-        const existingItem = state.items.find(
-          (item) => item.id === newItem.id
-        );
+        const existingItem = state.items.find((item) => item.id === newItem.id);
 
         if (existingItem) {
           existingItem.quantity += newItem.quantity;
@@ -279,7 +277,8 @@ const cartSlice = createSlice({
       })
       .addCase(addItemToCart.rejected, (state, action) => {
         state.status = "failed";
-        state.error = (action.payload as string) || "Failed to add item to cart";
+        state.error =
+          (action.payload as string) || "Failed to add item to cart";
       })
 
       // Fetch cart detail
@@ -333,8 +332,7 @@ const cartSlice = createSlice({
       })
       .addCase(clearAllCartItems.rejected, (state, action) => {
         state.status = "failed";
-        state.error =
-          (action.payload as string) || "Failed to clear cart";
+        state.error = (action.payload as string) || "Failed to clear cart";
       })
 
       // Update cart item quantity

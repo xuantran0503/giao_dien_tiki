@@ -3,10 +3,6 @@ import { useParams, Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart } from "../store/cartSlice";
 import { fetchProductById, clearCurrentProduct } from "../store/listingSlice";
-import {
-  fetchFlashSaleProductById,
-  clearFlashSaleProducts,
-} from "../store/flashSaleSlice";
 import Header from "../components/Header/Header";
 import Footer from "../components/Footer/Footer";
 import CheckoutForm from "../components/CheckoutForm/CheckoutForm";
@@ -21,10 +17,6 @@ const ProductDetailPage = () => {
   const dispatch = useDispatch();
   const { currentProduct: listingProduct, productDetailStatus: listingStatus } =
     useSelector((state) => state.listing);
-  const {
-    currentProduct: flashSaleProduct,
-    productDetailStatus: flashSaleStatus,
-  } = useSelector((state) => state.flashSale);
   const [quantity, setQuantity] = useState(1);
   const { productId } = useParams();
   const [notification, setNotification] = useState({
@@ -40,23 +32,21 @@ const ProductDetailPage = () => {
 
   useEffect(() => {
     if (productId) {
-      // Gọi cả 2 API hoặc dựa vào context để gọi đúng (hiện tại gọi cả 2 để đảm bảo)
+    
+      dispatch(clearCurrentProduct());
+      
       dispatch(fetchProductById(productId));
-      dispatch(fetchFlashSaleProductById(productId));
     }
 
     return () => {
       dispatch(clearCurrentProduct());
-      // Không clear flash sale ở đây vì có thể gây mất data trang chủ nếu dùng chung state
+      
     };
   }, [dispatch, productId]);
 
-  // Ưu tiên sản phẩm có dữ liệu
-  let product = listingProduct || flashSaleProduct;
-  const status =
-    listingStatus === "pending" || flashSaleStatus === "pending"
-      ? "pending"
-      : "succeeded";
+  // Lấy dữ liệu sản phẩm từ listing slice
+  let product = listingProduct;
+  const status = listingStatus;
 
   if (product) {
     product = {

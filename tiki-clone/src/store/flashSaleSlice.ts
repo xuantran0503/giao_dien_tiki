@@ -64,8 +64,6 @@ export const fetchFlashSaleProducts = createAsyncThunk(
           AId: "da1e0cd8-f73b-4da2-acf2-8ddc621bcf75",
           CurrencyCode: "VND",
           Keyword: params.keyword || "",
-          // Có thể thêm filter cho Flash Sale
-          // IsFlashSale: true, // Nếu API hỗ trợ
         }
       );
 
@@ -74,7 +72,6 @@ export const fetchFlashSaleProducts = createAsyncThunk(
 
       // const products = list.map((item: any) => {
       return list.map((item: any) => {
-        // Tính toán giá
         const hasPromotion = item.MinHasPromotion || item.MaxHasPromotion;
 
         const currentPrice = hasPromotion
@@ -94,7 +91,6 @@ export const fetchFlashSaleProducts = createAsyncThunk(
 
         let discount = 0;
 
-        // Tính % giảm giá
         if (
           (item.MaxHasPromotion === true || item.MinHasPromotion === true) &&
           originalPrice > currentPrice &&
@@ -153,7 +149,6 @@ export const fetchFlashSaleProductById = createAsyncThunk(
 
       const item = data.Data;
 
-      // Tính toán giá
       const hasPromotion = item.MinHasPromotion || item.MaxHasPromotion;
 
       const currentPrice = hasPromotion
@@ -173,7 +168,6 @@ export const fetchFlashSaleProductById = createAsyncThunk(
 
       let discount = 0;
 
-      // Tính % giảm giá
       if (
         (item.MaxHasPromotion === true || item.MinHasPromotion === true) &&
         originalPrice > currentPrice &&
