@@ -23,7 +23,8 @@ export const setupCrossTabSync = (store: AppStore): (() => void) => {
     const handleStorageChange = (event: StorageEvent): void => {
         const { key, newValue } = event as StorageEventData;
         // only care about changes to the persisted root state
-        if (key !== "persist:root" || !newValue) {
+        // Cần đổi thành persist:root_v2 cho khớp với cấu hình trong store.ts
+        if (key !== "persist:root_v2" || !newValue) {
             return;
         }
 

@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-// import { FaStar } from "react-icons/fa";
+
 // import { topDealsData } from "../../data/topDealsData";
 import {
   fetchProductsByPage,
-  setListingPageIndex,
+  // setListingPageIndex,
 } from "../../store/listingSlice";
 import { PrevArrow, NextArrow } from "../shared/NavigationArrows";
 import { calculateDiscountedPrice, formatPrice } from "../../utils/priceUtils";
@@ -14,7 +14,11 @@ import "./TopDeals.css";
 
 const TopDeals = () => {
   const dispatch = useDispatch();
-  const { products, status, pageIndex } = useSelector((state) => state.listing);
+  
+  // Sử dụng local state để quản lý pagination riêng biệt cho component này
+  const [localPageIndex, setLocalPageIndex] = useState(1);
+  // Chúng ta vẫn lấy products từ Redux, nhưng không dùng pageIndex của Redux để slice
+  const { products, status /* , pageIndex */ } = useSelector((state) => state.listing);
 
   const [direction, setDirection] = useState("next");
 
@@ -27,21 +31,22 @@ const TopDeals = () => {
   const itemsPerPage = 6;
   const totalPages = Math.ceil(products.length / itemsPerPage);
 
-  const startIndex = (pageIndex - 1) * itemsPerPage;
+  const startIndex = (localPageIndex - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
+  // Cắt danh sách sản phẩm hiển thị dựa trên localPageIndex
   const deals = products.slice(startIndex, endIndex);
 
   const handlePrev = () => {
-    if (pageIndex > 1) {
+    if (localPageIndex > 1) {
       setDirection("prev");
-      dispatch(setListingPageIndex(pageIndex - 1));
+      setLocalPageIndex((prev) => prev - 1);
     }
   };
 
   const handleNext = () => {
-    if (pageIndex < totalPages) {
+    if (localPageIndex < totalPages) {
       setDirection("next");
-      dispatch(setListingPageIndex(pageIndex + 1));
+      setLocalPageIndex((prev) => prev + 1);
     }
   };
 
@@ -95,9 +100,9 @@ const TopDeals = () => {
       </div>
 
       <div className="deals-grid-wrapper">
-        {totalPages > 1 && pageIndex > 1 && <PrevArrow onClick={handlePrev} />}
+        {totalPages > 1 && localPageIndex > 1 && <PrevArrow onClick={handlePrev} />}
 
-        <div className={`deals-grid slide-${direction}`} key={pageIndex}>
+        <div className={`deals-grid slide-${direction}`} key={localPageIndex}>
           {deals.map((deal) => (
             <Link
               to={`/product/${deal.id}`}

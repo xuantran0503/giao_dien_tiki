@@ -103,6 +103,7 @@ export const fetchProductsByPage = createAsyncThunk(
 export const fetchProductById = createAsyncThunk(
   "listing/fetchProductById",
   async (id: string | number, { rejectWithValue }) => {
+    // console.log(`[API Request] Fetching product with ID: ${id}`);
     try {
       const { data } = await axios.get(
         `${API_BASE}/api-end-user/listing/${id}`,
@@ -112,6 +113,7 @@ export const fetchProductById = createAsyncThunk(
           },
         }
       );
+      console.log(`[API Response] Data received for ID: ${id}`, data.Data);
 
       const ProductPrices = (item: any) => {
         const hasPromotion = item.MinHasPromotion || item.MaxHasPromotion;
@@ -207,14 +209,17 @@ const listingSlice = createSlice({
 
       // Product detail cases
       .addCase(fetchProductById.pending, (state) => {
+        // console.log("[Reducer] fetchProductById.pending");
         state.productDetailStatus = "pending";
         state.error = null;
       })
       .addCase(fetchProductById.fulfilled, (state, action) => {
+        // console.log("[Reducer] fetchProductById.fulfilled - Payload:", action.payload);
         state.productDetailStatus = "succeeded";
         state.currentProduct = action.payload;
       })
       .addCase(fetchProductById.rejected, (state, action) => {
+        // console.error("[Reducer] fetchProductById.rejected - Error:", action.payload);
         state.productDetailStatus = "failed";
         state.error =
           (action.payload as string) || "Failed to fetch product detail";

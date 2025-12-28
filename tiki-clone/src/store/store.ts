@@ -65,9 +65,10 @@ const rootReducer = combineReducers({
 });
 
 const persistConfig: any = {
-  key: "root",
+  key: "root_v2",
   storage,
   whitelist: ["cart", "address", "checkout"], 
+  blacklist: ["listing", "flashSale"], // Không lưu các state này vào localStorage để tránh lỗi đồng bộ giữa các tab
   transforms: [addressTransform],
   throttle: 100, // Lưu localStorage tối đa 1 lần/100ms
 };
