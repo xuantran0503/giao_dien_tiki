@@ -5,10 +5,9 @@ khoảng cách trái phải của 2 ảnh với 2 bên  viền chưa bằng nhau
 
 thêm phần điều chỉnh số lượng kí tự để xuống dòng khi Địa chỉ chi tiết trong lịch sử đơn hàng quá dài  trong lịch sử đơn hàng
 
-lỗi currentProduct trong chi tiết sản phẩm bằng null nhưng vẫn hiển  và khi currentProduct = null thì khi f5 thì nó lại có dữ liệu, và dữ liệu  currentProduct không khớp với dữ liệu đang hiển thị ở giao diện
+lỗi currentProduct trong chi tiết sản phẩm bằng null nhưng vẫn hiển  và khi currentProduct = null thì khi f5 thì nó lại có dữ liệu đúng với giao diện đang hiển thị, và có lúc dữ liệu  currentProduct không khớp với dữ liệu đang hiển thị ở giao diện, nhưng mà vẫn thêm vào giỏ hàng được thành công 
 
-
-
+ giải thích khi nào dùng useEffect và nó hoạt động , chu trình vòng đời render  useEffect
 
 nhạc : nắng hoa niên , cơn mưa khẽ rơi, thế em làm sao , cơn mưa khẽ rơi
 
@@ -156,7 +155,7 @@ Trong dự án bạn đang mở (ProductDetailPage.jsx), chắc hẳn bạn đan
 ======================================================
 
 
-và giải thích khi nào dùng useEffect và nó hoạt động , chu trình vòng đời render , tại sao lại để dispatch(fetchProductsByPage({ pageIndex: 1, pageSize: 18 })); trong  useEffect
+và giải thích khi nào dùng useEffect và nó hoạt động , chu trình vòng đời render  useEffect , tại sao lại để dispatch(fetchProductsByPage({ pageIndex: 1, pageSize: 18 })); trong  useEffect
 
 useEffect(() => {
     if (products.length === 0) {

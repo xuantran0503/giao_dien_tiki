@@ -38,6 +38,10 @@ const ProductDetailPage = () => {
     if (productId) {
       dispatch(fetchProductById(productId));
     }
+    return () => {
+      dispatch(clearCurrentProduct());
+      setProduct(null);
+    };
   }, [dispatch, productId]);
 
   //  Cập nhật local state khi Redux state thay đổi
