@@ -9,11 +9,9 @@ import { calculateDiscountedPrice, formatPrice } from "../utils/priceUtils";
 import "./CartPage.css";
 import { PrevArrow, NextArrow } from "../components/shared/NavigationArrows";
 import CheckoutForm from "../components/CheckoutForm/CheckoutForm";
-
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 
 const CartPage = () => {
-
   const dispatch = useAppDispatch();
   const cartItems = useAppSelector((state) => state.cart.items);
 
@@ -22,10 +20,9 @@ const CartPage = () => {
   const [editingQuantity, setEditingQuantity] = useState(null);
   const [quantityInput, setQuantityInput] = useState('');
 
-  // Log giỏ hàng khi có thay đổi
   useEffect(() => {
     console.log('giỏ hàng hiện tại:', cartItems.length, 'sản phẩm');
-    console.log(cartItems.map(item => ({ id: item.id, name: item.name, quantity: item.quantity })));
+    // console.log(cartItems.map(item => ({ id: item.id, name: item.name, quantity: item.quantity })));
   }, [cartItems]);
 
   const handleSelectAll = (e) => {

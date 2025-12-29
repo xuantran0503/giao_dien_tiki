@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-
 // import { topDealsData } from "../../data/topDealsData";
 import {
   fetchProductsByPage,
@@ -17,7 +16,7 @@ const TopDeals = () => {
   
   // Sử dụng local state để quản lý pagination riêng biệt cho component này
   const [localPageIndex, setLocalPageIndex] = useState(1);
-  // Chúng ta vẫn lấy products từ Redux, nhưng không dùng pageIndex của Redux để slice
+  
   const { products, status /* , pageIndex */ } = useSelector((state) => state.listing);
 
   const [direction, setDirection] = useState("next");

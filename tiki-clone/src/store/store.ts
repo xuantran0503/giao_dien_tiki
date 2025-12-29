@@ -33,8 +33,9 @@ export interface RootState {
 const addressTransform = createTransform(
   // SAVE: Loại bỏ các field không cần thiết
   (inboundState: AddressState) => {
-    const { addressData, status, error, showLocationModal, ...rest } = inboundState;
-    
+    const { addressData, status, error, showLocationModal, ...rest } =
+      inboundState;
+
     return rest;
   },
 
@@ -48,7 +49,7 @@ const addressTransform = createTransform(
       error: null,
       showLocationModal: false,
     } as AddressState;
-    
+
     return result;
   },
 
@@ -65,10 +66,9 @@ const rootReducer = combineReducers({
 });
 
 const persistConfig: any = {
-  key: "root_v2",
+  key: "root", // Đổi key để reset localStorage và loại bỏ dữ liệu cũ
   storage,
-  whitelist: ["cart", "address", "checkout"], 
-  blacklist: ["listing", "flashSale"], // Không lưu các state này vào localStorage để tránh lỗi đồng bộ giữa các tab
+  whitelist: ["cart", "address", "checkout"],
   transforms: [addressTransform],
   throttle: 100, // Lưu localStorage tối đa 1 lần/100ms
 };

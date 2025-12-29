@@ -9,7 +9,6 @@ import CheckoutForm from "../components/CheckoutForm/CheckoutForm";
 import AddressSelector from "../components/AddressSelector/AddressSelector";
 import { PrevArrow, NextArrow } from "../components/shared/NavigationArrows";
 import { suggestedProductsData } from "../data/suggestedProductsData";
-
 import { calculateDiscountedPrice, formatPrice } from "../utils/priceUtils";
 import "./ProductDetailPage.css";
 
@@ -17,43 +16,42 @@ const ProductDetailPage = () => {
   const dispatch = useDispatch();
   const { currentProduct: listingProduct, productDetailStatus: listingStatus } =
     useSelector((state) => state.listing);
-  const [quantity, setQuantity] = useState(1);
   const { productId } = useParams();
+
+  //  Lưu product trong local state
+  const [product, setProduct] = useState(null);
+  const [status, setStatus] = useState("idle");
+
+  const [quantity, setQuantity] = useState(1);
   const [notification, setNotification] = useState({
     show: false,
     message: "",
     type: "",
   });
 
-  const [isAddressModalOpen, setIsAddressModalOpen] = useState(false);
+  // const [isAddressModalOpen, setIsAddressModalOpen] = useState(false);
   const [showCheckoutForm, setShowCheckoutForm] = useState(false);
 
   const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
     if (productId) {
-    
-      dispatch(clearCurrentProduct());
-      
       dispatch(fetchProductById(productId));
     }
-
-    return () => {
-      dispatch(clearCurrentProduct());
-    };
   }, [dispatch, productId]);
 
-  // Lấy dữ liệu sản phẩm từ listing slice
-  let product = listingProduct;
-  const status = listingStatus;
-
-  if (product) {
-    product = {
-      ...product,
-      name: product.name || product.title || "Sản phẩm",
-      originalPrice: product.originalPrice || product.price || 0,
-    };
-  }
+  //  Cập nhật local state khi Redux state thay đổi
+  useEffect(() => {
+    if (listingProduct) {
+      setProduct({
+        ...listingProduct,
+        name: listingProduct.name || listingProduct.title || "Sản phẩm",
+        originalPrice:
+          listingProduct.originalPrice || listingProduct.price || 0,
+      });
+    }
+    setStatus(listingStatus);
+  }, [listingProduct, listingStatus]);
 
   if (status === "pending" && !product) {
     return (
