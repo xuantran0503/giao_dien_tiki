@@ -1,0 +1,105 @@
+TÓM TẮT: LIFECYCLE OF REACTIVE EFFECTS (REACT)
+
+1. Tổng quan
+- Effect trong React có lifecycle riêng, khác với lifecycle của component.
+- Component có các giai đoạn: mount, update, unmount.
+- Effect dùng để đồng bộ hóa React state/props với hệ thống bên ngoài.
+
+2. Lifecycle của Effect
+- Mỗi Effect gồm hai pha:
+  + Bắt đầu đồng bộ hóa (effect body)
+  + Dừng đồng bộ hóa (cleanup function)
+- Effect có thể chạy nhiều lần trong vòng đời component khi dependencies thay đổi.
+
+3. Cơ chế chạy lại Effect
+- Khi giá trị trong dependency array thay đổi:
+  + React chạy cleanup của Effect cũ
+  + Sau đó chạy Effect mới với giá trị cập nhật
+
+4. Dependencies
+- Mọi state hoặc props được Effect sử dụng đều phải khai báo trong dependency array.
+- React dùng linter để đảm bảo dependencies được khai báo chính xác.
+
+5. Dependency array rỗng []
+- Effect chỉ chạy một lần khi component mount
+- Cleanup chỉ chạy khi component unmount
+
+6. Cách tư duy đúng về Effect
+- Không nên gắn Effect với các mốc lifecycle của component
+- Nên xem mỗi Effect là một quá trình đồng bộ độc lập:
+  + Cách bắt đầu đồng bộ
+  + Cách dừng đồng bộ
+- React tự quyết định khi nào cần chạy Effect dựa trên dependencies
+
+
+
+Tóm tắt: Lifecycle of Reactive Effects (React)
+1. Tổng quan về Effect và lifecycle
+
+Trong React, Effects (tác động phụ) có lifecycle khác với lifecycle của component. 
+React
+
+Component thì trải qua các giai đoạn: mounting (được thêm vào UI), updating (cập nhật), unmounting (bị gỡ khỏi UI). 
+React
+
+Nhưng một Effect không gắn chặt vào các giai đoạn này — mỗi Effect mô tả làm sao để đồng bộ hóa một hệ thống ngoài React với state/props hiện tại. 
+React
+
+2. Lifecycle của một Effect
+
+Một Effect thực thi hai việc chính:
+
+Bắt đầu đồng bộ hóa (start synchronization).
+
+Sau đó dừng đồng bộ hóa (stop synchronization) thông qua cleanup function. 
+React
+
+Điều này có thể xảy ra nhiều lần trong cùng một component khi giá trị phụ thuộc (dependencies) thay đổi. 
+React
+
+3. Ví dụ minh họa
+
+Giả sử bạn có Effect kết nối tới một server chat:
+
+useEffect(() => {
+  const connection = createConnection(serverUrl, roomId);
+  connection.connect();
+  return () => {
+    connection.disconnect();
+  };
+}, [roomId]);
+
+
+Phần body của Effect mô tả bắt đầu kết nối.
+
+Phần return (cleanup) mô tả ngắt kết nối.
+
+Mỗi lần roomId thay đổi, React sẽ chạy cleanup cũ rồi chạy Effect mới để đồng bộ với giá trị mới. 
+React
+
+4. Khi nào Effect cần tái đồng bộ
+
+Nếu Effect đọc dữ liệu từ props hoặc state, và các giá trị này thay đổi sau một render, Effect cần được dừng và bắt đầu lại để đồng bộ với giá trị mới. 
+React
+
+5. Cách React quyết định dependencies
+
+Giá trị nào được xem là reactive (thay đổi theo state/props) thì phải nằm trong danh sách dependencies.
+
+React sử dụng linter để kiểm tra bạn đã khai báo dependencies chính xác hay chưa. 
+React
+
+6. Ý nghĩa của mảng dependencies rỗng []
+
+Nếu mảng dependencies là [], Effect không đọc bất kỳ giá trị reactive nào → React chỉ chạy Effect một lần khi component mount và cleanup khi unmount. 
+React
+
+7. Cách nghĩ đúng về Effect
+
+Thay vì nghĩ về những thời điểm trong lifecycle, tốt nhất là nghĩ mỗi Effect là một quá trình đồng bộ hóa độc lập:
+
+Làm gì để bắt đầu đồng bộ.
+
+Làm gì để dừng đồng bộ.
+Và React sẽ gọi chúng ở đúng thời điểm cần thiết, tùy theo dependencies. 
+React

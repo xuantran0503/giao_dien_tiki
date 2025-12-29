@@ -1,0 +1,104 @@
+TÓM TẮT useEffect TRONG REACT
+
+1. useEffect là gì?
+useEffect dùng để xử lý side effects trong React function component.
+Side effects là các tác vụ không trực tiếp liên quan đến việc render UI như:
+- Gọi API
+- Set interval / timeout
+- Lắng nghe sự kiện (scroll, resize)
+- Thao tác DOM thủ công
+- Đồng bộ localStorage
+- Kết nối / ngắt kết nối (WebSocket, subscription)
+
+Nguyên tắc:
+- Render chỉ để vẽ UI
+- useEffect dùng để xử lý logic bên ngoài render
+
+2. Cú pháp cơ bản
+
+useEffect(() => {
+  // side effect logic
+
+  return () => {
+    // cleanup
+  };
+}, [dependencies]);
+
+Gồm:
+- Effect function
+- Cleanup function (tùy chọn)
+- Dependency array
+
+3. Khi nào useEffect chạy?
+
+a. Không có dependency
+useEffect(() => { ... });
+→ Chạy sau mỗi lần render (ít dùng)
+
+b. Dependency rỗng []
+useEffect(() => { ... }, []);
+→ Chỉ chạy 1 lần khi component mount
+Dùng cho:
+- Gọi API ban đầu
+- Khởi tạo dữ liệu
+- Add event listener
+
+c. Có dependency
+useEffect(() => { ... }, [count]);
+→ Chạy khi dependency thay đổi
+Dùng cho:
+- Gọi API theo điều kiện
+- Đồng bộ dữ liệu
+- Cập nhật side effect theo state
+
+4. Cleanup function
+
+Cleanup chạy khi:
+- Component unmount
+- Trước khi effect chạy lại
+
+Dùng để:
+- Clear interval / timeout
+- Remove event listener
+- Hủy subscription
+- Ngắt kết nối
+
+Nếu không cleanup có thể gây memory leak.
+
+5. Vòng đời của useEffect
+
+useEffect gắn với dữ liệu (dependency), không phải lifecycle component.
+
+Chu trình:
+- Mount: Render → Effect chạy
+- Update dependency:
+  Render → Cleanup → Effect chạy lại
+- Unmount:
+  Cleanup chạy lần cuối
+
+Thứ tự:
+Render → Effect
+Render → Cleanup → Effect
+Unmount → Cleanup
+
+6. Khi nào nên dùng useEffect?
+
+NÊN dùng:
+- Gọi API
+- Làm việc với browser API
+- Timer, event, storage
+
+KHÔNG nên dùng:
+- Tính toán dữ liệu để render
+- Gộp state từ state khác
+
+7. Tư duy đúng khi dùng useEffect
+
+Hãy hỏi:
+"Logic này có cần tương tác với thế giới bên ngoài React không?"
+
+- Có → useEffect
+- Không → xử lý trực tiếp trong render
+
+Tóm lại:
+useEffect dùng để đồng bộ component với thế giới bên ngoài và chạy theo sự thay đổi của dependency.
