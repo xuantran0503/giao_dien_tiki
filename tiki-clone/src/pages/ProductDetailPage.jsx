@@ -138,7 +138,7 @@ const ProductDetailPage = () => {
     console.log("Sản phẩm mua ngay:", product);
     console.log("Số lượng:", quantity);
 
-    // Đóng form checkout
+  
     setShowCheckoutForm(false);
 
     alert("Đặt hàng thành công! Chúng tôi sẽ liên hệ với bạn sớm.");

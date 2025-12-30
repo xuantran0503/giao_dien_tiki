@@ -25,8 +25,20 @@ put /api-end-user/cart/cart-public/clear-item
 cập nhật thông tin sản phẩm trong giỏ hàng ( số lượng)
 put /api-end-user/cart/cart-public/update-item
 
+==========================================
+ Luồng hoạt động hiện tại (Step-by-Step)
+Hãy lấy ví dụ khi bạn nhấn "Thêm vào giỏ" ở trang Chi tiết:
 
-
+Bước 1 (Component): 
+ProductDetailPage.jsx
+ gọi dispatch(addItemToCart({ productId, quantity, ... })). Lưu ý: Bạn đang gọi AsyncThunk.
+Bước 2 (Thunk - Gửi đi): Hàm addItemToCart chạy, thực hiện lệnh axios.put gửi thông tin lên Backend. Lúc này Front-end sẽ đợi Server phản hồi.
+Bước 3 (Server - Xử lý): Backend nhận yêu cầu, lưu sản phẩm vào Database của Server dưới tên tài khoản của bạn.
+Bước 4 (Thunk - Trả về): Backend phản hồi mã 200 OK kèm dữ liệu sản phẩm. Thunk nhận dữ liệu này và trả về cho Redux.
+Bước 5 (Reducer - Cập nhật): Vào 
+extraReducers
+, case fulfilled bắt được dữ liệu. Nó cập nhật mảng state.items.
+Bước 6 (UI - Hiển thị): Vì state.items thay đổi, icon Giỏ hàng trên Header và trang CartPage sẽ tự động re-render và hiển thị số lượng mới nhất.
 =======================================================
 
 1. Phần useEffect (Quản lý vòng đời dữ liệu)

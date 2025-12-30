@@ -26,7 +26,6 @@ const CartPage = () => {
 
   useEffect(() => {
     console.log("giỏ hàng hiện tại:", cartItems.length, "sản phẩm");
-  
   }, [cartItems]);
 
   const handleSelectAll = (e) => {
