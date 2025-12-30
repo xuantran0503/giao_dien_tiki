@@ -1,9 +1,13 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { addToCart, removeFromCart, removeSelectBuysFromCart, updateQuantity } from "../store/cartSlice";
+import {
+  addToCart,
+  removeFromCart,
+  removeSelectBuysFromCart,
+  updateQuantity,
+} from "../store/cartSlice";
 import Header from "../components/Header/Header";
 import Footer from "../components/Footer/Footer";
-// import { addToCart } from "../store/cartSlice";
 import { topDealsData } from "../data/topDealsData";
 import { calculateDiscountedPrice, formatPrice } from "../utils/priceUtils";
 import "./CartPage.css";
@@ -18,17 +22,20 @@ const CartPage = () => {
   const [selectedItems, setSelectedItems] = useState([]);
   const [showCheckoutForm, setShowCheckoutForm] = useState(false);
   const [editingQuantity, setEditingQuantity] = useState(null);
-  const [quantityInput, setQuantityInput] = useState('');
+  const [quantityInput, setQuantityInput] = useState("");
 
   useEffect(() => {
-    console.log('giỏ hàng hiện tại:', cartItems.length, 'sản phẩm');
-    // console.log(cartItems.map(item => ({ id: item.id, name: item.name, quantity: item.quantity })));
+    console.log("giỏ hàng hiện tại:", cartItems.length, "sản phẩm");
+  
   }, [cartItems]);
 
   const handleSelectAll = (e) => {
     if (e.target.checked) {
       setSelectedItems(cartItems.map((item) => item.id));
-      console.log('Selected items:', cartItems.map((item) => item.id));
+      console.log(
+        "Selected items:",
+        cartItems.map((item) => item.id)
+      );
     } else {
       setSelectedItems([]);
     }
@@ -38,23 +45,23 @@ const CartPage = () => {
     if (selectedItems.includes(id)) {
       //neu da chon thi bo ra khoi danh sach bang filter
       setSelectedItems(selectedItems.filter((itemId) => itemId !== id));
-      console.log('Bo Selected item voi id:', id);
+      console.log("Bo Selected item voi id:", id);
     } else {
       //neu chua chon thi them vao
       setSelectedItems([...selectedItems, id]);
-      console.log('Selected items:', id);
+      console.log("Selected items:", id);
     }
   };
 
   const handleIncrease = (id, currentQuantity) => {
     dispatch(updateQuantity({ id, quantity: currentQuantity + 1 }));
-    console.log('Tang so luong cho item voi id:', id);
+    console.log("Tang so luong cho item voi id:", id);
   };
 
   const handleDecrease = (id, currentQuantity) => {
     if (currentQuantity > 1) {
       dispatch(updateQuantity({ id, quantity: currentQuantity - 1 }));
-      console.log('Giam so luong cho item voi id:', id);
+      console.log("Giam so luong cho item voi id:", id);
     }
   };
 
@@ -73,43 +80,49 @@ const CartPage = () => {
       dispatch(updateQuantity({ id, quantity: newQuantity }));
     }
     setEditingQuantity(null);
-    setQuantityInput('');
+    setQuantityInput("");
   };
 
   const handleQuantityKeyPress = (e, id) => {
-    if (e.key === 'Enter') {
+    if (e.key === "Enter") {
       handleQuantityBlur(id);
-    } else if (e.key === 'Escape') {
+    } else if (e.key === "Escape") {
       setEditingQuantity(null);
-      setQuantityInput('');
+      setQuantityInput("");
     }
   };
 
   const handleCheckoutClick = () => {
-    console.log('Checkout clicked, selectedItems:', selectedItems);
-    console.log('Selected cart items for checkout:', cartItems.filter(item => selectedItems.includes(item.id)));
-    // console.log('Total amount for checkout:', cartItems
-    //   .filter(item => selectedItems.includes(item.id))
-    //   .reduce((total, item) => total + (item.price * item.quantity), 0));
+    console.log("Checkout clicked, selectedItems:", selectedItems);
+    console.log(
+      "Selected cart items for checkout:",
+      cartItems.filter((item) => selectedItems.includes(item.id))
+    );
+    
     setShowCheckoutForm(true);
   };
 
   const handleCheckoutSubmit = (checkoutData) => {
-    console.log('Add completed:', checkoutData);
+    console.log("Add completed:", checkoutData);
 
     // Lưu danh sách sản phẩm cần xóa trước khi state thay đổi
     const itemsToRemove = [...selectedItems];
-    console.log('Items to remove from cart:', itemsToRemove);
-    console.log('Cart items before removal:', cartItems.map(item => ({ id: item.id, type: typeof item.id, name: item.name })));
-    // console.log('Selected items types:', selectedItems.map(id => ({ id, type: typeof id })));
+    console.log("Items to remove from cart:", itemsToRemove);
+    console.log(
+      "Cart items before removal:",
+      cartItems.map((item) => ({
+        id: item.id,
+        type: typeof item.id,
+        name: item.name,
+      }))
+    );
+    
 
     // Xóa các sản phẩm đã mua khỏi giỏ hàng
     dispatch(removeSelectBuysFromCart(itemsToRemove));
-    console.log('Dispatched removeSelectBuysFromCart with IDs:', itemsToRemove);
+    console.log("Dispatched removeSelectBuysFromCart with IDs:", itemsToRemove);
 
     setSelectedItems([]);
-
-    
   };
 
   const handleCheckoutCancel = () => {
@@ -122,33 +135,36 @@ const CartPage = () => {
   };
 
   const handleRemove = (id) => {
-    if (window.confirm('Bạn có chắc chắn muốn xóa sản phẩm này khỏi giỏ hàng?')) {
+    if (
+      window.confirm("Bạn có chắc chắn muốn xóa sản phẩm này khỏi giỏ hàng?")
+    ) {
       dispatch(removeFromCart(id));
       setSelectedItems(selectedItems.filter((itemId) => itemId !== id));
-      console.log('Removed item with id:', id);
+      console.log("Removed item with id:", id);
     }
   };
 
   // Xóa các sản phẩm đã chọn
   const handleClearSelected = async () => {
     if (selectedItems.length === 0) {
-      alert('Vui lòng chọn sản phẩm cần xóa!');
+      alert("Vui lòng chọn sản phẩm cần xóa!");
       return;
     }
 
-    if (window.confirm(`Bạn có chắc chắn muốn xóa ${selectedItems.length} sản phẩm đã chọn khỏi giỏ hàng?`)) {
+    if (
+      window.confirm(
+        `Bạn có chắc chắn muốn xóa ${selectedItems.length} sản phẩm đã chọn khỏi giỏ hàng?`
+      )
+    ) {
       try {
-        // Xóa local (ưu tiên hiển thị ngay)
-        dispatch(removeSelectBuysFromCart(selectedItems));
         
-        // Nếu muốn gọi API xóa từng cái (optional, tùy backend)
-        // selectedItems.forEach(id => dispatch(removeItemFromCart(id)));
+        dispatch(removeSelectBuysFromCart(selectedItems));
 
         setSelectedItems([]);
-        console.log('Đã xóa các sản phẩm đã chọn');
+        console.log("Đã xóa các sản phẩm đã chọn");
       } catch (error) {
-        console.error('Lỗi khi xóa sản phẩm:', error);
-        alert('Có lỗi xảy ra khi xóa sản phẩm.');
+        console.error("Lỗi khi xóa sản phẩm:", error);
+        alert("Có lỗi xảy ra khi xóa sản phẩm.");
       }
     }
   };
@@ -290,15 +306,28 @@ const CartPage = () => {
                   <span className="col-quantity">Số lượng</span>
                   <span className="col-total">Thành tiền</span>
                   <span className="col-action">
-                    <button 
-                      className="btn-clear-all" 
-                      onClick={handleClearSelected} 
+                    <button
+                      className="btn-clear-all"
+                      onClick={handleClearSelected}
                       title="Xóa các sản phẩm đã chọn"
                     >
-                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z" fill="currentColor"/>
+                      <svg
+                        width="18"
+                        height="18"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"
+                          fill="currentColor"
+                        />
                       </svg>
-                      <span>{selectedItems.length > 0 ? 'Xóa đã chọn' : 'Xóa tất cả'}</span>
+                      <span>
+                        {selectedItems.length > 0
+                          ? "Xóa đã chọn"
+                          : "Xóa tất cả"}
+                      </span>
                     </button>
                   </span>
                 </div>
@@ -375,9 +404,11 @@ const CartPage = () => {
                           type="text"
                           className="qty-input"
                           value={item.quantity}
-                          onClick={() => handleQuantityClick(item.id, item.quantity)}
+                          onClick={() =>
+                            handleQuantityClick(item.id, item.quantity)
+                          }
                           readOnly
-                          style={{ cursor: 'pointer' }}
+                          style={{ cursor: "pointer" }}
                         />
                       )}
 
@@ -420,7 +451,6 @@ const CartPage = () => {
         {/* Sidebar */}
         {cartItems.length > 0 && (
           <div className="cart-sidebar">
-
             <div className="order-summary">
               <div className="summary-row">
                 <span>Tổng tiền hàng</span>
@@ -467,7 +497,6 @@ const CartPage = () => {
           <h2 className="suggested-title">Sản phẩm mua kèm</h2>
 
           <div className="similar-products-wrapper">
-
             {totalPages > 1 && currentPage > 1 && (
               <PrevArrow onClick={handlePrevPage} />
             )}
@@ -540,10 +569,10 @@ const CartPage = () => {
           onCancel={handleCheckoutCancel}
           onClose={handleCheckoutClose}
           meta={{
-            items: cartItems.filter(item => selectedItems.includes(item.id)),
+            items: cartItems.filter((item) => selectedItems.includes(item.id)),
             totalAmount: cartItems
-              .filter(item => selectedItems.includes(item.id))
-              .reduce((total, item) => total + (item.price * item.quantity), 0)
+              .filter((item) => selectedItems.includes(item.id))
+              .reduce((total, item) => total + item.price * item.quantity, 0),
           }}
         />
       )}

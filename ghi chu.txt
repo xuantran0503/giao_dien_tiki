@@ -24,6 +24,52 @@ xóa tất cả sản phẩm trong giỏ hàng
 put /api-end-user/cart/cart-public/clear-item
 cập nhật thông tin sản phẩm trong giỏ hàng ( số lượng)
 put /api-end-user/cart/cart-public/update-item
+
+
+
+=======================================================
+
+1. Phần useEffect (Quản lý vòng đời dữ liệu)
+javascript
+useEffect(() => {
+  // 1. GỬI YÊU CẦU LẤY DỮ LIỆU (MOUNT/UPDATE)
+  if (productId) {
+    dispatch(fetchProductById(productId));
+  }
+  // 2. DỌN DẸP DỮ LIỆU CŨ (UNMOUNT)
+  return () => {
+    dispatch(clearCurrentProduct());
+  };
+}, [dispatch, productId]); // 3. ĐIỀU KIỆN CHẠY LẠI (DEPENDENCIES)
+Tác vụ 1 (Gửi yêu cầu): Khi bạn vừa vào trang Chi tiết, productId từ thanh địa chỉ sẽ được lấy ra. useEffect kiểm tra nếu có ID thì sẽ ra lệnh cho Redux (dispatch) đi gọi API để lấy thông tin sản phẩm đó về.
+Tác vụ 2 (Dọn dẹp - Cleanup): Đây là phần cực kỳ quan trọng. Khi người dùng bấm nút "Quay lại" hoặc chuyển sang xem sản phẩm khác, hàm return sẽ chạy. Nó xóa sản phẩm hiện tại trong Redux (clearCurrentProduct).
+Tại sao cần? Nếu không xóa, khi bạn click vào sản phẩm thứ 2, giao diện có thể hiển thị ảnh của sản phẩm 1 trong tích tắc trước khi API kịp tải xong sản phẩm 2. Việc xóa này giúp giao diện luôn sạch sẽ.
+Tác vụ 3 (Dependencies): Mảng [dispatch, productId] nói với React rằng: "Nếu người dùng đổi sang xem sản phẩm có ID khác, hãy chạy lại đoạn code này để lấy dữ liệu mới".
+2. Phần biến product (Chuẩn hóa dữ liệu)
+javascript
+const product = currentProduct
+  ? {
+      ...currentProduct,
+      id: currentProduct.productId,
+      name: currentProduct.name || currentProduct.title,
+      originalPrice: currentProduct.originalPrice || currentProduct.Price || 0,
+      discount: currentProduct.DiscountPercentage || 0,
+    }
+  : null;
+Đây được gọi là bước Mapping hoặc Normalization. Nó có 3 tác dụng chính:
+
+Chống lỗi Crash: Nếu currentProduct là null (đang tải hoặc lỗi), biến product sẽ là null. Các đoạn code phía dưới (như product.name) sẽ không bị lỗi "Cannot read property of null".
+Hợp nhất các trường dữ liệu (Mapping): Đôi khi dữ liệu từ API trả về có tên trường không đồng nhất hoặc khó dùng. Đoạn code này "ép" chúng về một cái tên dễ nhớ:
+API trả về productId -> Bạn muốn dùng là id.
+API trả về Price (chữ P hoa) -> Bạn chuyển về originalPrice cho dễ đọc.
+API trả về DiscountPercentage -> Bạn rút gọn thành discount.
+Giá trị mặc định (Fallback): Bạn sử dụng toán tử || để đảm bảo nếu API thiếu dữ liệu, App vẫn không bị trống.
+Ví dụ: Nếu không có name thì lấy title, nếu không có giá thì để là 0.
+💡 Tóm tắt cách hoạt động:
+Bước 1: Bạn vào trang -> useEffect gọi API.
+Bước 2: API đang tải -> currentProduct là null -> product là null -> Giao diện hiện "Đang tải...".
+Bước 3: API xong -> Redux cập nhật -> currentProduct có dữ liệu -> Biến product được tính toán lại và chứa dữ liệu đã được "làm đẹp".
+Bước 4: Giao diện nhận được product đã chuẩn hóa và hiển thị lên màn hình.
 =============================================
 
 

@@ -25,7 +25,6 @@ const FlashSale = () => {
   // Khai báo direction cho animation
   const [direction, setDirection] = useState("next");
 
-  // Fetch flash sale products from API
   const apiProducts = useSelector(selectFlashSaleProducts);
   const apiStatus = useSelector(selectFlashSaleStatus);
   const pageIndex = useSelector(selectFlashSalePageIndex);
@@ -81,8 +80,7 @@ const FlashSale = () => {
   if (apiStatus === "failed") {
     return <div className="flash-sale">Không thể tải dữ liệu sản phẩm.</div>;
   }
-
-  // Logic hiển thị dữ liệu (Trang 1-based như Top Deals)
+  
   const flashSaleDataSource = apiProducts;
   const itemsPerPage = 6;
   const totalPages = Math.ceil(flashSaleDataSource.length / itemsPerPage);

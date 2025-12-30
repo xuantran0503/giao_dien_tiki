@@ -66,7 +66,7 @@ const rootReducer = combineReducers({
 });
 
 const persistConfig: any = {
-  key: "root", // Đổi key để reset localStorage và loại bỏ dữ liệu cũ
+  key: "root",
   storage,
   whitelist: ["cart", "address", "checkout"],
   transforms: [addressTransform],

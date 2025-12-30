@@ -173,7 +173,6 @@ const cartSlice = createSlice({
   name: "cart",
   initialState,
   reducers: {
-    // Local actions (không gọi API)
     addToCart: (state, action: PayloadAction<CartItem>) => {
       const newItem = action.payload;
       const existingItem = state.items.find((item) => item.id === newItem.id);
@@ -237,10 +236,10 @@ const cartSlice = createSlice({
       }
     },
 
-    clearCart: (state) => {
-      state.items = [];
-      state.totalQuantity = 0;
-    },
+    // clearCart: (state) => {
+    //   state.items = [];
+    //   state.totalQuantity = 0;
+    // },
 
     syncCart: (state, action: PayloadAction<CartState>) => {
       state.items = action.payload.items;
@@ -378,7 +377,7 @@ export const {
   removeFromCart,
   removeSelectBuysFromCart,
   updateQuantity,
-  clearCart,
+  // clearCart,
   syncCart,
 } = cartSlice.actions;
 

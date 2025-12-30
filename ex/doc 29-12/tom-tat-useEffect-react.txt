@@ -92,6 +92,46 @@ KHÔNG nên dùng:
 - Tính toán dữ liệu để render
 - Gộp state từ state khác
 
+1. Tại sao NÊN dùng useEffect cho các tác vụ sau?
+Điểm chung của các tác vụ này là chúng cần tương tác với thế giới bên ngoài React.
+
+🌐 Gọi API (Data Fetching)
+Lý do: Khi bạn muốn lấy dữ liệu từ Server, việc này mất thời gian (bất đồng bộ). Bạn không thể gọi gọi API trực tiếp trong thân Component vì React yêu cầu hàm render phải là một hàm thuần khiết (pure function) – tức là nó chỉ nhận vào Props/State và trả ra UI ngay lập tức.
+Hành động: useEffect cho phép bạn render giao diện "đang tải" (loading) trước, sau đó mới đi lấy dữ liệu và cập nhật lại giao diện sau khi có dữ liệu.
+🖥️ Làm việc với Browser API (DOM thủ công)
+Lý do: Đôi khi bạn cần thay đổi document.title, cuộn trang (window.scrollTo), hoặc tập trung vào một ô nhập liệu (input.focus()). Những thứ này React không quản lý trực tiếp.
+Hành động: Bạn cần đợi React vẽ xong UI ra màn hình (commit), lúc đó DOM thật mới tồn tại để bạn tương tác.
+⏱️ Timer, Event, Storage
+Lý do: Những thứ này cần được Khởi tạo và quan trọng nhất là Dọn dẹp (Cleanup).
+Timer: setInterval, setTimeout.
+Event: Lắng nghe sự kiện cuộn chuột (scroll), thay đổi kích thước màn hình (resize).
+Storage: Đọc/ghi localStorage khi có một giá trị nào đó thay đổi.
+Hành động: useEffect cung cấp hàm return () => { ... } (cleanup function) để gỡ bỏ event listener hoặc xóa timer khi Component bị hủy, tránh bị Memory Leak (tràn bộ nhớ).
+2. Tại sao KHÔNG NÊN dùng useEffect cho các tác vụ sau?
+Đây là lỗi phổ biến nhất khiến App React chạy chậm và code bị khó hiểu (spaghetti).
+
+🧮 Tính toán dữ liệu để render
+Ví dụ: Bạn có firstName và lastName, bạn muốn tạo fullName.
+Cách SAI (Dùng Effect):
+javascript
+useEffect(() => {
+    setFullName(`${firstName} ${lastName}`);
+}, [firstName, lastName]);
+Tại sao SAI: Khi firstName thay đổi, React sẽ:
+Render với tên cũ.
+Chạy useEffect.
+Gọi setFullName -> Kích hoạt Render lần 2. => Lãng phí hiệu năng.
+Cách ĐÚNG: Tính toán trực tiếp trong lúc render.
+javascript
+const fullName = `${firstName} ${lastName}`; // Tự cập nhật mỗi khi render
+🔗 Gộp state từ state khác (Derived State)
+Ví dụ: Bạn có danh sách cartItems và muốn tính totalPrice.
+Cách SAI: Dùng useEffect để theo dõi cartItems rồi setTotalPrice.
+Tại sao SAI: Bạn đang tạo ra một "chuỗi phản ứng" (Chain of effects). Thay đổi State A -> Chạy Effect -> Cập nhật State B -> Lại Render... Điều này làm code cực kỳ khó debug.
+Cách ĐÚNG: Nếu một giá trị có thể tính toán được từ các State/Props hiện có, đừng bao giờ cho nó vào State riêng. Hãy dùng useMemo nếu phép tính đó cực kỳ nặng, còn không cứ tính thẳng trong hàm.
+javascript
+const totalPrice = cartItems.reduce((acc, item) => acc + item.price, 0);
+
 7. Tư duy đúng khi dùng useEffect
 
 Hãy hỏi:

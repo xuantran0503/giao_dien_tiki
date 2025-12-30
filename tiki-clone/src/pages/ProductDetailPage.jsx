@@ -6,7 +6,7 @@ import { fetchProductById, clearCurrentProduct } from "../store/listingSlice";
 import Header from "../components/Header/Header";
 import Footer from "../components/Footer/Footer";
 import CheckoutForm from "../components/CheckoutForm/CheckoutForm";
-import AddressSelector from "../components/AddressSelector/AddressSelector";
+// import AddressSelector from "../components/AddressSelector/AddressSelector";
 import { PrevArrow, NextArrow } from "../components/shared/NavigationArrows";
 import { suggestedProductsData } from "../data/suggestedProductsData";
 import { calculateDiscountedPrice, formatPrice } from "../utils/priceUtils";
@@ -14,13 +14,10 @@ import "./ProductDetailPage.css";
 
 const ProductDetailPage = () => {
   const dispatch = useDispatch();
-  const { currentProduct: listingProduct, productDetailStatus: listingStatus } =
-    useSelector((state) => state.listing);
+  const { currentProduct, productDetailStatus } = useSelector(
+    (state) => state.listing
+  );
   const { productId } = useParams();
-
-  //  Lưu product trong local state
-  const [product, setProduct] = useState(null);
-  const [status, setStatus] = useState("idle");
 
   const [quantity, setQuantity] = useState(1);
   const [notification, setNotification] = useState({
@@ -28,10 +25,7 @@ const ProductDetailPage = () => {
     message: "",
     type: "",
   });
-
-  // const [isAddressModalOpen, setIsAddressModalOpen] = useState(false);
   const [showCheckoutForm, setShowCheckoutForm] = useState(false);
-
   const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
@@ -40,24 +34,21 @@ const ProductDetailPage = () => {
     }
     return () => {
       dispatch(clearCurrentProduct());
-      setProduct(null);
     };
   }, [dispatch, productId]);
 
-  //  Cập nhật local state khi Redux state thay đổi
-  useEffect(() => {
-    if (listingProduct) {
-      setProduct({
-        ...listingProduct,
-        name: listingProduct.name || listingProduct.title || "Sản phẩm",
+  const product = currentProduct
+    ? {
+        ...currentProduct,
+        id: currentProduct.id,
+        name: currentProduct.name || currentProduct.title,
         originalPrice:
-          listingProduct.originalPrice || listingProduct.price || 0,
-      });
-    }
-    setStatus(listingStatus);
-  }, [listingProduct, listingStatus]);
+          currentProduct.originalPrice || currentProduct.Price || 0,
+        discount: currentProduct.discount || 0,
+      }
+    : null;
 
-  if (status === "pending" && !product) {
+  if (productDetailStatus === "pending" && !product) {
     return (
       <div className="product-detail-page">
         <Header />
@@ -125,23 +116,21 @@ const ProductDetailPage = () => {
       })
     );
 
-    // Hiển thị thông báo
     setNotification({
       show: true,
       message: `Đã thêm ${quantity} ${product.name} vào giỏ hàng!`,
       type: "success",
     });
 
-    // Tự động ẩn thông báo sau 3 giây
     setTimeout(() => {
       setNotification({ show: false, message: "", type: "" });
     }, 3000);
   };
 
   const handleBuyNow = () => {
-    console.log("Buy now clicked");
+    // console.log("Buy now clicked");
     setShowCheckoutForm(true);
-    console.log("showCheckoutForm set to true");
+    // console.log("showCheckoutForm set to true");
   };
 
   const handleCheckoutSubmit = (checkoutData) => {
