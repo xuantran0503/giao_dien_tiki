@@ -134,6 +134,10 @@ const flashSaleSlice = createSlice({
       .addCase(fetchFlashSaleProducts.fulfilled, (state, action) => {
         state.status = "succeeded";
         state.products = action.payload;
+        // console.log(
+        //   "[Reducer] fetchFlashSaleProducts.fulfilled - Products:",
+        //   state.products
+        // );
       })
       .addCase(fetchFlashSaleProducts.rejected, (state, action) => {
         state.status = "failed";

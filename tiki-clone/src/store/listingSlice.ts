@@ -63,9 +63,9 @@ export const fetchProductsByPage = createAsyncThunk(
         }
       );
 
-      const list = data.Data.Result;
+      const list = data.Data.Result || [];
 
-      if (list.length === 0) return topDealsData;
+      // if (list.length === 0) return topDealsData;
 
       return list.map((item: any) => {
         return {
@@ -79,7 +79,7 @@ export const fetchProductsByPage = createAsyncThunk(
           // name: item.Name ,
           // image: item.Image || item.image,
           // image: item.Image
-          //   ? item.Image.startsWith("http")
+          //   ? item.Image.startsWith("http")-
           //     ? item.Image
           //     : `${API_BASE}${item.Image}`
           //   : "",
@@ -209,17 +209,18 @@ const listingSlice = createSlice({
 
       // Product detail cases
       .addCase(fetchProductById.pending, (state) => {
-        // console.log("[Reducer] fetchProductById.pending");
         state.productDetailStatus = "pending";
         state.error = null;
       })
       .addCase(fetchProductById.fulfilled, (state, action) => {
-        // console.log("[Reducer] fetchProductById.fulfilled - Payload:", action.payload);
+        // console.log(
+        //   "[Reducer] fetchProductById.fulfilled - Payload:",
+        //   action.payload
+        // );
         state.productDetailStatus = "succeeded";
         state.currentProduct = action.payload;
       })
       .addCase(fetchProductById.rejected, (state, action) => {
-        // console.error("[Reducer] fetchProductById.rejected - Error:", action.payload);
         state.productDetailStatus = "failed";
         state.error =
           (action.payload as string) || "Failed to fetch product detail";

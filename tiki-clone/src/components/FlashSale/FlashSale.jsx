@@ -144,7 +144,7 @@ const FlashSale = () => {
                 <img
                   src={
                     product.image ||
-                    "https://salt.tikicdn.com/cache/280x280/media/catalog/producttmp/80/b9/75/829e0d96e6675f28dc46757a27120354.jpg.webp"
+                    "https://salt.tikicdn.com/cache/750x750/ts/product/ac/65/4e/e21a92395ae8a7a1c2af3da945d76944.jpg.webp"
                   }
                   alt="Product"
                 />

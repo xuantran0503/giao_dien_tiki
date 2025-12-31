@@ -35,7 +35,7 @@ Khi bạn nhấn "Thêm vào giỏ", hàm `addToCart` (reducer bình thường) 
 - Nếu chưa: Thêm mới item vào mảng `items`.
 - **Ưu điểm**: Phản hồi cực nhanh, người dùng thấy giỏ hàng nhảy số ngay lập tức.
 
-### B. Thao tác API (Đồng bộ máy chủ)
+### B. Thao tác API (Đồng bộ máy chủ)-
 Bạn cũng có các Async Thunk như `addItemToCart`, `updateCartItemQuantity`:
 - Gửi dữ liệu lên Server để lưu trữ vĩnh viễn vào tài khoản người dùng.
 - Sử dụng phương thức `PUT` tới các endpoint: `/update-item`, `/remove-item`,...

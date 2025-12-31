@@ -63,7 +63,7 @@ export const addItemToCart = createAsyncThunk(
         originalPrice: params.originalPrice,
         discount: params.discount,
         quantity: params.quantity,
-        apiResponse: data.Data,
+        // apiResponse: data.Data,
       };
     } catch (error: any) {
       return rejectWithValue(error.response?.data?.Message || error.message);
@@ -114,7 +114,7 @@ export const removeItemFromCart = createAsyncThunk(
 
       return {
         productId,
-        apiResponse: data.Data,
+        // apiResponse: data.Data,
       };
     } catch (error: any) {
       return rejectWithValue(error.response?.data?.Message || error.message);
@@ -161,7 +161,7 @@ export const updateCartItemQuantity = createAsyncThunk(
       return {
         productId: params.productId,
         quantity: params.quantity,
-        apiResponse: data.Data,
+        // apiResponse: data.Data,
       };
     } catch (error: any) {
       return rejectWithValue(error.response?.data?.Message || error.message);

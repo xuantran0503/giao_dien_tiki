@@ -107,6 +107,8 @@ Timer: setInterval, setTimeout.
 Event: Lắng nghe sự kiện cuộn chuột (scroll), thay đổi kích thước màn hình (resize).
 Storage: Đọc/ghi localStorage khi có một giá trị nào đó thay đổi.
 Hành động: useEffect cung cấp hàm return () => { ... } (cleanup function) để gỡ bỏ event listener hoặc xóa timer khi Component bị hủy, tránh bị Memory Leak (tràn bộ nhớ).
+
+
 2. Tại sao KHÔNG NÊN dùng useEffect cho các tác vụ sau?
 Đây là lỗi phổ biến nhất khiến App React chạy chậm và code bị khó hiểu (spaghetti).
 

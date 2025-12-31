@@ -15,7 +15,7 @@ const CategoryPage = () => {
   const { categories, status, chilldCategoryStatus } = useSelector((state) => state.category);
 
   useEffect(() => {
-    // Tải danh sách danh mục gốc nếu chưa có
+    
     if (categories.length === 0 && status === "idle") {
       dispatch(fetchAllCategories());
     }

@@ -7,10 +7,6 @@ interface PersistedState {
   cart?: string;
   checkout?: string;
   address?: string;
-  // _persist?: {
-  //     version: number;
-  //     rehydrated: boolean;
-  // };
 }
 
 interface StorageEventData {
@@ -21,8 +17,9 @@ interface StorageEventData {
 export const setupCrossTabSync = (store: AppStore): (() => void) => {
   const handleStorageChange = (event: StorageEvent): void => {
     const { key, newValue } = event as StorageEventData;
-    // only care about changes to the persisted root state
-    // Cần đổi thành persist:root_v2 cho khớp với cấu hình trong store.ts
+
+    // Nếu Cần local store mới đổi thành persist:root_v2 cho khớp với cấu hình trong store.ts cũng cần phải đổi ở đó
+
     if (key !== "persist:root" || !newValue) {
       return;
     }
@@ -82,69 +79,3 @@ export const setupCrossTabSync = (store: AppStore): (() => void) => {
     window.removeEventListener("storage", handleStorageChange);
   };
 };
-
-// export const triggerCrossTabSync = (
-//     store: AppStore,
-//     sliceName: "cart" | "checkout" | "address"
-// ): void => {
-//     try {
-//         const persistedData = localStorage.getItem("persist:root");
-//         if (!persistedData) return;
-
-//         const persistedState: PersistedState = JSON.parse(persistedData);
-
-//         switch (sliceName) {
-//             case "cart":
-//                 if (persistedState.cart) {
-//                     const cartState: CartState = JSON.parse(persistedState.cart);
-//                     store.dispatch({ type: "cart/syncCart", payload: cartState });
-//                 }
-//                 break;
-
-//             case "checkout":
-//                 if (persistedState.checkout) {
-//                     const checkoutState: CheckoutState = JSON.parse(persistedState.checkout);
-//                     store.dispatch({ type: "checkout/syncCheckout", payload: checkoutState });
-//                 }
-//                 break;
-
-//             case "address":
-//                 if (persistedState.address) {
-//                     const addressState: AddressState = JSON.parse(persistedState.address);
-//                     store.dispatch({
-//                         type: "address/syncAddress",
-//                         payload: { selectedAddress: addressState.selectedAddress }
-//                     });
-//                 }
-//                 break;
-
-//             default:
-//                 console.warn(`Unknown slice name: ${sliceName}`);
-//         }
-//     } catch (error) {
-//         console.error(`Error manually syncing ${sliceName} state:`, error);
-//     }
-// };
-
-// export const isCrossTabSyncSupported = (): boolean => {
-//     try {
-//         return (
-//             typeof Storage !== "undefined" &&
-//             typeof window !== "undefined" &&
-//             typeof window.addEventListener === "function" &&
-//             typeof localStorage !== "undefined"
-//         );
-//     } catch {
-//         return false;
-//     }
-// };
-
-// export const getCurrentPersistedState = (): PersistedState | null => {
-//     try {
-//         const persistedData = localStorage.getItem("persist:root");
-//         return persistedData ? JSON.parse(persistedData) : null;
-//     } catch (error) {
-//         console.error("Error getting persisted state:", error);
-//         return null;
-//     }
-// };
