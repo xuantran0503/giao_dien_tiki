@@ -72,7 +72,6 @@ const FlashSale = () => {
     }
   }, [dispatch, apiProducts.length]);
 
-  // Kiểm tra status và return sớm nếu cần
   if (apiStatus === "pending") {
     return <div className="flash-sale">Đang tải dữ liệu...</div>;
   }

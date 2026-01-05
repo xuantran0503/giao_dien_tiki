@@ -311,7 +311,7 @@ useEffect dùng để đồng bộ component với thế giới bên ngoài và 
 Sự khác biệt:
 useState
 Dùng để quản lý state cục bộ của 1 component
-Khi state thay đổi → chỉ component đó re-render (và các component con nếu có)
+Khi state thay đổi → chỉ component đó re-render (và các component con nếu có)-
 Mỗi lần state thay đổi → hàm component chạy lại từ đầu
 useEffect
 Dùng để chạy side effects (gọi API, subscribe, cleanup, v.v.)

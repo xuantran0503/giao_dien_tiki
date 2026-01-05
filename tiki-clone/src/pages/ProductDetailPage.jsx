@@ -42,8 +42,7 @@ const ProductDetailPage = () => {
         ...currentProduct,
         id: currentProduct.id,
         name: currentProduct.name || currentProduct.title,
-        originalPrice:
-          currentProduct.originalPrice || currentProduct.Price || 0,
+        originalPrice: currentProduct.originalPrice || currentProduct.Price || 0,
         discount: currentProduct.discount || 0,
       }
     : null;
