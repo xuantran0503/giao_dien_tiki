@@ -15,9 +15,19 @@ import { fetchProductByIdFashSale , clearFlashSaleProducts} from "../store/flash
 
 const ProductDetailPage = () => {
   const dispatch = useDispatch();
-  const { currentProduct, productDetailStatus } = useSelector(
+  const { currentProduct: listingProduct, productDetailStatus: listingStatus } = useSelector(
     (state) => state.listing
   );
+  const { currentProduct: flashSaleProduct, productDetailStatus: flashSaleStatus } = useSelector(
+    (state) => state.flashSale
+  );
+
+  const currentProduct = listingProduct || flashSaleProduct;
+  const productDetailStatus = 
+    listingStatus === "pending" || flashSaleStatus === "pending" 
+      ? "pending" 
+      : (listingStatus === "succeeded" || flashSaleStatus === "succeeded" ? "succeeded" : "idle");
+
   const { productId } = useParams();
 
   const [quantity, setQuantity] = useState(1);
@@ -31,14 +41,12 @@ const ProductDetailPage = () => {
 
   useEffect(() => {
     if (productId) {
-      dispatch(fetchProductById(productId))
-      || dispatch(fetchProductByIdFashSale(productId));
-    } 
-      // else {
-      //   dispatch(clearCurrentProduct());
-      // };
+      dispatch(fetchProductById(productId));
+      dispatch(fetchProductByIdFashSale(productId));
+    }
     return () => {
-      dispatch(clearCurrentProduct()) || dispatch(clearFlashSaleProducts());
+      dispatch(clearCurrentProduct());
+      dispatch(clearFlashSaleProducts());
     };
   }, [dispatch, productId]);
 
