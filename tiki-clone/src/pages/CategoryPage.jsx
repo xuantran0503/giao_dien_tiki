@@ -15,7 +15,6 @@ const CategoryPage = () => {
   const { categories, status, chilldCategoryStatus } = useSelector((state) => state.category);
 
   useEffect(() => {
-    
     if (categories.length === 0 && status === "idle") {
       dispatch(fetchAllCategories());
     }

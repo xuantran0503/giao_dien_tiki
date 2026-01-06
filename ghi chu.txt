@@ -5,6 +5,7 @@ khoảng cách trái phải của 2 ảnh với 2 bên  viền chưa bằng nhau
 
 thêm phần điều chỉnh số lượng kí tự để xuống dòng khi Địa chỉ chi tiết trong lịch sử đơn hàng quá dài  trong lịch sử đơn hàng
 
+trong dữ liệu cart thừa biến totalQuantity
 
 +++++++++++++ĐANG LÀM ++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 

@@ -57,17 +57,16 @@ export const fetchAllCategories = createAsyncThunk(
 // GET child categories by parent id
 export const fetchChildCategories = createAsyncThunk(
   "category/fetchChildCategories",
-  async (id: string, { rejectWithValue, getState }) => {
+  async (id: string, { rejectWithValue, getState, dispatch }) => {
     try {
-      const { data } = await axios.get(
+      const { data: childData } = await axios.get(
         `${API_BASE}/api-end-user/classification/${id}/get-children`,
         {
           params: { aid: AID },
         }
       );
-      const list = data.Data || [];
+      const list = childData.Data || [];
 
-      // const id = ParentId;
       const children = list.map((item: any) => ({
         id: item.Id,
         name: item.DisplayName,
@@ -75,16 +74,48 @@ export const fetchChildCategories = createAsyncThunk(
       }));
 
       // Tìm thông tin danh mục hiện tại từ categories đã có trong state
+      let current = null;
       const state = getState() as any;
-      const current = state.category.categories.find(
+      const foundInState = state.category.categories.find(
         (c: any) => String(c.id) === String(id)
       );
+
+      if (foundInState) {
+        current = foundInState;
+      } else {
+        // Nếu categories array trống, fetch tất cả categories trước
+        if (state.category.categories.length === 0) {
+          try {
+            const { data } = await axios.get(
+              `${API_BASE}/api-end-user/classification/get-all`,
+              {
+                params: { aid: AID },
+              }
+            );
+            const allCategories = data.Data.map((item: any) => ({
+              id: item.Id,
+              name: item.DisplayName,
+              image: item.Image || item.image,
+            }));
+
+            // Tìm category từ danh sách vừa fetch
+            current = allCategories.find(
+              (c: any) => String(c.id) === String(id)
+            ) || { id, name: "Danh mục", image: "" };
+          } catch (error) {
+            // Fallback nếu API fail
+            current = { id, name: "Danh mục", image: "" };
+          }
+        } else {
+          // Fallback
+          current = { id, name: "Danh mục", image: "" };
+        }
+      }
 
       return {
         id,
         children,
-        current: current || null,
-        // current: current || { id, name: "Danh mục" },
+        current,
       };
     } catch (error: any) {
       return rejectWithValue(error.message);

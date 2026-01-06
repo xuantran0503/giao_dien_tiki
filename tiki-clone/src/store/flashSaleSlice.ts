@@ -26,6 +26,8 @@ export interface FlashSaleState {
   error: string | null;
   pageIndex: number;
   pageSize: number;
+  currentProduct: FlashSaleProduct | null;
+  productDetailStatus: "idle" | "pending" | "succeeded" | "failed";
 }
 
 const initialState: FlashSaleState = {
@@ -34,6 +36,8 @@ const initialState: FlashSaleState = {
   error: null,
   pageIndex: 1,
   pageSize: 18,
+  currentProduct: null,
+  productDetailStatus: "idle",
 };
 
 // API: Danh sách sản phẩm Flash Sale
@@ -112,6 +116,86 @@ export const fetchFlashSaleProducts = createAsyncThunk(
   }
 );
 
+// GET product detail by id for Flash Sale
+export const fetchProductByIdFashSale = createAsyncThunk(
+  "flashSale/fetchProductByIdFashSale",
+  async (id: string | number, { rejectWithValue }) => {
+    // console.log(`[API Request] Fetching product with ID: ${id}`);
+    try {
+      const { data } = await axios.get(
+        `${API_BASE}/api-end-user/listing/${id}`,
+        {
+          params: {
+            aid: "da1e0cd8-f73b-4da2-acf2-8ddc621bcf75",
+          },
+        }
+      );
+      console.log(`[API Response] Data received for ID: ${id}`, data.Data);
+
+      const ProductPrices = (item: any) => {
+        const hasPromotion = item.MinHasPromotion || item.MaxHasPromotion;
+
+        const currentPrice = hasPromotion
+          ? item.MinPromotionPrice ??
+            item.MaxPromotionPrice ??
+            item.MinPrice ??
+            item.MaxPrice ??
+            0
+          : item.Price ?? item.MinPrice ?? item.MaxPrice ?? 0;
+
+        let originalPrice = item.MaxPrice ?? item.MinPrice ?? currentPrice;
+
+        if (originalPrice < currentPrice) {
+          originalPrice = currentPrice;
+        }
+
+        let discount = 0;
+
+        //  Tính % giảm giá CHỈ khi có khuyến mãi hợp lệ
+        if (
+          (item.MaxHasPromotion === true || item.MinHasPromotion === true) &&
+          originalPrice > currentPrice &&
+          originalPrice > 0
+        ) {
+          discount = Math.round(
+            ((originalPrice - currentPrice) / originalPrice) * 100
+          );
+        }
+
+        return {
+          originalPrice,
+          currentPrice,
+          discount,
+        };
+      };
+
+      const item = data.Data;
+      // if (!item) return null;
+
+      const { originalPrice, discount, currentPrice } = ProductPrices(item);
+
+      return {
+        id: item.Id,
+        title: item.Name,
+        name: item.Name,
+        // image: img,
+        image: item.Image,
+        originalPrice,
+        currentPrice,
+        discount,
+        // rating: item.Rating || 5,
+        // shippingBadge: item.ShippingBadge || "Giao nhanh 2h",
+        // date: "Hot",
+        description: item.Description,
+        shortDescription: item.ShortDescription,
+        // madeIn: item.ExData?.Origin || item.madeIn,
+      };
+    } catch (error: any) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
 const flashSaleSlice = createSlice({
   name: "flashSale",
   initialState,
@@ -120,9 +204,11 @@ const flashSaleSlice = createSlice({
       state.pageIndex = action.payload;
     },
     clearFlashSaleProducts: (state) => {
-      state.products = [];
-      state.status = "idle";
-      state.error = null;
+      // state.products = [];
+      // state.status = "idle";
+      // state.error = null;
+      state.currentProduct = null;
+      state.productDetailStatus = "idle";
     },
   },
   extraReducers: (builder) => {
@@ -143,6 +229,21 @@ const flashSaleSlice = createSlice({
         state.status = "failed";
         state.error =
           (action.payload as string) || "Failed to fetch flash sale products";
+      })
+
+      // Product detail cases
+      .addCase(fetchProductByIdFashSale.pending, (state) => {
+        state.productDetailStatus = "pending";
+        state.error = null;
+      })
+      .addCase(fetchProductByIdFashSale.fulfilled, (state, action) => {
+        state.productDetailStatus = "succeeded";
+        state.currentProduct = action.payload;
+      })
+      .addCase(fetchProductByIdFashSale.rejected, (state, action) => {
+        state.productDetailStatus = "failed";
+        state.error =
+          (action.payload as string) || "Failed to fetch product detail";
       });
   },
 });

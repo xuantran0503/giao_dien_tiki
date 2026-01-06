@@ -11,6 +11,7 @@ import { PrevArrow, NextArrow } from "../components/shared/NavigationArrows";
 import { suggestedProductsData } from "../data/suggestedProductsData";
 import { calculateDiscountedPrice, formatPrice } from "../utils/priceUtils";
 import "./ProductDetailPage.css";
+import { fetchProductByIdFashSale , clearFlashSaleProducts} from "../store/flashSaleSlice";
 
 const ProductDetailPage = () => {
   const dispatch = useDispatch();
@@ -30,10 +31,14 @@ const ProductDetailPage = () => {
 
   useEffect(() => {
     if (productId) {
-      dispatch(fetchProductById(productId));
-    }
+      dispatch(fetchProductById(productId))
+      || dispatch(fetchProductByIdFashSale(productId));
+    } 
+      // else {
+      //   dispatch(clearCurrentProduct());
+      // };
     return () => {
-      dispatch(clearCurrentProduct());
+      dispatch(clearCurrentProduct()) || dispatch(clearFlashSaleProducts());
     };
   }, [dispatch, productId]);
 

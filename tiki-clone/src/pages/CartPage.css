@@ -357,15 +357,23 @@
 
 /* Remove button */
 .item-remove {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
   background: none;
   border: none;
   cursor: pointer;
   color: #787878;
   transition: all 0.2s;
+  padding: 6px 10px;
+  border-radius: 4px;
 }
 
 .item-remove:hover {
   color: #ff424e;
+  background-color: rgba(255, 66, 78, 0.1);
+
 }
 
 /* Sidebar */
@@ -705,3 +713,8 @@
   color: #ff424e;
   background-color: rgba(255, 66, 78, 0.1);
 }
+
+/* .qty-btn :hover{
+  color: #ff424e;
+  background-color: rgba(255, 66, 78, 0.1);
+} */

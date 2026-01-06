@@ -20,6 +20,7 @@ import addressReducer, { AddressState } from "./addressSlice";
 import listingReducer, { ListingState } from "./listingSlice";
 import categoryReducer, { CategoryState } from "./categorySlice";
 import flashSaleReducer, { FlashSaleState } from "./flashSaleSlice";
+import { version } from "os";
 
 export interface RootState {
   cart: CartState;
@@ -68,6 +69,7 @@ const rootReducer = combineReducers({
 const persistConfig: any = {
   key: "root",
   storage,
+  // version: 2,
   whitelist: ["cart", "address", "checkout"],
   transforms: [addressTransform],
   throttle: 100, // Lưu localStorage tối đa 1 lần/100ms

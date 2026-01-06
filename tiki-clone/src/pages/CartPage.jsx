@@ -5,6 +5,7 @@ import {
   removeFromCart,
   removeSelectBuysFromCart,
   updateQuantity,
+  clearCart,
 } from "../store/cartSlice";
 import Header from "../components/Header/Header";
 import Footer from "../components/Footer/Footer";
@@ -17,6 +18,8 @@ import { useAppDispatch, useAppSelector } from "../store/hooks";
 
 const CartPage = () => {
   const dispatch = useAppDispatch();
+  // dispatch(clearCart());
+
   const cartItems = useAppSelector((state) => state.cart.items);
 
   const [selectedItems, setSelectedItems] = useState([]);
@@ -24,9 +27,9 @@ const CartPage = () => {
   const [editingQuantity, setEditingQuantity] = useState(null);
   const [quantityInput, setQuantityInput] = useState("");
 
-  useEffect(() => {
-    console.log("giỏ hàng hiện tại:", cartItems.length, "sản phẩm");
-  }, [cartItems]);
+  // useEffect(() => {
+  //   console.log("giỏ hàng hiện tại:", cartItems.length, "sản phẩm");
+  // }, [cartItems]);
 
   const handleSelectAll = (e) => {
     if (e.target.checked) {
@@ -61,6 +64,15 @@ const CartPage = () => {
     if (currentQuantity > 1) {
       dispatch(updateQuantity({ id, quantity: currentQuantity - 1 }));
       console.log("Giam so luong cho item voi id:", id);
+    } else {
+      if(
+        window.confirm("Số lượng sản phẩm bằng 1. Bạn có muốn xóa sản phẩm khỏi giỏ hàng?")
+      ) {
+      // Khi số lượng <= 1, xóa sản phẩm khỏi giỏ
+      dispatch(removeFromCart(id));
+      setSelectedItems(selectedItems.filter((itemId) => itemId !== id));
+      // console.log("Xoa san pham voi id:", id);
+      }
     }
   };
 
@@ -324,7 +336,7 @@ const CartPage = () => {
                       </svg>
                       <span>
                         {selectedItems.length > 0
-                          ? "Xóa đã chọn"
+                          ? "Xóa SP đã chọn"
                           : "Xóa tất cả"}
                       </span>
                     </button>
@@ -382,7 +394,7 @@ const CartPage = () => {
                       <button
                         className="qty-btn"
                         onClick={() => handleDecrease(item.id, item.quantity)}
-                        disabled={item.quantity <= 1}
+                        // disabled={item.quantity <= 1}
                       >
                         -
                       </button>
@@ -439,6 +451,7 @@ const CartPage = () => {
                           fill="currentColor"
                         />
                       </svg>
+                      <span>Xóa</span>
                     </button>
                   </div>
                 ))}
