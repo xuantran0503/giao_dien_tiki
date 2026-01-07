@@ -38,7 +38,7 @@ const ProductDetailPage = () => {
       //   dispatch(clearCurrentProduct());
       // };
     return () => {
-      dispatch(clearCurrentProduct()) || dispatch(clearFlashSaleProducts());
+      dispatch(clearCurrentProduct()) && dispatch(clearFlashSaleProducts());
     };
   }, [dispatch, productId]);
 
