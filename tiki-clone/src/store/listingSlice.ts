@@ -65,32 +65,19 @@ export const fetchProductsByPage = createAsyncThunk(
 
       const list = data.Data.Result || [];
 
-      // if (list.length === 0) return topDealsData;
-
       return list.map((item: any) => {
         return {
           id: item.Id,
           title: item.Name,
-          originalPrice: item.Price,
-          discount: item.DiscountPercentage,
-          price: item.PromotionPrice,
-          // discount: item.PromotionPrice,
-
-          // name: item.Name ,
-          // image: item.Image || item.image,
-          // image: item.Image
-          //   ? item.Image.startsWith("http")-
-          //     ? item.Image
-          //     : `${API_BASE}${item.Image}`
-          //   : "",
-
-          // originalPrice,
-          // currentPrice,
-          // discount,
-          // rating: item.Rating || 0,
-          // shippingBadge: item.ShippingBadge,
-          // date: item.Date,
-          // madeIn: item.ExData?.Origin || item.madeIn
+          name: item.Name,
+          originalPrice: item.Price || 0,
+          currentPrice: item.PromotionPrice || item.Price || 0,
+          discount: item.DiscountPercentage || 0,
+          image: item.Image
+            ? item.Image.startsWith("http")
+              ? item.Image
+              : `${API_BASE}${item.Image}`
+            : "",
         };
       });
     } catch (error: any) {
@@ -113,7 +100,6 @@ export const fetchProductById = createAsyncThunk(
           },
         }
       );
-      console.log(`[API Response] Data received for ID: ${id}`, data.Data);
 
       const ProductPrices = (item: any) => {
         const hasPromotion = item.MinHasPromotion || item.MaxHasPromotion;
@@ -153,25 +139,18 @@ export const fetchProductById = createAsyncThunk(
       };
 
       const item = data.Data;
-      // if (!item) return null;
-
       const { originalPrice, discount, currentPrice } = ProductPrices(item);
 
       return {
         id: item.Id,
         title: item.Name,
         name: item.Name,
-        // image: img,
         image: item.Image,
         originalPrice,
         currentPrice,
         discount,
-        // rating: item.Rating || 5,
-        // shippingBadge: item.ShippingBadge || "Giao nhanh 2h",
-        // date: "Hot",
         description: item.Description,
         shortDescription: item.ShortDescription,
-        // madeIn: item.ExData?.Origin || item.madeIn,
       };
     } catch (error: any) {
       return rejectWithValue(error.message);

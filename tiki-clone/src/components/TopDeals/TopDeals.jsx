@@ -28,6 +28,7 @@ const TopDeals = () => {
 
   const startIndex = (pageIndex - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
+  
   // Cắt danh sách sản phẩm hiển thị dựa trên pageIndex và itemsPerPage
   const deals = products.slice(startIndex, endIndex);
 

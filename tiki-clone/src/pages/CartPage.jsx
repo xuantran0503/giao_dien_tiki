@@ -18,7 +18,6 @@ import { useAppDispatch, useAppSelector } from "../store/hooks";
 
 const CartPage = () => {
   const dispatch = useAppDispatch();
-  // dispatch(clearCart());
 
   const cartItems = useAppSelector((state) => state.cart.items);
 
@@ -28,7 +27,7 @@ const CartPage = () => {
   const [quantityInput, setQuantityInput] = useState("");
 
   // useEffect(() => {
-  //   console.log("giỏ hàng hiện tại:", cartItems.length, "sản phẩm");
+  //   console.log("số lượng sản phẩm trong giỏ hàng hiện tại:", cartItems.length, "sản phẩm");
   // }, [cartItems]);
 
   const handleSelectAll = (e) => {
@@ -363,7 +362,7 @@ const CartPage = () => {
                         className="item-image-link"
                       >
                         <img
-                          src={item.image}
+                          src={item.image || "https://salt.tikicdn.com/cache/750x750/ts/product/ac/65/4e/e21a92395ae8a7a1c2af3da945d76944.jpg.webp"}
                           alt={item.name}
                           className="item-image"
                         />
