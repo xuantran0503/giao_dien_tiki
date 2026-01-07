@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { addToCart } from "../store/cartSlice";
+import { addItemToCart } from "../store/cartSlice";
 import { fetchProductById, clearCurrentProduct } from "../store/listingSlice";
 import Header from "../components/Header/Header";
 import Footer from "../components/Footer/Footer";
@@ -11,22 +11,19 @@ import { PrevArrow, NextArrow } from "../components/shared/NavigationArrows";
 import { suggestedProductsData } from "../data/suggestedProductsData";
 import { calculateDiscountedPrice, formatPrice } from "../utils/priceUtils";
 import "./ProductDetailPage.css";
-import { fetchProductByIdFashSale , clearFlashSaleProducts} from "../store/flashSaleSlice";
 
 const ProductDetailPage = () => {
   const dispatch = useDispatch();
-  const { currentProduct: listingProduct, productDetailStatus: listingStatus } = useSelector(
-    (state) => state.listing
-  );
-  const { currentProduct: flashSaleProduct, productDetailStatus: flashSaleStatus } = useSelector(
-    (state) => state.flashSale
-  );
+  const { currentProduct: listingProduct, productDetailStatus: listingStatus } =
+    useSelector((state) => state.listing);
+  const currentProduct = listingProduct;
 
-  const currentProduct = listingProduct || flashSaleProduct;
-  const productDetailStatus = 
-    listingStatus === "pending" || flashSaleStatus === "pending" 
-      ? "pending" 
-      : (listingStatus === "succeeded" || flashSaleStatus === "succeeded" ? "succeeded" : "idle");
+  const productDetailStatus =
+    listingStatus === "pending"
+      ? "pending"
+      : listingStatus === "succeeded"
+      ? "succeeded"
+      : "idle";
 
   const { productId } = useParams();
 
@@ -42,11 +39,9 @@ const ProductDetailPage = () => {
   useEffect(() => {
     if (productId) {
       dispatch(fetchProductById(productId));
-      dispatch(fetchProductByIdFashSale(productId));
     }
     return () => {
       dispatch(clearCurrentProduct());
-      dispatch(clearFlashSaleProducts());
     };
   }, [dispatch, productId]);
 
@@ -55,7 +50,8 @@ const ProductDetailPage = () => {
         ...currentProduct,
         id: currentProduct.id,
         name: currentProduct.name || currentProduct.title,
-        originalPrice: currentProduct.originalPrice || currentProduct.Price || 0,
+        originalPrice:
+          currentProduct.originalPrice || currentProduct.Price || 0,
         discount: currentProduct.discount || 0,
       }
     : null;
@@ -114,11 +110,11 @@ const ProductDetailPage = () => {
     }
   };
 
-  const handleAddToCart = () => {
+  const handleAddToCart = async () => {
     // Thêm sản phẩm vào giỏ hàng (nếu trùng sẽ tự động tăng số lượng)
-    dispatch(
-      addToCart({
-        id: product.id,
+    const result = await dispatch(
+      addItemToCart({
+        productId: product.id,
         name: product.name,
         image: product.image,
         price: finalPrice,
@@ -128,11 +124,22 @@ const ProductDetailPage = () => {
       })
     );
 
-    setNotification({
-      show: true,
-      message: `Đã thêm ${quantity} ${product.name} vào giỏ hàng!`,
-      type: "success",
-    });
+    // Only show success notification if API call succeeded
+    if (addItemToCart.fulfilled.match(result)) {
+      setNotification({
+        show: true,
+        message: `Đã thêm ${quantity} ${product.name} vào giỏ hàng!`,
+        type: "success",
+      });
+    } else {
+      setNotification({
+        show: true,
+        message: `Không thể thêm vào giỏ hàng: ${
+          result.payload || "Lỗi không xác định"
+        }`,
+        type: "error",
+      });
+    }
 
     setTimeout(() => {
       setNotification({ show: false, message: "", type: "" });
@@ -150,7 +157,6 @@ const ProductDetailPage = () => {
     console.log("Sản phẩm mua ngay:", product);
     console.log("Số lượng:", quantity);
 
-  
     setShowCheckoutForm(false);
 
     alert("Đặt hàng thành công!");
@@ -162,24 +168,20 @@ const ProductDetailPage = () => {
 
   // Hàm thêm sản phẩm tương tự vào giỏ
   const handleAddSimilarProductToCart = (item, e) => {
-    // Ngăn chặn điều hướng khi click nút
-    // e.preventDefault();
-    // e.stopPropagation();
-
     const itemFinalPrice = calculateDiscountedPrice(
       item.originalPrice,
       item.discount
     );
 
     dispatch(
-      addToCart({
-        id: item.id,
-        name: item.name,
-        image: item.image,
+      addItemToCart({
+        productId: item.id, // Use item.id, not product.cartItemId
+        quantity: 1, // Always add 1 for similar products
         price: itemFinalPrice,
         originalPrice: item.originalPrice,
         discount: item.discount,
-        quantity: 1,
+        name: item.name,
+        image: item.image,
       })
     );
 

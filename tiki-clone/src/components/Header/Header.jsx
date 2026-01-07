@@ -1,14 +1,23 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { fetchCartDetail } from "../../store/cartSlice";
 import SearchBar from "../SearchBar/SearchBar";
 import AddressSelector from "../AddressSelector/AddressSelector";
 import Login from "../Login/Login";
 import "./Header.css";
 
 const Header = () => {
+  const dispatch = useDispatch();
   const [showLogin, setShowLogin] = useState(false);
   const cartItemsCount = useSelector((state) => state.cart.items.length);
+  const cartId = useSelector((state) => state.cart.cartId);
+
+  React.useEffect(() => {
+    if (cartId) {
+      dispatch(fetchCartDetail(cartId));
+    }
+  }, [dispatch, cartId]);
 
   const handleAccountClick = (e) => {
     if (e && e.preventDefault) {

@@ -90,7 +90,6 @@ export const fetchProductsByPage = createAsyncThunk(
 export const fetchProductById = createAsyncThunk(
   "listing/fetchProductById",
   async (id: string | number, { rejectWithValue }) => {
-    // console.log(`[API Request] Fetching product with ID: ${id}`);
     try {
       const { data } = await axios.get(
         `${API_BASE}/api-end-user/listing/${id}`,
@@ -192,10 +191,6 @@ const listingSlice = createSlice({
         state.error = null;
       })
       .addCase(fetchProductById.fulfilled, (state, action) => {
-        // console.log(
-        //   "[Reducer] fetchProductById.fulfilled - Payload:",
-        //   action.payload
-        // );
         state.productDetailStatus = "succeeded";
         state.currentProduct = action.payload;
       })

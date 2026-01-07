@@ -44,7 +44,7 @@ const initialState: FlashSaleState = {
 export const fetchFlashSaleProducts = createAsyncThunk(
   "flashSale/fetchFlashSaleProducts",
   async (
-    params: {
+    payload: {
       pageIndex: number;
       pageSize: number;
       keyword?: string;
@@ -55,54 +55,25 @@ export const fetchFlashSaleProducts = createAsyncThunk(
       const { data } = await axios.post(
         `${API_BASE}/api-end-user/listing/get-by-page`,
         {
-          PageIndex: params.pageIndex,
-          PageSize: params.pageSize,
+          PageIndex: payload.pageIndex,
+          PageSize: payload.pageSize,
           Orderby: "CreatedDate desc",
           AId: "da1e0cd8-f73b-4da2-acf2-8ddc621bcf75",
           CurrencyCode: "VND",
-          Keyword: params.keyword || "",
+          Keyword: payload.keyword || "",
         }
       );
 
       const list = data.Data.Result || [];
 
       return list.map((item: any) => {
-        const hasPromotion = item.MinHasPromotion || item.MaxHasPromotion;
-
-        const currentPrice = hasPromotion
-          ? item.MinPromotionPrice ??
-            item.MaxPromotionPrice ??
-            item.Price ??
-            item.MinPrice ??
-            item.MaxPrice ??
-            0
-          : item.Price ?? item.MinPrice ?? item.MaxPrice ?? 0;
-
-        let originalPrice = item.MaxPrice ?? item.MinPrice ?? currentPrice;
-
-        if (originalPrice < currentPrice) {
-          originalPrice = currentPrice;
-        }
-
-        let discount = 0;
-
-        if (
-          (item.MaxHasPromotion === true || item.MinHasPromotion === true) &&
-          originalPrice > currentPrice &&
-          originalPrice > 0
-        ) {
-          discount = Math.round(
-            ((originalPrice - currentPrice) / originalPrice) * 100
-          );
-        }
-
         return {
           id: item.Id,
           title: item.Name,
           name: item.Name,
-          originalPrice,
-          currentPrice,
-          discount,
+          originalPrice: item.Price || 0,
+          currentPrice: item.PromotionPrice || item.Price,
+          discount: item.DiscountPercentage || 0,
           image: item.Image || "",
         };
       });
@@ -178,14 +149,10 @@ export const fetchProductByIdFashSale = createAsyncThunk(
         id: item.Id,
         title: item.Name,
         name: item.Name,
-        // image: img,
         image: item.Image,
         originalPrice,
         currentPrice,
         discount,
-        // rating: item.Rating || 5,
-        // shippingBadge: item.ShippingBadge || "Giao nhanh 2h",
-        // date: "Hot",
         description: item.Description,
         shortDescription: item.ShortDescription,
         // madeIn: item.ExData?.Origin || item.madeIn,
@@ -220,10 +187,6 @@ const flashSaleSlice = createSlice({
       .addCase(fetchFlashSaleProducts.fulfilled, (state, action) => {
         state.status = "succeeded";
         state.products = action.payload;
-        // console.log(
-        //   "[Reducer] fetchFlashSaleProducts.fulfilled - Products:",
-        //   state.products
-        // );
       })
       .addCase(fetchFlashSaleProducts.rejected, (state, action) => {
         state.status = "failed";

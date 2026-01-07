@@ -18,17 +18,15 @@ const TopDeals = () => {
   const [direction, setDirection] = useState("next");
 
   useEffect(() => {
-    if (products.length === 0) {
       dispatch(fetchProductsByPage({ pageIndex: 1, pageSize: 18 }));
-    }
-  }, [dispatch, products.length]);
+  }, []);
 
   const itemsPerPage = 6;
   const totalPages = Math.ceil(products.length / itemsPerPage);
 
   const startIndex = (pageIndex - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
-  
+
   // Cắt danh sách sản phẩm hiển thị dựa trên pageIndex và itemsPerPage
   const deals = products.slice(startIndex, endIndex);
 
@@ -43,7 +41,6 @@ const TopDeals = () => {
   const handleNext = () => {
     if (pageIndex < totalPages) {
       setDirection("next");
-      
       dispatch(setListingPageIndex(pageIndex + 1));
     }
   };

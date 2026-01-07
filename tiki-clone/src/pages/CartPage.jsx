@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import {
-  addToCart,
-  removeFromCart,
-  removeSelectBuysFromCart,
-  updateQuantity,
+  addItemToCart,
+  fetchCartDetail,
+  removeItemFromCart,
+  clearAllCartItems,
+  updateCartItemQuantity,
   clearCart,
 } from "../store/cartSlice";
 import Header from "../components/Header/Header";
@@ -20,15 +21,18 @@ const CartPage = () => {
   const dispatch = useAppDispatch();
 
   const cartItems = useAppSelector((state) => state.cart.items);
+  const cartId = useAppSelector((state) => state.cart.cartId);
 
   const [selectedItems, setSelectedItems] = useState([]);
   const [showCheckoutForm, setShowCheckoutForm] = useState(false);
   const [editingQuantity, setEditingQuantity] = useState(null);
   const [quantityInput, setQuantityInput] = useState("");
 
-  // useEffect(() => {
-  //   console.log("số lượng sản phẩm trong giỏ hàng hiện tại:", cartItems.length, "sản phẩm");
-  // }, [cartItems]);
+  useEffect(() => {
+    if (cartId) {
+      dispatch(fetchCartDetail(cartId));
+    }
+  }, [dispatch, cartId]);
 
   const handleSelectAll = (e) => {
     if (e.target.checked) {
@@ -39,6 +43,7 @@ const CartPage = () => {
       );
     } else {
       setSelectedItems([]);
+      console.log("Cleared all selected items");
     }
   };
 
@@ -46,31 +51,49 @@ const CartPage = () => {
     if (selectedItems.includes(id)) {
       //neu da chon thi bo ra khoi danh sach bang filter
       setSelectedItems(selectedItems.filter((itemId) => itemId !== id));
-      console.log("Bo Selected item voi id:", id);
+      console.log("Huy chon item voi id:", id);
     } else {
       //neu chua chon thi them vao
       setSelectedItems([...selectedItems, id]);
-      console.log("Selected items:", id);
+      console.log("Chon item voi id:", id);
     }
   };
 
   const handleIncrease = (id, currentQuantity) => {
-    dispatch(updateQuantity({ id, quantity: currentQuantity + 1 }));
-    console.log("Tang so luong cho item voi id:", id);
+    const item = cartItems.find((i) => i.id === id);
+    if (item) {
+      dispatch(
+        updateCartItemQuantity({
+          productId: id,
+          quantity: currentQuantity + 1,
+          price: item.price,
+        })
+      );
+      console.log("Tang so luong cho item voi id:", id);
+    }
   };
 
   const handleDecrease = (id, currentQuantity) => {
+    const item = cartItems.find((i) => i.id === id);
+    if (!item) return;
+
     if (currentQuantity > 1) {
-      dispatch(updateQuantity({ id, quantity: currentQuantity - 1 }));
+      dispatch(
+        updateCartItemQuantity({
+          productId: id,
+          quantity: currentQuantity - 1,
+          price: item.price,
+        })
+      );
       console.log("Giam so luong cho item voi id:", id);
     } else {
-      if(
-        window.confirm("Số lượng sản phẩm bằng 1. Bạn có muốn xóa sản phẩm khỏi giỏ hàng?")
+      if (
+        window.confirm(
+          "Số lượng sản phẩm bằng 1. Bạn có muốn xóa sản phẩm khỏi giỏ hàng?"
+        )
       ) {
-      // Khi số lượng <= 1, xóa sản phẩm khỏi giỏ
-      dispatch(removeFromCart(id));
-      setSelectedItems(selectedItems.filter((itemId) => itemId !== id));
-      // console.log("Xoa san pham voi id:", id);
+        dispatch(removeItemFromCart(id));
+        setSelectedItems(selectedItems.filter((itemId) => itemId !== id));
       }
     }
   };
@@ -86,8 +109,15 @@ const CartPage = () => {
 
   const handleQuantityBlur = (id) => {
     const newQuantity = parseInt(quantityInput) || 1;
-    if (newQuantity > 0) {
-      dispatch(updateQuantity({ id, quantity: newQuantity }));
+    const item = cartItems.find((i) => i.id === id);
+    if (newQuantity > 0 && item) {
+      dispatch(
+        updateCartItemQuantity({
+          productId: id,
+          quantity: newQuantity,
+          price: item.price,
+        })
+      );
     }
     setEditingQuantity(null);
     setQuantityInput("");
@@ -108,31 +138,20 @@ const CartPage = () => {
       "Selected cart items for checkout:",
       cartItems.filter((item) => selectedItems.includes(item.id))
     );
-    
+
     setShowCheckoutForm(true);
   };
 
-  const handleCheckoutSubmit = (checkoutData) => {
+  const handleCheckoutSubmit = async (checkoutData) => {
     console.log("Add completed:", checkoutData);
 
-    // Lưu danh sách sản phẩm cần xóa trước khi state thay đổi
-    const itemsToRemove = [...selectedItems];
-    console.log("Items to remove from cart:", itemsToRemove);
-    console.log(
-      "Cart items before removal:",
-      cartItems.map((item) => ({
-        id: item.id,
-        type: typeof item.id,
-        name: item.name,
-      }))
-    );
-    
-
     // Xóa các sản phẩm đã mua khỏi giỏ hàng
-    dispatch(removeSelectBuysFromCart(itemsToRemove));
-    console.log("Dispatched removeSelectBuysFromCart with IDs:", itemsToRemove);
+    for (const id of selectedItems) {
+      await dispatch(removeItemFromCart(id));
+    }
 
     setSelectedItems([]);
+    setShowCheckoutForm(false);
   };
 
   const handleCheckoutCancel = () => {
@@ -148,7 +167,7 @@ const CartPage = () => {
     if (
       window.confirm("Bạn có chắc chắn muốn xóa sản phẩm này khỏi giỏ hàng?")
     ) {
-      dispatch(removeFromCart(id));
+      dispatch(removeItemFromCart(id));
       setSelectedItems(selectedItems.filter((itemId) => itemId !== id));
       console.log("Removed item with id:", id);
     }
@@ -157,7 +176,10 @@ const CartPage = () => {
   // Xóa các sản phẩm đã chọn
   const handleClearSelected = async () => {
     if (selectedItems.length === 0) {
-      alert("Vui lòng chọn sản phẩm cần xóa!");
+      if (window.confirm("Bạn có chắc chắn muốn xóa toàn bộ giỏ hàng?")) {
+        dispatch(clearAllCartItems());
+        setSelectedItems([]);
+      }
       return;
     }
 
@@ -167,9 +189,13 @@ const CartPage = () => {
       )
     ) {
       try {
-        
-        dispatch(removeSelectBuysFromCart(selectedItems));
-
+        if (selectedItems.length === cartItems.length) {
+          dispatch(clearAllCartItems());
+        } else {
+          for (const id of selectedItems) {
+            await dispatch(removeItemFromCart(id));
+          }
+        }
         setSelectedItems([]);
         console.log("Đã xóa các sản phẩm đã chọn");
       } catch (error) {
@@ -203,10 +229,9 @@ const CartPage = () => {
       item.originalPrice,
       item.discount
     );
-
     dispatch(
-      addToCart({
-        id: item.id,
+      addItemToCart({
+        productId: item.id,
         name: item.title,
         image: item.image,
         price: itemFinalPrice,
@@ -362,7 +387,10 @@ const CartPage = () => {
                         className="item-image-link"
                       >
                         <img
-                          src={item.image || "https://salt.tikicdn.com/cache/750x750/ts/product/ac/65/4e/e21a92395ae8a7a1c2af3da945d76944.jpg.webp"}
+                          src={
+                            item.image ||
+                            "https://salt.tikicdn.com/cache/750x750/ts/product/ac/65/4e/e21a92395ae8a7a1c2af3da945d76944.jpg.webp"
+                          }
                           alt={item.name}
                           className="item-image"
                         />

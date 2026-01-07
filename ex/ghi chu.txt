@@ -1,5 +1,5 @@
 
------------Lỗi chưa sửa được ----------------------------------------------------
+----------- Lỗi chưa sửa được ----------------------------------------------------
 
 khoảng cách trái phải của 2 ảnh với 2 bên  viền chưa bằng nhau ( bên trái 16px , phải 10px)
 
@@ -7,7 +7,7 @@ thêm phần điều chỉnh số lượng kí tự để xuống dòng khi Đ�
 
 trong dữ liệu cart thừa biến totalQuantity
 
-+++++++++++++ĐANG LÀM ++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++++++++++++++ ĐANG LÀM ++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 currentProduct trong chi tiết sản phẩm bằng null nhưng vẫn hiển thị dữ liệu trên giao diện  và khi currentProduct = null thì khi f5 thì nó lại có dữ liệu đúng với giao diện đang hiển thị, và có lúc dữ liệu  currentProduct không khớp với dữ liệu đang hiển thị ở giao diện, nhưng mà vẫn thêm vào giỏ hàng được thành công với trường hợp không khớp dữ liệu hiển thị và currentProduct
 
