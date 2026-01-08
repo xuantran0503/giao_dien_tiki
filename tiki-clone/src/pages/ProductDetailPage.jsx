@@ -52,6 +52,8 @@ const ProductDetailPage = () => {
         name: currentProduct.name || currentProduct.title,
         originalPrice:
           currentProduct.originalPrice || currentProduct.Price || 0,
+        currentPrice:
+          currentProduct.currentPrice || currentProduct.originalPrice || 0,
         discount: currentProduct.discount || 0,
       }
     : null;
@@ -114,17 +116,16 @@ const ProductDetailPage = () => {
     // Thêm sản phẩm vào giỏ hàng (nếu trùng sẽ tự động tăng số lượng)
     const result = await dispatch(
       addItemToCart({
-        productId: product.id,
+        productId: product.productId ?? product.id,
         name: product.name,
         image: product.image,
-        price: finalPrice,
+        price: product.currentPrice,
         originalPrice: product.originalPrice,
         discount: product.discount,
         quantity: quantity,
       })
     );
 
-    // Only show success notification if API call succeeded
     if (addItemToCart.fulfilled.match(result)) {
       setNotification({
         show: true,
@@ -175,8 +176,9 @@ const ProductDetailPage = () => {
 
     dispatch(
       addItemToCart({
-        productId: item.id, // Use item.id, not product.cartItemId
-        quantity: 1, // Always add 1 for similar products
+        // productId: item.id,
+        productId: item.productId,
+        quantity: 1, 
         price: itemFinalPrice,
         originalPrice: item.originalPrice,
         discount: item.discount,
@@ -537,7 +539,7 @@ const ProductDetailPage = () => {
         <div className={`add-to-cart-notification ${notification.type}`}>
           <div className="notification-content">
             <span className="notification-icon">
-              {notification.type === "success"}
+              {notification.type === "success" ? "✓" : "✕"}
             </span>
             <span>{notification.message}</span>
           </div>

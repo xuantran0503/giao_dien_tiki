@@ -4,6 +4,7 @@ import { topDealsData } from "../data/topDealsData";
 
 export interface Product {
   id: string | number;
+  productId?: string | number;
   title: string;
   originalPrice: number;
   discount: number;
@@ -68,6 +69,8 @@ export const fetchProductsByPage = createAsyncThunk(
       return list.map((item: any) => {
         return {
           id: item.Id,
+          // productId: item.ProductsId,
+          productId: item.Id,
           title: item.Name,
           name: item.Name,
           originalPrice: item.Price || 0,
@@ -142,9 +145,14 @@ export const fetchProductById = createAsyncThunk(
 
       return {
         id: item.Id,
+        productId: item.Id,
         title: item.Name,
         name: item.Name,
-        image: item.Image,
+        image: item.Image
+          ? item.Image.startsWith("http")
+            ? item.Image
+            : `${API_BASE}${item.Image}`
+          : "",
         originalPrice,
         currentPrice,
         discount,

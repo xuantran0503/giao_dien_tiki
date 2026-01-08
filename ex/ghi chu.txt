@@ -9,9 +9,9 @@ trong dữ liệu cart thừa biến totalQuantity
 
 +++++++++++++ ĐANG LÀM ++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-currentProduct trong chi tiết sản phẩm bằng null nhưng vẫn hiển thị dữ liệu trên giao diện  và khi currentProduct = null thì khi f5 thì nó lại có dữ liệu đúng với giao diện đang hiển thị, và có lúc dữ liệu  currentProduct không khớp với dữ liệu đang hiển thị ở giao diện, nhưng mà vẫn thêm vào giỏ hàng được thành công với trường hợp không khớp dữ liệu hiển thị và currentProduct
+lỗi chức năng thêm sản phẩm vào giỏ hàng
 
- giải thích khi nào dùng useEffect và nó hoạt động , chu trình vòng đời render  useEffect
+const A_ID = "da1e0cd8-f73b-4da2-acf2-8ddc621bcf75";
 
 code tiếp api giỏ hàng với  các tương ứng action 
 thêm sản phẩm vào giỏ hàng
@@ -26,6 +26,10 @@ cập nhật thông tin sản phẩm trong giỏ hàng ( số lượng)
 put /api-end-user/cart/cart-public/update-item
 
 ==========================================
+currentProduct trong chi tiết sản phẩm bằng null nhưng vẫn hiển thị dữ liệu trên giao diện  và khi currentProduct = null thì khi f5 thì nó lại có dữ liệu đúng với giao diện đang hiển thị, và có lúc dữ liệu  currentProduct không khớp với dữ liệu đang hiển thị ở giao diện, nhưng mà vẫn thêm vào giỏ hàng được thành công với trường hợp không khớp dữ liệu hiển thị và currentProduct
+
+ giải thích khi nào dùng useEffect và nó hoạt động , chu trình vòng đời render  useEffect
+==============================================
 # Giải thích cơ chế Redux và hiện tượng dữ liệu trong Chi tiết sản phẩm
 
 Tài liệu này giải thích các vấn đề bạn đang gặp phải liên quan đến `currentProduct` trong `listingSlice` và cách nó tương tác với Giao diện (UI).

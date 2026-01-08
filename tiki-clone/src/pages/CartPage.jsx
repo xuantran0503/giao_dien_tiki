@@ -32,14 +32,17 @@ const CartPage = () => {
     if (cartId) {
       dispatch(fetchCartDetail(cartId));
     }
+    return () => {
+      dispatch(clearCart());
+    };
   }, [dispatch, cartId]);
 
   const handleSelectAll = (e) => {
     if (e.target.checked) {
-      setSelectedItems(cartItems.map((item) => item.id));
+      setSelectedItems(cartItems.map((item) => item.productId));
       console.log(
         "Selected items:",
-        cartItems.map((item) => item.id)
+        cartItems.map((item) => item.productId)
       );
     } else {
       setSelectedItems([]);
@@ -59,41 +62,45 @@ const CartPage = () => {
     }
   };
 
-  const handleIncrease = (id, currentQuantity) => {
-    const item = cartItems.find((i) => i.id === id);
+  const handleIncrease = (productId, cartItemId, currentQuantity) => {
+    const item = cartItems.find((i) => i.productId === productId);
     if (item) {
       dispatch(
         updateCartItemQuantity({
-          productId: id,
+          productId: productId,
+          cartItemId: cartItemId,
           quantity: currentQuantity + 1,
           price: item.price,
         })
       );
-      console.log("Tang so luong cho item voi id:", id);
+      console.log("Tang so luong cho item voi id:", productId);
     }
   };
 
-  const handleDecrease = (id, currentQuantity) => {
-    const item = cartItems.find((i) => i.id === id);
+  const handleDecrease = (productId, cartItemId, currentQuantity) => {
+    const item = cartItems.find((i) => i.productId === productId);
     if (!item) return;
 
     if (currentQuantity > 1) {
       dispatch(
         updateCartItemQuantity({
-          productId: id,
+          productId: productId,
+          cartItemId: cartItemId,
           quantity: currentQuantity - 1,
           price: item.price,
         })
       );
-      console.log("Giam so luong cho item voi id:", id);
+      console.log("Giam so luong cho item voi id:", productId);
     } else {
       if (
         window.confirm(
           "Số lượng sản phẩm bằng 1. Bạn có muốn xóa sản phẩm khỏi giỏ hàng?"
         )
       ) {
-        dispatch(removeItemFromCart(id));
-        setSelectedItems(selectedItems.filter((itemId) => itemId !== id));
+        dispatch(removeItemFromCart(productId));
+        setSelectedItems(
+          selectedItems.filter((itemId) => itemId !== productId)
+        );
       }
     }
   };
@@ -107,13 +114,14 @@ const CartPage = () => {
     setQuantityInput(e.target.value);
   };
 
-  const handleQuantityBlur = (id) => {
+  const handleQuantityBlur = (productId, cartItemId) => {
     const newQuantity = parseInt(quantityInput) || 1;
-    const item = cartItems.find((i) => i.id === id);
+    const item = cartItems.find((i) => i.productId === productId);
     if (newQuantity > 0 && item) {
       dispatch(
         updateCartItemQuantity({
-          productId: id,
+          productId: productId,
+          cartItemId: cartItemId,
           quantity: newQuantity,
           price: item.price,
         })
@@ -123,9 +131,9 @@ const CartPage = () => {
     setQuantityInput("");
   };
 
-  const handleQuantityKeyPress = (e, id) => {
+  const handleQuantityKeyPress = (e, productId, cartItemId) => {
     if (e.key === "Enter") {
-      handleQuantityBlur(id);
+      handleQuantityBlur(productId, cartItemId);
     } else if (e.key === "Escape") {
       setEditingQuantity(null);
       setQuantityInput("");
@@ -136,7 +144,7 @@ const CartPage = () => {
     console.log("Checkout clicked, selectedItems:", selectedItems);
     console.log(
       "Selected cart items for checkout:",
-      cartItems.filter((item) => selectedItems.includes(item.id))
+      cartItems.filter((item) => selectedItems.includes(item.productId))
     );
 
     setShowCheckoutForm(true);
@@ -163,13 +171,13 @@ const CartPage = () => {
     setShowCheckoutForm(false);
   };
 
-  const handleRemove = (id) => {
+  const handleRemove = (productId) => {
     if (
       window.confirm("Bạn có chắc chắn muốn xóa sản phẩm này khỏi giỏ hàng?")
     ) {
-      dispatch(removeItemFromCart(id));
-      setSelectedItems(selectedItems.filter((itemId) => itemId !== id));
-      console.log("Removed item with id:", id);
+      dispatch(removeItemFromCart(productId));
+      setSelectedItems(selectedItems.filter((itemId) => itemId !== productId));
+      console.log("Removed item with id:", productId);
     }
   };
 
@@ -207,7 +215,7 @@ const CartPage = () => {
 
   const calculateSubtotal = () => {
     return cartItems
-      .filter((item) => selectedItems.includes(item.id))
+      .filter((item) => selectedItems.includes(item.productId))
       .reduce((total, item) => {
         return total + item.originalPrice * item.quantity;
       }, 0);
@@ -215,7 +223,7 @@ const CartPage = () => {
 
   const calculateTotal = () => {
     return cartItems
-      .filter((item) => selectedItems.includes(item.id))
+      .filter((item) => selectedItems.includes(item.productId))
       .reduce((total, item) => total + item.price * item.quantity, 0);
   };
 
@@ -229,9 +237,13 @@ const CartPage = () => {
       item.originalPrice,
       item.discount
     );
+    // if (!item.productId) {
+    //   console.error("Similar product has no backend productId");
+    //   return;
+    // }
     dispatch(
       addItemToCart({
-        productId: item.id,
+        productId: (item.productId ?? item.id).toString(),
         name: item.title,
         image: item.image,
         price: itemFinalPrice,
@@ -371,19 +383,19 @@ const CartPage = () => {
               {/* Cart Items */}
               <div className="cart-items">
                 {cartItems.map((item) => (
-                  <div key={item.id} className="cart-item">
+                  <div key={item.productId} className="cart-item">
                     <div className="cart-item-left">
                       <label className="checkbox-container">
                         <input
                           type="checkbox"
-                          checked={selectedItems.includes(item.id)}
-                          onChange={() => handleSelectItem(item.id)}
+                          checked={selectedItems.includes(item.productId)}
+                          onChange={() => handleSelectItem(item.productId)}
                         />
                         <span className="checkmark"></span>
                       </label>
 
                       <Link
-                        to={`/product/${item.id}`}
+                        to={`/product/${item.productId}`}
                         className="item-image-link"
                       >
                         <img
@@ -397,7 +409,10 @@ const CartPage = () => {
                       </Link>
 
                       <div className="item-info">
-                        <Link to={`/product/${item.id}`} className="item-name">
+                        <Link
+                          to={`/product/${item.productId}`}
+                          className="item-name"
+                        >
                           {item.name}
                         </Link>
                       </div>
@@ -420,20 +435,34 @@ const CartPage = () => {
                     <div className="item-quantity">
                       <button
                         className="qty-btn"
-                        onClick={() => handleDecrease(item.id, item.quantity)}
+                        onClick={() =>
+                          handleDecrease(
+                            item.productId,
+                            item.cartItemId,
+                            item.quantity
+                          )
+                        }
                         // disabled={item.quantity <= 1}
                       >
                         -
                       </button>
 
-                      {editingQuantity === item.id ? (
+                      {editingQuantity === item.productId ? (
                         <input
                           type="number"
                           className="qty-input editing"
                           value={quantityInput}
                           onChange={handleQuantityChange}
-                          onBlur={() => handleQuantityBlur(item.id)}
-                          onKeyDown={(e) => handleQuantityKeyPress(e, item.id)}
+                          onBlur={() =>
+                            handleQuantityBlur(item.productId, item.cartItemId)
+                          }
+                          onKeyDown={(e) =>
+                            handleQuantityKeyPress(
+                              e,
+                              item.productId,
+                              item.cartItemId
+                            )
+                          }
                           autoFocus
                           min="1"
                         />
@@ -443,7 +472,7 @@ const CartPage = () => {
                           className="qty-input"
                           value={item.quantity}
                           onClick={() =>
-                            handleQuantityClick(item.id, item.quantity)
+                            handleQuantityClick(item.productId, item.quantity)
                           }
                           readOnly
                           style={{ cursor: "pointer" }}
@@ -452,7 +481,13 @@ const CartPage = () => {
 
                       <button
                         className="qty-btn"
-                        onClick={() => handleIncrease(item.id, item.quantity)}
+                        onClick={() =>
+                          handleIncrease(
+                            item.productId,
+                            item.cartItemId,
+                            item.quantity
+                          )
+                        }
                       >
                         +
                       </button>
@@ -465,7 +500,7 @@ const CartPage = () => {
 
                     <button
                       className="item-remove"
-                      onClick={() => handleRemove(item.id)}
+                      onClick={() => handleRemove(item.productId)}
                     >
                       <svg
                         width="20"
@@ -608,9 +643,11 @@ const CartPage = () => {
           onCancel={handleCheckoutCancel}
           onClose={handleCheckoutClose}
           meta={{
-            items: cartItems.filter((item) => selectedItems.includes(item.id)),
+            items: cartItems.filter((item) =>
+              selectedItems.includes(item.productId)
+            ),
             totalAmount: cartItems
-              .filter((item) => selectedItems.includes(item.id))
+              .filter((item) => selectedItems.includes(item.productId))
               .reduce((total, item) => total + item.price * item.quantity, 0),
           }}
         />

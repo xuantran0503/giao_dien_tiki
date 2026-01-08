@@ -3,8 +3,16 @@ import axios from "axios";
 import { RootState } from "./store";
 
 const API_BASE = "http://192.168.2.112:9092";
-
 const A_ID = "da1e0cd8-f73b-4da2-acf2-8ddc621bcf75";
+
+const getOrCreateCartId = () => {
+  let cartId = localStorage.getItem("cartId");
+  if (!cartId) {
+    cartId = crypto.randomUUID();
+    localStorage.setItem("cartId", cartId);
+  }
+  return cartId;
+};
 
 export interface CartItem {
   cartItemId: string;
@@ -28,7 +36,7 @@ const initialState: CartState = {
   items: [],
   status: "idle",
   error: null,
-  cartId: A_ID,
+  cartId: getOrCreateCartId(),
 };
 
 // API: Thêm sản phẩm vào giỏ hàng
@@ -37,7 +45,7 @@ export const addItemToCart = createAsyncThunk(
   "cart/addItemToCart",
   async (
     params: {
-      productId: string | number;
+      productId: string;
       quantity: number;
       price: number;
       originalPrice: number;
@@ -47,25 +55,20 @@ export const addItemToCart = createAsyncThunk(
     },
     { dispatch, getState, rejectWithValue }
   ) => {
-    const state = getState() as RootState;
-    const cartId = state.cart.cartId || A_ID;
+    const cartId = getOrCreateCartId();
     try {
-      // Format UsingDate as "yyyy-MM-dd HH:mm:ss"
       const now = new Date();
-      const usingDate = now.toISOString().replace("T", " ").substring(0, 19);
 
       const payload = {
         CartId: cartId,
-        ItemId: String(params.productId),
-        ProductName: params.name, // Add product name
-        Price: params.price, // Add price
+        ItemId: params.productId,
         Count: params.quantity,
-        UsingDate: [usingDate], // Array of date strings in format "yyyy-MM-dd HH:mm:ss"
+        // Price: params.price,
+        UsingDate: [now.toISOString()],
         AId: A_ID,
       };
 
-      console.log("=== ADD TO CART REQUEST ===");
-      console.log("Payload:", JSON.stringify(payload, null, 2));
+      console.log(JSON.stringify(payload, null, 2));
 
       const response = await axios({
         method: "POST",
@@ -79,21 +82,15 @@ export const addItemToCart = createAsyncThunk(
         },
       });
 
-      console.log("=== ADD TO CART SUCCESS ===");
-      console.log("Response:", response.data);
-
-      if (response.data?.Code === 200 || response.data?.Code === 0) {
-        dispatch(fetchCartDetail(cartId));
-        return params;
-      } else {
-        console.warn("API returned non-success code:", response.data);
-        return rejectWithValue(response.data?.Message || "Failed to add item");
-      }
+      dispatch(fetchCartDetail(cartId));
+      return params;
     } catch (error: any) {
-      console.error("=== ADD TO CART ERROR ===");
-      console.error("Status:", error.response?.status);
-      console.error("Response:", error.response?.data);
-      return rejectWithValue(error.response?.data?.Message || error.message);
+      console.log("Add to cart response error:", error.response?.data);
+      const errorMessage =
+        error.response?.data?.Message ||
+        error.response?.data?.title ||
+        error.message;
+      return rejectWithValue(errorMessage);
     }
   }
 );
@@ -127,119 +124,42 @@ export const fetchCartDetail = createAsyncThunk(
   }
 );
 
-// export const fetchCartDetail = createAsyncThunk(
-//   "cart/fetchCartDetail",
-//   async (cartId: string, { rejectWithValue }) => {
-//     try {
-//       const { data } = await axios.get(
-//         `${API_BASE}/api-end-user/cart/cart-public/${cartId}`,
-//         {
-//           params: {
-//             aid: A_ID,
-//           },
-//         }
-//       );
-
-//       const cartItems = data.Data?.Items || data.Data || [];
-
-//       return cartItems.map((item: any) => ({
-//         id: item.ProductId || item.ItemId || item.Id,
-//         name: item.ProductName || item.Name || "Sản phẩm",
-//         image: item.ProductImage || item.Image || "",
-//         price: item.Price || 0,
-//         originalPrice: item.OriginalPrice || item.Price || 0,
-//         discount: item.DiscountPercentage || item.Discount || 0,
-//         quantity: item.Quantity || item.Count || 0,
-//       }));
-//     } catch (error: any) {
-//       return rejectWithValue(error.response?.data?.Message || error.message);
-//     }
-//   }
-// );
-
 // API: Xóa từng sản phẩm trong giỏ hàng
 // put  /api-end-user/cart/cart-public/remove-item
 
 export const removeItemFromCart = createAsyncThunk(
   "cart/removeItemFromCart",
-  async (cartItemId: string, { getState, dispatch, rejectWithValue }) => {
+  async (
+    params: { cartItemId: string; productId: string },
+    { dispatch, rejectWithValue }
+  ) => {
     try {
-      const state = getState() as RootState;
+      const cartId = getOrCreateCartId();
 
-      await axios.put(
-        `${API_BASE}/api-end-user/cart/cart-public/remove-item`,
-        {
-          CartId: state.cart.cartId,
-          ItemId: [cartItemId],
-          AId: A_ID,
-        },
-        { params: { aid: A_ID } }
-      );
+      await axios.put(`${API_BASE}/api-end-user/cart/cart-public/remove-item`, {
+        CartId: cartId,
+        // ProductId: productId,
+        CartItemId: params.cartItemId,
 
-      dispatch(fetchCartDetail(state.cart.cartId!));
+        AId: A_ID,
+      });
 
-      return { cartItemId };
+      dispatch(fetchCartDetail(cartId));
+
+      return { productId: params.productId };
     } catch (error: any) {
       return rejectWithValue(error.response?.data?.Message || error.message);
     }
   }
 );
 
-// export const removeItemFromCart = createAsyncThunk(
-//   "cart/removeItemFromCart",
-//   async (
-//     productId: string | number,
-//     { dispatch, getState, rejectWithValue }
-//   ) => {
-//     try {
-//       const state = getState() as RootState;
-//       const cartId = state.cart.cartId;
-
-//       // According to Swagger, ItemId should be an array for remove-item
-//       const payload = {
-//         CartId: cartId,
-//         ItemId: [String(productId)], // Array of ItemIds
-//         AId: A_ID,
-//       };
-
-//       console.log("Remove Item Payload:", payload);
-
-//       await axios({
-//         method: "PUT",
-//         url: `${API_BASE}/api-end-user/cart/cart-public/remove-item`,
-//         data: payload,
-//         headers: {
-//           "Content-Type": "application/json",
-//         },
-//         params: {
-//           aid: A_ID,
-//         },
-//       });
-//       console.log("Item removed from cart successfully.");
-
-//       if (cartId) {
-//         dispatch(fetchCartDetail(cartId));
-//       }
-
-//       return { productId };
-//     } catch (error: any) {
-//       console.error("Remove Item Error Details:", {
-//         message: error.message,
-//         response: error.response?.data,
-//       });
-//       return rejectWithValue(error.response?.data?.Message || error.message);
-//     }
-//   }
-// );
-
 // API: Xóa tất cả sản phẩm trong giỏ hàng
 // put   /api-end-user/cart/cart-public/clear-item
 export const clearAllCartItems = createAsyncThunk(
   "cart/clearAllCartItems",
-  async (_, { dispatch, getState, rejectWithValue }) => {
+  async (_, { dispatch, rejectWithValue }) => {
     try {
-      const state = getState() as RootState;
-      const cartId = state.cart.cartId;
+      const cartId = getOrCreateCartId();
 
       await axios({
         method: "PUT",
@@ -250,9 +170,6 @@ export const clearAllCartItems = createAsyncThunk(
         },
         headers: {
           "Content-Type": "application/json",
-        },
-        params: {
-          aid: A_ID,
         },
       });
 
@@ -278,71 +195,21 @@ export const updateCartItemQuantity = createAsyncThunk(
       productId: string;
       quantity: number;
     },
-    { getState, dispatch }
+    { dispatch }
   ) => {
-    const state = getState() as RootState;
+    const cartId = getOrCreateCartId();
 
-    await axios.put(
-      `${API_BASE}/api-end-user/cart/cart-public/update-item`,
-      {
-        CartId: state.cart.cartId,
-        ItemId: params.productId,
-        CartItemId: params.cartItemId,
-        Count: params.quantity,
-        AId: A_ID,
-      },
-      { params: { aid: A_ID } }
-    );
+    await axios.put(`${API_BASE}/api-end-user/cart/cart-public/update-item`, {
+      CartId: cartId,
+      ProductId: params.productId,
+      CartItemId: params.cartItemId,
+      Quantity: params.quantity,
+      AId: A_ID,
+    });
 
-    dispatch(fetchCartDetail(state.cart.cartId!));
+    dispatch(fetchCartDetail(cartId));
   }
 );
-
-// export const updateCartItemQuantity = createAsyncThunk(
-//   "cart/updateCartItemQuantity",
-//   async (
-//     params: { productId: string | number; quantity: number; price: number },
-//     { dispatch, getState, rejectWithValue }
-//   ) => {
-//     try {
-//       const state = getState() as RootState;
-//       const cartId = state.cart.cartId || A_ID;
-
-//       await axios({
-//         method: "PUT",
-//         url: `${API_BASE}/api-end-user/cart/cart-public/update-item`,
-//         data: {
-//           CartId: cartId,
-//           ItemId: String(params.productId),
-//           Count: params.quantity,
-//           UsingDate: [new Date().toISOString()],
-//           AId: A_ID,
-//         },
-//         headers: {
-//           "Content-Type": "application/json",
-//         },
-//         params: {
-//           aid: A_ID,
-//         },
-//       });
-
-//       if (cartId) {
-//         dispatch(fetchCartDetail(cartId));
-//       }
-
-//       return {
-//         productId: params.productId,
-//         quantity: params.quantity,
-//       };
-//     } catch (error: any) {
-//       console.error("Update Quantity Error Details:", {
-//         message: error.message,
-//         response: error.response?.data,
-//       });
-//       return rejectWithValue(error.response?.data?.Message || error.message);
-//     }
-//   }
-// );
 
 const cartSlice = createSlice({
   name: "cart",
@@ -358,6 +225,7 @@ const cartSlice = createSlice({
       state.items = [];
       state.status = "idle";
       state.error = null;
+      state.cartId = null;
     },
   },
 
@@ -399,9 +267,9 @@ const cartSlice = createSlice({
       })
       .addCase(removeItemFromCart.fulfilled, (state, action) => {
         state.status = "succeeded";
-        const { cartItemId } = action.payload;
+        const { productId } = action.payload;
         state.items = state.items.filter(
-          (item) => item.cartItemId !== cartItemId
+          (item) => item.productId !== productId
         );
       })
       .addCase(removeItemFromCart.rejected, (state, action) => {
