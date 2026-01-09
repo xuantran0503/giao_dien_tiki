@@ -1,10 +1,9 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
-import { topDealsData } from "../data/topDealsData";
 
 export interface Product {
   id: string | number;
-  productId?: string | number;
+  productId?: string;
   title: string;
   originalPrice: number;
   discount: number;
@@ -69,8 +68,8 @@ export const fetchProductsByPage = createAsyncThunk(
       return list.map((item: any) => {
         return {
           id: item.Id,
-          // productId: item.ProductsId,
-          productId: item.Id,
+          productId: item.ProductsId || item.Id,
+          // productId: item.Id,
           title: item.Name,
           name: item.Name,
           originalPrice: item.Price || 0,
@@ -141,11 +140,12 @@ export const fetchProductById = createAsyncThunk(
       };
 
       const item = data.Data;
+      // console.log("Raw Product Detail:", item);
       const { originalPrice, discount, currentPrice } = ProductPrices(item);
 
       return {
         id: item.Id,
-        productId: item.Id,
+        productId: item.ExData?.GroupServiceId,
         title: item.Name,
         name: item.Name,
         image: item.Image

@@ -39,10 +39,10 @@ const CartPage = () => {
 
   const handleSelectAll = (e) => {
     if (e.target.checked) {
-      setSelectedItems(cartItems.map((item) => item.productId));
+      setSelectedItems(cartItems.map((item) => item.cartItemId));
       console.log(
         "Selected items:",
-        cartItems.map((item) => item.productId)
+        cartItems.map((item) => item.cartItemId)
       );
     } else {
       setSelectedItems([]);
@@ -50,20 +50,20 @@ const CartPage = () => {
     }
   };
 
-  const handleSelectItem = (id) => {
-    if (selectedItems.includes(id)) {
+  const handleSelectItem = (cartItemId) => {
+    if (selectedItems.includes(cartItemId)) {
       //neu da chon thi bo ra khoi danh sach bang filter
-      setSelectedItems(selectedItems.filter((itemId) => itemId !== id));
-      console.log("Huy chon item voi id:", id);
+      setSelectedItems(selectedItems.filter((id) => id !== cartItemId));
+      console.log("Huy chon item voi cartItemId:", cartItemId);
     } else {
       //neu chua chon thi them vao
-      setSelectedItems([...selectedItems, id]);
-      console.log("Chon item voi id:", id);
+      setSelectedItems([...selectedItems, cartItemId]);
+      console.log("Chon item voi cartItemId:", cartItemId);
     }
   };
 
   const handleIncrease = (productId, cartItemId, currentQuantity) => {
-    const item = cartItems.find((i) => i.productId === productId);
+    const item = cartItems.find((i) => i.cartItemId === cartItemId);
     if (item) {
       dispatch(
         updateCartItemQuantity({
@@ -73,12 +73,12 @@ const CartPage = () => {
           price: item.price,
         })
       );
-      console.log("Tang so luong cho item voi id:", productId);
+      console.log("Tang so luong cho item voi cartItemId:", cartItemId);
     }
   };
 
   const handleDecrease = (productId, cartItemId, currentQuantity) => {
-    const item = cartItems.find((i) => i.productId === productId);
+    const item = cartItems.find((i) => i.cartItemId === cartItemId);
     if (!item) return;
 
     if (currentQuantity > 1) {
@@ -90,17 +90,15 @@ const CartPage = () => {
           price: item.price,
         })
       );
-      console.log("Giam so luong cho item voi id:", productId);
+      console.log("Giam so luong cho item voi cartItemId:", cartItemId);
     } else {
       if (
         window.confirm(
           "Số lượng sản phẩm bằng 1. Bạn có muốn xóa sản phẩm khỏi giỏ hàng?"
         )
       ) {
-        dispatch(removeItemFromCart(productId));
-        setSelectedItems(
-          selectedItems.filter((itemId) => itemId !== productId)
-        );
+        dispatch(removeItemFromCart({ cartItemId, productId }));
+        setSelectedItems(selectedItems.filter((id) => id !== cartItemId));
       }
     }
   };
@@ -116,7 +114,7 @@ const CartPage = () => {
 
   const handleQuantityBlur = (productId, cartItemId) => {
     const newQuantity = parseInt(quantityInput) || 1;
-    const item = cartItems.find((i) => i.productId === productId);
+    const item = cartItems.find((i) => i.cartItemId === cartItemId);
     if (newQuantity > 0 && item) {
       dispatch(
         updateCartItemQuantity({
@@ -144,7 +142,7 @@ const CartPage = () => {
     console.log("Checkout clicked, selectedItems:", selectedItems);
     console.log(
       "Selected cart items for checkout:",
-      cartItems.filter((item) => selectedItems.includes(item.productId))
+      cartItems.filter((item) => selectedItems.includes(item.cartItemId))
     );
 
     setShowCheckoutForm(true);
@@ -154,8 +152,13 @@ const CartPage = () => {
     console.log("Add completed:", checkoutData);
 
     // Xóa các sản phẩm đã mua khỏi giỏ hàng
-    for (const id of selectedItems) {
-      await dispatch(removeItemFromCart(id));
+    for (const cartItemId of selectedItems) {
+      const item = cartItems.find((i) => i.cartItemId === cartItemId);
+      if (item) {
+        await dispatch(
+          removeItemFromCart({ cartItemId, productId: item.productId })
+        );
+      }
     }
 
     setSelectedItems([]);
@@ -171,13 +174,13 @@ const CartPage = () => {
     setShowCheckoutForm(false);
   };
 
-  const handleRemove = (productId) => {
+  const handleRemove = (productId, cartItemId) => {
     if (
       window.confirm("Bạn có chắc chắn muốn xóa sản phẩm này khỏi giỏ hàng?")
     ) {
-      dispatch(removeItemFromCart(productId));
-      setSelectedItems(selectedItems.filter((itemId) => itemId !== productId));
-      console.log("Removed item with id:", productId);
+      dispatch(removeItemFromCart({ cartItemId, productId }));
+      setSelectedItems(selectedItems.filter((id) => id !== cartItemId));
+      console.log("Removed item with cartItemId:", cartItemId);
     }
   };
 
@@ -200,9 +203,18 @@ const CartPage = () => {
         if (selectedItems.length === cartItems.length) {
           dispatch(clearAllCartItems());
         } else {
-          for (const id of selectedItems) {
-            await dispatch(removeItemFromCart(id));
-          }
+          // Use Promise.all for parallel deletion
+          const deletePromises = selectedItems.map((cartItemId) => {
+            const item = cartItems.find((i) => i.cartItemId === cartItemId);
+            if (item) {
+              return dispatch(
+                removeItemFromCart({ cartItemId, productId: item.productId })
+              );
+            }
+            return Promise.resolve();
+          });
+
+          await Promise.all(deletePromises);
         }
         setSelectedItems([]);
         console.log("Đã xóa các sản phẩm đã chọn");
@@ -243,7 +255,7 @@ const CartPage = () => {
     // }
     dispatch(
       addItemToCart({
-        productId: (item.productId ?? item.id).toString(),
+        productId: item.productId.toString(),
         name: item.title,
         image: item.image,
         price: itemFinalPrice,
@@ -383,19 +395,23 @@ const CartPage = () => {
               {/* Cart Items */}
               <div className="cart-items">
                 {cartItems.map((item) => (
-                  <div key={item.productId} className="cart-item">
+                  <div
+                    key={item.cartItemId || item.productId}
+                    className="cart-item"
+                  >
                     <div className="cart-item-left">
                       <label className="checkbox-container">
                         <input
                           type="checkbox"
-                          checked={selectedItems.includes(item.productId)}
-                          onChange={() => handleSelectItem(item.productId)}
+                          checked={selectedItems.includes(item.cartItemId)}
+                          onChange={() => handleSelectItem(item.cartItemId)}
                         />
                         <span className="checkmark"></span>
                       </label>
 
                       <Link
                         to={`/product/${item.productId}`}
+                        state={{ cartItem: item }}
                         className="item-image-link"
                       >
                         <img
@@ -411,6 +427,7 @@ const CartPage = () => {
                       <div className="item-info">
                         <Link
                           to={`/product/${item.productId}`}
+                          state={{ cartItem: item }}
                           className="item-name"
                         >
                           {item.name}
@@ -500,7 +517,9 @@ const CartPage = () => {
 
                     <button
                       className="item-remove"
-                      onClick={() => handleRemove(item.productId)}
+                      onClick={() =>
+                        handleRemove(item.productId, item.cartItemId)
+                      }
                     >
                       <svg
                         width="20"

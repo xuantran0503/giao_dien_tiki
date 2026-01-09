@@ -5,11 +5,11 @@ khoảng cách trái phải của 2 ảnh với 2 bên  viền chưa bằng nhau
 
 thêm phần điều chỉnh số lượng kí tự để xuống dòng khi Địa chỉ chi tiết trong lịch sử đơn hàng quá dài  trong lịch sử đơn hàng
 
-trong dữ liệu cart thừa biến totalQuantity
+
 
 +++++++++++++ ĐANG LÀM ++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-lỗi chức năng thêm sản phẩm vào giỏ hàng
+bug khi mở trang chi tiết sản phẩm của 1 sản phẩm trong giỏ hàng được rồi nhưng nếu dùng chức năng thêm sản phẩm vào giỏ thì không dùng được mặc dù cùng sản phẩm đó khi tôi thêm sản phẩm vào giỏ hàng thành công rồi từ giỏ hàng mở ngược lại chi tiết sản phẩm từ giỏ hàng cũng là sản phẩm đó 
 
 const A_ID = "da1e0cd8-f73b-4da2-acf2-8ddc621bcf75";
 

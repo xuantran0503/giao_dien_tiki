@@ -5,16 +5,10 @@ import { RootState } from "./store";
 const API_BASE = "http://192.168.2.112:9092";
 const A_ID = "da1e0cd8-f73b-4da2-acf2-8ddc621bcf75";
 
-const getOrCreateCartId = () => {
-  let cartId = localStorage.getItem("cartId");
-  if (!cartId) {
-    cartId = crypto.randomUUID();
-    localStorage.setItem("cartId", cartId);
-  }
-  return cartId;
-};
+const getCartId = () => localStorage.getItem("cartId");
 
 export interface CartItem {
+  Id: string;
   cartItemId: string;
   productId: string;
   name: string;
@@ -36,53 +30,72 @@ const initialState: CartState = {
   items: [],
   status: "idle",
   error: null,
-  cartId: getOrCreateCartId(),
+  cartId: getCartId(),
 };
 
 // API: Thêm sản phẩm vào giỏ hàng
-//post /api-end-user/acrt / cart - public / item;
+// POST /api-end-user/cart/cart-public/item
 export const addItemToCart = createAsyncThunk(
   "cart/addItemToCart",
   async (
     params: {
       productId: string;
+
       quantity: number;
       price: number;
       originalPrice: number;
       discount: number;
       name: string;
-      image: string;
+      // image: string;
     },
-    { dispatch, getState, rejectWithValue }
+    { dispatch, rejectWithValue }
   ) => {
-    const cartId = getOrCreateCartId();
+    let cartId = getCartId();
     try {
-      const now = new Date();
-
-      const payload = {
-        CartId: cartId,
+      const payload: any = {
         ItemId: params.productId,
         Count: params.quantity,
-        // Price: params.price,
-        UsingDate: [now.toISOString()],
+        // UsingDate: new Date().toISOString(),
         AId: A_ID,
       };
 
-      console.log(JSON.stringify(payload, null, 2));
+      if (cartId) {
+        payload.CartId = cartId;
+      }
 
-      const response = await axios({
-        method: "POST",
-        url: `${API_BASE}/api-end-user/cart/cart-public/item`,
-        data: payload,
-        headers: {
-          "Content-Type": "application/json",
-        },
-        params: {
-          aid: A_ID,
-        },
-      });
+      // console.log("Adding to cart payload:", JSON.stringify(payload, null, 2));
 
-      dispatch(fetchCartDetail(cartId));
+      const makeRequest = async (requestPayload: any) => {
+        return await axios({
+          method: "POST",
+          url: `${API_BASE}/api-end-user/cart/cart-public/item`,
+          data: requestPayload,
+          headers: {
+            "Content-Type": "application/json",
+          },
+          params: {
+            aid: A_ID,
+          },
+        });
+      };
+
+      let response = await makeRequest(payload);
+      // console.log("Add to cart response data:", response?.data);
+
+      const returnedCartId =
+        response.data?.Data?.CartId || response.data?.CartId;
+      // console.log("Returned CartId from Backend:", returnedCartId);
+
+      if (returnedCartId) {
+        localStorage.setItem("cartId", returnedCartId);
+        dispatch(setCartId(returnedCartId));
+        cartId = returnedCartId;
+      }
+
+      if (cartId) {
+        dispatch(fetchCartDetail(cartId));
+      }
+
       return params;
     } catch (error: any) {
       console.log("Add to cart response error:", error.response?.data);
@@ -99,25 +112,56 @@ export const addItemToCart = createAsyncThunk(
 // get /api-end-user/cart/cart-public/{id}
 export const fetchCartDetail = createAsyncThunk(
   "cart/fetchCartDetail",
-  async (cartId: string, { rejectWithValue }) => {
+  async (argCartId: string | undefined, { rejectWithValue }) => {
+    // Note: argCartId might be passed from dispatch, or we fallback to localStorage
+    const productId = argCartId;
+    const cartId = argCartId || getCartId();
+    if (!cartId) return rejectWithValue("No CartId found");
+
     try {
       const { data } = await axios.get(
-        `${API_BASE}/api-end-user/cart/cart-public/${cartId}`,
+        `${API_BASE}/api-end-user/cart/cart-public/${productId}`,
         { params: { aid: A_ID } }
       );
 
-      const items = data.Data?.Items || [];
+      // console.log("Full Cart Details API Response:", data);
 
-      return items.map((item: any) => ({
-        cartItemId: item.CartItemId,
-        productId: item.ItemId,
-        name: item.ProductName,
-        image: item.ProductImage,
-        price: item.Price,
-        originalPrice: item.OriginalPrice || item.Price,
-        discount: item.DiscountPercentage || 0,
-        quantity: item.Count,
-      }));
+      const items = data.Data?.ListItem || data.Data?.Items || [];
+      // Reverse to show newest items first
+      items.reverse();
+      if (items.length > 0) {
+        // console.log("Cart Item Debug:", items[0]);
+        // console.log("Cart Item Image Debug:", items[0]?.ImageUrl?.[0]);
+      }
+
+      return items.map((item: any) => {
+        // const firstImgObj =
+        //   item.ImageUrl && item.ImageUrl.length > 0 ? item.ImageUrl[0] : null;
+        // let imageUrl = "";
+        // if (firstImgObj) {
+        //   if (typeof firstImgObj === "string") {
+        //     imageUrl = firstImgObj;
+        //   } else if (firstImgObj.Url) {
+        //     imageUrl = firstImgObj.Url;
+        //   }
+        // }
+
+        // if (imageUrl && !imageUrl.startsWith("http")) {
+        //   imageUrl = `${API_BASE}${imageUrl}`;
+        // }
+
+        return {
+          cartItemId: item.CartItemId,
+          productId: item.ProductId,
+          name: item.Name,
+          // image: imageUrl,
+          price: item.SalePrice,
+          originalPrice: item.SalePrice,
+          discount: 0,
+          quantity: item.Count,
+          uri: item.Uri,
+        };
+      });
     } catch (err: any) {
       return rejectWithValue(err.message);
     }
@@ -126,21 +170,20 @@ export const fetchCartDetail = createAsyncThunk(
 
 // API: Xóa từng sản phẩm trong giỏ hàng
 // put  /api-end-user/cart/cart-public/remove-item
-
 export const removeItemFromCart = createAsyncThunk(
   "cart/removeItemFromCart",
   async (
     params: { cartItemId: string; productId: string },
     { dispatch, rejectWithValue }
   ) => {
-    try {
-      const cartId = getOrCreateCartId();
+    const cartId = getCartId();
+    if (!cartId) return rejectWithValue("No CartId found");
 
+    try {
       await axios.put(`${API_BASE}/api-end-user/cart/cart-public/remove-item`, {
         CartId: cartId,
-        // ProductId: productId,
+        ProductId: params.productId,
         CartItemId: params.cartItemId,
-
         AId: A_ID,
       });
 
@@ -158,9 +201,10 @@ export const removeItemFromCart = createAsyncThunk(
 export const clearAllCartItems = createAsyncThunk(
   "cart/clearAllCartItems",
   async (_, { dispatch, rejectWithValue }) => {
-    try {
-      const cartId = getOrCreateCartId();
+    const cartId = getCartId();
+    if (!cartId) return rejectWithValue("No CartId found");
 
+    try {
       await axios({
         method: "PUT",
         url: `${API_BASE}/api-end-user/cart/cart-public/clear-item`,
@@ -173,9 +217,7 @@ export const clearAllCartItems = createAsyncThunk(
         },
       });
 
-      if (cartId) {
-        dispatch(fetchCartDetail(cartId));
-      }
+      dispatch(fetchCartDetail(cartId));
 
       return null;
     } catch (error: any) {
@@ -195,19 +237,24 @@ export const updateCartItemQuantity = createAsyncThunk(
       productId: string;
       quantity: number;
     },
-    { dispatch }
+    { dispatch, rejectWithValue }
   ) => {
-    const cartId = getOrCreateCartId();
+    const cartId = getCartId();
+    if (!cartId) return rejectWithValue("No CartId found");
 
-    await axios.put(`${API_BASE}/api-end-user/cart/cart-public/update-item`, {
-      CartId: cartId,
-      ProductId: params.productId,
-      CartItemId: params.cartItemId,
-      Quantity: params.quantity,
-      AId: A_ID,
-    });
+    try {
+      await axios.put(`${API_BASE}/api-end-user/cart/cart-public/update-item`, {
+        CartId: cartId,
+        ProductId: params.productId,
+        CartItemId: params.cartItemId,
+        Count: params.quantity,
+        AId: A_ID,
+      });
 
-    dispatch(fetchCartDetail(cartId));
+      dispatch(fetchCartDetail(cartId));
+    } catch (error: any) {
+      return rejectWithValue(error.message);
+    }
   }
 );
 
@@ -218,7 +265,7 @@ const cartSlice = createSlice({
     syncCart: (state, action: PayloadAction<CartState>) => {
       state.items = action.payload.items;
     },
-    setCartId: (state, action: PayloadAction<string>) => {
+    setCartId: (state, action: PayloadAction<string | null>) => {
       state.cartId = action.payload;
     },
     clearCart: (state) => {

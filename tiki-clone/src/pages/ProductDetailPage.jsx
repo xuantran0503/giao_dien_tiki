@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { addItemToCart } from "../store/cartSlice";
 import { fetchProductById, clearCurrentProduct } from "../store/listingSlice";
@@ -26,6 +26,8 @@ const ProductDetailPage = () => {
       : "idle";
 
   const { productId } = useParams();
+  const location = useLocation();
+  const cartItem = location.state?.cartItem;
 
   const [quantity, setQuantity] = useState(1);
   const [notification, setNotification] = useState({
@@ -49,12 +51,25 @@ const ProductDetailPage = () => {
     ? {
         ...currentProduct,
         id: currentProduct.id,
+        productId: currentProduct.productId || currentProduct.id,
         name: currentProduct.name || currentProduct.title,
         originalPrice:
           currentProduct.originalPrice || currentProduct.Price || 0,
         currentPrice:
           currentProduct.currentPrice || currentProduct.originalPrice || 0,
         discount: currentProduct.discount || 0,
+      }
+    : cartItem
+    ? {
+        id: cartItem.productId,
+        productId: cartItem.productId,
+        name: cartItem.name,
+        originalPrice: cartItem.originalPrice || 0,
+        currentPrice: cartItem.price || 0,
+        discount: cartItem.discount || 0,
+        image: cartItem.image,
+        description: "Thông tin sản phẩm từ giỏ hàng",
+        quantity: 1, // Default for display
       }
     : null;
 
@@ -113,12 +128,13 @@ const ProductDetailPage = () => {
   };
 
   const handleAddToCart = async () => {
+    // console.log("Current Product in UI:", product);
     // Thêm sản phẩm vào giỏ hàng (nếu trùng sẽ tự động tăng số lượng)
     const result = await dispatch(
       addItemToCart({
-        productId: product.productId ?? product.id,
+        productId: product.productId,
         name: product.name,
-        image: product.image,
+        // image: product.image,
         price: product.currentPrice,
         originalPrice: product.originalPrice,
         discount: product.discount,
@@ -176,9 +192,8 @@ const ProductDetailPage = () => {
 
     dispatch(
       addItemToCart({
-        // productId: item.id,
-        productId: item.productId,
-        quantity: 1, 
+        productId: item.productId || item.id,
+        quantity: 1,
         price: itemFinalPrice,
         originalPrice: item.originalPrice,
         discount: item.discount,
