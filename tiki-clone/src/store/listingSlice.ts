@@ -68,7 +68,7 @@ export const fetchProductsByPage = createAsyncThunk(
       return list.map((item: any) => {
         return {
           id: item.Id,
-          productId: item.ProductsId || item.Id,
+          productId: item.ExData?.GroupServiceId || item.ProductsId || item.Id,
           // productId: item.Id,
           title: item.Name,
           name: item.Name,
@@ -145,7 +145,7 @@ export const fetchProductById = createAsyncThunk(
 
       return {
         id: item.Id,
-        productId: item.ExData?.GroupServiceId,
+        productId: item.ExData?.GroupServiceId || item.ProductsId || item.Id,
         title: item.Name,
         name: item.Name,
         image: item.Image
@@ -204,8 +204,7 @@ const listingSlice = createSlice({
       })
       .addCase(fetchProductById.rejected, (state, action) => {
         state.productDetailStatus = "failed";
-        state.error =
-          (action.payload as string) || "Failed to fetch product detail";
+        state.error = (action.payload as string) || "Failed to fetch product detail";
       });
   },
 });

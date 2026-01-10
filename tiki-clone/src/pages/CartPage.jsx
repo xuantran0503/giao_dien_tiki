@@ -174,13 +174,20 @@ const CartPage = () => {
     setShowCheckoutForm(false);
   };
 
-  const handleRemove = (productId, cartItemId) => {
+  const handleRemove = async (productId, cartItemId) => {
     if (
       window.confirm("Bạn có chắc chắn muốn xóa sản phẩm này khỏi giỏ hàng?")
     ) {
-      dispatch(removeItemFromCart({ cartItemId, productId }));
-      setSelectedItems(selectedItems.filter((id) => id !== cartItemId));
-      console.log("Removed item with cartItemId:", cartItemId);
+      console.log("Starting remove for cartItemId:", cartItemId);
+      const result = await dispatch(removeItemFromCart({ cartItemId, productId }));
+      
+      if (removeItemFromCart.fulfilled.match(result)) {
+        // Cập nhật lại danh sách được chọn ngay lập tức
+        setSelectedItems((prev) => prev.filter((id) => id !== cartItemId));
+        console.log("Removed from UI success:", cartItemId);
+      } else {
+        alert("Không thể xóa sản phẩm. Vui lòng thử lại!");
+      }
     }
   };
 
@@ -227,7 +234,7 @@ const CartPage = () => {
 
   const calculateSubtotal = () => {
     return cartItems
-      .filter((item) => selectedItems.includes(item.productId))
+      .filter((item) => selectedItems.includes(item.cartItemId))
       .reduce((total, item) => {
         return total + item.originalPrice * item.quantity;
       }, 0);
@@ -235,7 +242,7 @@ const CartPage = () => {
 
   const calculateTotal = () => {
     return cartItems
-      .filter((item) => selectedItems.includes(item.productId))
+      .filter((item) => selectedItems.includes(item.cartItemId))
       .reduce((total, item) => total + item.price * item.quantity, 0);
   };
 
@@ -396,7 +403,7 @@ const CartPage = () => {
               <div className="cart-items">
                 {cartItems.map((item) => (
                   <div
-                    key={item.cartItemId || item.productId}
+                    key={item.cartItemId}
                     className="cart-item"
                   >
                     <div className="cart-item-left">
@@ -410,7 +417,7 @@ const CartPage = () => {
                       </label>
 
                       <Link
-                        to={`/product/${item.productId}`}
+                        to={`/product/${item.listingId || item.id}`}
                         state={{ cartItem: item }}
                         className="item-image-link"
                       >
@@ -426,7 +433,7 @@ const CartPage = () => {
 
                       <div className="item-info">
                         <Link
-                          to={`/product/${item.productId}`}
+                          to={`/product/${item.listingId || item.id}`}
                           state={{ cartItem: item }}
                           className="item-name"
                         >
@@ -450,64 +457,67 @@ const CartPage = () => {
                     </div>
 
                     <div className="item-quantity">
-                      <button
-                        className="qty-btn"
-                        onClick={() =>
-                          handleDecrease(
-                            item.productId,
-                            item.cartItemId,
-                            item.quantity
-                          )
-                        }
-                        // disabled={item.quantity <= 1}
-                      >
-                        -
-                      </button>
-
-                      {editingQuantity === item.productId ? (
-                        <input
-                          type="number"
-                          className="qty-input editing"
-                          value={quantityInput}
-                          onChange={handleQuantityChange}
-                          onBlur={() =>
-                            handleQuantityBlur(item.productId, item.cartItemId)
-                          }
-                          onKeyDown={(e) =>
-                            handleQuantityKeyPress(
-                              e,
+                      <div className="qty-selector">
+                        <button
+                          className="qty-btn"
+                          onClick={() =>
+                            handleDecrease(
                               item.productId,
-                              item.cartItemId
+                              item.cartItemId,
+                              item.quantity
                             )
                           }
-                          autoFocus
-                          min="1"
-                        />
-                      ) : (
-                        <input
-                          type="text"
-                          className="qty-input"
-                          value={item.quantity}
-                          onClick={() =>
-                            handleQuantityClick(item.productId, item.quantity)
-                          }
-                          readOnly
-                          style={{ cursor: "pointer" }}
-                        />
-                      )}
+                          // disabled={item.quantity <= 1}
+                        >
+                          -
+                        </button>
 
-                      <button
-                        className="qty-btn"
-                        onClick={() =>
-                          handleIncrease(
-                            item.productId,
-                            item.cartItemId,
-                            item.quantity
-                          )
-                        }
-                      >
-                        +
-                      </button>
+                        {editingQuantity === item.productId ? (
+                          <input
+                            type="number"
+                            className="qty-input editing"
+                            value={quantityInput}
+                            style={{ width: `${Math.max(2, String(quantityInput).length) + 1}ch` }}
+                            onChange={handleQuantityChange}
+                            onBlur={() =>
+                              handleQuantityBlur(item.productId, item.cartItemId)
+                            }
+                            onKeyDown={(e) =>
+                              handleQuantityKeyPress(
+                                e,
+                                item.productId,
+                                item.cartItemId
+                              )
+                            }
+                            autoFocus
+                            min="1"
+                          />
+                        ) : (
+                          <input
+                            type="text"
+                            className="qty-input"
+                            value={item.quantity}
+                            onClick={() =>
+                              handleQuantityClick(item.productId, item.quantity)
+                            }
+                            readOnly
+                            style={{ cursor: "pointer", width: `${Math.max(2, String(item.quantity).length) + 1}ch` }}
+                          />
+                        )}
+
+                        <button
+                          className="qty-btn"
+                          onClick={() =>
+                            handleIncrease(
+                              item.productId,
+                              item.cartItemId,
+                              item.quantity
+                            )
+                          }
+                        >
+                          +
+                        </button>
+                      </div>
                     </div>
 
                     <div className="item-total">

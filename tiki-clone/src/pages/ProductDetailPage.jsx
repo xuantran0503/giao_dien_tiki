@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams, Link, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { addItemToCart } from "../store/cartSlice";
+import { addItemToCart, fetchCartDetail } from "../store/cartSlice";
 import { fetchProductById, clearCurrentProduct } from "../store/listingSlice";
 import Header from "../components/Header/Header";
 import Footer from "../components/Footer/Footer";
@@ -26,8 +26,16 @@ const ProductDetailPage = () => {
       : "idle";
 
   const { productId } = useParams();
+  const { items: cartItems } = useSelector((state) => state.cart);
   const location = useLocation();
-  const cartItem = location.state?.cartItem;
+  const cartItemFromState = location.state?.cartItem;
+  
+  // Tìm sản phẩm trong giỏ hàng nếu mở tab mới (không có state)
+  const cartItemFromStore = cartItems.find(item => 
+    item.productId === productId || item.listingId === productId || item.id === productId
+  );
+
+  const cartItem = cartItemFromState || cartItemFromStore;
 
   const [quantity, setQuantity] = useState(1);
   const [notification, setNotification] = useState({
@@ -38,20 +46,37 @@ const ProductDetailPage = () => {
   const [showCheckoutForm, setShowCheckoutForm] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
 
+  // Chỉ dùng 1 useEffect đơn giản để fetch dữ liệu, tránh vòng lặp treo máy
   useEffect(() => {
     if (productId) {
       dispatch(fetchProductById(productId));
+      dispatch(fetchCartDetail());
     }
+  }, [dispatch, productId]);
+
+  // Luôn dọn dẹp mỗi khi chuyển trang
+  useEffect(() => {
     return () => {
       dispatch(clearCurrentProduct());
     };
-  }, [dispatch, productId]);
+  }, [dispatch]);
+
+  // Cơ chế tự sửa lỗi: Lưu mapping giữa Service ID và Listing ID
+  useEffect(() => {
+    if (currentProduct && currentProduct.productId && currentProduct.id) {
+       const mappedIds = JSON.parse(localStorage.getItem('product_mapping') || '{}');
+       if (mappedIds[currentProduct.productId] !== currentProduct.id) {
+         mappedIds[currentProduct.productId] = currentProduct.id;
+         localStorage.setItem('product_mapping', JSON.stringify(mappedIds));
+       }
+    }
+  }, [currentProduct]);
 
   const product = currentProduct
     ? {
         ...currentProduct,
         id: currentProduct.id,
-        productId: currentProduct.productId || currentProduct.id,
+        productId: currentProduct.productId || currentProduct.id || productId,
         name: currentProduct.name || currentProduct.title,
         originalPrice:
           currentProduct.originalPrice || currentProduct.Price || 0,
@@ -61,8 +86,8 @@ const ProductDetailPage = () => {
       }
     : cartItem
     ? {
-        id: cartItem.productId,
-        productId: cartItem.productId,
+        id: cartItem.id || cartItem.productId, // Listing ID
+        productId: cartItem.productId,          // Service ID dùng để thêm vào giỏ
         name: cartItem.name,
         originalPrice: cartItem.originalPrice || 0,
         currentPrice: cartItem.price || 0,
@@ -73,6 +98,7 @@ const ProductDetailPage = () => {
       }
     : null;
 
+  // Trang đang tải: Chỉ hiện loading nếu chưa có bất kỳ dữ liệu gì cả từ API lẫn giỏ hàng
   if (productDetailStatus === "pending" && !product) {
     return (
       <div className="product-detail-page">
@@ -85,6 +111,8 @@ const ProductDetailPage = () => {
     );
   }
 
+  // Luôn hiển thị sản phẩm nếu nó tồn tại (lấy từ API hoặc giỏ hàng)
+  // Kể cả khi API trả về lỗi 400 (failed), nếu có cartItem thì vẫn hiện ra
   if (!product) {
     return (
       <div className="product-detail-page">
@@ -132,9 +160,9 @@ const ProductDetailPage = () => {
     // Thêm sản phẩm vào giỏ hàng (nếu trùng sẽ tự động tăng số lượng)
     const result = await dispatch(
       addItemToCart({
+        id: product.id, 
         productId: product.productId,
         name: product.name,
-        // image: product.image,
         price: product.currentPrice,
         originalPrice: product.originalPrice,
         discount: product.discount,
