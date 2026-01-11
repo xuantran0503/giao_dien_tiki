@@ -46,32 +46,7 @@ const ProductDetailPage = () => {
   const [showCheckoutForm, setShowCheckoutForm] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
 
-  // Chỉ dùng 1 useEffect đơn giản để fetch dữ liệu, tránh vòng lặp treo máy
-  useEffect(() => {
-    if (productId) {
-      dispatch(fetchProductById(productId));
-      dispatch(fetchCartDetail());
-    }
-  }, [dispatch, productId]);
-
-  // Luôn dọn dẹp mỗi khi chuyển trang
-  useEffect(() => {
-    return () => {
-      dispatch(clearCurrentProduct());
-    };
-  }, [dispatch]);
-
-  // Cơ chế tự sửa lỗi: Lưu mapping giữa Service ID và Listing ID
-  useEffect(() => {
-    if (currentProduct && currentProduct.productId && currentProduct.id) {
-       const mappedIds = JSON.parse(localStorage.getItem('product_mapping') || '{}');
-       if (mappedIds[currentProduct.productId] !== currentProduct.id) {
-         mappedIds[currentProduct.productId] = currentProduct.id;
-         localStorage.setItem('product_mapping', JSON.stringify(mappedIds));
-       }
-    }
-  }, [currentProduct]);
-
+  
   const product = currentProduct
     ? {
         ...currentProduct,
@@ -97,6 +72,43 @@ const ProductDetailPage = () => {
         quantity: 1, // Default for display
       }
     : null;
+
+  useEffect(() => {
+    if (productId) {
+      // 1. Nếu có dữ liệu truyền từ trang trước (location.state), tuyệt đối không gọi API vì chắc chắn ID này là Service ID (gây lỗi 400)
+      if (cartItemFromState) {
+        dispatch(fetchCartDetail());
+        return;
+      }
+
+      // 2. Nếu không có state, đợi một chút để kiểm tra trong giỏ hàng (cartItems)
+      // Nếu đã tìm thấy sản phẩm trong giỏ, cũng không gọi API Listing để tránh lỗi 400
+      if (!cartItemFromStore) {
+        dispatch(fetchProductById(productId));
+      }
+      
+      dispatch(fetchCartDetail());
+    }
+  }, [dispatch, productId, !!cartItemFromStore]); // Chạy lại khi tìm thấy sản phẩm trong giỏ 
+
+  // 1. Luôn dọn dẹp mỗi khi chuyển trang
+  useEffect(() => {
+    return () => {
+      dispatch(clearCurrentProduct());
+    };
+  }, [dispatch]);
+
+  // 2. Cơ chế tự sửa lỗi: Lưu mapping giữa Service ID và Listing ID
+  useEffect(() => {
+    if (currentProduct && currentProduct.productId && currentProduct.id) {
+       const mappedIds = JSON.parse(localStorage.getItem('product_mapping') || '{}');
+       if (mappedIds[currentProduct.productId] !== currentProduct.id) {
+         mappedIds[currentProduct.productId] = currentProduct.id;
+         localStorage.setItem('product_mapping', JSON.stringify(mappedIds));
+       }
+    }
+  }, [currentProduct]);
+ // Bỏ product ra khỏi dependency để tránh loop
 
   // Trang đang tải: Chỉ hiện loading nếu chưa có bất kỳ dữ liệu gì cả từ API lẫn giỏ hàng
   if (productDetailStatus === "pending" && !product) {
@@ -155,9 +167,9 @@ const ProductDetailPage = () => {
     }
   };
 
+  // Thêm sản phẩm vào giỏ hàng (nếu trùng sẽ tự động tăng số lượng)
   const handleAddToCart = async () => {
     // console.log("Current Product in UI:", product);
-    // Thêm sản phẩm vào giỏ hàng (nếu trùng sẽ tự động tăng số lượng)
     const result = await dispatch(
       addItemToCart({
         id: product.id, 

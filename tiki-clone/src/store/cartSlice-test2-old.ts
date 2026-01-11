@@ -47,40 +47,16 @@ export const addItemToCart = createAsyncThunk(
       originalPrice: number;
       discount: number;
       name: string;
+      // image: string;
     },
-    { dispatch, getState, rejectWithValue }
+    { dispatch, rejectWithValue }
   ) => {
     let cartId = getCartId();
-    const state = getState() as RootState;
-    
-    // Kiểm tra xem sản phẩm đã có trong giỏ hàng chưa
-    const existingItem = state.cart.items.find(
-      (item) => item.productId === params.productId
-    );
-
     try {
-      // TRƯỜNG HỢP 1: Nếu sản phẩm ĐÃ TỒN TẠI -> Cập nhật số lượng (PUT)
-      if (existingItem && cartId) {
-        const newQuantity = existingItem.quantity + params.quantity;
-        
-        await axios.put(`${API_BASE}/api-end-user/cart/cart-public/update-item`, {
-          CartId: cartId,
-          ProductId: params.productId,
-          CartItemId: existingItem.cartItemId,
-          Count: newQuantity,
-          AId: A_ID,
-        });
-
-        // Load lại giỏ hàng để đồng bộ UI
-        dispatch(fetchCartDetail(cartId));
-        return params;
-      }
-
-      // TRƯỜNG HỢP 2: Nếu chưa có -> Thêm mới (POST)
       const payload: any = {
         ItemId: params.productId,
         Count: params.quantity,
-        UsingDate: [new Date().toISOString()],
+        UsingDate: [new Date().toISOString()], 
         AId: A_ID,
       };
 
@@ -88,15 +64,28 @@ export const addItemToCart = createAsyncThunk(
         payload.CartId = cartId;
       }
 
-      const response = await axios({
-        method: "POST",
-        url: `${API_BASE}/api-end-user/cart/cart-public/item`,
-        data: payload,
-        headers: { "Content-Type": "application/json" },
-        params: { aid: A_ID },
-      });
+      // console.log("Adding to cart payload:", JSON.stringify(payload, null, 2));
 
-      const returnedCartId = response.data?.Data?.CartId || response.data?.CartId;
+      const makeRequest = async (requestPayload: any) => {
+        return await axios({
+          method: "POST",
+          url: `${API_BASE}/api-end-user/cart/cart-public/item`,
+          data: requestPayload,
+          headers: {
+            "Content-Type": "application/json",
+          },
+          params: {
+            aid: A_ID,
+          },
+        });
+      };
+
+      let response = await makeRequest(payload);
+      // console.log("Add to cart response data:", response?.data);
+
+      const returnedCartId =
+        response.data?.Data?.CartId || response.data?.CartId;
+      // console.log("Returned CartId from Backend:", returnedCartId);
 
       if (returnedCartId) {
         localStorage.setItem("cartId", returnedCartId);
@@ -110,7 +99,7 @@ export const addItemToCart = createAsyncThunk(
 
       return params;
     } catch (error: any) {
-      console.log("Cart Action Error:", error.response?.data);
+      console.log("Add to cart response error:", error.response?.data);
       const errorMessage =
         error.response?.data?.Message ||
         error.response?.data?.title ||
