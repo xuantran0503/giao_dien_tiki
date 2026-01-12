@@ -46,6 +46,8 @@ export const addItemToCart = createAsyncThunk(
       originalPrice: number;
       discount: number;
       name: string;
+      image: string;
+      description: string;
     },
     { dispatch, getState, rejectWithValue }
   ) => {
@@ -186,6 +188,8 @@ export const fetchCartDetail = createAsyncThunk(
           discount: 0,
           quantity: item.Count,
           uri: item.Uri,
+          // image: item.ImageUrl,
+          description: item.Description,
         };
       });
     } catch (err: any) {
@@ -213,7 +217,7 @@ export const removeItemFromCart = createAsyncThunk(
         AId: A_ID,
       });
 
-      dispatch(fetchCartDetail(cartId));
+      // dispatch(fetchCartDetail(cartId));
 
       return { cartItemId: params.cartItemId };
     } catch (error: any) {
@@ -277,7 +281,8 @@ export const updateCartItemQuantity = createAsyncThunk(
         AId: A_ID,
       });
 
-      dispatch(fetchCartDetail(cartId));
+      // dispatch(fetchCartDetail(cartId));
+      return params;
     } catch (error: any) {
       return rejectWithValue(error.message);
     }
@@ -370,14 +375,18 @@ const cartSlice = createSlice({
         state.status = "pending";
         state.error = null;
       })
-      .addCase(updateCartItemQuantity.fulfilled, (state) => {
-        state.status = "succeeded";
-        // Items will be updated by fetchCartDetail
-      })
       .addCase(updateCartItemQuantity.rejected, (state, action) => {
         state.status = "failed";
         state.error =
           (action.payload as string) || "Failed to update item quantity";
+      })
+      .addCase(updateCartItemQuantity.fulfilled, (state, action: any) => {
+        state.status = "succeeded";
+        const { cartItemId, quantity } = action.payload;
+        const item = state.items.find((i) => i.cartItemId === cartItemId);
+        if (item) {
+          item.quantity = quantity;
+        }
       });
   },
 });

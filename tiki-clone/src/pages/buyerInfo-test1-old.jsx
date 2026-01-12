@@ -1,5 +1,5 @@
 import { useSelector, useDispatch } from "react-redux";
-import { useMemo } from "react";
+import { useState } from "react";
 import { clearCheckoutHistory } from "../store/checkoutSlice";
 import { selectSelectedAddress } from "../store/addressSlice";
 import { Link } from "react-router-dom";
@@ -7,68 +7,19 @@ import { formatPrice } from "../utils/priceUtils";
 import "./BuyerInfo.css";
 import Header from "../components/Header/Header";
 
-// Helper functions moved outside component to prevent recreation
-const getOrderAddress = (order, selectedAddress) => {
-  const parseDeliveryAddress = (deliveryAddress) => {
-    if (!deliveryAddress || typeof deliveryAddress !== "string") {
-      return { detailedAddress: "N/A", generalAddress: "N/A" };
-    }
-
-    const parts = deliveryAddress.split("\n");
-
-    if (parts.length >= 2) {
-      let detailedAddress = parts[0];
-      let generalAddress = parts[1];
-
-      if (detailedAddress.includes("Địa chỉ chi tiết: ")) {
-        detailedAddress = detailedAddress
-          .replace("Địa chỉ chi tiết: ", "")
-          .trim();
-      }
-      if (generalAddress.includes("Địa chỉ: ")) {
-        generalAddress = generalAddress.replace("Địa chỉ: ", "").trim();
-      }
-
-      return { detailedAddress, generalAddress };
-    } else {
-      return {
-        detailedAddress: deliveryAddress,
-        generalAddress: selectedAddress || "N/A",
-      };
-    }
-  };
-
-  const parsed = parseDeliveryAddress(order?.deliveryAddress);
-  return {
-    detailedAddress: parsed.detailedAddress,
-    generalAddress: parsed.generalAddress,
-  };
-};
-
-const formatDate = (dateString) => {
-  if (!dateString) return "N/A";
-  const date = new Date(dateString);
-
-  return date.toLocaleString("vi-VN", {
-    year: "numeric",
-    month: "2-digit",
-    day: "2-digit",
-    hour: "2-digit",
-    minute: "2-digit",
-    second: "2-digit",
-  });
-};
-
 const BuyerInfo = () => {
   const dispatch = useDispatch();
+
   const history = useSelector((state) => state.checkout.history);
   const selectedAddress = useSelector(selectSelectedAddress);
 
-  // Use useMemo to avoid reversing and mapping on every render
-  const reversedHistory = useMemo(() => {
-    if (!history) return [];
-    return history.slice().reverse();
-  }, [history]);
+  // console.log("BuyerInfo render - Order history:", history);
+
+  // console.log('BuyerInfo render - Number of orders:', history?.length);
+  // console.log('BuyerInfo render - Force update counter:', forceUpdate);
+  // console.log('Order history:', history);
+  // console.log('Number of orders:', history?.length);
+  // console.log('Current selected address:', selectedAddress);
 
   const handleClear = () => {
     if (window.confirm("Bạn có chắc chắn muốn xóa toàn bộ lịch sử mua hàng?")) {
@@ -113,15 +64,106 @@ const BuyerInfo = () => {
           </div>
         ) : (
           <div className="order-list">
-            {reversedHistory.map((order, idx) => {
-                if (!order || typeof order !== "object") return null;
+            {history
+              .slice()
+              .reverse()
+              .map((order, idx) => {
+                // Safety check for order data
+                if (!order || typeof order !== "object") {
+                  console.warn(`Invalid order data at index ${idx}:`, order);
+                  return null;
+                }
 
                 const products = order.items || [];
                 const customerInfo = order.customerInfo || {};
-                const { detailedAddress, generalAddress } = getOrderAddress(
-                  order,
-                  selectedAddress
-                );
+
+                // Sử dụng addressSnapshot nếu có, nếu không thì fallback về parsing cũ
+                const getOrderAddress = (order) => {
+                  // Ưu tiên sử dụng addressSnapshot (địa chỉ tại thời điểm mua hàng)
+                  // if (order.addressSnapshot) {
+                  //   console.log(`Order ${order.id} has addressSnapshot:`, order.addressSnapshot);
+                  //   return {
+                  //     detailedAddress: order.addressSnapshot.detailedAddress || 'N/A',
+                  //     generalAddress: order.addressSnapshot.generalAddress || 'N/A',
+                  //     isSnapshot: true
+                  //   };
+                  // }
+
+                  // Fallback: Parse từ deliveryAddress (cho các đơn hàng cũ)
+                  // console.log(`Order ${order.id} using fallback parsing`);
+                  const parseDeliveryAddress = (deliveryAddress) => {
+                    if (
+                      !deliveryAddress ||
+                      typeof deliveryAddress !== "string"
+                    ) {
+                      return { detailedAddress: "N/A", generalAddress: "N/A" };
+                    }
+
+                    const parts = deliveryAddress.split("\n");
+
+                    if (parts.length >= 2) {
+                      let detailedAddress = parts[0];
+                      let generalAddress = parts[1];
+
+                      // Remove labels if they exist
+                      if (detailedAddress.includes("Địa chỉ chi tiết: ")) {
+                        detailedAddress = detailedAddress
+                          .replace("Địa chỉ chi tiết: ", "")
+                          .trim();
+                      }
+                      if (generalAddress.includes("Địa chỉ: ")) {
+                        generalAddress = generalAddress
+                          .replace("Địa chỉ: ", "")
+                          .trim();
+                      }
+
+                      return { detailedAddress, generalAddress };
+                    } else {
+                      // Single line - use current selected address as fallback
+                      return {
+                        detailedAddress: deliveryAddress,
+                        generalAddress: selectedAddress || "N/A",
+                      };
+                    }
+                  };
+
+                  const parsed = parseDeliveryAddress(order?.deliveryAddress);
+                  return {
+                    detailedAddress: parsed.detailedAddress,
+                    generalAddress: parsed.generalAddress,
+                    isSnapshot: false,
+                  };
+                };
+
+                const { detailedAddress, generalAddress, isSnapshot } =
+                  getOrderAddress(order);
+
+                const getStatusText = (status) => {
+                  const statusMap = {
+                    pending: "Chờ xác nhận",
+                    confirmed: "Đã xác nhận",
+                    shipping: "Đang giao hàng",
+                    delivered: "Đã giao hàng",
+                    cancelled: "Đã hủy",
+                  };
+                  return statusMap[status] || status;
+                };
+
+                const formatDate = (dateString) => {
+                  if (!dateString) return "N/A";
+                  const date = new Date(dateString);
+
+                  return date.toLocaleString("vi-VN", {
+                    year: "numeric",
+                    month: "2-digit",
+                    day: "2-digit",
+                    hour: "2-digit",
+                    minute: "2-digit",
+                    second: "2-digit",
+                  });
+                };
+
+                console.log(`Rendering order ${idx + 1}:`, order);
 
                 return (
                   <div key={order.id || idx} className="order-card">

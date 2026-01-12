@@ -7,6 +7,9 @@ thêm phần điều chỉnh số lượng kí tự để xuống dòng khi Đ�
 
 lỗi chức năng xóa lịch sử mua đơn hàng , bấm nút xóa có những lúc không dùng chức năng f12 để coi console thì xóa được nhanh nhưng khi bật f12 lên thì bấm vài lần thì mới xóa được , liệu có phải do lỗi đồng bộ hoặc rendering 
 
+
+lỗi mua hàng thành công nhưng không thấy hiện trong lịch sử đơn hàng và cũng không xóa sản phẩm đó khi mua hàng thành công
+
 +++++++++++++ ĐANG LÀM ++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 const A_ID = "da1e0cd8-f73b-4da2-acf2-8ddc621bcf75";

@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { addCheckout } from "../../store/checkoutSlice";
@@ -13,21 +13,12 @@ const CheckoutForm = ({ onSubmit, onCancel, onClose, meta }) => {
     handleSubmit,
     formState: { errors, isSubmitting },
     reset,
-    watch,
   } = useForm();
   const isSubmittingRef = useRef(false);
-
-  const [notification, setNotification] = useState(null);
 
   // Watch addressDetail field for character count
   // const addressDetailValue = watch('addressDetail', '');
 
-  const showNotification = (type, message) => {
-    setNotification({ type, message });
-    setTimeout(() => {
-      setNotification(null);
-    }, 5000); // Hide after 5 seconds
-  };
 
   const onFormSubmit = async (data) => {
     try {
@@ -67,8 +58,6 @@ const CheckoutForm = ({ onSubmit, onCancel, onClose, meta }) => {
       dispatch(addCheckout(checkoutData));
       console.log("Order added to checkout history");
 
-      // Show success notification first
-      showNotification("success", "Đặt hàng thành công! ");
 
       // Gọi callback để xử lý logic khác (xóa khỏi cart, etc.)
       if (onSubmit && typeof onSubmit === "function") {
@@ -96,10 +85,7 @@ const CheckoutForm = ({ onSubmit, onCancel, onClose, meta }) => {
       }, 1000); // Close after 1 seconds
     } catch (error) {
       console.error("Error during form submission:", error);
-      showNotification(
-        "error",
-        "Có lỗi xảy ra khi đặt hàng. Vui lòng thử lại!"
-      );
+        alert("Có lỗi xảy ra khi đặt hàng. Vui lòng thử lại!");
     } finally {
       // Reset flag sau khi hoàn thành
       setTimeout(() => {
@@ -110,24 +96,6 @@ const CheckoutForm = ({ onSubmit, onCancel, onClose, meta }) => {
 
   return (
     <div className="checkout-form-overlay">
-      {/* Notification */}
-      {notification && (
-        <div className={`notification ${notification.type}`}>
-          <div className="notification-content">
-            <span className="notification-icon">
-              {notification.type === "success" ? "✓" : "✕"}
-            </span>
-            <span className="notification-message">{notification.message}</span>
-            <button
-              className="notification-close"
-              onClick={() => setNotification(null)}
-            >
-              ×
-            </button>
-          </div>
-        </div>
-      )}
-
       <div className="checkout-form-container">
         <div className="checkout-form-header">
           <h2>Thông tin người mua hàng</h2>

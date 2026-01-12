@@ -60,6 +60,8 @@ const ProductDetailPage = () => {
         currentPrice:
           currentProduct.currentPrice || currentProduct.originalPrice || 0,
         discount: currentProduct.discount || 0,
+        // image: currentProduct.image,
+        // description: currentProduct.description ,
       }
     : cartItem
     ? {
@@ -69,8 +71,8 @@ const ProductDetailPage = () => {
         originalPrice: cartItem.originalPrice || 0,
         currentPrice: cartItem.price || 0,
         discount: cartItem.discount || 0,
-        image: cartItem.image,
-        description: "Thông tin sản phẩm từ giỏ hàng",
+        // image: cartItem.image,
+        // description: cartItem.description ,
         quantity: 1,
       }
     : null;

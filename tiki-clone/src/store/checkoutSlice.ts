@@ -52,11 +52,11 @@ const checkoutSlice = createSlice({
         data: CheckoutData | null;
       }>
     ) => {
-      console.log(
-        "Syncing checkout history from other tab:",
-        action.payload.history.length,
-        "items"
-      );
+      // console.log(
+      //   "Syncing checkout history from other tab:",
+      //   action.payload.history.length,
+      //   "items"
+      // );
       state.history = action.payload.history;
       state.data = action.payload.data;
     },
