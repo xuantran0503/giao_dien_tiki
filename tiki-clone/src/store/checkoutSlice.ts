@@ -45,15 +45,29 @@ const checkoutSlice = createSlice({
       state.data = newOrder;
     },
 
-    syncCheckout: (state, action: PayloadAction<{ history: CheckoutData[]; data: CheckoutData | null }>) => {
+    syncCheckout: (
+      state,
+      action: PayloadAction<{
+        history: CheckoutData[];
+        data: CheckoutData | null;
+      }>
+    ) => {
+      console.log(
+        "Syncing checkout history from other tab:",
+        action.payload.history.length,
+        "items"
+      );
       state.history = action.payload.history;
       state.data = action.payload.data;
     },
 
-    updateCheckoutStatus: (state, action: PayloadAction<{ id: string; status: CheckoutData["status"] }>) => {
+    updateCheckoutStatus: (
+      state,
+      action: PayloadAction<{ id: string; status: CheckoutData["status"] }>
+    ) => {
       const { id, status } = action.payload;
 
-      const historyItem = state.history.find(item => item.id === id);
+      const historyItem = state.history.find((item) => item.id === id);
       if (historyItem) {
         historyItem.status = status;
       }
@@ -65,46 +79,28 @@ const checkoutSlice = createSlice({
     },
 
     clearCheckoutHistory: (state) => {
-      console.log("Clearing checkout history...");
-      console.log("History length before clear:", state.history.length);
-
+      console.log("Action: clearCheckoutHistory triggered");
       state.history = [];
       state.data = null;
-
-      console.log("History length after clear:", state.history.length);
-      console.log("Checkout history cleared successfully");
-
-      // Force clear from localStorage to prevent redux-persist from restoring
-      try {
-        const persistKey = "persist:root";
-        const persistedData = localStorage.getItem(persistKey);
-        if (persistedData) {
-          const parsed = JSON.parse(persistedData);
-          if (parsed.checkout) {
-            parsed.checkout = JSON.stringify({ history: [], data: null });
-            localStorage.setItem(persistKey, JSON.stringify(parsed));
-            console.log("Cleared checkout from localStorage");
-          }
-        }
-      } catch (error) {
-        console.error("Error clearing checkout from localStorage:", error);
-      }
+      console.log("Checkout history cleared in state");
     },
   },
 });
 
-
-export const selectCheckoutHistory = (state: RootState) => state.checkout.history;
+export const selectCheckoutHistory = (state: RootState) =>
+  state.checkout.history;
 export const selectCurrentCheckout = (state: RootState) => state.checkout.data;
 export const selectCheckoutById = (state: RootState, id: string) =>
-  state.checkout.history.find(item => item.id === id);
-export const selectCheckoutsByStatus = (state: RootState, status: CheckoutData["status"]) =>
-  state.checkout.history.filter(item => item.status === status);
+  state.checkout.history.find((item) => item.id === id);
+export const selectCheckoutsByStatus = (
+  state: RootState,
+  status: CheckoutData["status"]
+) => state.checkout.history.filter((item) => item.status === status);
 
 export const {
   addCheckout,
   syncCheckout,
   updateCheckoutStatus,
-  clearCheckoutHistory
+  clearCheckoutHistory,
 } = checkoutSlice.actions;
 export default checkoutSlice.reducer;

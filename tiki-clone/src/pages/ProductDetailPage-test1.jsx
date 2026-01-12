@@ -71,7 +71,7 @@ const ProductDetailPage = () => {
         discount: cartItem.discount || 0,
         image: cartItem.image,
         description: "Thông tin sản phẩm từ giỏ hàng",
-        quantity: 1,
+        quantity: 1, // Default for display
       }
     : null;
 
@@ -215,22 +215,12 @@ const ProductDetailPage = () => {
 
   const handleCheckoutSubmit = (checkoutData) => {
     console.log("Checkout completed:", checkoutData);
-    // console.log("Sản phẩm mua ngay:", product);
-    // console.log("Số lượng:", quantity);
+    console.log("Sản phẩm mua ngay:", product);
+    console.log("Số lượng:", quantity);
 
     setShowCheckoutForm(false);
 
-    // Sử dụng thông báo trong ứng dụng thay vì alert trình duyệt
-    setNotification({
-      show: true,
-      message: "Đặt hàng thành công! Cảm ơn bạn đã mua sắm tại Tiki.",
-      type: "success",
-    });
-
-    // Tự động đóng thông báo sau 4 giây
-    setTimeout(() => {
-      setNotification({ show: false, message: "", type: "" });
-    }, 4000);
+    alert("Đặt hàng thành công!");
   };
 
   const handleCheckoutCancel = () => {
@@ -624,8 +614,6 @@ const ProductDetailPage = () => {
             items: [
               {
                 id: product.id,
-                listingId: product.productId || product.id,
-                productId: product.productId || product.id,
                 name: product.name,
                 image: product.image,
                 price: finalPrice,

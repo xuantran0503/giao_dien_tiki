@@ -33,8 +33,8 @@ const CheckoutForm = ({ onSubmit, onCancel, onClose, meta }) => {
     try {
       // Lưu địa chỉ tại thời điểm mua hàng (snapshot)
       const addressSnapshot = {
-        detailedAddress: (data.addressDetail || "").trim(),
-        generalAddress: (selectedAddress || "Chưa chọn địa chỉ").trim(),
+        detailedAddress: data.addressDetail.trim(),
+        generalAddress: selectedAddress.trim(),
         timestamp: new Date().toISOString(),
       };
 

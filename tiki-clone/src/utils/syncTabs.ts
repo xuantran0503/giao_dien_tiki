@@ -46,6 +46,10 @@ export const setupCrossTabSync = (store: AppStore): (() => void) => {
           const checkoutState: CheckoutState = JSON.parse(
             persistedState.checkout
           );
+          // console.log(
+          //   "Storage event: Syncing checkout state, items:",
+          //   checkoutState.history?.length
+          // );
           store.dispatch({
             type: "checkout/syncCheckout",
             payload: checkoutState,

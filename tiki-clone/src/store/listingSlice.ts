@@ -3,12 +3,12 @@ import axios from "axios";
 
 export interface Product {
   id: string | number;
-  productId?: string;
+  productId: string;
   title: string;
   originalPrice: number;
   discount: number;
   rating?: number;
-  image: string;
+  image?: string;
   name?: string;
   price?: number;
   imageBadges?: string;
@@ -204,7 +204,8 @@ const listingSlice = createSlice({
       })
       .addCase(fetchProductById.rejected, (state, action) => {
         state.productDetailStatus = "failed";
-        state.error = (action.payload as string) || "Failed to fetch product detail";
+        state.error =
+          (action.payload as string) || "Failed to fetch product detail";
       });
   },
 });

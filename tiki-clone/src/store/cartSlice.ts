@@ -5,8 +5,6 @@ import { RootState } from "./store";
 const API_BASE = "http://192.168.2.112:9092";
 const A_ID = "da1e0cd8-f73b-4da2-acf2-8ddc621bcf75";
 
-const getCartId = () => localStorage.getItem("cartId");
-
 export interface CartItem {
   id: string; // ID gốc từ Server
   listingId: string; // Listing ID bóc tách để điều hướng
@@ -26,6 +24,7 @@ export interface CartState {
   error: string | null;
   cartId: string | null;
 }
+const getCartId = () => localStorage.getItem("cartId");
 
 const initialState: CartState = {
   items: [],
@@ -52,7 +51,7 @@ export const addItemToCart = createAsyncThunk(
   ) => {
     let cartId = getCartId();
     const state = getState() as RootState;
-    
+
     // Kiểm tra xem sản phẩm đã có trong giỏ hàng chưa
     const existingItem = state.cart.items.find(
       (item) => item.productId === params.productId
@@ -62,15 +61,18 @@ export const addItemToCart = createAsyncThunk(
       // TRƯỜNG HỢP 1: Nếu sản phẩm ĐÃ TỒN TẠI -> Cập nhật số lượng (PUT)
       if (existingItem && cartId) {
         const newQuantity = existingItem.quantity + params.quantity;
-        
-        await axios.put(`${API_BASE}/api-end-user/cart/cart-public/update-item`, {
-          CartId: cartId,
-          ProductId: params.productId,
-          CartItemId: existingItem.cartItemId,
-          Count: newQuantity,
-          AId: A_ID,
-        });
 
+        await axios.put(
+          `${API_BASE}/api-end-user/cart/cart-public/update-item`,
+          {
+            CartId: cartId,
+            // ProductId: params.productId,
+            ItemId: params.productId,
+            CartItemId: existingItem.cartItemId,
+            Count: newQuantity,
+            AId: A_ID,
+          }
+        );
         // Load lại giỏ hàng để đồng bộ UI
         dispatch(fetchCartDetail(cartId));
         return params;
@@ -96,7 +98,8 @@ export const addItemToCart = createAsyncThunk(
         params: { aid: A_ID },
       });
 
-      const returnedCartId = response.data?.Data?.CartId || response.data?.CartId;
+      const returnedCartId =
+        response.data?.Data?.CartId || response.data?.CartId;
 
       if (returnedCartId) {
         localStorage.setItem("cartId", returnedCartId);
@@ -162,16 +165,18 @@ export const fetchCartDetail = createAsyncThunk(
 
         // Dùng Regex để tìm mã UUID (Listing ID) trong Uri - Đây là nguồn tin cậy nhất
         let listingId = item.Id; // Mặc định dùng Id của chính nó nếu không tìm thấy ID khác
-        if (item.Uri) {
-          const match = item.Uri.match(/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/i);
-          if (match) {
-            listingId = match[0];
-          }
-        }
+        // if (item.Uri) {
+        //   const match = item.Uri.match(
+        //     /[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/i
+        //   );
+        //   if (match) {
+        //     listingId = match[0];
+        //   }
+        // }
 
         return {
           id: item.Id,
-          listingId: listingId, 
+          listingId: listingId,
           cartItemId: item.CartItemId,
           productId: item.GroupServiceId || item.Id, // ID dùng để thao tác giỏ hàng
           name: item.Name,
@@ -203,7 +208,7 @@ export const removeItemFromCart = createAsyncThunk(
     try {
       await axios.put(`${API_BASE}/api-end-user/cart/cart-public/remove-item`, {
         CartId: cartId,
-        ProductId: params.productId, // Trả lại ProductId cho API xóa
+        ItemId: params.productId, // Trả lại ProductId cho API xóa
         CartItemId: params.cartItemId,
         AId: A_ID,
       });
@@ -266,7 +271,7 @@ export const updateCartItemQuantity = createAsyncThunk(
     try {
       await axios.put(`${API_BASE}/api-end-user/cart/cart-public/update-item`, {
         CartId: cartId,
-        ProductId: params.productId,
+        ItemId: params.productId,
         CartItemId: params.cartItemId,
         Count: params.quantity,
         AId: A_ID,

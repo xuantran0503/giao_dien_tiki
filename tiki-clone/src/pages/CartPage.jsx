@@ -27,6 +27,11 @@ const CartPage = () => {
   const [showCheckoutForm, setShowCheckoutForm] = useState(false);
   const [editingQuantity, setEditingQuantity] = useState(null);
   const [quantityInput, setQuantityInput] = useState("");
+  const [notification, setNotification] = useState({
+    show: false,
+    message: "",
+    type: "",
+  });
 
   useEffect(() => {
     if (cartId) {
@@ -103,6 +108,8 @@ const CartPage = () => {
     }
   };
 
+  // console.log("cart item product id", cartItems.productId);
+
   const handleQuantityClick = (id, quantity) => {
     setEditingQuantity(id);
     setQuantityInput(quantity.toString());
@@ -163,6 +170,16 @@ const CartPage = () => {
 
     setSelectedItems([]);
     setShowCheckoutForm(false);
+
+    setNotification({
+      show: true,
+      message: "Đặt hàng thành công! Cảm ơn bạn đã mua sắm tại Tiki.",
+      type: "success",
+    });
+
+    setTimeout(() => {
+      setNotification({ show: false, message: "", type: "" });
+    }, 4000);
   };
 
   const handleCheckoutCancel = () => {
@@ -179,8 +196,10 @@ const CartPage = () => {
       window.confirm("Bạn có chắc chắn muốn xóa sản phẩm này khỏi giỏ hàng?")
     ) {
       console.log("Starting remove for cartItemId:", cartItemId);
-      const result = await dispatch(removeItemFromCart({ cartItemId, productId }));
-      
+      const result = await dispatch(
+        removeItemFromCart({ cartItemId, productId })
+      );
+
       if (removeItemFromCart.fulfilled.match(result)) {
         // Cập nhật lại danh sách được chọn ngay lập tức
         setSelectedItems((prev) => prev.filter((id) => id !== cartItemId));
@@ -402,10 +421,7 @@ const CartPage = () => {
               {/* Cart Items */}
               <div className="cart-items">
                 {cartItems.map((item) => (
-                  <div
-                    key={item.cartItemId}
-                    className="cart-item"
-                  >
+                  <div key={item.cartItemId} className="cart-item">
                     <div className="cart-item-left">
                       <label className="checkbox-container">
                         <input
@@ -477,10 +493,17 @@ const CartPage = () => {
                             type="number"
                             className="qty-input editing"
                             value={quantityInput}
-                            style={{ width: `${Math.max(2, String(quantityInput).length) + 1}ch` }}
+                            style={{
+                              width: `${
+                                Math.max(2, String(quantityInput).length) + 1
+                              }ch`,
+                            }}
                             onChange={handleQuantityChange}
                             onBlur={() =>
-                              handleQuantityBlur(item.productId, item.cartItemId)
+                              handleQuantityBlur(
+                                item.productId,
+                                item.cartItemId
+                              )
                             }
                             onKeyDown={(e) =>
                               handleQuantityKeyPress(
@@ -501,7 +524,12 @@ const CartPage = () => {
                               handleQuantityClick(item.productId, item.quantity)
                             }
                             readOnly
-                            style={{ cursor: "pointer", width: `${Math.max(2, String(item.quantity).length) + 1}ch` }}
+                            style={{
+                              cursor: "pointer",
+                              width: `${
+                                Math.max(2, String(item.quantity).length) + 1
+                              }ch`,
+                            }}
                           />
                         )}
 
@@ -673,13 +701,25 @@ const CartPage = () => {
           onClose={handleCheckoutClose}
           meta={{
             items: cartItems.filter((item) =>
-              selectedItems.includes(item.productId)
+              selectedItems.includes(item.cartItemId)
             ),
             totalAmount: cartItems
-              .filter((item) => selectedItems.includes(item.productId))
+              .filter((item) => selectedItems.includes(item.cartItemId))
               .reduce((total, item) => total + item.price * item.quantity, 0),
           }}
         />
+      )}
+
+      {/* Notification */}
+      {notification.show && (
+        <div className={`add-to-cart-notification ${notification.type}`}>
+          <div className="notification-content">
+            <span className="notification-icon">
+              {notification.type === "success" ? "✓" : "✕"}
+            </span>
+            <span>{notification.message}</span>
+          </div>
+        </div>
       )}
     </div>
   );
