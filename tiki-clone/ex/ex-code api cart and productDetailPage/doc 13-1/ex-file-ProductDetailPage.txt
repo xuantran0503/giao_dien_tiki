@@ -1,0 +1,289 @@
+useLocation là một hook (móc) trong thư viện định tuyến React Router, dùng để truy cập đối tượng location đại diện cho URL hiện tại của trình duyệt, cung cấp thông tin chi tiết như đường dẫn (pathname), tham số tìm kiếm (search), mã băm (hash), và dữ liệu trạng thái (state). Nó giúp các thành phần React phản ứng khi URL thay đổi, hữu ích cho các chức năng như làm nổi bật menu, tạo breadcrumbs, hoặc truyền dữ liệu giữa các trang. 
+Ứng dụng của useLocation:
+Truy cập thông tin URL: Lấy pathname, search, hash, và state của URL hiện tại.
+Phản ứng với sự thay đổi: Kích hoạt các tác vụ khi người dùng điều hướng đến một URL mới.
+Truyền dữ liệu: Lấy dữ liệu trạng thái được truyền từ một link (ví dụ: <Link to="/profile" state={{ from: '/' }}>).
+Tạo breadcrumbs: Xác định đường dẫn hiện tại để hiển thị cho người dùng. 
+
+=======================================================
+
+// Tìm sản phẩm trong giỏ hàng nếu mở tab mới (không có state)
+  const cartItemFromStore = cartItems.find(
+    (item) =>
+      item.productId === productId ||
+      item.listingId === productId ||
+      item.id === productId
+  );
+  
+  Đoạn code này sử dụng hàm .find() kết hợp với toán tử HOẶC (||). Trong lập trình, đây được gọi là cơ chế "Catch-all" (Bắt hết các trường hợp).
+
+Về câu hỏi "khi nào dùng giá trị 1, 2, 3", thực tế là hàm này sẽ kiểm tra lần lượt từ trái sang phải. Chỉ cần một cái đúng (True) là nó dừng lại và lấy luôn sản phẩm đó.
+
+Dưới đây là chi tiết từng trường hợp:
+
+1. item.productId === productId (Trường hợp 1: Service ID)
+Khi nào dùng: Khi người dùng truy cập vào trang chi tiết thông qua các đường link "kỹ thuật" của hệ thống (như từ danh sách đơn hàng đã mua, hoặc từ một số API giỏ hàng đời cũ).
+Đặc điểm: productId trên URL lúc này là mã dịch vụ (ví dụ: 512...). Vì trong giỏ hàng chúng ta cũng lưu productId là mã dịch vụ, nên hai cái này khớp nhau.
+2. item.listingId === productId (Trường hợp 2: Listing ID)
+Khi nào dùng: Khi người dùng đi từ Trang chủ (Home) hoặc Trang tìm kiếm (Search) vào trang chi tiết.
+Đặc điểm: Tiki ưu tiên hiển thị Listing ID (ví dụ: afa...) trên URL để làm SEO. Khi bạn đã thêm món đó vào giỏ, chúng ta đã tách được listingId ra để lưu lại. Khi người dùng quay lại trang bằng link SEO, điều kiện này sẽ giúp nhận diện ra sản phẩm đã có trong giỏ.
+3. item.id === productId (Trường hợp 3: ID định danh của Server)
+Khi nào dùng: Đây là "lưới bảo vệ cuối cùng" (Fallback).
+Đặc điểm: Đôi khi Server trả về một mã ID ngẫu nhiên cho mỗi bản ghi trong giỏ hàng. Nếu hai điều kiện trên đều sai (do sai lệch định dạng hoặc do Server thay đổi cách trả dữ liệu), thì việc so sánh trực tiếp với trường id gốc sẽ giúp chúng ta không bỏ sót sản phẩm.
+Tại sao phải để cả 3 điều kiện "hoặc" như vậy?
+Vì trong dự án của bạn, cái ID trên URL (biến productId từ useParams) là một kẻ "đa nhân cách":
+
+Lúc thì nó là Listing ID (khi nhấn từ trang chủ).
+Lúc thì nó là Service ID (khi nhấn từ giỏ hàng).
+Nếu bạn chỉ kiểm tra 1 trong 3, bạn sẽ gặp lỗi: "Sản phẩm rõ ràng đã có trong giỏ hàng rồi, nhưng vào trang chi tiết nó vẫn hiện số lượng là 0 và bắt thêm mới từ đầu".
+
+Cơ chế hoạt động của ||:
+
+Máy tính hỏi: "ID trên URL có phải là Service ID không?" -> Nếu ĐÚNG, lấy luôn.
+Nếu SAI, máy tính hỏi tiếp: "Vậy nó có phải là Listing ID không?" -> Nếu ĐÚNG, lấy luôn.
+Nếu vẫn SAI, máy tính hỏi cú chốt: "Thế nó có khớp với cái ID gốc nào không?" -> Nếu ĐÚNG, lấy luôn.
+Nếu cả 3 đều SAI -> Kết luận: Sản phẩm này thực sự chưa có trong giỏ hàng.
+Tóm lại: Đây là cách để bạn "truy vết" sản phẩm trong giỏ hàng bất kể người dùng đi vào trang chi tiết bằng con đường nào hay loại ID nào.
+
+Dòng code const cartItemFromState = location.state?.cartItem; là một kỹ thuật dùng để nhận dữ liệu được truyền qua từ trang trước thông qua React Router.
+
+Dưới đây là giải thích chi tiết:
+
+1. Thành phần cấu tạo
+location: Là đối tượng được trả về từ hook useLocation() của thư viện react-router-dom. Nó chứa thông tin về URL hiện tại.
+.state: Là một "ngăn chứa dữ liệu" đặc biệt. Khi bạn chuyển trang bằng <Link> hoặc navigate(), bạn có thể "gửi kèm" một object dữ liệu vào ngăn chứa này.
+?. (Optional Chaining): Đây là toán tử an toàn.
+Nếu location.state tồn tại (có dữ liệu truyền sang), nó sẽ truy cập vào thuộc tính cartItem.
+Nếu location.state là null hoặc undefined (ví dụ: người dùng gõ URL trực tiếp hoặc F5 lại trang), nó sẽ trả về undefined thay vì làm ứng dụng bị treo (crash).
+2. Dữ liệu này đến từ đâu?
+Dữ liệu này được gửi đi từ trang trước (thường là CartPage.jsx hoặc HomePage.jsx).
+
+Ví dụ, tại trang Giỏ hàng bạn có code chuyển sang trang Chi tiết như sau:
+
+javascript
+navigate(`/product/${item.productId}`, { 
+  state: { cartItem: item } // Đây chính là nơi 'cartItem' được gửi đi
+});
+3. Tại sao lại dùng cách này trong dự án của bạn?
+Trong trang 
+ProductDetailPage.jsx
+, việc này cực kỳ quan trọng vì 2 lý do:
+
+A. Trải nghiệm người dùng cực nhanh (Tức thì)
+Thay vì phải đợi API fetchProductById tải dữ liệu từ Server về (mất khoảng 0.5s - 1s), trang Chi tiết sản phẩm lấy luôn cái cartItem có sẵn trong state để hiển thị Tên, Giá và Ảnh ngay lập tức. Người dùng sẽ thấy trang web chạy rất mượt.
+
+B. "Phao cứu sinh" tránh lỗi 400
+Như bạn đã biết, nếu dùng Service ID để gọi API lấy chi tiết sản phẩm, hệ thống sẽ báo lỗi 400.
+
+Khi bạn đi từ Giỏ hàng, bạn đang cầm Service ID.
+Nếu không có dòng code lấy dữ liệu từ state này, trang web sẽ cố gọi API và bị lỗi.
+Nhờ có cartItemFromState, bạn đã có sẵn thông tin sản phẩm để hiện lên màn hình rồi, nên bạn có thể không cần gọi API nữa, từ đó "né" được lỗi 400.
+Tóm tắt:
+Dòng code này giống như việc bạn đi từ phòng này sang phòng khác và mang theo một gói quà. Khi sang phòng mới, bạn kiểm tra xem mình có cầm theo gói quà (cartItem) nào không. Nếu có, bạn mở ra dùng luôn mà không cần đi "mua mới" (gọi API) nữa.
+
+==================================================================
+
+useEffect(() => {
+    if (productId) {
+      // 1. Nếu có dữ liệu truyền từ trang trước (location.state), tuyệt đối không gọi API vì chắc chắn ID này là Service ID (gây lỗi 400)
+      if (cartItemFromState) {
+        dispatch(fetchCartDetail());
+        return;
+      }
+
+      // 2. Nếu không có state, đợi một chút để kiểm tra trong giỏ hàng (cartItems)
+      // Nếu đã tìm thấy sản phẩm trong giỏ, cũng không gọi API Listing để tránh lỗi 400
+      if (!cartItemFromStore) {
+        dispatch(fetchProductById(productId));
+      }
+
+      dispatch(fetchCartDetail());
+    }
+  }, [dispatch, productId, !!cartItemFromStore]); // Chạy lại khi tìm thấy sản phẩm trong giỏ
+  
+  Để hiểu logic bên trong, bạn cần nhớ chúng ta có 3 nguồn dữ liệu:
+
+cartItemFromState: Dữ liệu "đi cùng" khi bạn click từ giỏ hàng sang (có sẵn ngay lập tức).
+cartItemFromStore: Dữ liệu tìm thấy trong kho lưu trữ Redux của giỏ hàng.
+fetchProductById: Gọi lên Server để lấy dữ liệu mới nhất (mất thời gian tải).
+  
+  Đoạn useEffect này có thể coi là "Bộ não điều hướng dữ liệu" của trang Chi tiết sản phẩm. Nhiệm vụ tối thượng của nó là: Lấy được thông tin sản phẩm để hiển thị nhưng phải tránh tuyệt đối việc gọi API sai ID dẫn đến lỗi 400.
+
+Dưới đây là giải thích chi tiết logic "phòng thủ" của nó:
+
+1. Bối cảnh (Tại sao phải kiểm tra nhiều bước?)
+Hệ thống của bạn có 2 loại ID (Listing ID và Service ID).
+
+Nếu gọi fetchProductById bằng Service ID -> Lỗi 400.
+Khi đi từ Giỏ hàng sang Trang chi tiết, cái ID trên URL thường là Service ID.
+2. Phân tích từng bước logic
+Bước 1: Kiểm tra dữ liệu truyền nhanh (location.state)
+javascript
+if (cartItemFromState) {
+  dispatch(fetchCartDetail());
+  return; // DỪNG LẠI NGAY
+}
+Tình huống: Người dùng vừa nhấn vào sản phẩm từ trang Giỏ hàng. Trang Giỏ hàng đã "đóng gói" sẵn thông tin sản phẩm và gửi kèm qua đường state.
+Hành động: Vì đã có sẵn dữ liệu để hiện UI rồi, ứng dụng dừng lại luôn, không gọi API chi tiết nữa để tránh rủi ro dính lỗi 400.
+
+Bước 2: Kiểm tra dữ liệu trong kho chung (cartItems từ Redux)
+javascript
+if (!cartItemFromStore) {
+  dispatch(fetchProductById(productId));
+}
+Tình huống: Người dùng mở sản phẩm ở tab mới hoặc F5 lại trang (lúc này location.state bị mất).
+Hành động:
+Ứng dụng quét trong giỏ hàng (cartItemFromStore). Nếu thấy sản phẩm này đã nằm trong giỏ rồi, nó sẽ dùng dữ liệu đó để hiển thị UI và không gọi API.
+Chỉ khi không tìm thấy bất cứ đâu (người dùng nhấn từ trang chủ vào), nó mới tin tưởng ID đó là Listing ID chuẩn và gọi fetchProductById.
+
+Bước 3: Luôn cập nhật giỏ hàng
+javascript
+dispatch(fetchCartDetail());
+Lệnh này luôn chạy để đảm bảo danh sách giỏ hàng trong máy là mới nhất, giúp việc kiểm tra ở Bước 2 chính xác hơn.
+
+3. Tại sao mảng phụ thuộc lại có !!cartItemFromStore?
+javascript
+}, [dispatch, productId, !!cartItemFromStore]);
+
+!! là cách chuyển đổi một đối tượng thành kiểu boolean (true/false).
+Tại sao cần nó ở đây?:
+Giả sử lúc đầu vào trang, giỏ hàng trong Redux chưa kịp tải xong nên cartItemFromStore là null (false). useEffect sẽ định gọi API.
+Nhưng chỉ 0.1 giây sau, giỏ hàng tải xong và tìm thấy sản phẩm đó (true).
+Nhờ có biến này trong mảng phụ thuộc, useEffect sẽ chạy lại một lần nữa với giá trị true, giúp nó đưa ra quyết định chính xác hơn (ví dụ: dừng việc hiện báo lỗi nếu API chi tiết bị fail nhưng giỏ hàng lại có).
+Ý nghĩa: "Nếu trạng thái Tìm thấy sản phẩm trong giỏ thay đổi (từ chưa thấy sang đã thấy), hãy chạy lại useEffect này một lần nữa để cập nhật lại quyết định có gọi API hay không". Điều này giúp UI mượt mà hơn khi dữ liệu giỏ hàng tải về hơi chậm.
+Tóm tắt ý nghĩa:
+Đoạn code này giúp trang web của bạn "thông minh" hơn. Nó ưu tiên dùng dữ liệu có sẵn trong máy (Local/Redux) để hiển thị ngay lập tức và chỉ gọi API lên Server khi thực sự cần thiết, từ đó triệt tiêu các lỗi 400 khó chịu do sai khác ID.
+
+===================================================================
+
+const product = currentProduct
+    ? {
+        ...currentProduct,
+        id: currentProduct.id,
+        productId: currentProduct.productId || currentProduct.id || productId,
+        name: currentProduct.name || currentProduct.title,
+        originalPrice:
+          currentProduct.originalPrice || currentProduct.Price || 0,
+        currentPrice:
+          currentProduct.currentPrice || currentProduct.originalPrice || 0,
+        discount: currentProduct.discount || 0,
+      }
+    : cartItem
+    ? {
+        id: cartItem.id || cartItem.productId,
+        productId: cartItem.productId,
+        name: cartItem.name,
+        originalPrice: cartItem.originalPrice || 0,
+        currentPrice: cartItem.price || 0,
+        discount: cartItem.discount || 0,
+        image: cartItem.image,
+        description: "Thông tin sản phẩm từ giỏ hàng",
+        quantity: 1, 
+      }
+    : null;
+	
+Đoạn code này là một kỹ thuật Chuẩn hóa dữ liệu (Data Normalization) cực kỳ quan trọng trong lập trình Frontend. Nó đóng vai trò là một "bộ lọc" để ép các nguồn dữ liệu khác nhau về cùng một cấu trúc duy nhất giúp giao diện (UI) không bị lỗi.
+
+Dưới đây là giải thích chi tiết theo từng lớp:
+
+1. Ý nghĩa tổng quan: "Cơ chế phòng thủ 2 lớp"
+Biến product này sẽ cố gắng lấy dữ liệu theo thứ tự ưu tiên:
+
+Ưu tiên 1: Lấy từ API chi tiết sản phẩm (currentProduct).
+Ưu tiên 2: Nếu API chưa có (hoặc lỗi), lấy từ dữ liệu giỏ hàng (cartItem).
+Cuối cùng: Nếu không có cả hai thì bằng null (hiện thông báo lỗi hoặc Loading).
+2. Chi tiết lớp 1: Khi có dữ liệu từ API (currentProduct)
+Đây là lúc dữ liệu đầy đủ nhất. Tuy nhiên, API Tiki đôi khi trả về tên trường không đồng nhất, nên đoạn code này giúp "ép" chúng về tên chung:
+
+javascript
+{
+  ...currentProduct, // Giữ lại các trường như mô tả, hình ảnh...
+  id: currentProduct.id, 
+  // Đảm bảo productId luôn có giá trị để "Thêm vào giỏ" không bị lỗi
+  productId: currentProduct.productId || currentProduct.id || productId, 
+  // API lúc trả về 'name', lúc trả về 'title' -> gộp chung vào 'name'
+  name: currentProduct.name || currentProduct.title,
+  // API thô thường dùng 'Price' (chữ P hoa), ta đưa về 'originalPrice'
+  originalPrice: currentProduct.originalPrice || currentProduct.Price || 0,
+  currentPrice: currentProduct.currentPrice || currentProduct.originalPrice || 0,
+  discount: currentProduct.discount || 0,
+}
+3. Chi tiết lớp 2: Khi lấy dữ liệu từ giỏ hàng (cartItem)
+Đây là "pha cứu sinh" khi người dùng nhấn vào sản phẩm từ giỏ hàng nhưng API chi tiết bị lỗi 400. Mặc dù giỏ hàng không có mô tả đầy đủ, nhưng nó có đủ: Tên, Giá, Ảnh.
+
+javascript
+{
+  id: cartItem.id || cartItem.productId, // Dùng để dẫn link
+  productId: cartItem.productId,         // Dùng để thực hiện hành động thêm/xóa giỏ
+  name: cartItem.name,
+  originalPrice: cartItem.originalPrice || 0,
+  currentPrice: cartItem.price || 0,
+  discount: cartItem.discount || 0,
+  image: cartItem.image,
+  description: "Thông tin sản phẩm từ giỏ hàng", // Giá trị giả để UI không bị trống
+  quantity: 1, // Số lượng mặc định hiển thị trên trang chi tiết
+}
+4. Tại sao phải làm phức tạp như vậy? (3 Lý do chính)
+Chống Crash ứng dụng: Nếu bạn dùng trực tiếp currentProduct.name mà currentProduct là null, web sẽ bị màn hình trắng (Crash). Đoạn code này đảm bảo biến product luôn an toàn.
+Đồng bộ hóa (Mapping): API trả về 
+Price
+, ListingId, GroupServiceId... quá nhiều tên gọi. Đoạn code này quy hoạch lại thành các tên dễ nhớ: name, id, productId, originalPrice.
+Trải nghiệm người dùng (UX): Giúp người dùng luôn thấy được sản phẩm ngay cả khi API chi tiết bị lỗi. Họ vẫn thấy ảnh, tên và giá (lấy từ giỏ hàng) và vẫn có thể nhấn "Mua tiếp" thành công.
+Tóm lại: Đoạn code này là trái tim giúp trang Chi tiết sản phẩm của bạn chạy "bất tử", bất kể dữ liệu từ Server trả về có trễ hay bị lỗi ID.	
+
+===============================================================
+
+// 2. Cơ chế tự sửa lỗi: Lưu mapping giữa Service ID và Listing ID
+  useEffect(() => {
+    if (currentProduct && currentProduct.productId && currentProduct.id) {
+      const mappedIds = JSON.parse(
+        localStorage.getItem("product_mapping") || "{}"
+      );
+      if (mappedIds[currentProduct.productId] !== currentProduct.id) {
+        mappedIds[currentProduct.productId] = currentProduct.id;
+        localStorage.setItem("product_mapping", JSON.stringify(mappedIds));
+      }
+    }
+  }, [currentProduct]);
+  
+  Đoạn code này có thể được ví như một "Từ điển dịch thuật" mà trình duyệt tự xây dựng để giải quyết vấn đề nhức nhối nhất trong dự án của bạn: Sự khác biệt giữa ID hiển thị (Listing ID) và ID hành động (Service ID/Product ID).
+
+Dưới đây là giải thích chi tiết tại sao nó tồn tại và nó hoạt động như thế nào:
+
+1. Vấn đề gốc rễ (Tại sao cần?)
+Trong hệ thống của bạn, một sản phẩm có 2 loại ID:
+
+Listing ID (Ví dụ: id - afa...): Dùng để gọi API lấy chi tiết sản phẩm và làm đẹp URL.
+Service ID (Ví dụ: productId - 512...): Dùng để thêm vào giỏ hàng, đặt hàng.
+Rắc rối xảy ra khi: Bạn nhấn vào một sản phẩm từ Giỏ hàng hoặc Lịch sử đơn hàng. Lúc này, bạn thường chỉ có Service ID. Nếu bạn dùng ID này để gọi API lấy chi tiết, Server sẽ trả về lỗi 400 Bad Request vì nó mong đợi Listing ID.
+
+2. Cách đoạn code này hoạt động (Step-by-Step)
+Đoạn code này âm thầm chạy mỗi khi bạn vào một trang chi tiết sản phẩm thành công:
+
+Kiểm tra dữ liệu (if):
+javascript
+if (currentProduct && currentProduct.productId && currentProduct.id)
+Nó chỉ chạy khi API đã trả về dữ liệu chuẩn, tức là lúc này ta đã cầm trong tay cả "tên thật" (Listing ID) và "số chứng minh" (Service ID) của sản phẩm.
+Mở "cuốn từ điển" cũ (localStorage):
+javascript
+const mappedIds = JSON.parse(localStorage.getItem("product_mapping") || "{}");
+Nó vào kho lưu trữ của trình duyệt để lấy danh sách các cặp ID đã lưu trước đó. Nếu chưa có gì, nó tạo một object rỗng {}.
+
+Cập nhật từ điển:
+javascript
+if (mappedIds[currentProduct.productId] !== currentProduct.id) {
+    mappedIds[currentProduct.productId] = currentProduct.id;
+Nó kiểm tra xem cặp ID này đã được ghi chép chưa. Nếu chưa có hoặc thông tin bị cũ, nó sẽ ghi đè vào: Mã Service 512... tương ứng với Listing afa....
+Cất từ điển đi:
+javascript
+localStorage.setItem("product_mapping", JSON.stringify(mappedIds));
+Nó lưu lại vào máy tính người dùng.
+3. Mục đích cuối cùng (Công dụng thực tế)
+Giả sử ngày mai, người dùng F5 (Refresh) lại trang khi đang xem từ giỏ hàng (lúc này URL đang mang ID lỗi 400). Nhờ "cuốn từ điển" này đã được lưu từ hôm nay:
+
+Ứng dụng sẽ tìm trong localStorage: "À, cái mã lỗi 400 kia thực ra là của sản phẩm có Listing ID là afa...".
+Sau đó, nó tự động lấy afa... để gọi API.
+Kết quả: Trang web vẫn hiển thị mượt mà thay vì báo lỗi "Sản phẩm không tồn tại".
+Tóm tắt ý nghĩa:
+Đây là Cơ chế tự sướng (Self-healing). Bạn càng xem nhiều sản phẩm, "cuốn từ điển" này càng đầy đủ, và hệ thống của bạn càng ít bị lỗi 400 khi người dùng điều hướng qua lại giữa Giỏ hàng và Trang chi tiết.
+========================================================================

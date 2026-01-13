@@ -1,5 +1,5 @@
 import { useSelector, useDispatch } from "react-redux";
-import { useMemo } from "react";
+import { useMemo, useEffect } from "react";
 import { clearCheckoutHistory } from "../store/checkoutSlice";
 import { selectSelectedAddress } from "../store/addressSlice";
 import { Link } from "react-router-dom";
@@ -70,6 +70,12 @@ const BuyerInfo = () => {
     return history.slice().reverse();
   }, [history]);
 
+  useEffect(() => {
+    if (history && history.length > 0) {
+      console.log("Dữ liệu lịch sử mua hàng mới nhất:", history);
+    }
+  }, [history]);
+
   const handleClear = () => {
     if (window.confirm("Bạn có chắc chắn muốn xóa toàn bộ lịch sử mua hàng?")) {
       dispatch(clearCheckoutHistory());
@@ -114,122 +120,119 @@ const BuyerInfo = () => {
         ) : (
           <div className="order-list">
             {reversedHistory.map((order, idx) => {
-                if (!order || typeof order !== "object") return null;
+              if (!order || typeof order !== "object") return null;
 
-                const products = order.items || [];
-                const customerInfo = order.customerInfo || {};
-                const { detailedAddress, generalAddress } = getOrderAddress(
-                  order,
-                  selectedAddress
-                );
+              const products = order.items || [];
+              const customerInfo = order.customerInfo || {};
+              const { detailedAddress, generalAddress } = getOrderAddress(
+                order,
+                selectedAddress
+              );
 
-                return (
-                  <div key={order.id || idx} className="order-card">
-                    <div className="order-header">
-                      <div className="order-id">
-                        <strong>Mã đơn hàng: {order.id}</strong>
-                      </div>
-                      {/* <div className={`order-status status-${order.status}`}>
+              return (
+                <div key={order.id || idx} className="order-card">
+                  <div className="order-header">
+                    <div className="order-id">
+                      <strong>Mã đơn hàng: {order.id}</strong>
+                    </div>
+                    {/* <div className={`order-status status-${order.status}`}>
                     {getStatusText(order.status)}
                   </div> */}
-                    </div>
+                  </div>
 
-                    <div className="order-info">
-                      <div className="order-date">
-                        <span>Ngày đặt: {formatDate(order.orderDate)}</span>
-                      </div>
-                      {/* <div className="payment-method">
+                  <div className="order-info">
+                    <div className="order-date">
+                      <span>Ngày đặt: {formatDate(order.orderDate)}</span>
+                    </div>
+                    {/* <div className="payment-method">
                     <span>Thanh toán: {order.paymentMethod}</span>
                   </div> */}
-                    </div>
+                  </div>
 
-                    <div className="order-body">
-                      <div className="customer-info">
-                        <h4 className="section-title">Thông tin người nhận</h4>
-                        <div className="info-group">
-                          <div>
-                            <strong>Họ tên:</strong>{" "}
-                            {customerInfo.fullName || "N/A"}
-                          </div>
-                          <div>
-                            <strong>SĐT:</strong> {customerInfo.phone || "N/A"}
-                          </div>
-                          <div>
-                            <strong>Email:</strong>{" "}
-                            {customerInfo.email || "N/A"}
-                          </div>
-                          <div>
-                            <strong>Địa chỉ chi tiết:</strong> {detailedAddress}
-                          </div>
-                          <div>
-                            <strong>Địa chỉ:</strong> {generalAddress}
-                            {/* {isSnapshot && order.addressSnapshot?.timestamp && (
+                  <div className="order-body">
+                    <div className="customer-info">
+                      <h4 className="section-title">Thông tin người nhận</h4>
+                      <div className="info-group">
+                        <div>
+                          <strong>Họ tên:</strong>{" "}
+                          {customerInfo.fullName || "N/A"}
+                        </div>
+                        <div>
+                          <strong>SĐT:</strong> {customerInfo.phone || "N/A"}
+                        </div>
+                        <div>
+                          <strong>Email:</strong> {customerInfo.email || "N/A"}
+                        </div>
+                        <div>
+                          <strong>Địa chỉ chi tiết:</strong> {detailedAddress}
+                        </div>
+                        <div>
+                          <strong>Địa chỉ:</strong> {generalAddress}
+                          {/* {isSnapshot && order.addressSnapshot?.timestamp && (
                           <span style={{ fontSize: '12px', color: '#666', marginLeft: '8px' }}>
                             (Tại thời điểm: {formatDate(order.addressSnapshot.timestamp)})
                           </span>
 
                         )} */}
+                        </div>
+                        {customerInfo.note && (
+                          <div>
+                            <strong>Ghi chú:</strong> {customerInfo.note}
                           </div>
-                          {customerInfo.note && (
-                            <div>
-                              <strong>Ghi chú:</strong> {customerInfo.note}
-                            </div>
-                          )}
-                        </div>
-                      </div>
-
-                      {/* Product List */}
-                      <div className="product-list-section">
-                        <h4 className="section-title">
-                          Sản phẩm ({products.length})
-                        </h4>
-                        <div className="product-list">
-                          {products.map((product, pIdx) => (
-                            <div key={pIdx} className="product-item">
-                              <img
-                                src={product.image || null}
-                                alt={product.name}
-                                style={{
-                                  width: "60px",
-                                  height: "60px",
-                                  objectFit: "cover",
-                                  borderRadius: "4px",
-                                  border: "1px solid #eee",
-                                }}
-                              />
-                              <div className="product-details">
-                                <div className="product-name">
-                                  {product.name}
-                                </div>
-                                <div className="product-quantity">
-                                  Số lượng:{" "}
-                                  <strong className="quantity-value">
-                                    {product.quantity}
-                                  </strong>
-                                </div>
-                              </div>
-                              <div className="product-price">
-                                Giá: {formatPrice(product.price)}
-                                <sup>₫</sup>
-                              </div>
-                            </div>
-                          ))}
-                        </div>
+                        )}
                       </div>
                     </div>
 
-                    <div className="order-footer">
-                      <div>
-                        <span className="order-total-label">Tổng tiền: </span>
-                        <span className="order-total-value">
-                          {formatPrice(order.totalAmount)}
-                          <sup>₫</sup>
-                        </span>
+                    {/* Product List */}
+                    <div className="product-list-section">
+                      <h4 className="section-title">
+                        Sản phẩm ({products.length})
+                      </h4>
+                      <div className="product-list">
+                        {products.map((product, pIdx) => (
+                          <div key={pIdx} className="product-item">
+                            <img
+                              src={product.image || null}
+                              alt={product.name}
+                              style={{
+                                width: "60px",
+                                height: "60px",
+                                objectFit: "cover",
+                                borderRadius: "4px",
+                                border: "1px solid #eee",
+                              }}
+                            />
+                            <div className="product-details">
+                              <div className="product-name">{product.name}</div>
+                              <div className="product-quantity">
+                                Số lượng:{" "}
+                                <strong className="quantity-value">
+                                  {product.quantity}
+                                </strong>
+                              </div>
+                            </div>
+                            <div className="product-price">
+                              Giá: {formatPrice(product.price)}
+                              <sup>₫</sup>
+                            </div>
+                          </div>
+                        ))}
                       </div>
                     </div>
                   </div>
-                );
-              })}
+
+                  <div className="order-footer">
+                    <div>
+                      <span className="order-total-label">Tổng tiền: </span>
+                      <span className="order-total-value">
+                        {formatPrice(order.totalAmount)}
+                        <sup>₫</sup>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
           </div>
         )}
       </div>

@@ -1,0 +1,89 @@
+1. Giải thích chi tiết đoạn code của bạn
+javascript
+const reversedHistory = useMemo(() => {
+  if (!history) return []; // Nếu history chưa có dữ liệu, trả về mảng rỗng
+  return history.slice().reverse(); // Tạo bản sao và đảo ngược mảng
+}, [history]); // Chỉ chạy lại khi biến 'history' thay đổi
+history.slice(): Hàm reverse() trong JavaScript sẽ làm thay đổi (mutate) mảng gốc. Vì history thường là dữ liệu từ Redux Store (không được phép sửa trực tiếp), việc dùng .slice() giúp tạo ra một bản sao mới của mảng trước khi đảo ngược.
+Mục đích: Bạn muốn hiển thị lịch sử mua hàng theo thứ tự mới nhất hiện lên đầu. Thay vì đảo ngược trực tiếp trong phần hiển thị (JSX), bạn xử lý nó ở đây.
+Vai trò của useMemo: Giúp React "ghi nhớ" kết quả của mảng đã đảo ngược.
+2. useMemo là gì?
+useMemo là một React Hook giúp bạn lưu lại kết quả của một tính toán (memoization) và chỉ tính toán lại khi một trong các phụ thuộc (dependencies) thay đổi.
+
+Cú pháp:
+
+javascript
+const cachedValue = useMemo(calculateValue, dependencies)
+calculateValue: Hàm thực hiện việc tính toán (phải là hàm thuần túy).
+dependencies: Danh sách các biến mà hàm tính toán phụ thuộc vào.
+3. Khi nào nên dùng useMemo? (3 trường hợp chính)
+Trường hợp 1: Tránh các tính toán nặng (Expensive Calculations)
+Nếu bạn có một mảng 10,000 phần tử và cần lọc (filter) hoặc sắp xếp (sort) nó, việc này tốn tài nguyên. Nếu Component bị render lại vì một lý do không liên quan (ví dụ: gõ chữ vào một ô input khác), bạn không muốn tốn công sức tính lại mảng 10,000 phần tử đó.
+
+Trường hợp 2: Giữ tính đồng nhất về tham chiếu (Referential Equality)
+Trong JavaScript, {} không bao giờ bằng {} và [] không bằng []. Nếu bạn tạo một mảng/đối tượng mới bên trong Component, mỗi lần Render nó sẽ là một tham chiếu mới. Nếu mảng/đối tượng này được truyền xuống Component con qua props, Component con sẽ bị render lại một cách vô ích ngay cả khi nội dung mảng không đổi. useMemo giúp giữ nguyên tham chiếu đó.
+
+Trường hợp 3: Kết hợp với useEffect hoặc các Hook khác
+Nếu một useEffect phụ thuộc vào một mảng hoặc đối tượng, bạn cần useMemo để đảm bảo useEffect không bị kích hoạt liên tục mỗi khi Component cha render.
+
+4. Tại sao phải dùng và Tác dụng là gì?
+Tác dụng chính: Tối ưu hiệu năng (Performance Optimization).
+Tránh lãng phí CPU: Không làm lại những việc đã làm rồi.
+Tránh render dư thừa: Giúp các Component con (được bọc trong React.memo) không bị render lại nếu dữ liệu truyền vào không thực sự thay đổi.
+5. Tại sao không dùng useMemo cho tất cả mọi thứ?
+Đừng lạm dụng nó! useMemo cũng có "chi phí" của riêng nó:
+
+Nó tốn thêm bộ nhớ để lưu trữ kết quả cũ.
+Nó tốn code để so sánh các biến trong mảng dependencies.
+Lời khuyên:
+
+Nếu tính toán cực nhanh (như cộng 2 số, đảo ngược mảng nhỏ), không cần dùng.
+Chỉ dùng khi bạn thấy ứng dụng bị chậm hoặc khi cần giữ tham chiếu để tránh render lại Component con phức tạp.
+Ví dụ minh họa cụ thể trong BuyerInfo.jsx của bạn: Mỗi khi bạn nhấn vào một nút nào đó trên trang (ví dụ nút "Xem thêm"), Component BuyerInfo sẽ render lại. Nếu không có useMemo, dòng code history.slice().reverse() sẽ chạy lại liên tục. Với useMemo, React chỉ liếc nhìn: "A, biến history vẫn thế, lấy kết quả cũ ra dùng luôn, không cần đảo ngược lại làm gì cho mệt!"
+
+===========================================
+
+GIẢI THÍCH CHI TIẾT HÀM GETORDERADDRESS
+
+Đoạn code này là một hàm bổ trợ (helper function) dùng để xử lý và định dạng lại chuỗi địa chỉ từ dữ liệu đơn hàng.
+
+1. Tại sao lại đặt hàm ở ngoài Component?
+-----------------------------------------
+Dòng chú thích: // Helper functions moved outside component to prevent recreation
+- Lý do: Trong React, mọi thứ định nghĩa bên trong một Function Component sẽ bị khởi tạo lại mỗi khi component đó render.
+- Tác dụng: Đưa hàm này ra ngoài giúp tiết kiệm bộ nhớ và tránh việc tạo lại hàm không cần thiết, vì logic của hàm này không phụ thuộc vào state hay props trực tiếp của component.
+
+2. Hàm chính getOrderAddress(order, selectedAddress)
+----------------------------------------------------
+Hàm này nhận vào:
+- order: Đối tượng đơn hàng (chứa chuỗi địa chỉ gốc).
+- selectedAddress: Địa chỉ dự phòng nếu không tìm thấy địa chỉ trong đơn hàng.
+Nó gọi hàm con parseDeliveryAddress để bóc tách dữ liệu và trả về một object sạch sẽ: { detailedAddress, generalAddress }.
+
+3. Hàm con parseDeliveryAddress(deliveryAddress)
+-----------------------------------------------
+Đây là nơi xử lý logic quan trọng nhất:
+
+Bước 1: Kiểm tra tính hợp lệ
+- Nếu không có địa chỉ hoặc dữ liệu sai kiểu, trả về "N/A" để tránh lỗi ứng dụng.
+
+Bước 2: Tách chuỗi bằng dấu xuống dòng (\n)
+- const parts = deliveryAddress.split("\n");
+- Dữ liệu địa chỉ thường được lưu dưới dạng 2 dòng (Địa chỉ chi tiết và Địa chỉ chung). Hàm .split("\n") sẽ biến nó thành một mảng: ["Dòng 1", "Dòng 2"].
+
+Bước 3: Xử lý khi có đủ 2 dòng (Trường hợp lý tưởng)
+- Sử dụng .replace() để xóa các tiền tố như "Địa chỉ chi tiết: " hoặc "Địa chỉ: ".
+- Sử dụng .trim() để xóa khoảng trắng thừa ở hai đầu.
+- Trả về đối tượng đã làm sạch.
+
+Bước 4: Xử lý khi chỉ có 1 dòng hoặc định dạng lạ
+- Nếu chuỗi không có dấu xuống dòng, nó coi toàn bộ chuỗi đó là detailedAddress (địa chỉ chi tiết) và lấy selectedAddress truyền từ ngoài vào làm địa chỉ chung.
+
+TÓM TẮT LUỒNG HOẠT ĐỘNG:
+1. Nhận vào một chuỗi địa chỉ thô từ order.
+2. Bẻ chuỗi đó làm đôi dựa trên dấu xuống dòng.
+3. "Dọn dẹp" các chữ tiền tố để lấy nội dung thực sự.
+4. Trả về một Object có cấu trúc rõ ràng ({ detailedAddress, generalAddress }) để Component dễ dàng hiển thị lên giao diện.
+
+
+===============================================

@@ -1,0 +1,45 @@
+GIẢI THÍCH CHI TIẾT HÀM GETORDERADDRESS
+==========================================
+
+Đoạn code này là một hàm bổ trợ (helper function) dùng để xử lý và định dạng lại chuỗi địa chỉ từ dữ liệu đơn hàng.
+
+1. Tại sao lại đặt hàm ở ngoài Component?
+-----------------------------------------
+Dòng chú thích: // Helper functions moved outside component to prevent recreation
+- Lý do: Trong React, mọi thứ định nghĩa bên trong một Function Component sẽ bị khởi tạo lại mỗi khi component đó render.
+- Tác dụng: Đưa hàm này ra ngoài giúp tiết kiệm bộ nhớ và tránh việc tạo lại hàm không cần thiết, vì logic của hàm này không phụ thuộc vào state hay props trực tiếp của component.
+
+2. Hàm chính getOrderAddress(order, selectedAddress)
+----------------------------------------------------
+Hàm này nhận vào:
+- order: Đối tượng đơn hàng (chứa chuỗi địa chỉ gốc).
+- selectedAddress: Địa chỉ dự phòng nếu không tìm thấy địa chỉ trong đơn hàng.
+Nó gọi hàm con parseDeliveryAddress để bóc tách dữ liệu và trả về một object sạch sẽ: { detailedAddress, generalAddress }.
+
+3. Hàm con parseDeliveryAddress(deliveryAddress)
+-----------------------------------------------
+Đây là nơi xử lý logic quan trọng nhất:
+
+Bước 1: Kiểm tra tính hợp lệ
+- Nếu không có địa chỉ hoặc dữ liệu sai kiểu, trả về "N/A" để tránh lỗi ứng dụng.
+
+Bước 2: Tách chuỗi bằng dấu xuống dòng (\n)
+- const parts = deliveryAddress.split("\n");
+- Dữ liệu địa chỉ thường được lưu dưới dạng 2 dòng (Địa chỉ chi tiết và Địa chỉ chung). Hàm .split("\n") sẽ biến nó thành một mảng: ["Dòng 1", "Dòng 2"].
+
+Bước 3: Xử lý khi có đủ 2 dòng (Trường hợp lý tưởng)
+- Sử dụng .replace() để xóa các tiền tố như "Địa chỉ chi tiết: " hoặc "Địa chỉ: ".
+- Sử dụng .trim() để xóa khoảng trắng thừa ở hai đầu.
+- Trả về đối tượng đã làm sạch.
+
+Bước 4: Xử lý khi chỉ có 1 dòng hoặc định dạng lạ
+- Nếu chuỗi không có dấu xuống dòng, nó coi toàn bộ chuỗi đó là detailedAddress (địa chỉ chi tiết) và lấy selectedAddress truyền từ ngoài vào làm địa chỉ chung.
+
+TÓM TẮT LUỒNG HOẠT ĐỘNG:
+1. Nhận vào một chuỗi địa chỉ thô từ order.
+2. Bẻ chuỗi đó làm đôi dựa trên dấu xuống dòng.
+3. "Dọn dẹp" các chữ tiền tố để lấy nội dung thực sự.
+4. Trả về một Object có cấu trúc rõ ràng ({ detailedAddress, generalAddress }) để Component dễ dàng hiển thị lên giao diện.
+
+
+===============================================

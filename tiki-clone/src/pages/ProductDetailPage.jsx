@@ -34,7 +34,7 @@ const ProductDetailPage = () => {
   const cartItemFromStore = cartItems.find(
     (item) =>
       item.productId === productId ||
-      item.listingId === productId ||
+      // item.listingId === productId ||
       item.id === productId
   );
 
@@ -71,22 +71,19 @@ const ProductDetailPage = () => {
         originalPrice: cartItem.originalPrice || 0,
         currentPrice: cartItem.price || 0,
         discount: cartItem.discount || 0,
-        // image: cartItem.image,
-        // description: cartItem.description ,
         quantity: 1,
+        // image: cartItem.image,
+        // description: cartItem.description,
       }
     : null;
 
   useEffect(() => {
     if (productId) {
-      // 1. Nếu có dữ liệu truyền từ trang trước (location.state), tuyệt đối không gọi API vì chắc chắn ID này là Service ID (gây lỗi 400)
       if (cartItemFromState) {
         dispatch(fetchCartDetail());
         return;
       }
 
-      // 2. Nếu không có state, đợi một chút để kiểm tra trong giỏ hàng (cartItems)
-      // Nếu đã tìm thấy sản phẩm trong giỏ, cũng không gọi API Listing để tránh lỗi 400
       if (!cartItemFromStore) {
         dispatch(fetchProductById(productId));
       }
@@ -114,9 +111,7 @@ const ProductDetailPage = () => {
       }
     }
   }, [currentProduct]);
-  // Bỏ product ra khỏi dependency để tránh loop
 
-  // Trang đang tải: Chỉ hiện loading nếu chưa có bất kỳ dữ liệu gì cả từ API lẫn giỏ hàng
   if (productDetailStatus === "pending" && !product) {
     return (
       <div className="product-detail-page">
@@ -129,8 +124,6 @@ const ProductDetailPage = () => {
     );
   }
 
-  // Luôn hiển thị sản phẩm nếu nó tồn tại (lấy từ API hoặc giỏ hàng)
-  // Kể cả khi API trả về lỗi 400 (failed), nếu có cartItem thì vẫn hiện ra
   if (!product) {
     return (
       <div className="product-detail-page">
@@ -626,7 +619,7 @@ const ProductDetailPage = () => {
             items: [
               {
                 id: product.id,
-                listingId: product.productId || product.id,
+                // listingId: product.productId || product.id,
                 productId: product.productId || product.id,
                 name: product.name,
                 image: product.image,

@@ -12,23 +12,30 @@ import BuyerInfo from "./pages/BuyerInfo";
 import "./App.css";
 
 const App: React.FC = () => {
-    return (
-        <Router>
-            <ScrollToTop />
-            <Routes>
-                <Route path="/" element={<HomePage />} />
-                <Route path="/category/:categoryId" element={<CategoryPage />} />
-                <Route path="/product/:productId" element={<ProductDetailPage />} />
-                <Route path="/cart" element={<CartPage />} />
-                <Route path="/promotion/:promoType" element={<PromotionPage />} />
-                <Route path="/brand/:brandId" element={<BrandPage />} />
-                <Route path="/about" element={<AboutPage />} />
-                <Route path="/buyer-info" element={<BuyerInfo />} />
+  return (
+    <Router>
+      <ScrollToTop />
+      <Routes>
+        <Route path="/" element={<HomePage />} />
 
-                {/* <Route path="/view-all-top-deals" element={<ViewAllTopDeals />} /> */}
-            </Routes>
-        </Router>
-    );
+        <Route path="/category/:categoryId" element={<CategoryPage />} />
+
+        <Route path="/product/:productId" element={<ProductDetailPage />} />
+
+        <Route path="/cart" element={<CartPage />} />
+
+        <Route path="/promotion/:promoType" element={<PromotionPage />} />
+
+        <Route path="/brand/:brandId" element={<BrandPage />} />
+
+        <Route path="/about" element={<AboutPage />} />
+
+        <Route path="/buyer-info" element={<BuyerInfo />} />
+
+        {/* <Route path="/view-all-top-deals" element={<ViewAllTopDeals />} /> */}
+      </Routes>
+    </Router>
+  );
 };
 
 export default App;

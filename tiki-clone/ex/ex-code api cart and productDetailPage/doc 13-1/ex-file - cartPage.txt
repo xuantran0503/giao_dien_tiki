@@ -1,0 +1,44 @@
+giải thích tại sao lại useEffect(() => {
+    if (cartId) {
+      dispatch(fetchCartDetail(cartId));
+    }
+    return () => {
+      dispatch(clearCart());
+    };
+  }, [dispatch, cartId]); trong cartPage
+  
+  Đoạn useEffect này trong 
+CartPage.jsx
+ đóng vai trò là "Người quản lý dữ liệu" cho trang Giỏ hàng. Nó đảm bảo dữ liệu luôn mới khi vào trang và sạch sẽ khi rời trang.
+
+Dưới đây là giải thích chi tiết cho từng phần của nó:
+
+1. Phần lệnh chạy khi vào trang (Mounting)
+javascript
+if (cartId) {
+  dispatch(fetchCartDetail(cartId));
+}
+Tại sao phải gọi API ở đây?: Giỏ hàng là phần dữ liệu cực kỳ nhạy cảm và thay đổi liên tục (giá sản phẩm có thể đổi, hàng có thể hết, hoặc bạn vừa thêm món mới từ trang Chi tiết).
+Mục đích: Mỗi khi người dùng nhấn vào trang Giỏ hàng, ứng dụng sẽ ngay lập tức "hỏi" Server: "Giỏ hàng hiện tại của ID này có những gì?" để hiển thị kết quả chính xác nhất, thay vì dùng dữ liệu cũ đang lưu trong máy.
+2. Phần lệnh dọn dẹp khi rời trang (Cleanup function)
+javascript
+return () => {
+  dispatch(clearCart());
+};
+Đây là hàm return bên trong useEffect, nó sẽ chạy khi bạn chuyển từ trang Giỏ hàng sang trang khác (như về Trang chủ hoặc xem Chi tiết sản phẩm).
+
+Mục đích: Xóa dữ liệu rác (Stale Data).
+Tại sao cần?: Nếu bạn không xóa, dữ liệu giỏ hàng vẫn sẽ nằm trong bộ nhớ Redux. Khi bạn quay lại trang giỏ hàng vào lần sau, giao diện có thể hiển thị danh sách cũ trong một vài miligiây trước khi API mới kịp tải xong, gây ra tình trạng "nháy" dữ liệu (thấy đồ cũ rồi mới thấy đồ mới). Việc xóa này giúp trang giỏ hàng luôn bắt đầu từ một trạng thái "sạch".
+3. Mảng phụ thuộc (Dependencies)
+javascript
+[dispatch, cartId]
+Tại sao có cartId ở đây?: Để đề phòng trường hợp cartId bị thay đổi (ví dụ: người dùng xóa giỏ hàng cũ hoặc hệ thống cấp ID mới). Nếu cartId thay đổi, useEffect sẽ hiểu là phải tải lại dữ liệu cho ID mới đó ngay lập tức.
+Tóm tắt luồng hoạt động:
+Bước 1 (User vào trang Giỏ hàng): useEffect nhận thấy có cartId, ra lệnh đi lấy dữ liệu từ Server -> Giao diện hiện danh sách sản phẩm.
+Bước 2 (User xem và thao tác): Mọi thứ diễn ra bình thường.
+Bước 3 (User bấm về Trang chủ): Trước khi trang Giỏ hàng biến mất, hàm 
+clearCart()
+ được gọi -> Xóa sạch danh sách trong Redux để "nhường" bộ nhớ cho các tác vụ khác và giữ bảo mật dữ liệu.
+Lời khuyên: Cách làm này rất tốt cho việc giữ cho ứng dụng của bạn luôn đồng bộ (Sync) với máy chủ và tránh các lỗi hiển thị dữ liệu cũ.
+
+======================================================================

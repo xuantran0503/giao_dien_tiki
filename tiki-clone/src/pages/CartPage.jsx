@@ -37,9 +37,9 @@ const CartPage = () => {
     if (cartId) {
       dispatch(fetchCartDetail(cartId));
     }
-    return () => {
-      dispatch(clearCart());
-    };
+    // return () => {
+    //   dispatch(clearCart());
+    // };
   }, [dispatch, cartId]);
 
   const handleSelectAll = (e) => {
@@ -433,7 +433,7 @@ const CartPage = () => {
                       </label>
 
                       <Link
-                        to={`/product/${item.listingId || item.id}`}
+                        to={`/product/${/*item.listingId |*/ item.id}`}
                         state={{ cartItem: item }}
                         className="item-image-link"
                       >
@@ -449,7 +449,7 @@ const CartPage = () => {
 
                       <div className="item-info">
                         <Link
-                          to={`/product/${item.listingId || item.id}`}
+                          to={`/product/${/*item.listingId ||*/ item.id}`}
                           state={{ cartItem: item }}
                           className="item-name"
                         >

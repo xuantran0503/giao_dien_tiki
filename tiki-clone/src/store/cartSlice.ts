@@ -7,7 +7,7 @@ const A_ID = "da1e0cd8-f73b-4da2-acf2-8ddc621bcf75";
 
 export interface CartItem {
   id: string; // ID gốc từ Server
-  listingId: string; // Listing ID bóc tách để điều hướng
+  // listingId: string; // Listing ID bóc tách để điều hướng
   cartItemId: string;
   productId: string;
   name: string;
@@ -166,7 +166,7 @@ export const fetchCartDetail = createAsyncThunk(
         // }
 
         // Dùng Regex để tìm mã UUID (Listing ID) trong Uri - Đây là nguồn tin cậy nhất
-        let listingId = item.Id; // Mặc định dùng Id của chính nó nếu không tìm thấy ID khác
+        // let listingId = item.Id; // Mặc định dùng Id của chính nó nếu không tìm thấy ID khác
         // if (item.Uri) {
         //   const match = item.Uri.match(
         //     /[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/i
@@ -178,7 +178,7 @@ export const fetchCartDetail = createAsyncThunk(
 
         return {
           id: item.Id,
-          listingId: listingId,
+          // listingId: listingId,
           cartItemId: item.CartItemId,
           productId: item.GroupServiceId || item.Id, // ID dùng để thao tác giỏ hàng
           name: item.Name,
@@ -217,7 +217,7 @@ export const removeItemFromCart = createAsyncThunk(
         AId: A_ID,
       });
 
-      // dispatch(fetchCartDetail(cartId));
+      dispatch(fetchCartDetail(cartId));
 
       return { cartItemId: params.cartItemId };
     } catch (error: any) {
@@ -281,7 +281,7 @@ export const updateCartItemQuantity = createAsyncThunk(
         AId: A_ID,
       });
 
-      // dispatch(fetchCartDetail(cartId));
+      dispatch(fetchCartDetail(cartId));
       return params;
     } catch (error: any) {
       return rejectWithValue(error.message);
@@ -295,6 +295,7 @@ const cartSlice = createSlice({
   reducers: {
     syncCart: (state, action: PayloadAction<CartState>) => {
       state.items = action.payload.items;
+      state.cartId = action.payload.cartId;
     },
     setCartId: (state, action: PayloadAction<string | null>) => {
       state.cartId = action.payload;
@@ -332,6 +333,11 @@ const cartSlice = createSlice({
       .addCase(fetchCartDetail.fulfilled, (state, action) => {
         state.status = "succeeded";
         state.items = action.payload;
+        // console.log(
+        //   "CART ITEMS UPDATED IN REDUX:",
+        //   action.payload.length,
+        //   action.payload
+        // );
       })
       .addCase(fetchCartDetail.rejected, (state, action) => {
         state.status = "failed";
