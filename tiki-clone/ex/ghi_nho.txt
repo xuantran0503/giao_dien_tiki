@@ -25,6 +25,9 @@ cập nhật thông tin sản phẩm trong giỏ hàng ( số lượng)
 put /api-end-user/cart/cart-public/update-item
 ======================================================
 
+
+========================================================
+
 1. Ý nghĩa của từng biến (Định nghĩa chung)
 listingId (Mã Tin Đăng): Đại diện cho "bài đăng" sản phẩm trên sàn. Nó chứa thông tin chung như tên, mô tả, đánh giá. Dùng để XEM.
 GroupServiceId (Mã Dịch Vụ/Biến Thể): Đây chính là mã định danh cho phiên bản cụ thể của sản phẩm (ví dụ: cùng là iPhone 15 nhưng bản 128GB khác bản 256GB). Dùng để MUA.

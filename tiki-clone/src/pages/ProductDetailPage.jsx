@@ -77,40 +77,61 @@ const ProductDetailPage = () => {
       }
     : null;
 
+      // Tách các biểu thức phức tạp ra biến riêng để ESLint có thể kiểm tra (Giải quyết lỗi thứ 2)
+  const hasCartItemFromState = !!cartItemFromState;
+  const hasCartItemFromStore = !!cartItemFromStore;
+
   useEffect(() => {
     if (productId) {
-      if (cartItemFromState) {
+      
+      if (hasCartItemFromState) {
         dispatch(fetchCartDetail());
         return;
       }
 
-      if (!cartItemFromStore) {
+      if (!hasCartItemFromStore) {
         dispatch(fetchProductById(productId));
       }
 
       dispatch(fetchCartDetail());
     }
-  }, [dispatch, productId, !!cartItemFromStore]); // Chạy lại khi tìm thấy sản phẩm trong giỏ
+    // Thêm đầy đủ các biến phụ thuộc (Giải quyết lỗi thứ 1)
+  }, [dispatch, productId, hasCartItemFromState, hasCartItemFromStore]); 
 
-  // 1. Luôn dọn dẹp mỗi khi chuyển trang
+  // useEffect(() => {
+  //   if (productId) {
+  //     if (cartItemFromState) {
+  //       dispatch(fetchCartDetail());
+  //       return;
+  //     }
+
+  //     if (!cartItemFromStore) {
+  //       dispatch(fetchProductById(productId));
+  //     }
+
+  //     dispatch(fetchCartDetail());
+  //   }
+  // }, [dispatch, productId, !!cartItemFromStore]); // Chạy lại khi tìm thấy sản phẩm trong giỏ
+
+  //  Luôn dọn dẹp mỗi khi chuyển trang hoặc đóng tab
   useEffect(() => {
     return () => {
       dispatch(clearCurrentProduct());
     };
-  }, [dispatch]);
+  }, [dispatch]);// chỉ chạy duy nhất 1 lần khi component unmount
 
   // 2. Cơ chế tự sửa lỗi: Lưu mapping giữa Service ID và Listing ID
-  useEffect(() => {
-    if (currentProduct && currentProduct.productId && currentProduct.id) {
-      const mappedIds = JSON.parse(
-        localStorage.getItem("product_mapping") || "{}"
-      );
-      if (mappedIds[currentProduct.productId] !== currentProduct.id) {
-        mappedIds[currentProduct.productId] = currentProduct.id;
-        localStorage.setItem("product_mapping", JSON.stringify(mappedIds));
-      }
-    }
-  }, [currentProduct]);
+  // useEffect(() => {
+  //   if (currentProduct && currentProduct.productId && currentProduct.id) {
+  //     const mappedIds = JSON.parse(
+  //       localStorage.getItem("product_mapping") || "{}"
+  //     );
+  //     if (mappedIds[currentProduct.productId] !== currentProduct.id) {
+  //       mappedIds[currentProduct.productId] = currentProduct.id;
+  //       localStorage.setItem("product_mapping", JSON.stringify(mappedIds));
+  //     }
+  //   }
+  // }, [currentProduct]);
 
   if (productDetailStatus === "pending" && !product) {
     return (
