@@ -1,5 +1,5 @@
-import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import {
   addItemToCart,
   fetchCartDetail,
@@ -7,15 +7,15 @@ import {
   clearAllCartItems,
   updateCartItemQuantity,
   clearCart,
-} from "../store/cartSlice";
-import Header from "../components/Header/Header";
-import Footer from "../components/Footer/Footer";
-import { topDealsData } from "../data/topDealsData";
-import { calculateDiscountedPrice, formatPrice } from "../utils/priceUtils";
-import "./CartPage.css";
-import { PrevArrow, NextArrow } from "../components/shared/NavigationArrows";
-import CheckoutForm from "../components/CheckoutForm/CheckoutForm";
-import { useAppDispatch, useAppSelector } from "../store/hooks";
+} from '../store/cartSlice';
+import Header from '../components/Header/Header';
+import Footer from '../components/Footer/Footer';
+// import { topDealsData } from "../data/topDealsData";
+import { calculateDiscountedPrice, formatPrice } from '../utils/priceUtils';
+import './CartPage.css';
+// import { PrevArrow, NextArrow } from "../components/shared/NavigationArrows";
+import CheckoutForm from '../components/CheckoutForm/CheckoutForm';
+import { useAppDispatch, useAppSelector } from '../store/hooks';
 
 const CartPage = () => {
   const dispatch = useAppDispatch();
@@ -26,11 +26,11 @@ const CartPage = () => {
   const [selectedItems, setSelectedItems] = useState([]);
   const [showCheckoutForm, setShowCheckoutForm] = useState(false);
   const [editingQuantity, setEditingQuantity] = useState(null);
-  const [quantityInput, setQuantityInput] = useState("");
+  const [quantityInput, setQuantityInput] = useState('');
   const [notification, setNotification] = useState({
     show: false,
-    message: "",
-    type: "",
+    message: '',
+    type: '',
   });
 
   useEffect(() => {
@@ -46,12 +46,12 @@ const CartPage = () => {
     if (e.target.checked) {
       setSelectedItems(cartItems.map((item) => item.cartItemId));
       console.log(
-        "Selected items:",
+        'Selected items:',
         cartItems.map((item) => item.cartItemId)
       );
     } else {
       setSelectedItems([]);
-      console.log("Cleared all selected items");
+      console.log('Cleared all selected items');
     }
   };
 
@@ -59,11 +59,11 @@ const CartPage = () => {
     if (selectedItems.includes(cartItemId)) {
       //neu da chon thi bo ra khoi danh sach bang filter
       setSelectedItems(selectedItems.filter((id) => id !== cartItemId));
-      console.log("Huy chon item voi cartItemId:", cartItemId);
+      console.log('Huy chon item voi cartItemId:', cartItemId);
     } else {
       //neu chua chon thi them vao
       setSelectedItems([...selectedItems, cartItemId]);
-      console.log("Chon item voi cartItemId:", cartItemId);
+      console.log('Chon item voi cartItemId:', cartItemId);
     }
   };
 
@@ -78,7 +78,7 @@ const CartPage = () => {
           price: item.price,
         })
       );
-      console.log("Tang so luong cho item voi cartItemId:", cartItemId);
+      console.log('Tang so luong cho item voi cartItemId:', cartItemId);
     }
   };
 
@@ -95,13 +95,9 @@ const CartPage = () => {
           price: item.price,
         })
       );
-      console.log("Giam so luong cho item voi cartItemId:", cartItemId);
+      console.log('Giam so luong cho item voi cartItemId:', cartItemId);
     } else {
-      if (
-        window.confirm(
-          "Số lượng sản phẩm bằng 1. Bạn có muốn xóa sản phẩm khỏi giỏ hàng?"
-        )
-      ) {
+      if (window.confirm('Số lượng sản phẩm bằng 1. Bạn có muốn xóa sản phẩm khỏi giỏ hàng?')) {
         dispatch(removeItemFromCart({ cartItemId, productId }));
         setSelectedItems(selectedItems.filter((id) => id !== cartItemId));
       }
@@ -133,22 +129,22 @@ const CartPage = () => {
       );
     }
     setEditingQuantity(null);
-    setQuantityInput("");
+    setQuantityInput('');
   };
 
   const handleQuantityKeyPress = (e, productId, cartItemId) => {
-    if (e.key === "Enter") {
+    if (e.key === 'Enter') {
       handleQuantityBlur(productId, cartItemId);
-    } else if (e.key === "Escape") {
+    } else if (e.key === 'Escape') {
       setEditingQuantity(null);
-      setQuantityInput("");
+      setQuantityInput('');
     }
   };
 
   const handleCheckoutClick = () => {
-    console.log("Checkout clicked, selectedItems:", selectedItems);
+    console.log('Checkout clicked, selectedItems:', selectedItems);
     console.log(
-      "Selected cart items for checkout:",
+      'Selected cart items for checkout:',
       cartItems.filter((item) => selectedItems.includes(item.cartItemId))
     );
 
@@ -156,15 +152,13 @@ const CartPage = () => {
   };
 
   const handleCheckoutSubmit = async (checkoutData) => {
-    console.log("Add completed:", checkoutData);
+    console.log('Add completed:', checkoutData);
 
     // Xóa các sản phẩm đã mua khỏi giỏ hàng
     for (const cartItemId of selectedItems) {
       const item = cartItems.find((i) => i.cartItemId === cartItemId);
       if (item) {
-        await dispatch(
-          removeItemFromCart({ cartItemId, productId: item.productId })
-        );
+        await dispatch(removeItemFromCart({ cartItemId, productId: item.productId }));
       }
     }
 
@@ -173,12 +167,12 @@ const CartPage = () => {
 
     setNotification({
       show: true,
-      message: "Đặt hàng thành công! Cảm ơn bạn đã mua sắm tại Tiki.",
-      type: "success",
+      message: 'Đặt hàng thành công! Cảm ơn bạn đã mua sắm tại Tiki.',
+      type: 'success',
     });
 
     setTimeout(() => {
-      setNotification({ show: false, message: "", type: "" });
+      setNotification({ show: false, message: '', type: '' });
     }, 4000);
   };
 
@@ -192,20 +186,16 @@ const CartPage = () => {
   };
 
   const handleRemove = async (productId, cartItemId) => {
-    if (
-      window.confirm("Bạn có chắc chắn muốn xóa sản phẩm này khỏi giỏ hàng?")
-    ) {
-      console.log("Starting remove for cartItemId:", cartItemId);
-      const result = await dispatch(
-        removeItemFromCart({ cartItemId, productId })
-      );
+    if (window.confirm('Bạn có chắc chắn muốn xóa sản phẩm này khỏi giỏ hàng?')) {
+      console.log('Starting remove for cartItemId:', cartItemId);
+      const result = await dispatch(removeItemFromCart({ cartItemId, productId }));
 
       if (removeItemFromCart.fulfilled.match(result)) {
         // Cập nhật lại danh sách được chọn ngay lập tức
         setSelectedItems((prev) => prev.filter((id) => id !== cartItemId));
-        console.log("Removed from UI success:", cartItemId);
+        console.log('Removed from UI success:', cartItemId);
       } else {
-        alert("Không thể xóa sản phẩm. Vui lòng thử lại!");
+        alert('Không thể xóa sản phẩm. Vui lòng thử lại!');
       }
     }
   };
@@ -213,7 +203,7 @@ const CartPage = () => {
   // Xóa các sản phẩm đã chọn
   const handleClearSelected = async () => {
     if (selectedItems.length === 0) {
-      if (window.confirm("Bạn có chắc chắn muốn xóa toàn bộ giỏ hàng?")) {
+      if (window.confirm('Bạn có chắc chắn muốn xóa toàn bộ giỏ hàng?')) {
         dispatch(clearAllCartItems());
         setSelectedItems([]);
       }
@@ -233,9 +223,7 @@ const CartPage = () => {
           const deletePromises = selectedItems.map((cartItemId) => {
             const item = cartItems.find((i) => i.cartItemId === cartItemId);
             if (item) {
-              return dispatch(
-                removeItemFromCart({ cartItemId, productId: item.productId })
-              );
+              return dispatch(removeItemFromCart({ cartItemId, productId: item.productId }));
             }
             return Promise.resolve();
           });
@@ -243,10 +231,10 @@ const CartPage = () => {
           await Promise.all(deletePromises);
         }
         setSelectedItems([]);
-        console.log("Đã xóa các sản phẩm đã chọn");
+        console.log('Đã xóa các sản phẩm đã chọn');
       } catch (error) {
-        console.error("Lỗi khi xóa sản phẩm:", error);
-        alert("Có lỗi xảy ra khi xóa sản phẩm.");
+        console.error('Lỗi khi xóa sản phẩm:', error);
+        alert('Có lỗi xảy ra khi xóa sản phẩm.');
       }
     }
   };
@@ -270,81 +258,81 @@ const CartPage = () => {
   const discount = subtotal - total;
 
   // Hàm thêm sản phẩm tương tự vào giỏ
-  const handleAddSimilarProductToCart = (item) => {
-    const itemFinalPrice = calculateDiscountedPrice(
-      item.originalPrice,
-      item.discount
-    );
-    // if (!item.productId) {
-    //   console.error("Similar product has no backend productId");
-    //   return;
-    // }
-    dispatch(
-      addItemToCart({
-        productId: item.productId.toString(),
-        name: item.title,
-        image: item.image,
-        price: itemFinalPrice,
-        originalPrice: item.originalPrice,
-        discount: item.discount,
-        quantity: 1,
-      })
-    );
-  };
+  // const handleAddSimilarProductToCart = (item) => {
+  //   const itemFinalPrice = calculateDiscountedPrice(
+  //     item.originalPrice,
+  //     item.discount
+  //   );
+  //   // if (!item.productId) {
+  //   //   console.error("Similar product has no backend productId");
+  //   //   return;
+  //   // }
+  //   dispatch(
+  //     addItemToCart({
+  //       productId: item.productId.toString(),
+  //       name: item.title,
+  //       image: item.image,
+  //       price: itemFinalPrice,
+  //       originalPrice: item.originalPrice,
+  //       discount: item.discount,
+  //       quantity: 1,
+  //     })
+  //   );
+  // };
 
-  const [currentPage, setCurrentPage] = useState(1);
+  // const [currentPage, setCurrentPage] = useState(1);
 
-  const itemsPerPage = 6;
-  const totalPages = Math.ceil(topDealsData.length / itemsPerPage);
-  const indexOfLastItem = currentPage * itemsPerPage;
-  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = topDealsData.slice(indexOfFirstItem, indexOfLastItem);
+  // const itemsPerPage = 6;
+  // const totalPages = Math.ceil(topDealsData.length / itemsPerPage);
+  // const indexOfLastItem = currentPage * itemsPerPage;
+  // const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  // const currentItems = topDealsData.slice(indexOfFirstItem, indexOfLastItem);
 
-  const handlePageChange = (pageNumber) => {
-    setCurrentPage(pageNumber);
-  };
+  // const handlePageChange = (pageNumber) => {
+  //   setCurrentPage(pageNumber);
+  // };
 
-  const handlePrevPage = () => {
-    if (currentPage > 1) {
-      handlePageChange(currentPage - 1);
-    }
-  };
+  // const handlePrevPage = () => {
+  //   if (currentPage > 1) {
+  //     handlePageChange(currentPage - 1);
+  //   }
+  // };
 
-  const handleNextPage = () => {
-    if (currentPage < totalPages) {
-      handlePageChange(currentPage + 1);
-    }
-  };
+  // const handleNextPage = () => {
+  //   if (currentPage < totalPages) {
+  //     handlePageChange(currentPage + 1);
+  //   }
+  // };
 
-  const renderStars = (rating) => {
-    const stars = [];
-    const fullStars = Math.floor(rating);
-    const hasHalfStar = rating % 1 !== 0;
+  // const renderStars = (rating) => {
+  //   const stars = [];
+  //   const fullStars = Math.floor(rating);
+  //   const hasHalfStar = rating % 1 !== 0;
 
-    for (let i = 0; i < fullStars; i++) {
-      stars.push(
-        <span key={i} className="star filled">
-          ★
-        </span>
-      );
-    }
-    if (hasHalfStar) {
-      stars.push(
-        <span key="half" className="star half">
-          ★
-        </span>
-      );
-    }
-    const emptyStars = 5 - Math.ceil(rating);
-    for (let i = 0; i < emptyStars; i++) {
-      stars.push(
-        <span key={`empty-${i}`} className="star">
-          ★
-        </span>
-      );
-    }
-    return stars;
-  };
+  //   for (let i = 0; i < fullStars; i++) {
+  //     stars.push(
+  //       <span key={i} className="star filled">
+  //         ★
+  //       </span>
+  //     );
+  //   }
+  //   if (hasHalfStar) {
+  //     stars.push(
+  //       <span key="half" className="star half">
+  //         ★
+  //       </span>
+  //     );
+  //   }
+  //   const emptyStars = 5 - Math.ceil(rating);
+  //   for (let i = 0; i < emptyStars; i++) {
+  //     stars.push(
+  //       <span key={`empty-${i}`} className="star">
+  //         ★
+  //       </span>
+  //     );
+  //   }
+  //   return stars;
+  // };
 
   return (
     <div className="cart-page">
@@ -373,16 +361,11 @@ const CartPage = () => {
                   <label className="checkbox-container">
                     <input
                       type="checkbox"
-                      checked={
-                        selectedItems.length === cartItems.length &&
-                        cartItems.length > 0
-                      }
+                      checked={selectedItems.length === cartItems.length && cartItems.length > 0}
                       onChange={handleSelectAll}
                     />
                     <span className="checkmark"></span>
-                    <span className="select-all-text">
-                      Tất cả ({cartItems.length} sản phẩm)
-                    </span>
+                    <span className="select-all-text">Tất cả ({cartItems.length} sản phẩm)</span>
                   </label>
                 </div>
 
@@ -408,11 +391,7 @@ const CartPage = () => {
                           fill="currentColor"
                         />
                       </svg>
-                      <span>
-                        {selectedItems.length > 0
-                          ? "Xóa SP đã chọn"
-                          : "Xóa tất cả"}
-                      </span>
+                      <span>{selectedItems.length > 0 ? 'Xóa SP đã chọn' : 'Xóa tất cả'}</span>
                     </button>
                   </span>
                 </div>
@@ -433,14 +412,14 @@ const CartPage = () => {
                       </label>
 
                       <Link
-                        to={`/product/${/*item.listingId |*/ item.id}`}
+                        to={`/product/${item.listingId || item.id || item.productId}`}
                         state={{ cartItem: item }}
                         className="item-image-link"
                       >
                         <img
                           src={
                             item.image ||
-                            "https://salt.tikicdn.com/cache/750x750/ts/product/ac/65/4e/e21a92395ae8a7a1c2af3da945d76944.jpg.webp"
+                            'https://salt.tikicdn.com/cache/750x750/ts/product/ac/65/4e/e21a92395ae8a7a1c2af3da945d76944.jpg.webp'
                           }
                           alt={item.name}
                           className="item-image"
@@ -449,7 +428,7 @@ const CartPage = () => {
 
                       <div className="item-info">
                         <Link
-                          to={`/product/${/*item.listingId ||*/ item.id}`}
+                          to={`/product/${item.listingId || item.id || item.productId}`}
                           state={{ cartItem: item }}
                           className="item-name"
                         >
@@ -459,13 +438,12 @@ const CartPage = () => {
                     </div>
 
                     <div className="item-price">
-                      {item.originalPrice &&
-                        item.originalPrice !== item.price && (
-                          <span className="item-original-price">
-                            {formatPrice(item.originalPrice)}
-                            <sup>₫</sup>
-                          </span>
-                        )}
+                      {item.originalPrice && item.originalPrice !== item.price && (
+                        <span className="item-original-price">
+                          {formatPrice(item.originalPrice)}
+                          <sup>₫</sup>
+                        </span>
+                      )}
                       <span className="item-current-price">
                         {formatPrice(item.price)}
                         <sup>₫</sup>
@@ -477,11 +455,7 @@ const CartPage = () => {
                         <button
                           className="qty-btn"
                           onClick={() =>
-                            handleDecrease(
-                              item.productId,
-                              item.cartItemId,
-                              item.quantity
-                            )
+                            handleDecrease(item.productId, item.cartItemId, item.quantity)
                           }
                           // disabled={item.quantity <= 1}
                         >
@@ -494,23 +468,12 @@ const CartPage = () => {
                             className="qty-input editing"
                             value={quantityInput}
                             style={{
-                              width: `${
-                                Math.max(2, String(quantityInput).length) + 1
-                              }ch`,
+                              width: `${Math.max(2, String(quantityInput).length) + 1}ch`,
                             }}
                             onChange={handleQuantityChange}
-                            onBlur={() =>
-                              handleQuantityBlur(
-                                item.productId,
-                                item.cartItemId
-                              )
-                            }
+                            onBlur={() => handleQuantityBlur(item.productId, item.cartItemId)}
                             onKeyDown={(e) =>
-                              handleQuantityKeyPress(
-                                e,
-                                item.productId,
-                                item.cartItemId
-                              )
+                              handleQuantityKeyPress(e, item.productId, item.cartItemId)
                             }
                             autoFocus
                             min="1"
@@ -520,15 +483,11 @@ const CartPage = () => {
                             type="text"
                             className="qty-input"
                             value={item.quantity}
-                            onClick={() =>
-                              handleQuantityClick(item.productId, item.quantity)
-                            }
+                            onClick={() => handleQuantityClick(item.productId, item.quantity)}
                             readOnly
                             style={{
-                              cursor: "pointer",
-                              width: `${
-                                Math.max(2, String(item.quantity).length) + 1
-                              }ch`,
+                              cursor: 'pointer',
+                              width: `${Math.max(2, String(item.quantity).length) + 1}ch`,
                             }}
                           />
                         )}
@@ -536,11 +495,7 @@ const CartPage = () => {
                         <button
                           className="qty-btn"
                           onClick={() =>
-                            handleIncrease(
-                              item.productId,
-                              item.cartItemId,
-                              item.quantity
-                            )
+                            handleIncrease(item.productId, item.cartItemId, item.quantity)
                           }
                         >
                           +
@@ -555,16 +510,9 @@ const CartPage = () => {
 
                     <button
                       className="item-remove"
-                      onClick={() =>
-                        handleRemove(item.productId, item.cartItemId)
-                      }
+                      onClick={() => handleRemove(item.productId, item.cartItemId)}
                     >
-                      <svg
-                        width="20"
-                        height="20"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                      >
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
                         <path
                           d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"
                           fill="currentColor"
@@ -623,7 +571,7 @@ const CartPage = () => {
       </div>
 
       {/* Suggested Products */}
-      {cartItems.length > 0 && (
+      {/* {cartItems.length > 0 && (
         <div className="suggested-products-cart">
           <h2 className="suggested-title">Sản phẩm mua kèm</h2>
 
@@ -689,8 +637,8 @@ const CartPage = () => {
               <NextArrow onClick={handleNextPage} />
             )}
           </div>
-        </div>
-      )}
+        </div> 
+      )}*/}
 
       <Footer />
 
@@ -700,9 +648,7 @@ const CartPage = () => {
           onCancel={handleCheckoutCancel}
           onClose={handleCheckoutClose}
           meta={{
-            items: cartItems.filter((item) =>
-              selectedItems.includes(item.cartItemId)
-            ),
+            items: cartItems.filter((item) => selectedItems.includes(item.cartItemId)),
             totalAmount: cartItems
               .filter((item) => selectedItems.includes(item.cartItemId))
               .reduce((total, item) => total + item.price * item.quantity, 0),
@@ -714,9 +660,7 @@ const CartPage = () => {
       {notification.show && (
         <div className={`add-to-cart-notification ${notification.type}`}>
           <div className="notification-content">
-            <span className="notification-icon">
-              {notification.type === "success" ? "✓" : "✕"}
-            </span>
+            <span className="notification-icon">{notification.type === 'success' ? '✓' : '✕'}</span>
             <span>{notification.message}</span>
           </div>
         </div>

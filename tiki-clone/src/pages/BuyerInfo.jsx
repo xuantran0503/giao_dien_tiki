@@ -70,11 +70,11 @@ const BuyerInfo = () => {
     return history.slice().reverse();
   }, [history]);
 
-  useEffect(() => {
-    if (history && history.length > 0) {
-      console.log("Dữ liệu lịch sử mua hàng mới nhất:", history);
-    }
-  }, [history]);
+  // useEffect(() => {
+  //   if (history && history.length > 0) {
+  //     console.log("Dữ liệu lịch sử mua hàng mới nhất:", history);
+  //   }
+  // }, [history]);
 
   const handleClear = () => {
     if (window.confirm("Bạn có chắc chắn muốn xóa toàn bộ lịch sử mua hàng?")) {

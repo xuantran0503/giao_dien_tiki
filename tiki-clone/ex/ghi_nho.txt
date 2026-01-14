@@ -5,12 +5,14 @@ khoảng cách trái phải của 2 ảnh với 2 bên  viền chưa bằng nhau
 
 thêm phần điều chỉnh số lượng kí tự để xuống dòng khi Địa chỉ chi tiết trong lịch sử đơn hàng quá dài  trong lịch sử đơn hàng
 
-
-lỗi mua hàng thành công nhưng không thấy hiện trong lịch sử đơn hàng và cũng không xóa sản phẩm đó khi mua hàng thành công
-
+lỗi khi mở tab mới bằng sản phẩm từ giỏ hàng nhưng khi xóa sản phẩm đó từ giỏ hàng thì sẽ báo lỗi không tìm thấy sản phẩm  hiện không có sẵn, nhưng mà trường hợp mà từ trang giỏ hàng mà bấm trực tiếp vào sản phẩm để chuyển sang trang chi tiết sản phẩm  từ giỏ hàng đó thì bình thường không lỗi 
 +++++++++++++ ĐANG LÀM ++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 const A_ID = "da1e0cd8-f73b-4da2-acf2-8ddc621bcf75";
+
+/api-end-user/listing/get-by-page
+chi tiết sản phẩm từ trang chủ
+api-end-user/listing/
 
 code tiếp api giỏ hàng với  các tương ứng action 
 thêm sản phẩm vào giỏ hàng

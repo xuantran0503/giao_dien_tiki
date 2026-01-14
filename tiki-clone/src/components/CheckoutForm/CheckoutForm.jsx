@@ -19,7 +19,6 @@ const CheckoutForm = ({ onSubmit, onCancel, onClose, meta }) => {
   // Watch addressDetail field for character count
   // const addressDetailValue = watch('addressDetail', '');
 
-
   const onFormSubmit = async (data) => {
     try {
       // Lưu địa chỉ tại thời điểm mua hàng (snapshot)
@@ -31,6 +30,7 @@ const CheckoutForm = ({ onSubmit, onCancel, onClose, meta }) => {
 
       // Tạo đúng cấu trúc CheckoutData theo interface
       const timestamp = Date.now();
+      console.log("Timestamp:", timestamp);
       const randomId = Math.random().toString(36).substring(2, 11);
 
       const checkoutData = {
@@ -58,7 +58,6 @@ const CheckoutForm = ({ onSubmit, onCancel, onClose, meta }) => {
       dispatch(addCheckout(checkoutData));
       console.log("Order added to checkout history");
 
-
       // Gọi callback để xử lý logic khác (xóa khỏi cart, etc.)
       if (onSubmit && typeof onSubmit === "function") {
         // console.log("Calling onSubmit callback with data:", checkoutData);
@@ -85,7 +84,7 @@ const CheckoutForm = ({ onSubmit, onCancel, onClose, meta }) => {
       }, 1000); // Close after 1 seconds
     } catch (error) {
       console.error("Error during form submission:", error);
-        alert("Có lỗi xảy ra khi đặt hàng. Vui lòng thử lại!");
+      alert("Có lỗi xảy ra khi đặt hàng. Vui lòng thử lại!");
     } finally {
       // Reset flag sau khi hoàn thành
       setTimeout(() => {

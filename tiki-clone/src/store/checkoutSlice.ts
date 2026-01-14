@@ -79,10 +79,10 @@ const checkoutSlice = createSlice({
     },
 
     clearCheckoutHistory: (state) => {
-      console.log("Action: clearCheckoutHistory triggered");
+      // console.log("Action: clearCheckoutHistory triggered");
       state.history = [];
       state.data = null;
-      console.log("Checkout history cleared in state");
+      // console.log("Checkout history cleared in state");
     },
   },
 });

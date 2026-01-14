@@ -1,53 +1,54 @@
-import React, { useState, useEffect } from "react";
-import { useParams, Link, useLocation } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { addItemToCart, fetchCartDetail } from "../store/cartSlice";
-import { fetchProductById, clearCurrentProduct } from "../store/listingSlice";
-import Header from "../components/Header/Header";
-import Footer from "../components/Footer/Footer";
-import CheckoutForm from "../components/CheckoutForm/CheckoutForm";
+import React, { useState, useEffect } from 'react';
+import { useParams, Link, useLocation } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { addItemToCart, fetchCartDetail } from '../store/cartSlice';
+import { fetchProductById, clearCurrentProduct } from '../store/listingSlice';
+import Header from '../components/Header/Header';
+import Footer from '../components/Footer/Footer';
+import CheckoutForm from '../components/CheckoutForm/CheckoutForm';
 // import AddressSelector from "../components/AddressSelector/AddressSelector";
-import { PrevArrow, NextArrow } from "../components/shared/NavigationArrows";
-import { suggestedProductsData } from "../data/suggestedProductsData";
-import { calculateDiscountedPrice, formatPrice } from "../utils/priceUtils";
-import "./ProductDetailPage.css";
+// import { PrevArrow, NextArrow } from "../components/shared/NavigationArrows";
+// import { suggestedProductsData } from "../data/suggestedProductsData";
+import { calculateDiscountedPrice, formatPrice } from '../utils/priceUtils';
+import './ProductDetailPage.css';
 
 const ProductDetailPage = () => {
   const dispatch = useDispatch();
-  const { currentProduct: listingProduct, productDetailStatus: listingStatus } =
-    useSelector((state) => state.listing);
+  const { currentProduct: listingProduct, productDetailStatus: listingStatus } = useSelector(
+    (state) => state.listing
+  );
   const currentProduct = listingProduct;
 
   const productDetailStatus =
-    listingStatus === "pending"
-      ? "pending"
-      : listingStatus === "succeeded"
-      ? "succeeded"
-      : "idle";
+    listingStatus === 'pending' ? 'pending' : listingStatus === 'succeeded' ? 'succeeded' : 'idle';
 
   const { productId } = useParams();
   const { items: cartItems } = useSelector((state) => state.cart);
+  const { products: allProducts } = useSelector((state) => state.listing);
+
   const location = useLocation();
   const cartItemFromState = location.state?.cartItem;
 
   // Tìm sản phẩm trong giỏ hàng nếu mở tab mới (không có state)
   const cartItemFromStore = cartItems.find(
-    (item) =>
-      item.productId === productId ||
-      // item.listingId === productId ||
-      item.id === productId
+    (item) => item.productId === productId || item.id === productId
   );
 
   const cartItem = cartItemFromState || cartItemFromStore;
 
+  // Tìm trong danh sách trang chủ nếu không có trong giỏ hàng
+  const productFromListing = allProducts.find(
+    (p) => p.productId === productId || p.id === productId
+  );
+
   const [quantity, setQuantity] = useState(1);
   const [notification, setNotification] = useState({
     show: false,
-    message: "",
-    type: "",
+    message: '',
+    type: '',
   });
   const [showCheckoutForm, setShowCheckoutForm] = useState(false);
-  const [currentPage, setCurrentPage] = useState(1);
+  // const [currentPage, setCurrentPage] = useState(1);
 
   const product = currentProduct
     ? {
@@ -55,13 +56,10 @@ const ProductDetailPage = () => {
         id: currentProduct.id,
         productId: currentProduct.productId || currentProduct.id || productId,
         name: currentProduct.name || currentProduct.title,
-        originalPrice:
-          currentProduct.originalPrice || currentProduct.Price || 0,
-        currentPrice:
-          currentProduct.currentPrice || currentProduct.originalPrice || 0,
+        originalPrice: currentProduct.originalPrice || currentProduct.Price || 0,
+        currentPrice: currentProduct.currentPrice || currentProduct.originalPrice || 0,
         discount: currentProduct.discount || 0,
         // image: currentProduct.image,
-        // description: currentProduct.description ,
       }
     : cartItem
     ? {
@@ -72,74 +70,43 @@ const ProductDetailPage = () => {
         currentPrice: cartItem.price || 0,
         discount: cartItem.discount || 0,
         quantity: 1,
-        // image: cartItem.image,
-        // description: cartItem.description,
+        // image: cartItem.image, // Mở lại ảnh
+      }
+    : productFromListing
+    ? {
+        ...productFromListing,
+        quantity: 1,
       }
     : null;
 
-      // Tách các biểu thức phức tạp ra biến riêng để ESLint có thể kiểm tra (Giải quyết lỗi thứ 2)
-  const hasCartItemFromState = !!cartItemFromState;
-  const hasCartItemFromStore = !!cartItemFromStore;
-
   useEffect(() => {
     if (productId) {
-      
-      if (hasCartItemFromState) {
+      if (cartItemFromState) {
         dispatch(fetchCartDetail());
         return;
       }
 
-      if (!hasCartItemFromStore) {
+      if (!cartItemFromStore) {
         dispatch(fetchProductById(productId));
+        // dispatch(fetchCartDetail());
       }
 
       dispatch(fetchCartDetail());
     }
-    // Thêm đầy đủ các biến phụ thuộc (Giải quyết lỗi thứ 1)
-  }, [dispatch, productId, hasCartItemFromState, hasCartItemFromStore]); 
-
-  // useEffect(() => {
-  //   if (productId) {
-  //     if (cartItemFromState) {
-  //       dispatch(fetchCartDetail());
-  //       return;
-  //     }
-
-  //     if (!cartItemFromStore) {
-  //       dispatch(fetchProductById(productId));
-  //     }
-
-  //     dispatch(fetchCartDetail());
-  //   }
-  // }, [dispatch, productId, !!cartItemFromStore]); // Chạy lại khi tìm thấy sản phẩm trong giỏ
+  }, [dispatch, productId, !!cartItemFromStore]); //  Chạy lại khi tìm thấy sản phẩm trong giỏ
 
   //  Luôn dọn dẹp mỗi khi chuyển trang hoặc đóng tab
   useEffect(() => {
     return () => {
       dispatch(clearCurrentProduct());
     };
-  }, [dispatch]);// chỉ chạy duy nhất 1 lần khi component unmount
+  }, [dispatch]); // chỉ chạy duy nhất 1 lần khi component unmount
 
-  // 2. Cơ chế tự sửa lỗi: Lưu mapping giữa Service ID và Listing ID
-  // useEffect(() => {
-  //   if (currentProduct && currentProduct.productId && currentProduct.id) {
-  //     const mappedIds = JSON.parse(
-  //       localStorage.getItem("product_mapping") || "{}"
-  //     );
-  //     if (mappedIds[currentProduct.productId] !== currentProduct.id) {
-  //       mappedIds[currentProduct.productId] = currentProduct.id;
-  //       localStorage.setItem("product_mapping", JSON.stringify(mappedIds));
-  //     }
-  //   }
-  // }, [currentProduct]);
-
-  if (productDetailStatus === "pending" && !product) {
+  if (productDetailStatus === 'pending' && !product) {
     return (
       <div className="product-detail-page">
         <Header />
-        <div style={{ padding: "100px", textAlign: "center" }}>
-          Đang tải thông tin sản phẩm...
-        </div>
+        <div style={{ padding: '100px', textAlign: 'center' }}>Đang tải thông tin sản phẩm...</div>
         <Footer />
       </div>
     );
@@ -149,18 +116,15 @@ const ProductDetailPage = () => {
     return (
       <div className="product-detail-page">
         <Header />
-        <div
-          className="product-not-found"
-          style={{ padding: "100px", textAlign: "center" }}
-        >
+        <div className="product-not-found" style={{ padding: '100px', textAlign: 'center' }}>
           <h2>Rất tiếc, sản phẩm này hiện không có sẵn!</h2>
           <Link
             to="/"
             className="back-home-link"
             style={{
-              color: "#0b74e5",
-              marginTop: "15px",
-              display: "inline-block",
+              color: '#0b74e5',
+              marginTop: '15px',
+              display: 'inline-block',
             }}
           >
             Quay về trang chủ
@@ -172,10 +136,7 @@ const ProductDetailPage = () => {
   }
 
   // Tính giá sau giảm giá
-  const finalPrice = calculateDiscountedPrice(
-    product.originalPrice,
-    product.discount
-  );
+  const finalPrice = calculateDiscountedPrice(product.originalPrice, product.discount);
 
   const handleIncrease = () => {
     setQuantity((prev) => prev + 1);
@@ -206,20 +167,18 @@ const ProductDetailPage = () => {
       setNotification({
         show: true,
         message: `Đã thêm ${quantity} ${product.name} vào giỏ hàng!`,
-        type: "success",
+        type: 'success',
       });
     } else {
       setNotification({
         show: true,
-        message: `Không thể thêm vào giỏ hàng: ${
-          result.payload || "Lỗi không xác định"
-        }`,
-        type: "error",
+        message: `Không thể thêm vào giỏ hàng: ${result.payload || 'Lỗi không xác định'}`,
+        type: 'error',
       });
     }
 
     setTimeout(() => {
-      setNotification({ show: false, message: "", type: "" });
+      setNotification({ show: false, message: '', type: '' });
     }, 3000);
   };
 
@@ -230,7 +189,7 @@ const ProductDetailPage = () => {
   };
 
   const handleCheckoutSubmit = (checkoutData) => {
-    console.log("Checkout completed:", checkoutData);
+    console.log('Checkout completed:', checkoutData);
     // console.log("Sản phẩm mua ngay:", product);
     // console.log("Số lượng:", quantity);
 
@@ -239,13 +198,13 @@ const ProductDetailPage = () => {
     // Sử dụng thông báo trong ứng dụng thay vì alert trình duyệt
     setNotification({
       show: true,
-      message: "Đặt hàng thành công! Cảm ơn bạn đã mua sắm tại Tiki.",
-      type: "success",
+      message: 'Đặt hàng thành công! Cảm ơn bạn đã mua sắm tại Tiki.',
+      type: 'success',
     });
 
     // Tự động đóng thông báo sau 4 giây
     setTimeout(() => {
-      setNotification({ show: false, message: "", type: "" });
+      setNotification({ show: false, message: '', type: '' });
     }, 4000);
   };
 
@@ -254,95 +213,95 @@ const ProductDetailPage = () => {
   };
 
   // Hàm thêm sản phẩm tương tự vào giỏ
-  const handleAddSimilarProductToCart = (item, e) => {
-    const itemFinalPrice = calculateDiscountedPrice(
-      item.originalPrice,
-      item.discount
-    );
+  // const handleAddSimilarProductToCart = (item, e) => {
+  //   const itemFinalPrice = calculateDiscountedPrice(
+  //     item.originalPrice,
+  //     item.discount
+  //   );
 
-    dispatch(
-      addItemToCart({
-        productId: item.productId || item.id,
-        quantity: 1,
-        price: itemFinalPrice,
-        originalPrice: item.originalPrice,
-        discount: item.discount,
-        name: item.name,
-        image: item.image,
-      })
-    );
+  //   dispatch(
+  //     addItemToCart({
+  //       productId: item.productId || item.id,
+  //       quantity: 1,
+  //       price: itemFinalPrice,
+  //       originalPrice: item.originalPrice,
+  //       discount: item.discount,
+  //       name: item.name,
+  //       image: item.image,
+  //     })
+  //   );
 
-    setNotification({
-      show: true,
-      message: "Đã thêm sản phẩm vào giỏ hàng",
-      type: "success",
-    });
+  //   setNotification({
+  //     show: true,
+  //     message: "Đã thêm sản phẩm vào giỏ hàng",
+  //     type: "success",
+  //   });
 
-    setTimeout(() => {
-      setNotification({ show: false, message: "", type: "" });
-    }, 1000);
-  };
+  //   setTimeout(() => {
+  //     setNotification({ show: false, message: "", type: "" });
+  //   }, 1000);
+  // };
 
-  const itemsPerPage = 6;
-  // Tính toán pagination
-  const totalPages = Math.ceil(suggestedProductsData.length / itemsPerPage);
-  const indexOfLastItem = currentPage * itemsPerPage;
-  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = suggestedProductsData.slice(
-    indexOfFirstItem,
-    indexOfLastItem
-  );
+  // const itemsPerPage = 6;
+  // // Tính toán pagination
+  // const totalPages = Math.ceil(suggestedProductsData.length / itemsPerPage);
+  // const indexOfLastItem = currentPage * itemsPerPage;
+  // const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  // const currentItems = suggestedProductsData.slice(
+  //   indexOfFirstItem,
+  //   indexOfLastItem
+  // );
 
-  const handlePageChange = (pageNumber) => {
-    setCurrentPage(pageNumber);
-    // Cuộn lên phần sản phẩm tương tự
-    // document.querySelector(".similar-products-section")?.scrollIntoView({
-    //   behavior: "smooth",
-    //   block: "start",
-    // });
-  };
+  // const handlePageChange = (pageNumber) => {
+  //   setCurrentPage(pageNumber);
+  //   // Cuộn lên phần sản phẩm tương tự
+  //   // document.querySelector(".similar-products-section")?.scrollIntoView({
+  //   //   behavior: "smooth",
+  //   //   block: "start",
+  //   // });
+  // };
 
-  const handlePrevPage = () => {
-    if (currentPage > 1) {
-      handlePageChange(currentPage - 1);
-    }
-  };
+  // const handlePrevPage = () => {
+  //   if (currentPage > 1) {
+  //     handlePageChange(currentPage - 1);
+  //   }
+  // };
 
-  const handleNextPage = () => {
-    if (currentPage < totalPages) {
-      handlePageChange(currentPage + 1);
-    }
-  };
+  // const handleNextPage = () => {
+  //   if (currentPage < totalPages) {
+  //     handlePageChange(currentPage + 1);
+  //   }
+  // };
 
-  const renderStars = (rating) => {
-    const stars = [];
-    const fullStars = Math.floor(rating);
-    const hasHalfStar = rating % 1 !== 0;
+  // const renderStars = (rating) => {
+  //   const stars = [];
+  //   const fullStars = Math.floor(rating);
+  //   const hasHalfStar = rating % 1 !== 0;
 
-    for (let i = 0; i < fullStars; i++) {
-      stars.push(
-        <span key={i} className="star filled">
-          ★
-        </span>
-      );
-    }
-    if (hasHalfStar) {
-      stars.push(
-        <span key="half" className="star half">
-          ★
-        </span>
-      );
-    }
-    const emptyStars = 5 - Math.ceil(rating);
-    for (let i = 0; i < emptyStars; i++) {
-      stars.push(
-        <span key={`empty-${i}`} className="star">
-          ★
-        </span>
-      );
-    }
-    return stars;
-  };
+  //   for (let i = 0; i < fullStars; i++) {
+  //     stars.push(
+  //       <span key={i} className="star filled">
+  //         ★
+  //       </span>
+  //     );
+  //   }
+  //   if (hasHalfStar) {
+  //     stars.push(
+  //       <span key="half" className="star half">
+  //         ★
+  //       </span>
+  //     );
+  //   }
+  //   const emptyStars = 5 - Math.ceil(rating);
+  //   for (let i = 0; i < emptyStars; i++) {
+  //     stars.push(
+  //       <span key={`empty-${i}`} className="star">
+  //         ★
+  //       </span>
+  //     );
+  //   }
+  //   return stars;
+  // };
 
   return (
     <div className="product-detail-page">
@@ -351,7 +310,7 @@ const ProductDetailPage = () => {
       <div className="breadcrumb-container">
         <div className="breadcrumb">
           <Link to="/">Trang chủ</Link>
-          <span className="separator">{">"}</span>
+          <span className="separator">{'>'}</span>
           <span className="current">{product.name}</span>
         </div>
       </div>
@@ -363,7 +322,7 @@ const ProductDetailPage = () => {
               <img
                 src={
                   product.image ||
-                  "https://salt.tikicdn.com/cache/750x750/ts/product/ac/65/4e/e21a92395ae8a7a1c2af3da945d76944.jpg.webp"
+                  'https://salt.tikicdn.com/cache/750x750/ts/product/ac/65/4e/e21a92395ae8a7a1c2af3da945d76944.jpg.webp'
                 }
                 alt={product.name}
               />
@@ -373,7 +332,7 @@ const ProductDetailPage = () => {
                 <img
                   src={
                     product.image ||
-                    "https://salt.tikicdn.com/cache/750x750/ts/product/ac/65/4e/e21a92395ae8a7a1c2af3da945d76944.jpg.webp"
+                    'https://salt.tikicdn.com/cache/750x750/ts/product/ac/65/4e/e21a92395ae8a7a1c2af3da945d76944.jpg.webp'
                   }
                   alt={product.name}
                 />
@@ -385,11 +344,7 @@ const ProductDetailPage = () => {
           <div className="product-info-detail">
             {product.imageBadges && (
               <div className="product-badge-container">
-                <img
-                  src={product.imageBadges}
-                  alt="Badge"
-                  className="product-badge-icon-detail"
-                />
+                <img src={product.imageBadges} alt="Badge" className="product-badge-icon-detail" />
               </div>
             )}
 
@@ -399,18 +354,14 @@ const ProductDetailPage = () => {
               {product.rating && (
                 <>
                   <span className="rating-number">{product.rating}</span>
-                  <div className="rating-stars-detail">
-                    {renderStars(product.rating)}
-                  </div>
+                  {/* <div className="rating-stars-detail">{renderStars(product.rating)}</div> */}
                   <span className="separator-dot">•</span>
                   {product.sold && (
                     <span className="sold-count">
-                      Đã bán {product.sold.toLocaleString("vi-VN")}
+                      Đã bán {product.sold.toLocaleString('vi-VN')}
                     </span>
                   )}
-                  {!product.sold && (
-                    <span className="sold-count">Đã bán sản phẩm</span>
-                  )}
+                  {!product.sold && <span className="sold-count">Đã bán sản phẩm</span>}
                 </>
               )}
             </div>
@@ -419,9 +370,7 @@ const ProductDetailPage = () => {
             <div className="price-section-detail">
               <div
                 className={`current-price-detail ${
-                  !product.discount || product.discount <= 0
-                    ? "no-discount"
-                    : ""
+                  !product.discount || product.discount <= 0 ? 'no-discount' : ''
                 }`}
               >
                 {formatPrice(finalPrice)}
@@ -458,12 +407,8 @@ const ProductDetailPage = () => {
                 </div> */}
 
                 <div className="delivery-text">
-                  <p className="delivery-main">
-                    {product.deliveryTime || "Giao siêu tốc 2h"}
-                  </p>
-                  <p className="delivery-sub">
-                    Freeship 10k đơn từ 45k, Freeship 25k đơn từ 100k
-                  </p>
+                  <p className="delivery-main">{product.deliveryTime || 'Giao siêu tốc 2h'}</p>
+                  <p className="delivery-sub">Freeship 10k đơn từ 45k, Freeship 25k đơn từ 100k</p>
                 </div>
               </div>
             </div>
@@ -490,12 +435,7 @@ const ProductDetailPage = () => {
                   -
                 </button>
 
-                <input
-                  type="text"
-                  className="quantity-input"
-                  value={quantity}
-                  readOnly
-                />
+                <input type="text" className="quantity-input" value={quantity} readOnly />
 
                 <button className="quantity-btn" onClick={handleIncrease}>
                   +
@@ -549,11 +489,12 @@ const ProductDetailPage = () => {
         )}
 
         {/* Similar Products */}
-        <div className="similar-products-section">
+
+        {/* <div className="similar-products-section">
           <h2 className="section-title">Sản phẩm tương tự</h2>
 
           <div className="similar-products-wrapper">
-            {/* Navigation Arrows */}
+            // Pagination Arrows
             {totalPages > 1 && currentPage > 1 && (
               <PrevArrow onClick={handlePrevPage} />
             )}
@@ -616,16 +557,14 @@ const ProductDetailPage = () => {
               <NextArrow onClick={handleNextPage} />
             )}
           </div>
-        </div>
+        </div> */}
       </div>
 
       {/* Notification */}
       {notification.show && (
         <div className={`add-to-cart-notification ${notification.type}`}>
           <div className="notification-content">
-            <span className="notification-icon">
-              {notification.type === "success" ? "✓" : "✕"}
-            </span>
+            <span className="notification-icon">{notification.type === 'success' ? '✓' : '✕'}</span>
             <span>{notification.message}</span>
           </div>
         </div>
@@ -640,7 +579,7 @@ const ProductDetailPage = () => {
             items: [
               {
                 id: product.id,
-                // listingId: product.productId || product.id,
+
                 productId: product.productId || product.id,
                 name: product.name,
                 image: product.image,
