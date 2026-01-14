@@ -295,11 +295,6 @@ const cartSlice = createSlice({
       .addCase(fetchCartDetail.fulfilled, (state, action) => {
         state.status = 'succeeded';
         state.items = action.payload;
-        // console.log(
-        //   "CART ITEMS UPDATED IN REDUX:",
-        //   action.payload.length,
-        //   action.payload
-        // );
       })
       .addCase(fetchCartDetail.rejected, (state, action) => {
         state.status = 'failed';

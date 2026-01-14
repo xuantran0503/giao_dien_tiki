@@ -104,7 +104,6 @@ const CartPage = () => {
     }
   };
 
-  // console.log("cart item product id", cartItems.productId);
 
   const handleQuantityClick = (id, quantity) => {
     setEditingQuantity(id);
@@ -181,7 +180,6 @@ const CartPage = () => {
   };
 
   const handleCheckoutClose = () => {
-    // console.log('Closing checkout form from callback');
     setShowCheckoutForm(false);
   };
 
@@ -257,82 +255,6 @@ const CartPage = () => {
   const total = calculateTotal();
   const discount = subtotal - total;
 
-  // Hàm thêm sản phẩm tương tự vào giỏ
-  // const handleAddSimilarProductToCart = (item) => {
-  //   const itemFinalPrice = calculateDiscountedPrice(
-  //     item.originalPrice,
-  //     item.discount
-  //   );
-  //   // if (!item.productId) {
-  //   //   console.error("Similar product has no backend productId");
-  //   //   return;
-  //   // }
-  //   dispatch(
-  //     addItemToCart({
-  //       productId: item.productId.toString(),
-  //       name: item.title,
-  //       image: item.image,
-  //       price: itemFinalPrice,
-  //       originalPrice: item.originalPrice,
-  //       discount: item.discount,
-  //       quantity: 1,
-  //     })
-  //   );
-  // };
-
-  // const [currentPage, setCurrentPage] = useState(1);
-
-  // const itemsPerPage = 6;
-  // const totalPages = Math.ceil(topDealsData.length / itemsPerPage);
-  // const indexOfLastItem = currentPage * itemsPerPage;
-  // const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  // const currentItems = topDealsData.slice(indexOfFirstItem, indexOfLastItem);
-
-  // const handlePageChange = (pageNumber) => {
-  //   setCurrentPage(pageNumber);
-  // };
-
-  // const handlePrevPage = () => {
-  //   if (currentPage > 1) {
-  //     handlePageChange(currentPage - 1);
-  //   }
-  // };
-
-  // const handleNextPage = () => {
-  //   if (currentPage < totalPages) {
-  //     handlePageChange(currentPage + 1);
-  //   }
-  // };
-
-  // const renderStars = (rating) => {
-  //   const stars = [];
-  //   const fullStars = Math.floor(rating);
-  //   const hasHalfStar = rating % 1 !== 0;
-
-  //   for (let i = 0; i < fullStars; i++) {
-  //     stars.push(
-  //       <span key={i} className="star filled">
-  //         ★
-  //       </span>
-  //     );
-  //   }
-  //   if (hasHalfStar) {
-  //     stars.push(
-  //       <span key="half" className="star half">
-  //         ★
-  //       </span>
-  //     );
-  //   }
-  //   const emptyStars = 5 - Math.ceil(rating);
-  //   for (let i = 0; i < emptyStars; i++) {
-  //     stars.push(
-  //       <span key={`empty-${i}`} className="star">
-  //         ★
-  //       </span>
-  //     );
-  //   }
-  //   return stars;
-  // };
 
   return (
     <div className="cart-page">
@@ -412,7 +334,7 @@ const CartPage = () => {
                       </label>
 
                       <Link
-                        to={`/product/${item.listingId || item.id || item.productId}`}
+                        to={`/product/${item.listingId || item.productId || item.id}`}
                         state={{ cartItem: item }}
                         className="item-image-link"
                       >
@@ -428,7 +350,7 @@ const CartPage = () => {
 
                       <div className="item-info">
                         <Link
-                          to={`/product/${item.listingId || item.id || item.productId}`}
+                          to={`/product/${item.listingId || item.productId || item.id}`}
                           state={{ cartItem: item }}
                           className="item-name"
                         >
@@ -570,75 +492,6 @@ const CartPage = () => {
         )}
       </div>
 
-      {/* Suggested Products */}
-      {/* {cartItems.length > 0 && (
-        <div className="suggested-products-cart">
-          <h2 className="suggested-title">Sản phẩm mua kèm</h2>
-
-          <div className="similar-products-wrapper">
-            {totalPages > 1 && currentPage > 1 && (
-              <PrevArrow onClick={handlePrevPage} />
-            )}
-
-            <div className="similar-products-grid">
-              {currentItems.map((item) => (
-                <div key={item.id} className="similar-product-card-wrapper">
-                  <Link
-                    to={`/product/${item.id}`}
-                    className="similar-product-card"
-                  >
-                    <div className="similar-product-image">
-                      <img src={item.image} alt={item.name} />
-                    </div>
-
-                    <div className="similar-product-info">
-                      <h3 className="similar-product-name">{item.title}</h3>
-                      <div>
-                        <span className="rating-stars">
-                          {renderStars(item.rating)}
-                        </span>
-                      </div>
-                      <div className="similar-product-price">
-                        <span className="price">
-                          {formatPrice(
-                            calculateDiscountedPrice(
-                              item.originalPrice,
-                              item.discount
-                            )
-                          )}
-                          <sup>₫</sup>
-                        </span>
-                        <div className="discount-price-container">
-                          {item.discount && item.discount > 0 && (
-                            <span className="discount">-{item.discount}%</span>
-                          )}
-
-                          {item.originalPrice !== item.price && (
-                            <span className="original-price">
-                              {formatPrice(item.originalPrice)}
-                              <sup>₫</sup>
-                            </span>
-                          )}
-                        </div>
-                      </div>
-                    </div>
-                  </Link>
-                  <button
-                    className="btn-add-to-cart-similar"
-                    onClick={() => handleAddSimilarProductToCart(item)}
-                  >
-                    Thêm vào giỏ
-                  </button>
-                </div>
-              ))}
-            </div>
-
-            {totalPages > 1 && currentPage < totalPages && (
-              <NextArrow onClick={handleNextPage} />
-            )}
-          </div>
-        </div> 
-      )}*/}
 
       <Footer />
 

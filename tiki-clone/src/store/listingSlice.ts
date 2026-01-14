@@ -67,11 +67,6 @@ export const fetchProductsByPage = createAsyncThunk(
           originalPrice: item.Price || 0,
           currentPrice: item.PromotionPrice || item.Price || 0,
           discount: item.DiscountPercentage || 0,
-          //   image: item.Image
-          //     ? item.Image.startsWith('http')
-          //       ? item.Image
-          //       : `${API_BASE}${item.Image}`
-          //     : '',
         };
       });
     } catch (error: any) {
@@ -131,11 +126,6 @@ export const fetchProductById = createAsyncThunk(
         productId: item.ExData?.GroupServiceId || item.ProductsId || item.Id,
         title: item.Name,
         name: item.Name,
-        // image: item.Image
-        //   ? item.Image.startsWith('http')
-        //     ? item.Image
-        //     : `${API_BASE}${item.Image}`
-        //   : '',
         originalPrice,
         currentPrice,
         discount,

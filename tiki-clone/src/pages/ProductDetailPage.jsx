@@ -14,10 +14,7 @@ import './ProductDetailPage.css';
 
 const ProductDetailPage = () => {
   const dispatch = useDispatch();
-  const { currentProduct: listingProduct, productDetailStatus: listingStatus } = useSelector(
-    (state) => state.listing
-  );
-  const currentProduct = listingProduct;
+  const { currentProduct, productDetailStatus: listingStatus } = useSelector((state) => state.listing);
 
   const productDetailStatus =
     listingStatus === 'pending' ? 'pending' : listingStatus === 'succeeded' ? 'succeeded' : 'idle';
@@ -29,71 +26,94 @@ const ProductDetailPage = () => {
   const location = useLocation();
   const cartItemFromState = location.state?.cartItem;
 
-  // Tìm sản phẩm trong giỏ hàng nếu mở tab mới (không có state)
+  // Tìm sản phẩm trong giỏ hàng hoặc danh sách liệt kê để hiển thị tạm thời trong khi tải API
   const cartItemFromStore = cartItems.find(
-    (item) => item.productId === productId || item.id === productId
+    (item) => item.productId === productId || item.id === productId || item.listingId === productId
   );
-
   const cartItem = cartItemFromState || cartItemFromStore;
 
-  // Tìm trong danh sách trang chủ nếu không có trong giỏ hàng
   const productFromListing = allProducts.find(
     (p) => p.productId === productId || p.id === productId
   );
 
   const [quantity, setQuantity] = useState(1);
-  const [notification, setNotification] = useState({
-    show: false,
-    message: '',
-    type: '',
-  });
+  const [notification, setNotification] = useState({ show: false, message: '', type: '' });
   const [showCheckoutForm, setShowCheckoutForm] = useState(false);
-  // const [currentPage, setCurrentPage] = useState(1);
 
+  // Đối tượng sản phẩm tổng hợp (Ưu tiên từ API -> Giỏ hàng -> Danh sách Trang chủ)
   const product = currentProduct
     ? {
         ...currentProduct,
         id: currentProduct.id,
-        productId: currentProduct.productId || currentProduct.id || productId,
+        productId: currentProduct.productId || currentProduct.id,
         name: currentProduct.name || currentProduct.title,
         originalPrice: currentProduct.originalPrice || currentProduct.Price || 0,
         currentPrice: currentProduct.currentPrice || currentProduct.originalPrice || 0,
         discount: currentProduct.discount || 0,
-        // image: currentProduct.image,
+
       }
     : cartItem
     ? {
-        id: cartItem.id || cartItem.productId,
+        id: cartItem.listingId || cartItem.id,
         productId: cartItem.productId,
         name: cartItem.name,
-        originalPrice: cartItem.originalPrice || 0,
+        originalPrice: cartItem.originalPrice || cartItem.price || 0,
         currentPrice: cartItem.price || 0,
         discount: cartItem.discount || 0,
-        quantity: 1,
-        // image: cartItem.image, // Mở lại ảnh
+        image: cartItem.image,
+        // quantity: 1,
       }
     : productFromListing
     ? {
         ...productFromListing,
-        quantity: 1,
+        id: productFromListing.id,
+        productId: productFromListing.productId || productFromListing.id,
       }
     : null;
 
+  const cartListingId = cartItem?.listingId;
+  const listingStoreId = productFromListing?.id;
+
+//    const hasCartItemFromState = !!cartItemFromState;
+//   const hasCartItemFromStore = !!cartItemFromStore;
+
   useEffect(() => {
     if (productId) {
-      if (cartItemFromState) {
-        dispatch(fetchCartDetail());
-        return;
-      }
+      // if(hasCartItemFromState){
+      //   dispatch(fetchCartDetail());
+      //   return;
+      // }
+      // if(!hasCartItemFromStore){
+      //   dispatch(fetchProductById(productId));
+        
+      // }
 
-      if (!cartItemFromStore) {
-        dispatch(fetchProductById(productId));
-        // dispatch(fetchCartDetail());
-      }
+      // Tự động tìm Mapping ID nếu productId hiện tại là Service ID
+      // (Bởi vì API listing chỉ nhận Listing ID, dùng Service ID sẽ bị lỗi 400)
+      const mappedIds = JSON.parse(localStorage.getItem('product_mapping') || '{}');
 
+      const resolvedId =
+        mappedIds[productId] || // 1. Ưu tiên từ Mapping Storage
+        cartListingId || // 2. Nếu không có, thử lấy listingId từ giỏ hàng
+        listingStoreId || // 3. Thử tìm trong danh sách trang chủ
+        productId; // 4. Cuối cùng mới dùng chính nó
+
+      dispatch(fetchProductById(resolvedId));
       dispatch(fetchCartDetail());
     }
-  }, [dispatch, productId, !!cartItemFromStore]); //  Chạy lại khi tìm thấy sản phẩm trong giỏ
+  }, [dispatch, productId, cartListingId, listingStoreId /*, hasCartItemFromState, hasCartItemFromStore*/]);
+
+  // Cơ chế tự sửa lỗi: Lưu mapping giữa Service ID và Listing ID để lần sau mở tab mới vẫn xem được
+  useEffect(() => {
+    if (currentProduct && currentProduct.productId && currentProduct.id) {
+      const mappedIds = JSON.parse(localStorage.getItem('product_mapping') || '{}');
+      // productId ở đây là Service ID (dùng để mua), id là Listing ID (dùng để xem)
+      if (mappedIds[currentProduct.productId] !== currentProduct.id) {
+        mappedIds[currentProduct.productId] = currentProduct.id;
+        localStorage.setItem('product_mapping', JSON.stringify(mappedIds));
+      }
+    }
+  }, [currentProduct]);
 
   //  Luôn dọn dẹp mỗi khi chuyển trang hoặc đóng tab
   useEffect(() => {
@@ -212,96 +232,6 @@ const ProductDetailPage = () => {
     setShowCheckoutForm(false);
   };
 
-  // Hàm thêm sản phẩm tương tự vào giỏ
-  // const handleAddSimilarProductToCart = (item, e) => {
-  //   const itemFinalPrice = calculateDiscountedPrice(
-  //     item.originalPrice,
-  //     item.discount
-  //   );
-
-  //   dispatch(
-  //     addItemToCart({
-  //       productId: item.productId || item.id,
-  //       quantity: 1,
-  //       price: itemFinalPrice,
-  //       originalPrice: item.originalPrice,
-  //       discount: item.discount,
-  //       name: item.name,
-  //       image: item.image,
-  //     })
-  //   );
-
-  //   setNotification({
-  //     show: true,
-  //     message: "Đã thêm sản phẩm vào giỏ hàng",
-  //     type: "success",
-  //   });
-
-  //   setTimeout(() => {
-  //     setNotification({ show: false, message: "", type: "" });
-  //   }, 1000);
-  // };
-
-  // const itemsPerPage = 6;
-  // // Tính toán pagination
-  // const totalPages = Math.ceil(suggestedProductsData.length / itemsPerPage);
-  // const indexOfLastItem = currentPage * itemsPerPage;
-  // const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  // const currentItems = suggestedProductsData.slice(
-  //   indexOfFirstItem,
-  //   indexOfLastItem
-  // );
-
-  // const handlePageChange = (pageNumber) => {
-  //   setCurrentPage(pageNumber);
-  //   // Cuộn lên phần sản phẩm tương tự
-  //   // document.querySelector(".similar-products-section")?.scrollIntoView({
-  //   //   behavior: "smooth",
-  //   //   block: "start",
-  //   // });
-  // };
-
-  // const handlePrevPage = () => {
-  //   if (currentPage > 1) {
-  //     handlePageChange(currentPage - 1);
-  //   }
-  // };
-
-  // const handleNextPage = () => {
-  //   if (currentPage < totalPages) {
-  //     handlePageChange(currentPage + 1);
-  //   }
-  // };
-
-  // const renderStars = (rating) => {
-  //   const stars = [];
-  //   const fullStars = Math.floor(rating);
-  //   const hasHalfStar = rating % 1 !== 0;
-
-  //   for (let i = 0; i < fullStars; i++) {
-  //     stars.push(
-  //       <span key={i} className="star filled">
-  //         ★
-  //       </span>
-  //     );
-  //   }
-  //   if (hasHalfStar) {
-  //     stars.push(
-  //       <span key="half" className="star half">
-  //         ★
-  //       </span>
-  //     );
-  //   }
-  //   const emptyStars = 5 - Math.ceil(rating);
-  //   for (let i = 0; i < emptyStars; i++) {
-  //     stars.push(
-  //       <span key={`empty-${i}`} className="star">
-  //         ★
-  //       </span>
-  //     );
-  //   }
-  //   return stars;
-  // };
 
   return (
     <div className="product-detail-page">
@@ -488,76 +418,6 @@ const ProductDetailPage = () => {
           </div>
         )}
 
-        {/* Similar Products */}
-
-        {/* <div className="similar-products-section">
-          <h2 className="section-title">Sản phẩm tương tự</h2>
-
-          <div className="similar-products-wrapper">
-            // Pagination Arrows
-            {totalPages > 1 && currentPage > 1 && (
-              <PrevArrow onClick={handlePrevPage} />
-            )}
-
-            <div className="similar-products-grid">
-              {currentItems.map((item) => (
-                <div key={item.id} className="similar-product-card-wrapper">
-                  <Link
-                    to={`/product/${item.id}`}
-                    className="similar-product-card"
-                  >
-                    <div className="similar-product-image">
-                      <img src={item.image} alt={item.name} />
-                    </div>
-
-                    <div className="similar-product-info">
-                      <h3 className="similar-product-name">{item.name}</h3>
-                      <div className="similar-product-price">
-                        <span
-                          className={`price ${
-                            !item.discount || item.discount <= 0
-                              ? "no-discount"
-                              : ""
-                          }`}
-                        >
-                          {formatPrice(
-                            calculateDiscountedPrice(
-                              item.originalPrice,
-                              item.discount
-                            )
-                          )}
-                          <sup>₫</sup>
-                        </span>
-                        {item.discount > 0 && (
-                          <div className="discount-price-container">
-                            <span className="discount">-{item.discount}%</span>
-
-                            {item.originalPrice !== item.price && (
-                              <span className="original-price">
-                                {formatPrice(item.originalPrice)}
-                                <sup>₫</sup>
-                              </span>
-                            )}
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                  </Link>
-                  <button
-                    className="btn-add-to-cart-similar"
-                    onClick={(e) => handleAddSimilarProductToCart(item, e)}
-                  >
-                    Thêm vào giỏ
-                  </button>
-                </div>
-              ))}
-            </div>
-
-            {totalPages > 1 && currentPage < totalPages && (
-              <NextArrow onClick={handleNextPage} />
-            )}
-          </div>
-        </div> */}
       </div>
 
       {/* Notification */}
